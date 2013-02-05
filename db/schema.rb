@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205161402) do
+ActiveRecord::Schema.define(:version => 20130205181541) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -32,9 +32,11 @@ ActiveRecord::Schema.define(:version => 20130205161402) do
     t.integer  "conference_label"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "upload_file_id"
   end
 
   add_index "conferences", ["start_date", "name"], :name => "index_conferences_on_start_date_and_name"
+  add_index "conferences", ["upload_file_id"], :name => "index_conferences_on_upload_file_id"
 
   create_table "delegates", :force => true do |t|
     t.integer  "group_id"
@@ -47,8 +49,20 @@ ActiveRecord::Schema.define(:version => 20130205161402) do
   add_index "delegates", ["group_id"], :name => "index_delegates_on_group_id"
 
   create_table "groups", :force => true do |t|
+    t.integer  "conference_id"
     t.string   "text"
     t.string   "short_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups", ["conference_id"], :name => "index_groups_on_conference_id"
+
+  create_table "upload_files", :force => true do |t|
+    t.string   "xml_file_name"
+    t.string   "xml_content_type"
+    t.string   "xml_file_size"
+    t.string   "xml_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
