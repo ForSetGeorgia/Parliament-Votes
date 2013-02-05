@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sort_order: 1
+  level: 1
+  name: MyString
+  description: MyText
+
+two:
+  sort_order: 1
+  level: 1
+  name: MyString
+  description: MyText

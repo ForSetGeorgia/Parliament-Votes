@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  voting_session_id: 1
+  delegate_id: 1
+  present: false
+  vote: 1
+  weight: 1
+
+two:
+  voting_session_id: 1
+  delegate_id: 1
+  present: false
+  vote: 1
+  weight: 1

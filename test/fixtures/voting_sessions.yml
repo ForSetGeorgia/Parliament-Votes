@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  agenda_id: 1
+  passed: false
+  quorum: false
+  result1: 1
+  result3: 1
+  result5: 1
+  result1text: MyString
+  result3text: MyString
+  result5text: MyString
+  button1text: MyString
+  button3text: MyString
+  voting_conclusion: MyText
+
+two:
+  agenda_id: 1
+  passed: false
+  quorum: false
+  result1: 1
+  result3: 1
+  result5: 1
+  result1text: MyString
+  result3text: MyString
+  result5text: MyString
+  button1text: MyString
+  button3text: MyString
+  voting_conclusion: MyText
