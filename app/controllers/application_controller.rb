@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
 	before_filter :set_locale
-	before_filter :is_browser_supported?
 	before_filter :initialize_gon
 
 	unless Rails.application.config.consider_all_requests_local
@@ -22,26 +21,6 @@ class ApplicationController < ActionController::Base
       redirect_to root_url, :alert => exception.message
     end
 	end
-
-	Browser = Struct.new(:browser, :version)
-	SUPPORTED_BROWSERS = [
-		Browser.new("Chrome", "15.0"),
-		Browser.new("Safari", "4.0.2"),
-		Browser.new("Firefox", "10.0.2"),
-		Browser.new("Internet Explorer", "9.0"),
-		Browser.new("Opera", "11.0")
-	]
-
-	def is_browser_supported?
-		user_agent = UserAgent.parse(request.user_agent)
-logger.debug "////////////////////////// BROWSER = #{user_agent}"
-		if SUPPORTED_BROWSERS.any? { |browser| user_agent < browser }
-			# browser not supported
-logger.debug "////////////////////////// BROWSER NOT SUPPORTED"
-			render "layouts/unsupported_browser", :layout => false
-		end
-	end
-
 
 	def set_locale
     if params[:locale] and I18n.available_locales.include?(params[:locale].to_sym)

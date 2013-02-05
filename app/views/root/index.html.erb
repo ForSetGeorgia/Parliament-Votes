@@ -1,1 +1,14 @@
-Hi!
+<%= semantic_form_for @upload_file, :url => root_path do |f| %>
+	<%= f.error_messages %>
+
+	<%= f.inputs do %>
+		<%= f.input :xml, :as => :file, :input_html => {:accept => 'application/xml'} %>
+	<% end %>
+
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+	  <%= f.submit nil, :class => 'btn btn-warning', :type => :reset, :value => t('helpers.links.reset'), :name => :reset %>
+	  <%= link_to t('helpers.links.cancel'), root_path, :class => 'btn btn-mini btn-warning' %>
+  </div>
+<% end %>

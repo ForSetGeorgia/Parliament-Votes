@@ -3,6 +3,7 @@ ka:
   activerecord:
     models:
       user: მომხმარებელი
+      upload_file: File Upload
     attributes:
       user:
         email: ელ.ფოსტა
@@ -10,6 +11,8 @@ ka:
         password_confirmation: გაიმეორეთ პაროლი
         role: როლი
         remember_me: დამიმახსოვრე
+      upload_file:
+        xml: XML File
   helpers:
     actions: აირჩიეთ
     links:
@@ -44,7 +47,12 @@ ka:
       confirm: დარწმუნებული ხართ?
       new: ახალი
     common:
-      app_name: Bootstrap Starter Project
+      app_name: Parliamentary Votes
+    msgs:
+      does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
+      not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
+      success_created: "%{obj} შექმნილია."
+      success_updated: "%{obj} განახლებულია."
   layouts:
     application:
       admin: ადმინისტრატო

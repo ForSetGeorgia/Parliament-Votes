@@ -1,0 +1,46 @@
+conference
+ - start date  date
+ - name string
+ - conferenceLabel int
+
+Agenda
+ - id int
+ - SortOrder int
+ - Level int
+ - Name string
+ - Description text
+
+Group
+ - id int
+ - Text string
+ - ShortName string
+
+Delegate
+ - id int
+ - Group_id int
+ - firstname string
+ - title string
+
+VotingSession
+ - id  int
+ - Agenda_id  int
+ - passed  t/f
+ - quorum  t/f
+ - result1 int 
+ - result3 int
+ - result5 int
+ - result1text string
+ - result3text string
+ - result5text string
+ - button1text string
+ - button3text string
+ - VotingConclusion text
+
+VotingResult
+ - VotingSession_id  int
+ - Delegate_id  int
+ - Present t/f
+ - Vote int
+ - weight  int
+
+
