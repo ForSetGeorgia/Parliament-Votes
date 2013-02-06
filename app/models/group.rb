@@ -1,7 +1,7 @@
 class Group < ActiveRecord::Base
 
+  belongs_to :conference
   has_many :delegates, :dependent => :destroy
-  accepts_nested_attributes_for :delegates
 
-  attr_accessible :id, :text, :short_name, :delegates_attributes
+  attr_accessible :xml_id, :text, :short_name, :conference_id
 end

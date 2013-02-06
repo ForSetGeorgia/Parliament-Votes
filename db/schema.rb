@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205181541) do
+ActiveRecord::Schema.define(:version => 20130206135655) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130205181541) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "xml_id"
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"
@@ -44,8 +45,11 @@ ActiveRecord::Schema.define(:version => 20130205181541) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "conference_id"
+    t.integer  "xml_id"
   end
 
+  add_index "delegates", ["conference_id"], :name => "index_delegates_on_conference_id"
   add_index "delegates", ["group_id"], :name => "index_delegates_on_group_id"
 
   create_table "groups", :force => true do |t|
@@ -54,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20130205181541) do
     t.string   "short_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "xml_id"
   end
 
   add_index "groups", ["conference_id"], :name => "index_groups_on_conference_id"
@@ -65,7 +70,10 @@ ActiveRecord::Schema.define(:version => 20130205181541) do
     t.string   "xml_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "file_processed"
   end
+
+  add_index "upload_files", ["file_processed"], :name => "index_upload_files_on_file_processed"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -114,6 +122,7 @@ ActiveRecord::Schema.define(:version => 20130205181541) do
     t.text     "voting_conclusion"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "xml_id"
   end
 
   add_index "voting_sessions", ["agenda_id"], :name => "index_voting_sessions_on_agenda_id"

@@ -4,7 +4,7 @@ class VotingSession < ActiveRecord::Base
   belongs_to :agenda
   accepts_nested_attributes_for :voting_results
 
-  attr_accessible :id, :agenda_id, :passed, :quorum, 
+  attr_accessible :xml_id, :agenda_id, :passed, :quorum, 
       :result1, :result3, :result5, 
       :result1text, :result3text, :result5text, 
       :button1text, :button3text, :voting_conclusion,

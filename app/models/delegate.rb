@@ -2,7 +2,8 @@ class Delegate < ActiveRecord::Base
 
   has_many :voting_results, :dependent => :destroy
   belongs_to :group
+  belongs_to :conference
 
-  attr_accessible :id, :group_id, :first_name, :title
+  attr_accessible :xml_id, :conference_id, :group_id, :first_name, :title
 
 end
