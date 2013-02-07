@@ -9,7 +9,7 @@ class Conference < ActiveRecord::Base
   accepts_nested_attributes_for :groups
   accepts_nested_attributes_for :delegates
 
-  attr_accessible :upload_file_id, :start_date, :name, :conference_label, :agendas_attributes, :groups_attributes, :file_processed
+  attr_accessible :upload_file_id, :start_date, :name, :conference_label, :agendas_attributes, :groups_attributes
 
   
 end

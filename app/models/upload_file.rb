@@ -3,52 +3,118 @@ class UploadFile < ActiveRecord::Base
   has_one :conference, :dependent => :destroy
   accepts_nested_attributes_for :conference
 
-	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, :conference_attributes
+	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, :conference_attributes, :file_processed
 
   validates :xml_file_name, :presence => true
 
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
   
 
-
-  def process_file
-    file = File.open("#{Rails.root}/public#{self.xml.url(:original,false)}")
-
-    doc = Nokogiri::XML(file)
-
-    # conference
-    conf = doc.at_css('Conference')
-    if conf.present?
-      conference = self.create_conference(:start_date => conf.at_css('StartDate').text[0..9], 
-        :name => conf.at_css('name').text, 
-        :conference_label => conf.at_css('conferenceLabel').text)
-
-      puts "conf = #{conference.inspect}"
-
-      # groups
-      doc.css('Group').each do |group|
-        g = conference.groups.create(:xml_id => group.at_css('id').text, 
-          :text => group.at_css('Text').text, 
-          :short_name => group.at_css('ShortName').text)
-          
-        puts "- group = #{g.inspect}"
+  def unprocess_file
+    # voting session & voting results
+    if self.conference.present?
+      self.conference.agendas.each do |agenda|
+        agenda.voting_sessions.each do |session|
+          session.voting_results.delete_all
+        end
+        agenda.voting_sessions.delete_all
       end
+
+      # agenda
+      self.conference.agendas.delete_all
 
       # delegates
-      doc.css("Delegate").each do |delegate|
-        group_index = conference.groups.index{|x| x.xml_id.to_s == delegate.at_css('Group_id').text} if !delegate.at_css('Group_id').nil?
-        d = conference.delegates.create(:xml_id => delegate.at_css('id').text, 
-          :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
-          :first_name => delegate.at_css('firstname').nil? ? nil : delegate.at_css('firstname').text, 
-          :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text )
+      self.conference.delegates.delete_all
 
-        puts "-- delegate = #{d.inspect}"
-      end
+      # groups 
+      self.conference.groups.delete_all
 
-      conference.file_processed = true
-      conference.save
+      # conference
+      self.conference.delete
     end
 
+    self.file_processed = false
+    self.save
+  end
+
+
+  def process_file
+    if !self.file_processed
+
+      file = File.open("#{Rails.root}/public#{self.xml.url(:original,false)}")
+
+      doc = Nokogiri::XML(file)
+
+      UploadFile.transaction do
+        # conference
+        conf = doc.at_css('Conference')
+        if conf.present?
+          conference = self.create_conference(:start_date => conf.at_css('StartDate').text[0..9], 
+            :name => conf.at_css('name').text, 
+            :conference_label => conf.at_css('conferenceLabel').text
+          )
+
+          # groups
+          doc.css('Group').each do |group|
+            g = conference.groups.create(:xml_id => group.at_css('id').text, 
+              :text => group.at_css('Text').text, 
+              :short_name => group.at_css('ShortName').text
+            )
+          end
+
+          # delegates
+          doc.css("Delegate").each do |delegate|
+            group_index = conference.groups.index{|x| x.xml_id.to_s == delegate.at_css('Group_id').text} if !delegate.at_css('Group_id').nil?
+            d = conference.delegates.create(:xml_id => delegate.at_css('id').text, 
+              :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
+              :first_name => delegate.at_css('firstname').nil? ? nil : delegate.at_css('firstname').text, 
+              :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text 
+            )
+          end
+
+          # agendas
+          doc.css('Agenda').each do |agenda|
+            ag = conference.agendas.create(:xml_id => agenda.at_css('id').text, 
+              :sort_order => agenda.at_css('SortOrder').nil? ? nil : agenda.at_css('SortOrder').text, 
+              :level => agenda.at_css('Level').nil? ? nil : agenda.at_css('Level').text, 
+              :name => agenda.at_css('Name').nil? ? nil : agenda.at_css('Name').text, 
+              :description => agenda.at_css('Description').nil? ? nil : agenda.at_css('Description').text
+            )
+
+            # add voting sessions for agenda          
+            doc.xpath("//VotingSession/Agenda_id[contains(text(), '#{ag.xml_id}')]/..").each do |session|
+              vs = ag.voting_sessions.create(:xml_id => session.at_css('id').text, 
+                :agenda_id => session.at_css('Agenda_id').nil? ? nil : session.at_css('Agenda_id').text, 
+                :passed => session.at_css('Passed').nil? ? nil : session.at_css('Passed').text, 
+                :quorum => session.at_css('Quorum').nil? ? nil : session.at_css('Quorum').text,
+                :result1 => session.at_css('Result1').nil? ? nil : session.at_css('Result1').text,
+                :result3 => session.at_css('Result3').nil? ? nil : session.at_css('Result3').text,
+                :result5 => session.at_css('Result5').nil? ? nil : session.at_css('Result5').text,
+                :result1text => session.at_css('Result1Text').nil? ? nil : session.at_css('Result1Text').text,
+                :result3text => session.at_css('Result3Text').nil? ? nil : session.at_css('Result3Text').text,
+                :result5text => session.at_css('Result5Text').nil? ? nil : session.at_css('Result5Text').text,
+                :button1text => session.at_css('Button1Text').nil? ? nil : session.at_css('Button1Text').text,
+                :button3text => session.at_css('Button3Text').nil? ? nil : session.at_css('Button3Text').text,
+                :voting_conclusion => session.at_css('VotingConclusion').nil? ? nil : session.at_css('VotingConclusion').text
+              )
+
+              # add voting results
+              doc.xpath("//VotingResult/VotingSession_id[contains(text(), '#{vs.xml_id}')]/..").each do |result|
+                del_index = conference.delegates.index{|x| x.xml_id.to_s == result.at_css('Delegate_id').text} if !result.at_css('Delegate_id').nil?
+                vs.voting_results.create(:delegate_id => del_index.nil? ? nil : conference.delegates[del_index].id, 
+                  :present => result.at_css('Present').nil? ? nil : result.at_css('Present').text, 
+                  :vote => result.at_css('Vote').nil? ? nil : result.at_css('Vote').text, 
+                  :weight => result.at_css('Weight').nil? ? nil : result.at_css('Weight').text
+                )
+              end
+            end
+          end
+
+          # indicate the the file has been processed
+          self.file_processed = true
+          self.save
+        end
+      end
 =begin
     # conference
     conf = doc.at_css('Conference')
@@ -112,6 +178,7 @@ class UploadFile < ActiveRecord::Base
     end
 
 =end
-    file.close
+      file.close
+    end
   end
 end
