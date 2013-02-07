@@ -9,6 +9,16 @@ class UploadFile < ActiveRecord::Base
 
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
   
+  validate :file_does_not_exist
+  after_save :process_file
+
+  def file_does_not_exist
+    files = UploadFile.where(:xml_file_name => self.xml_file_name)
+
+    if files.present?
+      errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
+    end
+  end
 
   def unprocess_file
     # voting session & voting results

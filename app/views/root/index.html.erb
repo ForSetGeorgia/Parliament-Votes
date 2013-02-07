@@ -1,14 +1,47 @@
-<%= semantic_form_for @upload_file, :url => root_path do |f| %>
-	<%= f.error_messages %>
+<%= form_tag process_file_path, :method => :post, :class => "form-inline", :id => 'upload_file', :multipart => true do %>
+   <%= error_messages_for @upload_file  %> 
+  
+  <label class="control-label" for="xml">
+    <%= UploadFile.human_attribute_name(:xml) %>
+  </label>
 
-	<%= f.inputs do %>
-		<%= f.input :xml, :as => :file, :input_html => {:accept => 'application/xml'} %>
-	<% end %>
+  <%= file_field_tag 'xml' %>
 
+  <%= submit_tag t('.upload_btn'), :class => 'btn' %>
 
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-	  <%= f.submit nil, :class => 'btn btn-warning', :type => :reset, :value => t('helpers.links.reset'), :name => :reset %>
-	  <%= link_to t('helpers.links.cancel'), root_path, :class => 'btn btn-mini btn-warning' %>
+  <div id="processing_file_container">
+    <div id="processing_file">
+      <span id="processing_file_text"><%= t('.processing') %></span>
+    </div>
   </div>
+
+<% end %>
+
+<hr />
+
+<% if @upload_files.empty? %>
+
+  <p><%= t('.no_files') %></p>
+<% else %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= UploadFile.human_attribute_name(:xml) %></th>
+        <th><%= UploadFile.human_attribute_name(:created_at) %></th>
+        <th><%= Conference.human_attribute_name(:name) %></th>
+        <th><%= Conference.human_attribute_name(:start_date) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @upload_files.each do |file| %>
+        <tr>
+          <td><%= file.xml_file_name %></td>
+          <td><%= l file.created_at, :format => :no_zone %></td>
+          <td><%= file.conference.name %></td>
+          <td><%= l file.conference.start_date, :format => :no_zone %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

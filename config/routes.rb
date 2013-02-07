@@ -10,7 +10,7 @@ BootstrapStarter::Application.routes.draw do
 			resources :users
 		end
 
-    match '/', :to => 'root#index', :as => :root, :via => :post
+    match '/process_file', :to => 'root#process_file', :as => :process_file, :via => :post
 
 		root :to => 'root#index'
 	  match "*path", :to => redirect("/#{I18n.default_locale}") # handles /en/fake/path/whatever

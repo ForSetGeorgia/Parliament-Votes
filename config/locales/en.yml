@@ -2,14 +2,30 @@
 en:
   activerecord:
     models:
-      user: User
+      user: მომხმარებელი
+      upload_file: File Upload
+      conference: Conference
+      agenda: Agenda
+      group: Group
+      delegate: Delegate
+      voting_session: Voting Session
+      voting_result: Voting Result
     attributes:
       user:
-        email: Email Address
-        password: Password
-        password_confirmation: Password Confirmation
-        role: Role
-        remember_me: Remeber Me
+        email: ელ.ფოსტა
+        password: პაროლი
+        password_confirmation: გაიმეორეთ პაროლი
+        role: როლი
+        remember_me: დამიმახსოვრე
+      upload_file:
+        xml: XML File
+        created_at: Date Added
+      conference:
+        name: Conference Name
+        start_date: Conference Date
+    messages:
+      upload_file:
+        already_exists: "'%{file_name}' has already been loaded"
   helpers:
     actions: Actions
     links:
@@ -44,7 +60,7 @@ en:
       confirm: Are you sure?
       new: New
     common:
-      app_name: Bootstrap Starter Project
+      app_name: Parliamentary Votes
   layouts:
     application:
       admin: Admin
@@ -79,3 +95,10 @@ en:
         title: New User
       show:
         title: User Details
+  root:
+    index:
+      title:
+      no_files: No files have been uploaded.
+      upload_btn: Upload File
+      processing: Processing...
+
