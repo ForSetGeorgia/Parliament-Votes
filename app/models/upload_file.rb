@@ -15,7 +15,7 @@ class UploadFile < ActiveRecord::Base
   def file_does_not_exist
     files = UploadFile.where(:xml_file_name => self.xml_file_name)
 
-    if files.present?
+    if files.present? && files.first.file_processed
       errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
     end
   end
@@ -24,10 +24,10 @@ class UploadFile < ActiveRecord::Base
     # voting session & voting results
     if self.conference.present?
       self.conference.agendas.each do |agenda|
-        agenda.voting_sessions.each do |session|
-          session.voting_results.delete_all
+        if agenda.voting_session
+          agenda.voting_session.voting_results.delete_all
+          agenda.voting_session.delete
         end
-        agenda.voting_sessions.delete_all
       end
 
       # agenda
@@ -93,10 +93,21 @@ class UploadFile < ActiveRecord::Base
 
             # add voting sessions for agenda          
             doc.xpath("//VotingSession/Agenda_id[contains(text(), '#{ag.xml_id}')]/..").each do |session|
-              vs = ag.voting_sessions.create(:xml_id => session.at_css('id').text, 
-                :agenda_id => session.at_css('Agenda_id').nil? ? nil : session.at_css('Agenda_id').text, 
+              # sometimes quorum value is 1 sometimes it is the number of votes need for quorum
+              quorum = false
+              if session.at_css('Quorum') 
+                if session.at_css('Quorum').text.length > 1 && session.at_css('Result5') && 
+                    session.at_css('Quorum').text.to_i >= session.at_css('Result5').text.to_i
+                  quorum = true
+                else
+                  quorum = session.at_css('Quorum').text.length
+                end              
+              end
+
+              vs = ag.create_voting_session(:xml_id => session.at_css('id').text, 
+#                :agenda_id => session.at_css('Agenda_id').nil? ? nil : session.at_css('Agenda_id').text, 
                 :passed => session.at_css('Passed').nil? ? nil : session.at_css('Passed').text, 
-                :quorum => session.at_css('Quorum').nil? ? nil : session.at_css('Quorum').text,
+                :quorum => quorum,
                 :result1 => session.at_css('Result1').nil? ? nil : session.at_css('Result1').text,
                 :result3 => session.at_css('Result3').nil? ? nil : session.at_css('Result3').text,
                 :result5 => session.at_css('Result5').nil? ? nil : session.at_css('Result5').text,

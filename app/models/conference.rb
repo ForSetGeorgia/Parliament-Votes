@@ -11,5 +11,5 @@ class Conference < ActiveRecord::Base
 
   attr_accessible :upload_file_id, :start_date, :name, :conference_label, :agendas_attributes, :groups_attributes
 
-  
+ 
 end

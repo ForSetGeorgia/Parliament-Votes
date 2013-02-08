@@ -23,6 +23,13 @@ en:
       conference:
         name: Conference Name
         start_date: Conference Date
+      agenda:
+        name: Agenda Name
+        description: Agenda Description
+      voting_session:
+        passed: Passed
+        quorum: Quorum
+        results: Results (Y/N)
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"
@@ -37,6 +44,7 @@ en:
       list: View All
       cancel: Cancel
       reset: Reset
+      view: View
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -101,4 +109,5 @@ en:
       no_files: No files have been uploaded.
       upload_btn: Upload File
       processing: Processing...
-
+    conference:
+      title: "Conference: %{name} (%{date})"

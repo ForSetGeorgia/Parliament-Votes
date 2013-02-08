@@ -11,6 +11,7 @@ BootstrapStarter::Application.routes.draw do
 		end
 
     match '/process_file', :to => 'root#process_file', :as => :process_file, :via => :post
+    match '/conference/:id', :to => 'root#conference', :as => :conference, :via => :get
 
 		root :to => 'root#index'
 	  match "*path", :to => redirect("/#{I18n.default_locale}") # handles /en/fake/path/whatever

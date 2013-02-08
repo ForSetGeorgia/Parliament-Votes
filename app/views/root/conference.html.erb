@@ -1,0 +1,23 @@
+  <% title t('.title', :name => @conference.name, :date => l(@conference.start_date, :format => :no_zone)) %>
+
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= Agenda.human_attribute_name(:name) %></th>
+        <th><%= VotingSession.human_attribute_name(:passed) %></th>
+        <th><%= VotingSession.human_attribute_name(:quorum) %></th>
+        <th><%= VotingSession.human_attribute_name(:results) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @conference.agendas.sort{|x,y| x.sort_order <=> y.sort_order}.each do |agenda| %>
+        <tr>
+          <td><%= agenda.name %></td>
+          <td><%= agenda.voting_session.passed if agenda.voting_session %></td>
+          <td><%= agenda.voting_session.quorum if agenda.voting_session %></td>
+          <td><%= "#{agenda.voting_session.result1} / #{agenda.voting_session.result3}" if agenda.voting_session %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

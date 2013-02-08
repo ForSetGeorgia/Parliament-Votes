@@ -22,4 +22,8 @@ class RootController < ApplicationController
   end
 
 
+  def conference
+    @conference = Conference.find(params[:id])
+  end
+
 end
