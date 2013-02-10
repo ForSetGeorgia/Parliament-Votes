@@ -10,4 +10,20 @@ class VotingSession < ActiveRecord::Base
       :button1text, :button3text, :voting_conclusion,
       :voting_results_attributes
 
+
+  def passed_formatted
+    if read_attribute(:passed)
+      I18n.t('helpers.boolean.y')
+    else
+      I18n.t('helpers.boolean.n')
+    end
+  end
+
+  def quorum_formatted
+    if read_attribute(:quorum)
+      I18n.t('helpers.boolean.y')
+    else
+      I18n.t('helpers.boolean.n')
+    end
+  end
 end

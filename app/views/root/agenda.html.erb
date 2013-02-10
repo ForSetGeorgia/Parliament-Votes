@@ -1,0 +1,39 @@
+<% title t('.title', :name => @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
+<% title_link link_to t('helpers.back.conference'), conference_path(@agenda.conference_id), :class => 'btn btn-mini btn-primary' %>
+
+<div id="agenda_description">
+  <%= simple_format @agenda.description %>
+</div>
+
+<% if @agenda.voting_session.present? && @agenda.voting_session.voting_results.present? %>
+  <div id="results_description">
+    <%= simple_format @agenda.voting_session.voting_conclusion %>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= Delegate.human_attribute_name(:first_name) %></th>
+        <th><%= Delegate.human_attribute_name(:title) %></th>
+        <th><%= Group.human_attribute_name(:short_name) %></th>
+        <th><%= VotingResult.human_attribute_name(:present) %></th>
+        <th><%= VotingResult.human_attribute_name(:vote) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @agenda.voting_session.voting_results.each do |result| %>
+        <tr>
+          <td><%= result.delegate.first_name %></td>
+          <td><%= result.delegate.title %></td>
+          <td><%= result.delegate.group.short_name if result.delegate.group %></td>
+          <td><%= result.present_formatted %></td>
+          <td><%= result.vote_formatted %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    <%= t('.no_results') %>
+  </p>
+<% end %>

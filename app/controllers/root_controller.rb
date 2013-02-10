@@ -26,4 +26,8 @@ class RootController < ApplicationController
     @conference = Conference.find(params[:id])
   end
 
+  def agenda
+    @agenda = Agenda.find(params[:id])
+  end
+
 end

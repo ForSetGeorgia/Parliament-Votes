@@ -85,7 +85,18 @@
 								<div class="page-header">
 								  <div class="block">
 			              <h1>
-										  <%= yield(:title) %>
+                      <% if content_for?(:title_link ) %>
+                        <div class="row">
+                          <div class="span8">
+                            <%= yield(:title) %>
+                          </div>
+                          <div class="span4">
+                            <%= yield(:title_link) %>
+                          </div>
+                        </div>
+                      <% else %>
+  										  <%= yield(:title) %>
+                      <% end %>
 									  </h1>
 									</div>
 								</div>

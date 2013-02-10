@@ -30,6 +30,15 @@ en:
         passed: Passed
         quorum: Quorum
         results: Results (Y/N)
+      voting_result:
+        present: Present
+        vote: Vote
+      delegate:
+        first_name: Name
+        title: Title
+      group: 
+        text: Party
+        short_name: Party
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"
@@ -48,6 +57,12 @@ en:
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
+    boolean:
+      y: "Yes"
+      n: "No"
+    back: 
+      files: Back to Upload Files
+      conference: Back to Conference
   app:
     language:
       en: English
@@ -111,3 +126,6 @@ en:
       processing: Processing...
     conference:
       title: "Conference: %{name} (%{date})"
+    agenda:
+      title: "Agenda: %{name} (%{date})"
+      no_results: No voting results exist for this agenda.
