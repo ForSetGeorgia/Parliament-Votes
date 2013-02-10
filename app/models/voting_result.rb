@@ -22,4 +22,7 @@ class VotingResult < ActiveRecord::Base
     end
   end
 
+  def self.by_session(voting_session_id)
+    includes(:delegate => :group).where(:voting_session_id => voting_session_id)
+  end
 end

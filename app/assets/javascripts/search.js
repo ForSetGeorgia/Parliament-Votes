@@ -1,0 +1,32 @@
+$(document).ready(function(){
+  $.extend( $.fn.dataTableExt.oStdClasses, {
+      "sWrapper": "dataTables_wrapper form-inline"
+  });
+
+
+  $('#voting_results_datatable').dataTable({
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sPaginationType": "bootstrap",
+    "bJQueryUI": true,
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": $('#voting_results_datatable').data('source'),
+    "oLanguage": {
+      "sUrl": gon.datatable_i18n_url
+    }
+  });
+
+  $('#agendas_datatable').dataTable({
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sPaginationType": "bootstrap",
+    "bJQueryUI": true,
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": $('#agendas_datatable').data('source'),
+    "oLanguage": {
+      "sUrl": gon.datatable_i18n_url
+    }
+  });
+
+});
+

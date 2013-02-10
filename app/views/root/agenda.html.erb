@@ -10,7 +10,8 @@
     <%= simple_format @agenda.voting_session.voting_conclusion %>
   </div>
 
-  <table class="table table-striped">
+  <table id="voting_results_datatable" class="display table table-striped table-bordered" 
+        data-source="<%= search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
     <thead>
       <tr>
         <th><%= Delegate.human_attribute_name(:first_name) %></th>
@@ -21,15 +22,6 @@
       </tr>
     </thead>
     <tbody>
-      <% @agenda.voting_session.voting_results.each do |result| %>
-        <tr>
-          <td><%= result.delegate.first_name %></td>
-          <td><%= result.delegate.title %></td>
-          <td><%= result.delegate.group.short_name if result.delegate.group %></td>
-          <td><%= result.present_formatted %></td>
-          <td><%= result.vote_formatted %></td>
-        </tr>
-      <% end %>
     </tbody>
   </table>
 <% else %>
