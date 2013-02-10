@@ -1,9 +1,11 @@
 class RootController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :only => [:process_file] do |controller_instance|
+    controller_instance.send(:valid_role?, User::ROLES[:process_files])
+  end
 
   def index
     @upload_file = UploadFile.new
-#    @upload_files = UploadFile.order("created_at desc")
   end
 
   def process_file
