@@ -19,7 +19,7 @@ class UploadFile < ActiveRecord::Base
   def file_does_not_exist
     files = UploadFile.where(:xml_file_name => self.xml_file_name)
 
-    if files.present? && files.first.file_processed
+    if files.present?
       errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
     end
   end
