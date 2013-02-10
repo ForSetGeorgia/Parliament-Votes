@@ -11,7 +11,7 @@ class RootController < ApplicationController
 
     respond_to do |format|
       if @upload_file.save
-        format.html { redirect_to root_path, notice: t('app.msgs.success_created', :obj => t('activerecord.models.upload_file')) }
+        format.html { redirect_to conference_path(@upload_file.conference.id), notice: t('app.msgs.success_created', :obj => t('activerecord.models.upload_file')) }
         format.json { render json: @upload_file, status: :created, location: @upload_file }
       else
         @upload_files = UploadFile.order("created_at desc")
