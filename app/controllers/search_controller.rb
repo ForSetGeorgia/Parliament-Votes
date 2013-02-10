@@ -1,5 +1,6 @@
 # encoding: utf-8
 class SearchController < ApplicationController
+  before_filter :authenticate_user!
   
   def voting_results
     respond_to do |format|

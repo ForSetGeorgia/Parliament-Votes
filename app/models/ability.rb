@@ -7,9 +7,15 @@ class Ability
       can :manage, :all
     elsif user.role? User::ROLES[:user_manager]
       can :manage, User, :role != User::ROLES[:admin]
+    elsif user.role? User::ROLES[:process_files]
+      can :manage, UploadFile
+      can :manage, Agenda
+      can :manage, Conference
+      can :manage, Delegate
+      can :manage, Group
+      can :manage, VotingResult
+      can :manage, VotingSession
     elsif user.role? User::ROLES[:user]
-#      can :manage, Blog
-    else
       can :read, :all
     end
 
