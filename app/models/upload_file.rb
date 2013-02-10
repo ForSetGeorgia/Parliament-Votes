@@ -12,6 +12,10 @@ class UploadFile < ActiveRecord::Base
   validate :file_does_not_exist
   after_save :process_file
 
+  def self.with_conference
+    includes(:conference)
+  end
+
   def file_does_not_exist
     files = UploadFile.where(:xml_file_name => self.xml_file_name)
 

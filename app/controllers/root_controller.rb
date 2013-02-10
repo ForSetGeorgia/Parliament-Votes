@@ -2,7 +2,7 @@ class RootController < ApplicationController
 
   def index
     @upload_file = UploadFile.new
-    @upload_files = UploadFile.order("created_at desc")
+#    @upload_files = UploadFile.order("created_at desc")
   end
 
   def process_file
