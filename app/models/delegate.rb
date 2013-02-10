@@ -1,4 +1,5 @@
 class Delegate < ActiveRecord::Base
+  has_paper_trail
 
   has_many :voting_results, :dependent => :destroy
   belongs_to :group

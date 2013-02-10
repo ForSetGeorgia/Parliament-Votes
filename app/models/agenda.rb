@@ -1,4 +1,5 @@
 class Agenda < ActiveRecord::Base
+  has_paper_trail
   
   has_one :voting_session, :dependent => :destroy
   belongs_to :conference

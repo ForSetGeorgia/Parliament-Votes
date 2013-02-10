@@ -1,4 +1,5 @@
 class Conference < ActiveRecord::Base
+  has_paper_trail
 
   has_many :agendas, :dependent => :destroy
   has_many :groups, :dependent => :destroy

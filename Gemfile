@@ -26,8 +26,8 @@ gem "exception_notification", "2.5.2" # send an email when exception occurs
 #gem "use_tinymce", "~> 0.0.15" # wysiwyg
 #gem "rails_autolink", "~> 1.0.9" # convert string to link if it is url
 #gem 'acts_as_commentable', '2.0.1' #comments
-#gem "paper_trail", "~> 2.6.3" # keep audit log of all transactions
 gem "nokogiri", "~> 1.5.6" # read xml file
+gem "paper_trail", "~> 2.7.0" # keep audit log of all transactions
 
 # Gems used only for assets and not required
 # in production environments by default.

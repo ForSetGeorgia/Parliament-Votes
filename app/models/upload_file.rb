@@ -1,4 +1,5 @@
 class UploadFile < ActiveRecord::Base
+  has_paper_trail
   
   has_one :conference, :dependent => :destroy
   accepts_nested_attributes_for :conference

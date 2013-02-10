@@ -1,4 +1,5 @@
 class VotingResult < ActiveRecord::Base
+  has_paper_trail
   
   belongs_to :voting_session
   belongs_to :delegate
