@@ -2,7 +2,7 @@
 en:
   activerecord:
     models:
-      user: მომხმარებელი
+      user: User
       upload_file: File Upload
       conference: Conference
       agenda: Agenda
@@ -12,11 +12,11 @@ en:
       voting_result: Voting Result
     attributes:
       user:
-        email: ელ.ფოსტა
-        password: პაროლი
-        password_confirmation: გაიმეორეთ პაროლი
-        role: როლი
-        remember_me: დამიმახსოვრე
+        email: Email Address
+        password: Password
+        password_confirmation: Password Confirmation
+        role: Role
+        remember_me: Remeber Me
       upload_file:
         xml: XML File
         created_at: Date Added

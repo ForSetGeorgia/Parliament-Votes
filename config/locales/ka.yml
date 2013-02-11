@@ -4,6 +4,12 @@ ka:
     models:
       user: მომხმარებელი
       upload_file: File Upload
+      conference: Conference
+      agenda: Agenda
+      group: Group
+      delegate: Delegate
+      voting_session: Voting Session
+      voting_result: Voting Result
     attributes:
       user:
         email: ელ.ფოსტა
@@ -13,6 +19,30 @@ ka:
         remember_me: დამიმახსოვრე
       upload_file:
         xml: XML File
+        created_at: Date Added
+      conference:
+        name: Conference Name
+        start_date: Conference Date
+      agenda:
+        name: Agenda Name
+        description: Agenda Description
+      voting_session:
+        passed: Passed
+        passed_yn: Passed (Y/N)
+        quorum: Quorum
+        results: Results (Y/N)
+      voting_result:
+        present: Present
+        vote: Vote
+      delegate:
+        first_name: Name
+        title: Title
+      group: 
+        text: Party
+        short_name: Party
+    messages:
+      upload_file:
+        already_exists: "'%{file_name}' has already been loaded"
   helpers:
     actions: აირჩიეთ
     links:
@@ -24,9 +54,16 @@ ka:
       list: იხილეთ სრულად
       cancel: გაუქმება
       reset: საწყის კონფიგურაციაზე დაბრუნება
+      view: View
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
+    boolean:
+      y: "Yes"
+      n: "No"
+    back: 
+      files: Back to Upload Files
+      conference: Back to Conference
   app:
     language:
       en: English
@@ -72,7 +109,6 @@ ka:
       sign_out: გასვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
       js_link_text: აგებულია
-
   admin:
     index:
       title: ადმინისტრატორის განყოფილება
@@ -88,3 +124,14 @@ ka:
         title: ახალი მომხმარებელი
       show:
         title: მომხმარებლის დეტალები
+  root:
+    index:
+      title:
+      no_files: No files have been uploaded.
+      upload_btn: Upload File
+      processing: Processing...
+    conference:
+      title: "Conference: %{name} (%{date})"
+    agenda:
+      title: "Agenda: %{name} (%{date})"
+      no_results: No voting results exist for this agenda.
