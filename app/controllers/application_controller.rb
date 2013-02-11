@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
 	before_filter :set_locale
 	before_filter :initialize_gon
+	before_filter :store_location
 
 	unless Rails.application.config.consider_all_requests_local
 		rescue_from Exception,
@@ -47,13 +48,28 @@ class ApplicationController < ActionController::Base
 
 	# after user logs in, go to admin page
 	def after_sign_in_path_for(resource)
-		root_path
+		session[:previous_urls].last || root_path
 	end
 
   def valid_role?(role)
     redirect_to root_path, :notice => t('app.msgs.not_authorized') if !current_user || !current_user.role?(role)
   end
 
+
+	# store the current path so after login, can go back
+	def store_location
+		session[:previous_urls] ||= []
+		# only record path if page is not for users (sign in, sign up, etc) and not for reporting problems
+		if session[:previous_urls].first != request.fullpath && 
+        params[:format] != 'js' && params[:format] != 'json' && 
+        request.fullpath.index("/users/").nil?
+
+			session[:previous_urls].unshift request.fullpath
+		end
+		session[:previous_urls].pop if session[:previous_urls].count > 1
+
+#    Rails.logger.debug "****************** prev urls session = #{session[:previous_urls]}"
+	end
 
   #######################
 	def render_not_found(exception)
