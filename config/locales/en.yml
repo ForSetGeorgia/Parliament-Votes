@@ -28,6 +28,7 @@ en:
         description: Agenda Description
       voting_session:
         passed: Passed
+        passed_yn: Passed (Y/N)
         quorum: Quorum
         results: Results (Y/N)
       voting_result:
