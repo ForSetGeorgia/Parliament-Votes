@@ -3,13 +3,13 @@ ka:
   activerecord:
     models:
       user: მომხმარებელი
-      upload_file: File Upload
-      conference: Conference
-      agenda: Agenda
-      group: Group
-      delegate: Delegate
-      voting_session: Voting Session
-      voting_result: Voting Result
+      upload_file: ფაილის ატვირთვა
+      conference: კონფერენცია
+      agenda: დღის წესრიგი  
+      group: ჯგუფი
+      delegate: დელეგატი
+      voting_session: კენჭისყრის სხდომა
+      voting_result: კენჭისყრის შედეგები
     attributes:
       user:
         email: ელ.ფოსტა
@@ -18,31 +18,31 @@ ka:
         role: როლი
         remember_me: დამიმახსოვრე
       upload_file:
-        xml: XML File
-        created_at: Date Added
+        xml: XML ფაილი
+        created_at: დამატების თარიღი
       conference:
-        name: Conference Name
-        start_date: Conference Date
+        name: კონფერენციის სახელი
+        start_date: კონფერენციის თარიღი
       agenda:
-        name: Agenda Name
-        description: Agenda Description
+        name: დღის წესრიგის სახელი
+        description: დღის წესრიგის აღწერა
       voting_session:
-        passed: Passed
-        passed_yn: Passed (Y/N)
-        quorum: Quorum
-        results: Results (Y/N)
+        passed: გავიდა
+        passed_yn: გავიდა (Y/N)
+        quorum: ქვორუმი
+        results: შედეგები (Y/N)
       voting_result:
-        present: Present
-        vote: Vote
+        present: წარმოდგენა
+        vote: ხმის მიცემა
       delegate:
-        first_name: Name
-        title: Title
+        first_name: სახელი
+        title: წოდება
       group: 
-        text: Party
-        short_name: Party
+        text: პარტია
+        short_name: პარტია
     messages:
       upload_file:
-        already_exists: "'%{file_name}' has already been loaded"
+        already_exists: "'%{file_name}' უკვე  ჩატვირთული"
   helpers:
     actions: აირჩიეთ
     links:
@@ -54,17 +54,17 @@ ka:
       list: იხილეთ სრულად
       cancel: გაუქმება
       reset: საწყის კონფიგურაციაზე დაბრუნება
-      view: View
-      add_vote: Add Vote
+      view: ნახვა
+      add_vote: ხმის დამატება
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
     boolean:
-      y: "Yes"
-      n: "No"
+      y: "დიახ"
+      n: "არა"
     back: 
-      files: Back to Upload Files
-      conference: Back to Conference
+      files: ფაილის თავიდან ატვირთვა
+      conference: კონფერენციაში დაბრუნება
   app:
     language:
       en: English
@@ -85,7 +85,7 @@ ka:
       confirm: დარწმუნებული ხართ?
       new: ახალი
     common:
-      app_name: Parliamentary Votes
+      app_name: საპარლამენტო ხმები
     msgs:
       does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
@@ -128,11 +128,11 @@ ka:
   root:
     index:
       title:
-      no_files: No files have been uploaded.
-      upload_btn: Upload File
-      processing: Processing...
+      no_files: ფაილი არ აიტვირთა.
+      upload_btn: ფაილის ატვირთვა
+      processing: პროცესშია...
     conference:
-      title: "Conference: %{name} (%{date})"
+      title: "კონფერენცია: %{name} (%{date})"
     agenda:
-      title: "Agenda: %{name} (%{date})"
-      no_results: No voting results exist for this agenda.
+      title: "დღის წესრიგი: %{name} (%{date})"
+      no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის
