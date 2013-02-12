@@ -10,10 +10,15 @@
     <%= simple_format @agenda.voting_session.voting_conclusion %>
   </div>
 
+  <div style="margin: 10px 0;">
+    <%= link_to t('helpers.links.add_vote'), '#', :class => 'btn btn-success' %>
+  </div>
+
   <table id="voting_results_datatable" class="display table table-striped table-bordered" 
         data-source="<%= search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
     <thead>
       <tr>
+        <th></th>
         <th><%= Delegate.human_attribute_name(:first_name) %></th>
         <th><%= Delegate.human_attribute_name(:title) %></th>
         <th><%= Group.human_attribute_name(:short_name) %></th>

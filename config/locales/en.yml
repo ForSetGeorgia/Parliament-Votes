@@ -55,6 +55,7 @@ en:
       cancel: Cancel
       reset: Reset
       view: View
+      add_vote: Add Vote
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"

@@ -22,6 +22,7 @@ private
   def data
     voting_results.map do |voting_result|
       [
+        link_to(I18n.t('helpers.links.edit'), '#', :class => 'btn btn-mini'),
         voting_result.delegate.first_name,
         voting_result.delegate.title,
         voting_result.delegate.group.present? ? voting_result.delegate.group.short_name : nil,
@@ -53,8 +54,9 @@ private
   end
 
   def sort_column
-    columns = %w[delegates.first_name delegates.title groups.short_name voting_results.present, voting_results.vote]
-    columns[params[:iSortCol_0].to_i]
+    columns = %w[edit delegates.first_name delegates.title groups.short_name voting_results.present voting_results.vote]
+    index = params[:iSortCol_0].to_i == 0 ? 1 : params[:iSortCol_0].to_i
+    columns[index]
   end
 
   def sort_direction

@@ -13,7 +13,10 @@ $(document).ready(function(){
     "sAjaxSource": $('#voting_results_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
-    }
+    },
+    "aoColumnDefs": [
+      { 'bSortable': false, 'aTargets': [ 0 ] }
+    ]
   });
 
   $('#agendas_datatable').dataTable({
