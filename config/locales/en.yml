@@ -138,3 +138,4 @@ en:
     agenda:
       title: "Agenda: %{name} (%{date})"
       no_results: No voting results exist for this agenda.
+      not_present: Not Present

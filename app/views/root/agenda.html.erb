@@ -10,6 +10,25 @@
     <%= simple_format @agenda.voting_session.voting_conclusion %>
   </div>
 
+  <div id="agenda_counts">
+    <ul>
+      <li>
+        <span><%= t('helpers.boolean.y') %>:</span>
+        <%= @agenda.voting_session.result1 %>
+      </li>
+      <li>
+        <span><%= t('helpers.boolean.n') %>:</span>
+        <%= @agenda.voting_session.result3 %>
+      </li>
+      <li>
+        <span><%= t('.not_present') %>:</span>
+        <%= 147 - @agenda.voting_session.result1 - @agenda.voting_session.result3 %>
+        (this is an estimate: 147 minus the previous two numbers)
+      </li>
+    </ul>
+  </div>
+
+
   <div style="margin: 10px 0;">
     <%= link_to t('helpers.links.add_vote'), '#', :class => 'btn btn-success' %>
   </div>
