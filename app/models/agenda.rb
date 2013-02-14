@@ -15,6 +15,19 @@ class Agenda < ActiveRecord::Base
     includes(:voting_session).where(:conference_id => conference_id)
   end
 
+  def total_yes
+    self.voting_session.voting_results.select{|x| x.vote == 1}.count
+  end
+
+  def total_no
+    self.voting_session.voting_results.select{|x| x.vote == 3}.count
+  end
+
+  def total_not_present
+    147 - total_yes - total_no
+  end
+
+
   # if agenda is a law, set is_law, reg #, and session #
   def check_is_law
     found = false

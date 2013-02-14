@@ -14,15 +14,15 @@
     <ul>
       <li>
         <span><%= t('helpers.boolean.y') %>:</span>
-        <%= @agenda.voting_session.result1 %>
+        <%= @agenda.total_yes %>
       </li>
       <li>
         <span><%= t('helpers.boolean.n') %>:</span>
-        <%= @agenda.voting_session.result3 %>
+        <%= @agenda.total_no %>
       </li>
       <li>
         <span><%= t('.not_present') %>:</span>
-        <%= 147 - @agenda.voting_session.result1 - @agenda.voting_session.result3 %>
+        <%= @agenda.total_not_present %>
         (this is an estimate: 147 minus the previous two numbers)
       </li>
     </ul>

@@ -25,7 +25,7 @@ private
         link_to(agenda.name, agenda_path(:id => agenda.id, :locale => I18n.locale)),
         agenda.session_number,
         agenda.registration_number,
-        agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.voting_session.result1} / #{agenda.voting_session.result3})",
+        agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no})",
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.quorum_formatted} (#{agenda.voting_session.result5})"
       ]
     end

@@ -27,4 +27,5 @@ class VotingSession < ActiveRecord::Base
       I18n.t('helpers.boolean.n')
     end
   end
+
 end
