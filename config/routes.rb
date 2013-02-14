@@ -18,7 +18,7 @@ BootstrapStarter::Application.routes.draw do
 
     # search controller
     match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
-    match '/search/agendas/:conference_id', :to => 'search#agendas', :as => :search_agendas, :via => :get, :defaults => {:format => 'json'}
+    match '/search/agendas/:conference_id(/:laws_only)', :to => 'search#agendas', :as => :search_agendas, :via => :get, :defaults => {:format => 'json'}
     match '/search/files', :to => 'search#files', :as => :search_files, :via => :get, :defaults => {:format => 'json'}
 
 		root :to => 'root#index'

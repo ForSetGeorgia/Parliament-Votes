@@ -2,16 +2,19 @@ class AgendaDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :conference_id, to: :@conference_id
+  delegate :laws_only, to: :@laws_only
 
-  def initialize(view, conference_id)
+  def initialize(view, conference_id, laws_only)
     @view = view
     @conference_id = conference_id
+    @laws_only = laws_only == "true" ? true : false
+
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.by_conference(@conference_id).count,
+      iTotalRecords: Agenda.by_conference(@conference_id).laws_only(@laws_only).count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -36,7 +39,7 @@ private
   end
 
   def fetch_agendas
-    agendas = Agenda.by_conference(@conference_id).order("#{sort_column} #{sort_direction}")
+    agendas = Agenda.by_conference(@conference_id).laws_only(@laws_only).order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.name like :search or agendas.session_number like :search or agendas.registration_number like :search", search: "%#{params[:sSearch]}%")

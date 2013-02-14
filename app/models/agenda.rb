@@ -15,6 +15,14 @@ class Agenda < ActiveRecord::Base
     includes(:voting_session).where(:conference_id => conference_id)
   end
 
+  def self.laws_only(yes)
+    if yes
+      where(:is_law => 1)
+    else
+      where(:is_law => [0,1])
+    end
+  end
+
   def total_yes
     self.voting_session.voting_results.select{|x| x.vote == 1}.count
   end
