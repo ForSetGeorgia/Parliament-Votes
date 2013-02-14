@@ -16,7 +16,9 @@ $(document).ready(function(){
     },
     "aoColumnDefs": [
       { 'bSortable': false, 'aTargets': [ 0 ] }
-    ]
+    ],
+    "iDisplayLength": 150,
+    "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]]
   });
 
   $('#agendas_datatable').dataTable({
@@ -28,7 +30,9 @@ $(document).ready(function(){
     "sAjaxSource": $('#agendas_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
-    }
+    },
+    "iDisplayLength": 50,
+    "aLengthMenu": [[10, 20, 50, 100], [10, 20, 50, 100]]
   });
 
   $('#upload_files_datatable').dataTable({

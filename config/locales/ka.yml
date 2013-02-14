@@ -26,6 +26,8 @@ ka:
       agenda:
         name: დღის წესრიგის სახელი
         description: დღის წესრიგის აღწერა
+        session_number: Session Number
+        registration_number: Registration Number
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (Y/N)

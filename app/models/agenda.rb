@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Agenda < ActiveRecord::Base
   has_paper_trail
   
@@ -6,11 +7,48 @@ class Agenda < ActiveRecord::Base
 
   accepts_nested_attributes_for :voting_session
 
-  attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes
+  attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
+      :is_law, :registration_number, :session_number
 
 
   def self.by_conference(conference_id)
     includes(:voting_session).where(:conference_id => conference_id)
+  end
+
+  # if agenda is a law, set is_law, reg #, and session #
+  def check_is_law
+    found = false
+    
+    PREFIX.each do |pre|
+      POSTFIX.each do |post|
+        session = "#{pre} #{post}"
+        if self.name.index(session)
+          # found match
+          self.is_law = true
+          self.session_number = session
+
+          # look for registration number in description
+          # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  (07-2/3,05.11.2012)
+          reg = /\(\d{2}-\d\/\d{1,2}, {0,5}\d{2}.\d{2}.\d{4}\)/
+          reg_num = reg.match(self.description)
+          if reg_num
+            self.registration_number = reg_num.to_s
+          end
+
+          self.save
+          found = true
+          break
+        end
+        break if found
+      end
+    end
 
   end
+
+
+  private
+
+  PREFIX = ['III', 'II', 'I', 'ერთი']
+
+  POSTFIX = ['მოსმენით', 'მოსმენა', 'მოსმ.', 'მოს.']
 end
