@@ -96,8 +96,6 @@ class UploadFile < ActiveRecord::Base
               :description => agenda.at_css('Description').nil? ? nil : agenda.at_css('Description').text
             )
 
-            ag.check_is_law
-
             # add voting sessions for agenda          
             doc.xpath("//VotingSession/Agenda_id[contains(text(), '#{ag.xml_id}')]/..").each do |session|
               # sometimes quorum value is 1 sometimes it is the number of votes need for quorum
@@ -136,6 +134,10 @@ class UploadFile < ActiveRecord::Base
                 )
               end
             end
+
+            # if the agenda is a law, update its status
+            ag.check_is_law
+
           end
 
           # indicate the the file has been processed

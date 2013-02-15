@@ -39,31 +39,31 @@ class Agenda < ActiveRecord::Base
   # if agenda is a law, set is_law, reg #, and session #
   def check_is_law
     found = false
-    
-    PREFIX.each do |pre|
-      POSTFIX.each do |post|
-        session = "#{pre} #{post}"
-        if self.name.index(session)
-          # found match
-          self.is_law = true
-          self.session_number = session
+    if self.voting_session
+      PREFIX.each do |pre|
+        POSTFIX.each do |post|
+          session = "#{pre} #{post}"
+          if self.name.index(session)
+            # found match
+            self.is_law = true
+            self.session_number = session
 
-          # look for registration number in description
-          # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  (07-2/3,05.11.2012)
-          reg = /\(\d{2}-\d\/\d{1,2}, {0,5}\d{2}.\d{2}.\d{4}\)/
-          reg_num = reg.match(self.description)
-          if reg_num
-            self.registration_number = reg_num.to_s
+            # look for registration number in description
+            # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  (07-2/3,05.11.2012)
+            reg = /\(\d{2}-\d\/\d{1,2}, {0,5}\d{2}.\d{2}.\d{4}\)/
+            reg_num = reg.match(self.description)
+            if reg_num
+              self.registration_number = reg_num.to_s
+            end
+
+            self.save
+            found = true
+            break
           end
-
-          self.save
-          found = true
-          break
+          break if found
         end
-        break if found
       end
     end
-
   end
 
 
