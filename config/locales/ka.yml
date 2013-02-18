@@ -21,27 +21,27 @@ ka:
         xml: XML ფაილი
         created_at: დამატების თარიღი
       conference:
-        name: კონფერენციის სახელი
-        start_date: კონფერენციის თარიღი
+        name: სხდომა
+        start_date: სხდომის თარიღი
       agenda:
-        name: დღის წესრიგის სახელი
+        name: დღის წესრიგი
         description: დღის წესრიგის აღწერა
-        session_number: Session Number
-        registration_number: Registration Number
+        session_number: მოსმენა
+        registration_number: რეგისტრაციის ნომერი
       voting_session:
         passed: გავიდა
-        passed_yn: გავიდა (Y/N)
+        passed_yn: გავიდა (დიახ / არა)
         quorum: ქვორუმი
-        results: შედეგები (Y/N)
+        results: შედეგები (დიახ / არა)
       voting_result:
-        present: წარმოდგენა
-        vote: ხმის მიცემა
+        present: რეგისტრაცია
+        vote: კენჭისყრის შედეგი
       delegate:
         first_name: სახელი
         title: წოდება
       group: 
-        text: პარტია
-        short_name: პარტია
+        text: ფრაქცია
+        short_name: ფრაქცია
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
@@ -87,7 +87,7 @@ ka:
       confirm: დარწმუნებული ხართ?
       new: ახალი
     common:
-      app_name: საპარლამენტო ხმები
+      app_name: კენჭისყრის შედეგები
     msgs:
       does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
