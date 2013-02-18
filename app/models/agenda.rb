@@ -8,8 +8,9 @@ class Agenda < ActiveRecord::Base
   accepts_nested_attributes_for :voting_session
 
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
-      :is_law, :registration_number, :session_number
+      :is_law, :registration_number, :session_number, :number_possible_members
 
+  DEFAULT_NUMBER_MEMBERS = 150
 
   def self.by_conference(conference_id)
     includes(:voting_session).where(:conference_id => conference_id)
@@ -23,6 +24,14 @@ class Agenda < ActiveRecord::Base
     end
   end
 
+  # get the last number of members from the db.
+  # - if on exists, use default
+  def self.default_number_possible_members
+    x = select('number_possible_members').order('created_at desc').limit(1).first.number_possible_members
+    x = DEFAULT_NUMBER_MEMBERS if x.nil?
+    return x
+  end
+
   def total_yes
     self.voting_session.voting_results.select{|x| x.vote == 1}.count
   end
@@ -32,7 +41,7 @@ class Agenda < ActiveRecord::Base
   end
 
   def total_not_present
-    147 - total_yes - total_no
+    self.number_possible_members - total_yes - total_no
   end
 
 
@@ -46,7 +55,13 @@ class Agenda < ActiveRecord::Base
           if self.name.index(session)
             # found match
             self.is_law = true
-            self.session_number = session
+
+            # add the correct complete postfix so there is consistency
+            if pre == PREFIX[0]
+              self.session_number = "#{pre} #{CONSISTENT_SESSION_NAME[0]}"
+            else
+              self.session_number = "#{pre} #{CONSISTENT_SESSION_NAME[1]}"
+            end  
 
             # look for registration number in description
             # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  (07-2/3,05.11.2012)
@@ -69,7 +84,11 @@ class Agenda < ActiveRecord::Base
 
   private
 
-  PREFIX = ['III', 'II', 'I', 'ერთი']
+  PREFIX = ['ერთი', 'III', 'II', 'I']
 
   POSTFIX = ['მოსმენით', 'მოსმენა', 'მოსმ.', 'მოს.']
+
+  CONSISTENT_SESSION_NAME = ['მოსმენით', 'მოსმენა']
+
+  FINAL_VERSION = ['ერთი', 'III']
 end

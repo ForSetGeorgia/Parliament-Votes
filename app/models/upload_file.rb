@@ -4,7 +4,9 @@ class UploadFile < ActiveRecord::Base
   has_one :conference, :dependent => :destroy
   accepts_nested_attributes_for :conference
 
-	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, :conference_attributes, :file_processed
+	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, 
+      :conference_attributes, :file_processed, :number_possible_members
+  attr_accessor :number_possible_members
 
   validates :xml_file_name, :presence => true
 
@@ -93,7 +95,8 @@ class UploadFile < ActiveRecord::Base
               :sort_order => agenda.at_css('SortOrder').nil? ? nil : agenda.at_css('SortOrder').text, 
               :level => agenda.at_css('Level').nil? ? nil : agenda.at_css('Level').text, 
               :name => agenda.at_css('Name').nil? ? nil : agenda.at_css('Name').text, 
-              :description => agenda.at_css('Description').nil? ? nil : agenda.at_css('Description').text
+              :description => agenda.at_css('Description').nil? ? nil : agenda.at_css('Description').text,
+              :number_possible_members => self.number_possible_members
             )
 
             # add voting sessions for agenda          

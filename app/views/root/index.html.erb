@@ -8,6 +8,12 @@
 
     <%= file_field_tag 'xml' %>
 
+    <label class="control-label" for="number_possible_members">
+      <%= Agenda.human_attribute_name(:number_possible_members) %>
+      <%= text_field_tag 'number_possible_members', Agenda.default_number_possible_members, 
+            :class => 'input-mini', :size => 3, :maxlength => 3 %>
+    </label>
+
     <%= submit_tag t('.upload_btn'), :class => 'btn' %>
 
     <div id="processing_file_container">

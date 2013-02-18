@@ -28,6 +28,7 @@ en:
         description: Agenda Description
         session_number: Session Number
         registration_number: Registration Number
+        number_possible_members: Number Members
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N)

@@ -28,6 +28,7 @@ ka:
         description: დღის წესრიგის აღწერა
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
+        number_possible_members: Number Members
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)

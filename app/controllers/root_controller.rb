@@ -11,6 +11,7 @@ class RootController < ApplicationController
   def process_file
     @upload_file = UploadFile.new
     @upload_file.xml = params[:xml]
+    @upload_file.number_possible_members = params[:number_possible_members]
 
     respond_to do |format|
       if @upload_file.save

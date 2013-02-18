@@ -11,24 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130214171822) do
+ActiveRecord::Schema.define(:version => 20130218181024) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
-    t.integer  "sort_order",          :default => 0
+    t.integer  "sort_order",              :default => 0
     t.integer  "level"
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "xml_id"
-    t.boolean  "is_law",              :default => false
+    t.boolean  "is_law",                  :default => false
     t.string   "registration_number"
     t.string   "session_number"
+    t.integer  "number_possible_members", :default => 150
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"
   add_index "agendas", ["is_law"], :name => "index_agendas_on_is_law"
+  add_index "agendas", ["number_possible_members"], :name => "index_agendas_on_number_possible_members"
   add_index "agendas", ["sort_order", "name"], :name => "index_agendas_on_sort_order_and_name"
 
   create_table "conferences", :force => true do |t|
