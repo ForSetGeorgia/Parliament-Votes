@@ -27,8 +27,11 @@ class Agenda < ActiveRecord::Base
   # get the last number of members from the db.
   # - if on exists, use default
   def self.default_number_possible_members
-    x = select('number_possible_members').order('created_at desc').limit(1).first.number_possible_members
-    x = DEFAULT_NUMBER_MEMBERS if x.nil?
+    x = DEFAULT_NUMBER_MEMBERS 
+    y = select('number_possible_members').order('created_at desc').limit(1).first
+    if y
+      x = y.number_possible_members
+    end
     return x
   end
 
