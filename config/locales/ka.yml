@@ -135,8 +135,8 @@ ka:
       processing: პროცესშია...
     conference:
       title: "კონფერენცია: %{name} (%{date})"
-      view_laws_only: View Laws Only
-      view_all: View All Items
+      view_laws_only: მხოლოდ კანონების ნახვა
+      view_all: ყველა საკითხის ნახვა 
     agenda:
       title: "დღის წესრიგი: %{name} (%{date})"
       no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის
