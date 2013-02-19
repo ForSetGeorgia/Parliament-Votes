@@ -28,7 +28,7 @@ ka:
         description: დღის წესრიგის აღწერა
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
-        number_possible_members: Number Members
+        number_possible_members: წევრების რაოდენობა
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)
@@ -59,7 +59,7 @@ ka:
       reset: საწყის კონფიგურაციაზე დაბრუნება
       view: ნახვა
       add_vote: ხმის დამატება
-      add_law_url: Add URL to Law
+      add_law_url: კანონისთვის ბმულის დამატება
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
