@@ -30,6 +30,11 @@
 
   <div style="margin: 10px 0;">
     <%= link_to t('helpers.links.add_vote'), '#', :class => 'btn btn-success' %>
+  
+    <% if @agenda.is_final_version? %>
+      <%= link_to t('helpers.links.add_law_url'), '#', :class => 'btn btn-success' %>
+    <% end %>
+
   </div>
 
   <table id="voting_results_datatable" class="display table table-striped table-bordered" 

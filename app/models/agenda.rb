@@ -47,6 +47,18 @@ class Agenda < ActiveRecord::Base
     self.number_possible_members - total_yes - total_no
   end
 
+  def is_final_version?
+    x = false
+
+    FINAL_VERSION.each do |final|
+      if self.session_number.index(final)
+        x = true
+        break
+      end
+    end
+
+    return x
+  end
 
   # if agenda is a law, set is_law, reg #, and session #
   def check_is_law

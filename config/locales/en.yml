@@ -59,6 +59,7 @@ en:
       reset: Reset
       view: View
       add_vote: Add Vote
+      add_law_url: Add URL to Law
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"

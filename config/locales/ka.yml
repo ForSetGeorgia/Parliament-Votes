@@ -59,6 +59,7 @@ ka:
       reset: საწყის კონფიგურაციაზე დაბრუნება
       view: ნახვა
       add_vote: ხმის დამატება
+      add_law_url: Add URL to Law
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
