@@ -1,5 +1,3 @@
-$(document).ready(function(){
-
   function focus_fancybox_input ()
   {
     if (gon.highlight_first_form_field)
@@ -23,6 +21,9 @@ $(document).ready(function(){
 		return false;
 	}
 
+
+$(document).ready(function(){
+
 	// register click function for 'fancybox-nested' class that should only be used on pages that are opened in fancybox
 	$('#fancybox-content a.fancybox-nested').live('click', fancybox_nested_links);
 
@@ -36,9 +37,6 @@ $(document).ready(function(){
 		  focus_fancybox_input();
 	  }
   });
-	$("a.fancybox_visual").fancybox({
-		autoScale: false // use size of image to determine width/height,
-	});
 
 
 });

@@ -1,0 +1,32 @@
+<% title t('.title') %>
+
+<% if @voting_result %>
+
+<%= semantic_form_for @voting_result, :url => edit_vote_path(params[:id]), :method => :post do |f| %>
+
+  <p>
+    <%= @voting_result.voting_session.agenda.name %>
+  </p>
+  <p>
+    <%= @voting_result.delegate.first_name %>
+  </p>  
+
+	<%= f.inputs do %>
+		<%= f.input :vote, :as => :radio, :collection => [[t('helpers.boolean.y'), 1], [t('helpers.boolean.n'), 3]] %>
+	<% end %>
+
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+	  <%= f.submit nil, :class => 'btn btn-warning', :type => :reset, :value => t('helpers.links.reset'), :name => :reset %>
+	  <%= link_to t('helpers.links.cancel'), admin_users_path, :class => 'btn btn-mini btn-warning' %>
+  </div>
+<% end %>
+
+<% else %>
+
+  <p>
+    <%= t('.not_found') %>
+  </p>
+
+<% end %>

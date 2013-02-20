@@ -143,3 +143,6 @@ en:
       title: "Agenda: %{name} (%{date})"
       no_results: No voting results exist for this agenda.
       not_present: Not Present
+    edit_vote: 
+      title: Edit Vote
+      not_found: The Voting Record could not be found.

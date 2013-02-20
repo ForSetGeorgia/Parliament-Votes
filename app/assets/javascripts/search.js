@@ -33,7 +33,18 @@ $(document).ready(function(){
       { 'bSortable': false, 'aTargets': [ 0 ] }
     ],
     "iDisplayLength": 150,
-    "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]]
+    "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]],
+    "fnInitComplete": function () {
+	    $("#voting_results_datatable td a.fancybox").fancybox({
+        transitionIn: 'elastic',
+        transitionOut: 'elastic',
+	      width: 400,
+		    onComplete: function ()
+		    {
+		      focus_fancybox_input();
+	      }
+      });
+    }
   });
 
   agenda_dt = $('#agendas_datatable').dataTable({

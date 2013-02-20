@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 	before_filter :initialize_gon
 	before_filter :store_location
 
+	layout :layout_by_resource
+
 	unless Rails.application.config.consider_all_requests_local
 		rescue_from Exception,
 		            :with => :render_error
@@ -70,6 +72,16 @@ class ApplicationController < ActionController::Base
 
 #    Rails.logger.debug "****************** prev urls session = #{session[:previous_urls]}"
 	end
+
+	FB_ACTIONS = ['edit_vote']
+	def layout_by_resource
+    if !FB_ACTIONS.index(params[:action]).nil?
+      "fancybox"
+    else
+      "application"
+    end
+  end
+
 
   #######################
 	def render_not_found(exception)
