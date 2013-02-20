@@ -41,6 +41,7 @@ class RootController < ApplicationController
       if @voting_result.vote.to_s != params[:voting_result][:vote]
         # the vote chagned, save it
         @voting_result.vote = params[:voting_result][:vote]
+        @voting_result.is_edited = true
         @voting_result.save        
       end
       redirect_to agenda_path(@voting_result.voting_session.agenda.id), 

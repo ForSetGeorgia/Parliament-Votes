@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218181024) do
+ActiveRecord::Schema.define(:version => 20130220211520) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -119,6 +119,8 @@ ActiveRecord::Schema.define(:version => 20130218181024) do
     t.integer  "weight"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_edited",         :default => false
+    t.boolean  "is_manual_add",     :default => false
   end
 
   add_index "voting_results", ["delegate_id"], :name => "index_voting_results_on_delegate_id"

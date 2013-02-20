@@ -4,7 +4,7 @@ class VotingResult < ActiveRecord::Base
   belongs_to :voting_session
   belongs_to :delegate
 
-  attr_accessible :voting_session_id, :delegate_id, :present, :vote, :weight
+  attr_accessible :voting_session_id, :delegate_id, :present, :vote, :weight, :is_edited, :is_manual_add
 
   def present_formatted
     if read_attribute(:present)

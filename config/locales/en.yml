@@ -90,6 +90,8 @@ en:
       new: New
     common:
       app_name: Voting Records
+      edited: Edited  
+      manually_added: Manually Added
     msgs:
       does_not_exist: You tried to access a page that does not exist.
       not_authorized: You are not authorized to view that page.
@@ -146,3 +148,5 @@ en:
     edit_vote: 
       title: Edit Vote
       not_found: The Voting Record could not be found.
+      agenda: "Agenda: %{name} (%{date})"
+      delegate: "Delegate: %{name}"

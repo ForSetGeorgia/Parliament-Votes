@@ -28,9 +28,23 @@ private
         voting_result.delegate.title,
         voting_result.delegate.group.present? ? voting_result.delegate.group.short_name : nil,
         voting_result.present_formatted,
-        voting_result.vote_formatted
+        vote_text(voting_result)
       ]
     end
+  end
+
+  def vote_text(voting_result)
+    x = voting_result.vote_formatted
+
+    if voting_result.is_manual_add
+      x << "<span class=\"manually_added_vote\">#{I18n.t('app.common.manually_added')}</span>"
+    end
+
+    if voting_result.is_edited
+      x << "<span class=\"edited_vote\">#{I18n.t('app.common.edited')}</span>"
+    end
+
+    return x
   end
 
   def voting_results
