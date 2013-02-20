@@ -12,6 +12,8 @@
 //= require twitter/bootstrap
 //= require dataTables/jquery.dataTables
 //= require dataTables/jquery.dataTables.bootstrap
+//= require fancybox
+//= require fancybox2
 //= require vendor
 //= require_tree .
 
