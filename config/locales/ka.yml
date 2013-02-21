@@ -90,8 +90,8 @@ ka:
       new: ახალი
     common:
       app_name: კენჭისყრის შედეგები
-      edited: Edited  
-      manually_added: Manually Added
+      edited: რედაქტირებულია
+      manually_added: ხელით დამატებული 
     msgs:
       does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
@@ -146,7 +146,7 @@ ka:
       no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის
       not_present: არ ესწრებოდა
     edit_vote: 
-      title: Edit Vote
-      not_found: The Voting Record could not be found.
+      title: ხმის მიცემის რედაქტირება
+      not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
       agenda: "დღის წესრიგი: %{name} (%{date})"
-      delegate: "Delegate: %{name}"
+      delegate: "დელეგატი: %{name}"
