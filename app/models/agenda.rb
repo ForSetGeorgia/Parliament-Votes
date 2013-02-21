@@ -49,11 +49,13 @@ class Agenda < ActiveRecord::Base
 
   def is_final_version?
     x = false
-
-    FINAL_VERSION.each do |final|
-      if self.session_number.index(final)
-        x = true
-        break
+    
+    if self.session_number.present?
+      FINAL_VERSION.each do |final|
+        if self.session_number.index(final)
+          x = true
+          break
+        end
       end
     end
 
