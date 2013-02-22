@@ -76,7 +76,8 @@ $(document).ready(function(){
     },
     "bFilter": false,
     "bInfo": false,
-    "aaSorting": [[1, 'desc']]
+    "aaSorting": [[1, 'desc']],
+    "iDisplayLength": 25
   });
 
 });

@@ -22,8 +22,7 @@ private
   def data
     voting_results.map do |voting_result|
       [
-        link_to(I18n.t('helpers.links.edit'), edit_vote_path(:id => voting_result.id, :locale => I18n.locale), 
-           :class => 'btn btn-mini fancybox'),
+        vote_link(voting_result),
         voting_result.delegate.first_name,
         voting_result.delegate.title,
         voting_result.delegate.group.present? ? voting_result.delegate.group.short_name : nil,
@@ -45,6 +44,13 @@ private
     end
 
     return x
+  end
+
+  def vote_link(voting_result)
+    if voting_result.voting_session.agenda.is_law
+      link_to(I18n.t('helpers.links.edit'), edit_vote_path(:id => voting_result.id, :locale => I18n.locale), 
+             :class => 'btn btn-mini fancybox')  
+    end
   end
 
   def voting_results

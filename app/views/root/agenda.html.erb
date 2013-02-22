@@ -28,14 +28,16 @@
   </div>
 
 
-  <div style="margin: 10px 0;">
-    <%= link_to t('helpers.links.add_vote'), '#', :class => 'btn btn-success' %>
-  
-    <% if @agenda.is_final_version? %>
-      <%= link_to t('helpers.links.add_law_url'), '#', :class => 'btn btn-success' %>
-    <% end %>
+  <% if @agenda.is_law %>
+    <div style="margin: 10px 0;">
+      <%= link_to t('helpers.links.add_vote'), '#', :class => 'btn btn-success' %>
+    
+      <% if @agenda.is_final_version? %>
+        <%= link_to t('helpers.links.add_law_url'), '#', :class => 'btn btn-success' %>
+      <% end %>
 
-  </div>
+    </div>
+  <% end %>
 
   <table id="voting_results_datatable" class="display table table-striped table-bordered" 
         data-source="<%= search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
