@@ -2,9 +2,11 @@ class VotingResultDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :voting_session_id, to: :@voting_session_id
+  delegate :current_user, to: :@current_user
 
-  def initialize(view, voting_session_id)
+  def initialize(view, current_user, voting_session_id)
     @view = view
+    @current_user = current_user
     @voting_session_id = voting_session_id
   end
 
@@ -47,7 +49,7 @@ private
   end
 
   def vote_link(voting_result)
-    if voting_result.voting_session.agenda.is_law && current_user.role?(User::ROLES[:process_files]) 
+    if voting_result.voting_session.agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
       link_to(I18n.t('helpers.links.edit'), edit_vote_path(:id => voting_result.id, :locale => I18n.locale), 
              :class => 'btn btn-mini fancybox')  
     end
