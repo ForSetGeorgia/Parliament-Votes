@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  xml_id: 1
+  group_id: 1
+  first_name: MyString
+  title: MyString
+
+two:
+  xml_id: 1
+  group_id: 1
+  first_name: MyString
+  title: MyString
