@@ -1,0 +1,69 @@
+<% title t('.title') %>
+
+<% if @agenda %>
+
+  <% if @available_delegates.present? %>
+
+    <div id="add_form_heading">
+      <p>
+        <%= t('.agenda', :name => @agenda.name, 
+            :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
+      </p>
+    </div>
+    
+    <%= form_tag add_vote_path, :method => :post, :id => "form_add_vote" do %>
+      <div>
+        <%= submit_tag t('.submit'), :class => 'btn btn-primary' %>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              <%= t('activerecord.attributes.delegate.first_name') %>
+            </th>
+            <th>
+              <%= t('activerecord.attributes.voting_result.vote') %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @available_delegates.each_with_index do |delegate,index| %>
+            <tr>
+              <td>  
+                <%= delegate.first_name %>
+                <%= hidden_field_tag "delegates[#{index}][xml_id]", delegate.xml_id %>
+                <%= hidden_field_tag "delegates[#{index}][first_name]", delegate.first_name %>
+              </td>
+              <td>
+                <label for="<%= "delegates_#{index}_vote_1" %>" class="radio inline">
+                  <%= radio_button_tag "delegates[#{index}][vote]", "1", false %>
+                  <%= t('helpers.boolean.y') %>
+                </label>
+                <label for="<%= "delegates_#{index}_vote_3" %>" class="radio inline">
+                  <%= radio_button_tag "delegates[#{index}][vote]", "3", false %>
+                  <%= t('helpers.boolean.n') %>
+                </label>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>    
+
+      <div>
+        <%= submit_tag t('.submit'), :class => 'btn btn-primary' %>
+      </div>
+
+    <% end %>
+
+  <% else %>
+    <p>
+      <%= t('.not_available') %>
+    </p>
+  <% end %>
+<% else %>
+  <p>
+    <%= t('.not_found') %>
+  </p>
+<% end %>
+

@@ -150,3 +150,9 @@ en:
       not_found: The Voting Record could not be found.
       agenda: "Agenda: %{name} (%{date})"
       delegate: "Delegate: %{name}"
+    add_vote: 
+      title: Add Missing Votes
+      non_available: All delegates have voted.
+      not_found: The Agenda could not be found.
+      agenda: "Agenda: %{name} (%{date})"
+      submit: Save Votes

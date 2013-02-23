@@ -150,3 +150,9 @@ ka:
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
       agenda: "დღის წესრიგი: %{name} (%{date})"
       delegate: "დელეგატი: %{name}"
+    add_vote: 
+      title: Add Missing Votes
+      non_available: All delegates have voted.
+      not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
+      agenda: "დღის წესრიგი: %{name} (%{date})"
+      submit: Save Votes

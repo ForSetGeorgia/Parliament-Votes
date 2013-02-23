@@ -43,11 +43,21 @@
 							</div>
 						<% end %>
 
-		        <%= yield %>
-		      </div><!--/span12-->
-		    </div><!--/row-->
-		  </div><!--/content-->
-		 </div> <!-- /container -->
+					  <% if content_for?(:title) %>
+						  <div class="page-header">
+						    <div class="block">
+                  <h1>
+                    <%= yield(:title) %>
+							    </h1>
+							  </div>
+						  </div>
+  				  <% end %>
+
+  	        <%= yield %>
+          </div><!--/span12-->
+        </div><!--/row-->
+      </div><!--/content-->
+    </div> <!-- /container -->
 
     <!-- Javascripts
     ================================================== -->

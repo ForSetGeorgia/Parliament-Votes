@@ -34,6 +34,30 @@ class RootController < ApplicationController
     @agenda = Agenda.find(params[:id])
   end
 
+  def add_vote
+    @agenda = Agenda.find(params[:id])
+    @available_delegates = AllDelegate.available_delegates(params[:id])
+    if request.post?
+      params[:delegates].keys.each do |key|
+        delegate = params[:delegates][key]
+        if delegate["vote"].present?
+
+          # first create delegate record
+          del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], :first_name => delegate["first_name"])
+          # now save voting result record
+          VotingResult.create(:voting_session_id => @agenda.voting_session.id, 
+                    :delegate_id => del.id,
+                    :present => true,
+                    :vote => delegate["vote"],
+                    :is_manual_add => true)
+        end
+      end
+
+      redirect_to agenda_path(@agenda.id), 
+          notice: t('app.msgs.success_added', :obj => t('activerecord.models.voting_result'))
+    end
+  end
+
   def edit_vote
     @voting_result = VotingResult.find_by_id(params[:id])
 
