@@ -68,9 +68,6 @@ ka:
     boolean:
       y: "დიახ"
       n: "არა"
-    back: 
-      files: ფაილის თავიდან ატვირთვა
-      conference: კონფერენციაში დაბრუნება
   app:
     language:
       en: English
@@ -102,6 +99,8 @@ ka:
   layouts:
     application:
       admin: ადმინისტრატო
+      menu_files: Upload Files
+      menu_conference: Laws
       sign_out: გასვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
       js_link_text: აგებულია

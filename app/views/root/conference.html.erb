@@ -1,5 +1,4 @@
 <% title t('.title', :name => @conference.name, :date => l(@conference.start_date, :format => :no_zone)) %>
-<% title_link link_to t('helpers.back.files'), root_path(:locale => I18n.locale), :class => 'btn btn-mini btn-primary' %>
 
   <div id="agenda_laws_only">
     <span data-all="<%= t('.view_all') %>" data-laws="<%= t('.view_laws_only') %>"><%= t('.view_all') %></span>

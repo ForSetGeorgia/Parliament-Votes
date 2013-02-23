@@ -43,7 +43,7 @@ class RootController < ApplicationController
         @agenda.save
 
         redirect_to agenda_path(@agenda.id), 
-            notice: t('app.msgs.success_added', :obj => t('activerecord.attributes.agenda.law_url'))
+            notice: t('app.msgs.success_created', :obj => t('activerecord.attributes.agenda.law_url'))
       end
     end
   end
@@ -68,7 +68,7 @@ class RootController < ApplicationController
       end
 
       redirect_to agenda_path(@agenda.id), 
-          notice: t('app.msgs.success_added', :obj => t('activerecord.models.voting_result'))
+          notice: t('app.msgs.success_created', :obj => t('activerecord.models.voting_result'))
     end
   end
 

@@ -68,9 +68,6 @@ en:
     boolean:
       y: "Yes"
       n: "No"
-    back: 
-      files: Back to Upload Files
-      conference: Back to Conference
   app:
     language:
       en: English
@@ -102,6 +99,8 @@ en:
   layouts:
     application:
       admin: Admin
+      menu_files: Upload Files
+      menu_conference: Laws
       sign_out: Sign Out
       js_link_title: "Visit JumpStart Georgia's website"
       js_link_text: Built by

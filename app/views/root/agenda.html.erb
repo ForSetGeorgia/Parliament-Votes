@@ -1,5 +1,4 @@
 <% title t('.title', :name => @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
-<% title_link link_to t('helpers.back.conference'), conference_path(@agenda.conference_id), :class => 'btn btn-mini btn-primary' %>
 
 <div id="agenda_description">
   <%= simple_format @agenda.description %>

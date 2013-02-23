@@ -34,7 +34,18 @@
           </a>
           <%= link_to(t('app.common.app_name'), root_path(:locale => I18n.locale),:class=>"brand font")%>
           <div class="container nav-collapse">
+            <ul class="nav">
+              <li><%= link_to t('.menu_files'), root_path(:locale => I18n.locale) %>
+              <% if @agenda %>
+                <li><%= link_to t('.menu_conference'), conference_path(@agenda.conference_id) %>
+              <% end %>
+            </ul>
             <ul class="nav pull-right">
+							<% I18n.available_locales.each do |locale| %>
+								<% if locale != I18n.locale %>
+									<li><%= link_to t("app.language.#{locale}"), params.merge(:locale => locale) %></li>
+								<% end %>
+							<% end %>
 		          <% if user_signed_in? %>
 				        <li class="dropdown">
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -54,14 +65,6 @@
 				        </li>
 		          <% end %>
             </ul>
-
-	          <ul class="nav pull-right">
-							<% I18n.available_locales.each do |locale| %>
-								<% if locale != I18n.locale %>
-									<li><%= link_to t("app.language.#{locale}"), params.merge(:locale => locale) %></li>
-								<% end %>
-							<% end %>
-	          </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -85,18 +88,7 @@
 								  <div class="page-header">
 								    <div class="block">
 			                <h1>
-                        <% if content_for?(:title_link ) %>
-                          <div class="row">
-                            <div class="span8">
-                              <%= yield(:title) %>
-                            </div>
-                            <div class="span4">
-                              <%= yield(:title_link) %>
-                            </div>
-                          </div>
-                        <% else %>
-    										  <%= yield(:title) %>
-                        <% end %>
+  										  <%= yield(:title) %>
 									    </h1>
 									  </div>
 								  </div>

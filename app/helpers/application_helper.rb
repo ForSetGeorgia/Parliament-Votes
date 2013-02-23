@@ -3,10 +3,6 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
 
-  def title_link(link)
-    content_for(:title_link) { link }
-  end
-
 	def flash_translation(level)
     case level
     when :notice then "alert-info"
