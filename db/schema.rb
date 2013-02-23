@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130223165455) do
+ActiveRecord::Schema.define(:version => 20130223173703) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20130223165455) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "upload_file_id"
+    t.integer  "number_laws"
+    t.integer  "number_sessions"
   end
 
   add_index "conferences", ["start_date", "name"], :name => "index_conferences_on_start_date_and_name"

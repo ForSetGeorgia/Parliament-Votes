@@ -23,6 +23,8 @@ ka:
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი
+        number_laws: "# Laws"
+        number_sessions: "# Sessions"
       agenda:
         name: დღის წესრიგი
         description: დღის წესრიგის აღწერა

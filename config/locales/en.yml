@@ -23,6 +23,8 @@ en:
       conference:
         name: Conference Name
         start_date: Conference Date
+        number_laws: "# Laws"
+        number_sessions: "# Sessions"
       agenda:
         name: Agenda Name
         description: Agenda Description

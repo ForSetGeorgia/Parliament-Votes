@@ -22,6 +22,8 @@ private
       [
         link_to(upload_file.conference.name, conference_path(:id => upload_file.conference.id, :locale => I18n.locale)),
         I18n.l(upload_file.conference.start_date, :format => :no_zone),
+        upload_file.conference.number_laws,
+        upload_file.conference.number_sessions,
         upload_file.xml_file_name,
         I18n.l(upload_file.created_at, :format => :no_zone)
       ]
@@ -47,7 +49,7 @@ private
   end
 
   def sort_column
-    columns = %w[conferences.name conferences.start_date upload_files.xml_file_name upload_files.created_at]
+    columns = %w[conferences.name conferences.start_date conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at]
     columns[params[:iSortCol_0].to_i]
   end
 
