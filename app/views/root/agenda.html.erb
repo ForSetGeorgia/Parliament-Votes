@@ -30,10 +30,16 @@
 
   <% if @agenda.is_law && current_user.role?(User::ROLES[:process_files]) %>
     <div style="margin: 10px 0;">
-      <%= link_to t('helpers.links.add_vote'), add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+      <p>
+        <%= link_to t('helpers.links.add_vote'), add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+      </p>
     
       <% if @agenda.is_final_version? %>
-        <%= link_to t('helpers.links.add_law_url'), '#', :class => 'btn btn-success' %>
+        <p>
+          <%= link_to @agenda.law_url.present? ? t('helpers.links.edit_law_url') : t('helpers.links.add_law_url'), 
+              add_url_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+          <%= link_to t('helpers.links.view_law_url'), @agenda.law_url, :class => 'btn', :target => :blank if @agenda.law_url.present? %>
+        </p>
       <% end %>
 
     </div>

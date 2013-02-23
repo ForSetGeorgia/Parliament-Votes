@@ -29,6 +29,7 @@ en:
         session_number: Session Number
         registration_number: Registration Number
         number_possible_members: Number Members
+        law_url: URL to Law
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N)
@@ -60,6 +61,7 @@ en:
       view: View
       add_vote: Add Vote
       add_law_url: Add URL to Law
+      edit_law_url: Edit URL to Law
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -156,3 +158,10 @@ en:
       not_found: The Agenda could not be found.
       agenda: "Agenda: %{name} (%{date})"
       submit: Save Votes
+    add_url:
+      title_add: Add URL to Law
+      title_edit: Edit URL to Law
+      not_found: The Agenda could not be found.
+      agenda: "Agenda: %{name} (%{date})"
+      submit: Save URL
+

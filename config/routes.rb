@@ -19,6 +19,8 @@ BootstrapStarter::Application.routes.draw do
     match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => :post
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :get
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :post
+    match '/add_url/:id', :to => 'root#add_url', :as => :add_url, :via => :get
+    match '/add_url/:id', :to => 'root#add_url', :as => :add_url, :via => :post
 
     # search controller
     match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}

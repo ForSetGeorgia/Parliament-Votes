@@ -29,6 +29,7 @@ ka:
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
+        law_url: URL to Law
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)
@@ -60,6 +61,7 @@ ka:
       view: ნახვა
       add_vote: ხმის დამატება
       add_law_url: კანონისთვის ბმულის დამატება
+      edit_law_url: Edit URL to Law
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -156,3 +158,10 @@ ka:
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
       agenda: "დღის წესრიგი: %{name} (%{date})"
       submit: Save Votes
+    add_url:
+      title_add: Add URL to Law
+      title_edit: Edit URL to Law
+      not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
+      agenda: "დღის წესრიგი: %{name} (%{date})"
+      submit: Save URL
+

@@ -34,6 +34,20 @@ class RootController < ApplicationController
     @agenda = Agenda.find(params[:id])
   end
 
+  def add_url
+    @agenda = Agenda.find(params[:id])
+
+    if request.post?
+      @agenda.law_url = params[:agenda][:law_url]
+      if @agenda.valid?
+        @agenda.save
+
+        redirect_to agenda_path(@agenda.id), 
+            notice: t('app.msgs.success_added', :obj => t('activerecord.attributes.agenda.law_url'))
+      end
+    end
+  end
+
   def add_vote
     @agenda = Agenda.find(params[:id])
     @available_delegates = AllDelegate.available_delegates(params[:id])

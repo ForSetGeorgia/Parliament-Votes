@@ -1,0 +1,33 @@
+<% if @agenda && @agenda.law_url.present? %>
+  <% title t('.title_edit') %>
+<% else %>
+  <% title t('.title_add') %>
+<% end %>
+
+<% if @agenda %>
+
+  <div id="add_form_heading">
+    <p>
+      <%= t('.agenda', :name => @agenda.name, 
+          :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
+    </p>
+  </div>
+  
+  <%= semantic_form_for @agenda, :url => add_url_path(params[:id]), :method => :post do |f| %>
+
+	  <%= f.inputs do %>
+		  <%= f.input :law_url, :as => :url %>
+	  <% end %>
+
+    <div>
+      <%= f.submit t('.submit'), :class => 'btn btn-primary' %>
+    </div>
+  
+  <% end %>
+
+<% else %>
+  <p>
+    <%= t('.not_found') %>
+  </p>
+<% end %>
+
