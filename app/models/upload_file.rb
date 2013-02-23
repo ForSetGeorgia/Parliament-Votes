@@ -143,6 +143,11 @@ class UploadFile < ActiveRecord::Base
 
           end
 
+          # update the conference with the number of laws and sessions
+          conference.number_laws = conference.agendas.select{|x| x.is_law == true}.count
+          conference.number_sessions = conference.agendas.count
+          conference.save
+
           # indicate the the file has been processed
           self.file_processed = true
           self.save

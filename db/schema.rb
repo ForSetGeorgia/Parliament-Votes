@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(:version => 20130223173703) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "upload_file_id"
-    t.integer  "number_laws"
-    t.integer  "number_sessions"
+    t.integer  "number_laws",      :default => 0
+    t.integer  "number_sessions",  :default => 0
   end
 
   add_index "conferences", ["start_date", "name"], :name => "index_conferences_on_start_date_and_name"
