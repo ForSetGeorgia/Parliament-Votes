@@ -64,6 +64,7 @@ ka:
       add_vote: ხმის დამატება
       add_law_url: კანონისთვის ბმულის დამატება
       edit_law_url: Edit URL to Law
+      view_law_url: View Law
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
