@@ -10,7 +10,7 @@ class Agenda < ActiveRecord::Base
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
       :is_law, :registration_number, :session_number, :number_possible_members, :law_url
 
-	validates :law_url, :format => {:with => URI::regexp(['http','https'])}, :if => "!law_url.blank?"
+	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
 
   DEFAULT_NUMBER_MEMBERS = 150
 

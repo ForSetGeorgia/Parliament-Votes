@@ -14,6 +14,7 @@
   </div>
   
   <%= semantic_form_for @agenda, :url => add_url_path(params[:id]), :method => :post do |f| %>
+		<%= f.error_messages %>
 
 	  <%= f.inputs do %>
 		  <%= f.input :law_url, :as => :url %>

@@ -49,6 +49,8 @@ ka:
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
+      agenda:
+        invalid_url: "არასწორია. სწორი ბმული შეიცავს  'http://' ან 'https://', მაგ. 'http://parliament.ge/'"
   helpers:
     actions: აირჩიეთ
     links:

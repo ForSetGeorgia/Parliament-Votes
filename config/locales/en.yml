@@ -49,6 +49,8 @@ en:
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"
+      agenda:
+        invalid_url: "is invalid. A valid url includes 'http://' or 'https://', i.e. 'http://parliament.ge/'"
   helpers:
     actions: Actions
     links:
