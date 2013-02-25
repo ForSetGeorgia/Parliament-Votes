@@ -23,15 +23,15 @@ ka:
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი
-        number_laws: "# Laws"
-        number_sessions: "# Sessions"
+        number_laws: "# კანონები"
+        number_sessions: "# სესიები"
       agenda:
         name: დღის წესრიგი
         description: დღის წესრიგის აღწერა
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
-        law_url: URL to Law
+        law_url: კანონის ბმული
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)
@@ -63,8 +63,8 @@ ka:
       view: ნახვა
       add_vote: ხმის დამატება
       add_law_url: კანონისთვის ბმულის დამატება
-      edit_law_url: Edit URL to Law
-      view_law_url: View Law
+      edit_law_url: კანონის ბმულის რედაქტირება
+      view_law_url: კანონის ნახვა
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -102,8 +102,8 @@ ka:
   layouts:
     application:
       admin: ადმინისტრატო
-      menu_files: Upload Files
-      menu_conference: Laws
+      menu_files: ფაილების ატვირთვა
+      menu_conference: კანონები
       sign_out: გასვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
       js_link_text: აგებულია
@@ -155,15 +155,15 @@ ka:
       agenda: "დღის წესრიგი: %{name} (%{date})"
       delegate: "დელეგატი: %{name}"
     add_vote: 
-      title: Add Missing Votes
-      non_available: All delegates have voted.
+      title: გამოტოვებული ხმების დამატება
+      non_available: ყველადელეგატმა მისცა ხმა.
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
       agenda: "დღის წესრიგი: %{name} (%{date})"
-      submit: Save Votes
+      submit: ხმების შენახვა
     add_url:
-      title_add: Add URL to Law
-      title_edit: Edit URL to Law
+      title_add: კანონის ბმულის დამატება
+      title_edit: კანონის ბმულის რედაქტირება
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
       agenda: "დღის წესრიგი: %{name} (%{date})"
-      submit: Save URL
+      submit: ბმულის შენახვა
 
