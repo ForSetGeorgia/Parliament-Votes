@@ -23,6 +23,9 @@
               <%= t('activerecord.attributes.delegate.first_name') %>
             </th>
             <th>
+              <%= t('activerecord.attributes.group.short_name') %>
+            </th>
+            <th>
               <%= t('activerecord.attributes.voting_result.vote') %>
             </th>
           </tr>
@@ -34,6 +37,9 @@
                 <%= delegate.first_name %>
                 <%= hidden_field_tag "delegates[#{index}][xml_id]", delegate.xml_id %>
                 <%= hidden_field_tag "delegates[#{index}][first_name]", delegate.first_name %>
+              </td>
+              <td>
+                <%= select_tag "delegates[#{index}][group_id]", options_from_collection_for_select(@groups, 'id', 'short_name'), :include_blank => true%>
               </td>
               <td>
                 <label for="<%= "delegates_#{index}_vote_1" %>" class="radio inline">

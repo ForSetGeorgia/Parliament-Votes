@@ -50,6 +50,7 @@ class RootController < ApplicationController
 
   def add_vote
     @agenda = Agenda.find(params[:id])
+    @groups = Group.by_conference(@agenda.conference_id)
     @available_delegates = AllDelegate.available_delegates(params[:id])
     if request.post?
       params[:delegates].keys.each do |key|
@@ -57,7 +58,9 @@ class RootController < ApplicationController
         if delegate["vote"].present?
 
           # first create delegate record
-          del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], :first_name => delegate["first_name"])
+          del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], 
+            :group_id => delegate["group_id"],
+            :first_name => delegate["first_name"])
           # now save voting result record
           VotingResult.create(:voting_session_id => @agenda.voting_session.id, 
                     :delegate_id => del.id,
