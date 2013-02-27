@@ -17,6 +17,7 @@
 		<%= f.error_messages %>
 
 	  <%= f.inputs do %>
+		  <%= f.input :law_id, :input_html => {:size => 10} %>
 		  <%= f.input :law_url, :as => :url %>
 	  <% end %>
 

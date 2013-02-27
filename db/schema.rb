@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130223173703) do
+ActiveRecord::Schema.define(:version => 20130227192926) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -27,10 +27,13 @@ ActiveRecord::Schema.define(:version => 20130223173703) do
     t.string   "session_number"
     t.integer  "number_possible_members", :default => 150
     t.string   "law_url"
+    t.string   "law_id"
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"
   add_index "agendas", ["is_law"], :name => "index_agendas_on_is_law"
+  add_index "agendas", ["law_id"], :name => "index_agendas_on_law_id"
+  add_index "agendas", ["law_url"], :name => "index_agendas_on_law_url"
   add_index "agendas", ["number_possible_members"], :name => "index_agendas_on_number_possible_members"
   add_index "agendas", ["sort_order", "name"], :name => "index_agendas_on_sort_order_and_name"
 

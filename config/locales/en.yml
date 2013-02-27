@@ -32,6 +32,7 @@ en:
         registration_number: Registration Number
         number_possible_members: Number Members
         law_url: URL to Law
+        law_id: Law ID
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N)
@@ -64,8 +65,8 @@ en:
       reset: Reset
       view: View
       add_vote: Add Vote
-      add_law_url: Add URL to Law
-      edit_law_url: Edit URL to Law
+      add_law_url: Add Law Info
+      edit_law_url: Edit Law Info
       view_law_url: View Law
     titles:
       new: "New %{model}"

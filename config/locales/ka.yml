@@ -32,6 +32,7 @@ ka:
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
         law_url: კანონის ბმული
+        law_id: Law ID
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)
@@ -64,8 +65,8 @@ ka:
       reset: საწყის კონფიგურაციაზე დაბრუნება
       view: ნახვა
       add_vote: ხმის დამატება
-      add_law_url: კანონისთვის ბმულის დამატება
-      edit_law_url: კანონის ბმულის რედაქტირება
+      add_law_url: Add Law Info
+      edit_law_url: Edit Law Info
       view_law_url: კანონის ნახვა
     titles:
       new: "ახალი %{model}"

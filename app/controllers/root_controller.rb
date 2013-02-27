@@ -38,6 +38,7 @@ class RootController < ApplicationController
     @agenda = Agenda.find(params[:id])
 
     if request.post?
+      @agenda.law_id = params[:agenda][:law_id]
       @agenda.law_url = params[:agenda][:law_url]
       if @agenda.valid?
         @agenda.save
