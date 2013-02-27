@@ -6,14 +6,13 @@ class UploadFile < ActiveRecord::Base
 
 	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, 
       :conference_attributes, :file_processed, :number_possible_members
-  attr_accessor :number_possible_members
 
   validates :xml_file_name, :presence => true
 
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
   
   validate :file_does_not_exist
-  after_save :process_file
+  after_create :process_file
 
   def self.with_conference
     includes(:conference)
@@ -22,7 +21,7 @@ class UploadFile < ActiveRecord::Base
   def file_does_not_exist
     files = UploadFile.where(:xml_file_name => self.xml_file_name)
 
-    if files.present?
+    if files.present? && !self.id.present?
       errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
     end
   end

@@ -20,6 +20,7 @@ en:
       upload_file:
         xml: XML File
         created_at: Date Added
+        number_possible_members: Number Members
       conference:
         name: Conference Name
         start_date: Conference Date

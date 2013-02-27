@@ -20,6 +20,7 @@ ka:
       upload_file:
         xml: XML ფაილი
         created_at: დამატების თარიღი
+        number_possible_members: წევრების რაოდენობა
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი

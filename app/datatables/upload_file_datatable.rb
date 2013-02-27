@@ -22,6 +22,7 @@ private
       [
         link_to(upload_file.conference.name, conference_path(:id => upload_file.conference.id, :locale => I18n.locale)),
         I18n.l(upload_file.conference.start_date, :format => :no_zone),
+        upload_file.number_possible_members,
         upload_file.conference.number_laws,
         upload_file.conference.number_sessions,
         upload_file.xml_file_name,
