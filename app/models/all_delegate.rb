@@ -15,4 +15,16 @@ class AllDelegate < ActiveRecord::Base
     end
   end
 
+  def self.add_if_new(delegates)
+    if delegates.present?
+      delegates.each do |delegate|
+        exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name)
+
+        if !exists.present?
+          AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name)
+        end
+      end
+    end
+  end
+
 end
