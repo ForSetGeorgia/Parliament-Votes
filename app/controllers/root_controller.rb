@@ -1,6 +1,6 @@
 class RootController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :only => [:process_file] do |controller_instance|
+  before_filter :only => [:process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law] do |controller_instance|
     controller_instance.send(:valid_role?, User::ROLES[:process_files])
   end
 
@@ -91,4 +91,32 @@ class RootController < ApplicationController
     end
   end
 
+  def is_law
+    @agenda = Agenda.find_by_id(params[:id])
+
+    if @agenda
+      @agenda.is_law = true
+      @agenda.save
+      flash[:notice] = t('app.msgs.is_law', :name => @agenda.name)
+      redirect_to conference_path(@agenda.conference_id)
+    else
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
+    end
+  end
+
+  def not_law
+    @agenda = Agenda.find_by_id(params[:id])
+
+    if @agenda
+      @agenda.is_law = false
+      @agenda.save
+      flash[:notice] = t('app.msgs.not_law', :name => @agenda.name)
+      redirect_to conference_path(@agenda.conference_id)
+    else
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
+    end
+
+  end
 end

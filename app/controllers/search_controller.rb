@@ -10,7 +10,7 @@ class SearchController < ApplicationController
 
   def agendas
     respond_to do |format|
-      format.json { render json: AgendaDatatable.new(view_context, params[:conference_id], params[:laws_only]) }
+      format.json { render json: AgendaDatatable.new(view_context, current_user, params[:conference_id], params[:laws_only]) }
     end
   end
 

@@ -3,12 +3,13 @@ class AgendaDatatable
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :conference_id, to: :@conference_id
   delegate :laws_only, to: :@laws_only
+  delegate :current_user, to: :@current_user
 
-  def initialize(view, conference_id, laws_only)
+  def initialize(view, current_user, conference_id, laws_only)
     @view = view
     @conference_id = conference_id
     @laws_only = laws_only == "true" ? true : false
-
+    @current_user = current_user
   end
 
   def as_json(options = {})
@@ -25,12 +26,23 @@ private
   def data
     agendas.map do |agenda|
       [
+        change_status_link(agenda),
         link_to(agenda.name, agenda_path(:id => agenda.id, :locale => I18n.locale)),
         agenda.session_number,
         agenda.registration_number,
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no})",
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.quorum_formatted} (#{agenda.voting_session.result5})"
       ]
+    end
+  end
+
+  def change_status_link(agenda)
+    if agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
+      link_to(I18n.t('helpers.links.unmake_law'), not_law_path(:id => agenda.id, :locale => I18n.locale), 
+             :class => 'btn btn-mini')  
+    elsif !agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
+      link_to(I18n.t('helpers.links.make_law'), is_law_path(:id => agenda.id, :locale => I18n.locale), 
+             :class => 'btn btn-mini fancybox')  
     end
   end
 

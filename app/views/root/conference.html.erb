@@ -9,6 +9,7 @@
       data-source="<%= search_agendas_url(:conference_id => @conference.id, :format => :json) %>">
   <thead>
     <tr>
+      <th></th>
       <th><%= Agenda.human_attribute_name(:name) %></th>
       <th><%= Agenda.human_attribute_name(:session_number) %></th>
       <th><%= Agenda.human_attribute_name(:registration_number) %></th>

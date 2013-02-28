@@ -57,6 +57,9 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
+    "aoColumnDefs": [
+      { 'bSortable': false, 'aTargets': [ 0 ] }
+    ],
     "iDisplayLength": 50,
     "aLengthMenu": [[10, 20, 50, 100], [10, 20, 50, 100]],
     "fnServerParams": function ( aoData ) {
