@@ -15,7 +15,7 @@ class Agenda < ActiveRecord::Base
   DEFAULT_NUMBER_MEMBERS = 150
 
   def self.by_conference(conference_id)
-    includes(:voting_session).where(:conference_id => conference_id)
+    includes(:voting_session => :voting_results).where(:conference_id => conference_id)
   end
 
   def self.laws_only(yes)
