@@ -50,7 +50,7 @@ private
   end
 
   def sort_column
-    columns = %w[conferences.name conferences.start_date conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at]
+    columns = %w[conferences.name conferences.start_date upload_files.number_possible_members conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at]
     columns[params[:iSortCol_0].to_i]
   end
 
