@@ -149,10 +149,10 @@ class UploadFile < ActiveRecord::Base
           conference.number_sessions = conference.agendas.count
           conference.save
 
-          # indicate the the file has been processed
-          self.file_processed = true
-          self.save
         end
+        # indicate the the file has been processed
+        self.file_processed = true
+        self.save
       end
 
       file.close

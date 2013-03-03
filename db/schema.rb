@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130303122331) do
+ActiveRecord::Schema.define(:version => 20130303173120) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20130303122331) do
     t.integer  "number_possible_members", :default => 150
     t.string   "law_url"
     t.string   "law_id"
-    t.string   "name2"
+    t.string   "law_title"
     t.string   "official_law_title"
     t.text     "law_description"
   end
