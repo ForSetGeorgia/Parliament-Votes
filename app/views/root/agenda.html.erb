@@ -1,14 +1,43 @@
-<% title t('.title', :name => @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
+<% title t('.title', :name => @agenda.official_law_title.present? ? @agenda.official_law_title : @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
 
 <div id="agenda_description">
-  <%= simple_format @agenda.description %>
+  <ul>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:official_law_title) %>:</strong>
+      <%= @agenda.official_law_title %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:law_title) %>:</strong>
+      <%= @agenda.law_title %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:law_description) %>:</strong>
+      <%= @agenda.law_description %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:session_number) %>:</strong>
+      <%= @agenda.session_number %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:registration_number) %>:</strong>
+      <%= @agenda.registration_number %>
+    </li>    
+    <li>
+      <strong><%= Agenda.human_attribute_name(:description) %>:</strong>
+      <%= @agenda.description %>
+    </li>    
+
+    <% if @agenda.voting_session.present? && @agenda.voting_session.voting_results.present? %>
+      <li id="results_description">
+        <strong><%= VotingSession.human_attribute_name(:voting_conclusion) %>:</strong>
+        <%= simple_format @agenda.voting_session.voting_conclusion %>
+      </li>
+    <% end %>
+  </ul>
+  
 </div>
 
 <% if @agenda.voting_session.present? && @agenda.voting_session.voting_results.present? %>
-  <div id="results_description">
-    <%= simple_format @agenda.voting_session.voting_conclusion %>
-  </div>
-
   <div id="agenda_counts">
     <ul>
       <li>

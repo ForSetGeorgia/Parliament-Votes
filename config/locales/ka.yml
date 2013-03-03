@@ -28,17 +28,21 @@ ka:
         number_sessions: "# სესიები"
       agenda:
         name: დღის წესრიგი
-        description: დღის წესრიგის აღწერა
+        description: Full Description
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
         law_url: კანონის ბმული
         law_id: Law ID
+        official_law_title: Official Law Title
+        law_title: Law Title
+        law_description: Law Description
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)
         quorum: ქვორუმი
         results: შედეგები (დიახ / არა)
+        voting_conclusion: Original Voting Results
       voting_result:
         present: რეგისტრაცია
         vote: კენჭისყრის შედეგი

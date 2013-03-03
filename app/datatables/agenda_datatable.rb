@@ -27,7 +27,9 @@ private
     agendas.map do |agenda|
       [
         change_status_link(agenda),
-        link_to(agenda.name, agenda_path(:id => agenda.id, :locale => I18n.locale)),
+        link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, agenda_path(:id => agenda.id, :locale => I18n.locale)),
+        agenda.law_title,
+        agenda.law_description,
         agenda.session_number,
         agenda.registration_number,
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no})",
@@ -68,7 +70,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.name agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum]
+    columns = %w[agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum]
     columns[params[:iSortCol_0].to_i]
   end
 
