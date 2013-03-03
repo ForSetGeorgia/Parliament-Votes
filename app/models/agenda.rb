@@ -104,7 +104,7 @@ class Agenda < ActiveRecord::Base
   # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  (07-2/3,05.11.2012)  || (#07-3/16. 22.11.2012)
   def generate_registration_number
     if self.description.present?
-      reg = /\(\d{2}-\d\/\d{1,2}, {0,5}\d{2}.\d{2}.\d{4}\)/
+      reg = /\(\#{0,1}\d{2}-\d\/\d{1,2}(,||.) {0,5}\d{2}.\d{2}.\d{4}\)/
       reg_num = reg.match(self.description)
       if reg_num
         self.registration_number = reg_num.to_s
