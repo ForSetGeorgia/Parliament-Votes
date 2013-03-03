@@ -21,7 +21,6 @@ BootstrapStarter::Application.routes.draw do
     match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => :post
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :get
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :post
-    match '/is_law/:id', :to => 'root#is_law', :as => :is_law, :via => :get
     match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
 
     # search controller

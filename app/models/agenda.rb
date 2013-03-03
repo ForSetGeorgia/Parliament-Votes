@@ -14,7 +14,7 @@ class Agenda < ActiveRecord::Base
 	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
 
   DEFAULT_NUMBER_MEMBERS = 150
-
+  
   def self.by_conference(conference_id)
     includes(:voting_session => :voting_results).where(:conference_id => conference_id)
   end
@@ -84,10 +84,7 @@ class Agenda < ActiveRecord::Base
             end  
 
             if self.description.present?
-              generate_registration_number
-              generate_official_law_title
-              generate_law_description
-              generate_law_title
+              generate_missing_data
             end
 
             self.save
@@ -98,6 +95,16 @@ class Agenda < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def generate_missing_data
+    # if the description is empty, use the name
+    self.description = self.name if !self.description.present?
+    
+    generate_registration_number if !self.registration_number.present?
+    generate_official_law_title if !self.official_law_title.present?
+    generate_law_description if !self.law_description.present?
+    generate_law_title if !self.law_title.present?
   end
 
   # look for registration number in description
@@ -179,6 +186,17 @@ class Agenda < ActiveRecord::Base
       self. law_title = text if text.present?
     end
   end
+
+  def self.session_list
+    x = []
+    PREFIX[1..PREFIX.length-1].reverse.each do |p|
+      x << "#{p} #{CONSISTENT_SESSION_NAME[1]}"
+    end
+    x << "#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}"
+    
+    return x
+  end
+
 
   private
 

@@ -108,8 +108,7 @@ ka:
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
       success_created: "%{obj} შექმნილია."
       success_updated: "%{obj} განახლებულია."
-      is_law: The item '%{name}' has been marked as a law.
-      not_law: The item '%{name}' is no longer marked as a law.
+      not_law: "The item '%{name}' is no longer marked as a law."
   layouts:
     application:
       admin: ადმინისტრატო

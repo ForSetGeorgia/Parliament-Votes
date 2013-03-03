@@ -43,7 +43,7 @@ private
       link_to(I18n.t('helpers.links.unmake_law'), not_law_path(:id => agenda.id, :locale => I18n.locale), 
              :class => 'btn btn-mini')  
     elsif !agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t('helpers.links.make_law'), is_law_path(:id => agenda.id, :locale => I18n.locale), 
+      link_to(I18n.t('helpers.links.make_law'), edit_agenda_path(:id => agenda.id, :locale => I18n.locale), 
              :class => 'btn btn-mini fancybox')  
     end
   end

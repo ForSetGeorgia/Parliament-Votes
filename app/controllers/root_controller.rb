@@ -36,7 +36,9 @@ class RootController < ApplicationController
 
   def edit_agenda
     @agenda = Agenda.find_by_id(params[:id])
-
+    
+    @agenda.generate_missing_data
+    
     if request.post?
       @agenda.update_attributes(params[:agenda])
       redirect_to agenda_path(@agenda.id), 
@@ -83,20 +85,6 @@ class RootController < ApplicationController
       end
       redirect_to agenda_path(@voting_result.voting_session.agenda.id), 
           notice: t('app.msgs.success_updated', :obj => t('activerecord.models.voting_result'))
-    end
-  end
-
-  def is_law
-    @agenda = Agenda.find_by_id(params[:id])
-
-    if @agenda
-      @agenda.is_law = true
-      @agenda.save
-      flash[:notice] = t('app.msgs.is_law', :name => @agenda.name)
-      redirect_to conference_path(@agenda.conference_id)
-    else
-			flash[:info] =  t('app.msgs.does_not_exist')
-			redirect_to root_path(:locale => I18n.locale)
     end
   end
 

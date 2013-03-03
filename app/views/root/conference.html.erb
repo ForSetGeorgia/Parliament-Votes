@@ -1,7 +1,11 @@
 <% title t('.title', :name => @conference.name, :date => l(@conference.start_date, :format => :no_zone)) %>
 
   <div id="agenda_laws_only">
-    <span data-all="<%= t('.view_all') %>" data-laws="<%= t('.view_laws_only') %>"><%= t('.view_all') %></span>
+    <% if params[:laws_only].present? && params[:laws_only] == "false" %>
+      <%= link_to t('.view_laws_only'), url_for(params.merge(:laws_only => 'true')), :class => 'btn btn-primary' %>
+    <% else %>
+      <%= link_to t('.view_all'), url_for(params.merge(:laws_only => 'false')), :class => 'btn btn-primary' %>
+    <% end %>
   </div>
 
 

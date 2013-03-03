@@ -70,12 +70,16 @@
   </div>
 
 
-  <% if @agenda.is_law && current_user.role?(User::ROLES[:process_files]) %>
+  <% if current_user.role?(User::ROLES[:process_files]) %>
     <div id="add_buttons">
       <p>
-        <%= link_to t('helpers.links.edit_law'), edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+        <% if @agenda.is_law %>
+          <%= link_to t('helpers.links.edit_law'), edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
 
-        <%= link_to t('helpers.links.add_vote'), add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+          <%= link_to t('helpers.links.add_vote'), add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+        <% else %>
+          <%= link_to t('helpers.links.make_law'), edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+        <% end %>
       </p>
     
     </div>

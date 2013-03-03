@@ -2,16 +2,10 @@ var agenda_laws_only = true;
 var agenda_dt;
 
 $(document).ready(function(){
-  // switch between all items and laws only
-  $('#agenda_laws_only span').click(function(){
-    agenda_laws_only = !agenda_laws_only;
-    agenda_dt.fnDraw();
-    if (agenda_laws_only){
-      $('#agenda_laws_only span').html($('#agenda_laws_only span').data('all'));
-    } else {
-      $('#agenda_laws_only span').html($('#agenda_laws_only span').data('laws'));
-    }
-  });
+  var value = getParameterByName('laws_only');
+  if (value == "false"){
+    agenda_laws_only = false;
+  }
 
 
   $.extend( $.fn.dataTableExt.oStdClasses, {
@@ -64,6 +58,17 @@ $(document).ready(function(){
     "aLengthMenu": [[10, 20, 50, 100], [10, 20, 50, 100]],
     "fnServerParams": function ( aoData ) {
       aoData.push( { name: "laws_only", value: agenda_laws_only} );
+    },
+    "fnInitComplete": function () {
+	    $("#agendas_datatable td a.fancybox").fancybox({
+        transitionIn: 'elastic',
+        transitionOut: 'elastic',
+	      width: 400,
+		    onComplete: function ()
+		    {
+		      focus_fancybox_input();
+	      }
+      });
     }
   });
 
