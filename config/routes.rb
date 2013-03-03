@@ -15,12 +15,12 @@ BootstrapStarter::Application.routes.draw do
     match '/process_file', :to => 'root#process_file', :as => :process_file, :via => :post
     match '/conference/:id', :to => 'root#conference', :as => :conference, :via => :get
     match '/agenda/:id', :to => 'root#agenda', :as => :agenda, :via => :get
+    match '/edit_agenda/:id', :to => 'root#edit_agenda', :as => :edit_agenda, :via => :get
+    match '/edit_agenda/:id', :to => 'root#edit_agenda', :as => :edit_agenda, :via => :post
     match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => :get
     match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => :post
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :get
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :post
-    match '/add_url/:id', :to => 'root#add_url', :as => :add_url, :via => :get
-    match '/add_url/:id', :to => 'root#add_url', :as => :add_url, :via => :post
     match '/is_law/:id', :to => 'root#is_law', :as => :is_law, :via => :get
     match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
 

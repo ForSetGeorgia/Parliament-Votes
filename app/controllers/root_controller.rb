@@ -1,6 +1,6 @@
 class RootController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :only => [:process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law] do |controller_instance|
+  before_filter :only => [:process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda] do |controller_instance|
     controller_instance.send(:valid_role?, User::ROLES[:process_files])
   end
 
@@ -34,18 +34,13 @@ class RootController < ApplicationController
     @agenda = Agenda.find(params[:id])
   end
 
-  def add_url
-    @agenda = Agenda.find(params[:id])
+  def edit_agenda
+    @agenda = Agenda.find_by_id(params[:id])
 
     if request.post?
-      @agenda.law_id = params[:agenda][:law_id]
-      @agenda.law_url = params[:agenda][:law_url]
-      if @agenda.valid?
-        @agenda.save
-
-        redirect_to agenda_path(@agenda.id), 
-            notice: t('app.msgs.success_created', :obj => t('activerecord.attributes.agenda.law_url'))
-      end
+      @agenda.update_attributes(params[:agenda])
+      redirect_to agenda_path(@agenda.id), 
+          notice: t('app.msgs.success_updated', :obj => t('activerecord.models.agenda'))
     end
   end
 

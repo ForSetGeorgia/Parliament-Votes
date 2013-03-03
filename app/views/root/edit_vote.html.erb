@@ -6,7 +6,7 @@
 
   <div id="edit_form_heading">
     <p>
-      <%= t('.agenda', :name => @voting_result.voting_session.agenda.name, 
+      <%= t('.agenda', :name => @voting_result.voting_session.agenda.official_law_title.present? ? @voting_result.voting_session.agenda.official_law_title.present : @voting_result.voting_session.agenda.name, 
           :date => l(@voting_result.voting_session.agenda.conference.start_date, :format => :no_zone)) %>
     </p>
 

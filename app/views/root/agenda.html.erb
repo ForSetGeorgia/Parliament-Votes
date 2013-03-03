@@ -33,6 +33,20 @@
         <%= simple_format @agenda.voting_session.voting_conclusion %>
       </li>
     <% end %>
+    <% if @agenda.is_final_version? %>
+      <li>
+        <strong><%= Agenda.human_attribute_name(:law_id) %>:</strong>
+        <%= @agenda.law_id %>
+      </li>    
+      <li>
+        <strong><%= Agenda.human_attribute_name(:law_url) %>:</strong>
+        <% if @agenda.law_url.present? %>
+          <%= link_to( 
+            t('helpers.links.view_law_url'), 
+            @agenda.law_url, :class => 'btn btn-mini', :target => :blank) %>
+        <% end %>
+      </li>    
+    <% end %>
   </ul>
   
 </div>
@@ -59,23 +73,11 @@
   <% if @agenda.is_law && current_user.role?(User::ROLES[:process_files]) %>
     <div id="add_buttons">
       <p>
+        <%= link_to t('helpers.links.edit_law'), edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+
         <%= link_to t('helpers.links.add_vote'), add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
       </p>
     
-      <% if @agenda.is_final_version? %>
-        <p>
-          <%= link_to @agenda.law_url.present? || @agenda.law_id.present? ? t('helpers.links.edit_law_url') : t('helpers.links.add_law_url'), 
-              add_url_path(@agenda.id), :class => 'btn btn-success fancybox' %>
-          <% if @agenda.law_url.present? %>
-            <%= link_to( 
-                @agenda.law_id.present? ? "#{t('activerecord.attributes.agenda.law_id')}: #{@agenda.law_id}" : t('helpers.links.view_law_url'), 
-                @agenda.law_url, :class => 'btn', :target => :blank) %>
-          <% elsif @agenda.law_id.present? %>
-            <%= "#{t('activerecord.attributes.agenda.law_id')}: #{@agenda.law_id}" %>
-          <% end %>
-        </p>
-      <% end %>
-
     </div>
   <% end %>
 

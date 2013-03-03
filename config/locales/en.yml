@@ -70,8 +70,7 @@ en:
       reset: Reset
       view: View
       add_vote: Add Vote
-      add_law_url: Add Law Info
-      edit_law_url: Edit Law Info
+      edit_law: Edit Law Info
       view_law_url: View Law
       make_law: Is Law
       unmake_law: Not Law
@@ -161,21 +160,19 @@ en:
       title: "Agenda: %{name} (%{date})"
       no_results: No voting results exist for this agenda.
       not_present: Not Present
+    edit_agenda: 
+      title: Edit Law
+      not_found: The Law could not be found.
+      agenda: "Law: %{name} (%{date})"
     edit_vote: 
       title: Edit Vote
       not_found: The Voting Record could not be found.
-      agenda: "Agenda: %{name} (%{date})"
+      agenda: "Law: %{name} (%{date})"
       delegate: "Delegate: %{name}"
     add_vote: 
       title: Add Missing Votes
       non_available: All delegates have voted.
-      not_found: The Agenda could not be found.
-      agenda: "Agenda: %{name} (%{date})"
+      not_found: The Law could not be found.
+      agenda: "Law: %{name} (%{date})"
       submit: Save Votes
-    add_url:
-      title_add: Add URL to Law
-      title_edit: Edit URL to Law
-      not_found: The Agenda could not be found.
-      agenda: "Agenda: %{name} (%{date})"
-      submit: Save URL
 

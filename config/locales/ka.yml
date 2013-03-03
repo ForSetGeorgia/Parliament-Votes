@@ -70,8 +70,7 @@ ka:
       reset: საწყის კონფიგურაციაზე დაბრუნება
       view: ნახვა
       add_vote: ხმის დამატება
-      add_law_url: Add Law Info
-      edit_law_url: Edit Law Info
+      edit_law: Edit Law Info
       view_law_url: კანონის ნახვა
       make_law: Is Law
       unmake_law: Not Law
@@ -161,21 +160,19 @@ ka:
       title: "დღის წესრიგი: %{name} (%{date})"
       no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის
       not_present: არ ესწრებოდა
+    edit_agenda: 
+      title: Edit Law
+      not_found: The Law could not be found.
+      agenda: "Law: %{name} (%{date})"
     edit_vote: 
       title: ხმის მიცემის რედაქტირება
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
-      agenda: "დღის წესრიგი: %{name} (%{date})"
+      agenda: "Law: %{name} (%{date})"
       delegate: "დელეგატი: %{name}"
     add_vote: 
       title: გამოტოვებული ხმების დამატება
       non_available: ყველადელეგატმა მისცა ხმა.
-      not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
-      agenda: "დღის წესრიგი: %{name} (%{date})"
+      not_found: The Law could not be found.
+      agenda: "Law: %{name} (%{date})"
       submit: ხმების შენახვა
-    add_url:
-      title_add: კანონის ბმულის დამატება
-      title_edit: კანონის ბმულის რედაქტირება
-      not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
-      agenda: "დღის წესრიგი: %{name} (%{date})"
-      submit: ბმულის შენახვა
 
