@@ -27,22 +27,22 @@ en:
         number_laws: "# Laws"
         number_sessions: "# Sessions"
       agenda:
-        name: Agenda Name
-        description: Full Description
+        name: Original Name from File
+        description: Original Description from File
         session_number: Session Number
         registration_number: Registration Number
         number_possible_members: Number Members
         law_url: URL to Law
         law_id: Law ID
         official_law_title: Official Law Title
-        law_title: Law Title
+        law_title: Full Name
         law_description: Law Description
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N)
         quorum: Quorum
         results: Results (Y/N)
-        voting_conclusion: Original Voting Results
+        voting_conclusion: Original Voting Results from File
       voting_result:
         present: Present
         vote: Vote

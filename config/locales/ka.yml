@@ -27,15 +27,15 @@ ka:
         number_laws: "# კანონები"
         number_sessions: "# სესიები"
       agenda:
-        name: დღის წესრიგი
-        description: Full Description
+        name: Original Name from File
+        description: Original Description from File
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
         law_url: კანონის ბმული
         law_id: Law ID
         official_law_title: Official Law Title
-        law_title: Law Title
+        law_title: Full Name
         law_description: Law Description
       voting_session:
         passed: გავიდა

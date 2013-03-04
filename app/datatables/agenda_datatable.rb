@@ -27,7 +27,8 @@ private
     agendas.map do |agenda|
       [
         change_status_link(agenda),
-        link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, agenda_path(:id => agenda.id, :locale => I18n.locale)),
+        link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
+          agenda_path(:id => agenda.id, :locale => I18n.locale, :laws_only => params[:laws_only])),
         agenda.law_title,
         agenda.law_description,
         agenda.session_number,

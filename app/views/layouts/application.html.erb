@@ -37,7 +37,7 @@
             <ul class="nav">
               <li><%= link_to t('.menu_files'), root_path(:locale => I18n.locale) %>
               <% if @agenda %>
-                <li><%= link_to t('.menu_conference'), conference_path(@agenda.conference_id) %>
+                <li><%= link_to t('.menu_conference'), conference_path(:id => @agenda.conference_id, :laws_only => params[:laws_only]) %>
               <% end %>
             </ul>
             <ul class="nav pull-right">

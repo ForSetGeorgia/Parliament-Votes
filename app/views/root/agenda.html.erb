@@ -23,6 +23,10 @@
       <%= @agenda.registration_number %>
     </li>    
     <li>
+      <strong><%= Agenda.human_attribute_name(:name) %>:</strong>
+      <%= @agenda.name %>
+    </li>
+    <li>
       <strong><%= Agenda.human_attribute_name(:description) %>:</strong>
       <%= @agenda.description %>
     </li>    
