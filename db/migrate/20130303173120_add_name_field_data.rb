@@ -1,11 +1,9 @@
 class AddNameFieldData < ActiveRecord::Migration
   def up
-=begin
     Agenda.laws_only(true).each do |agenda|
       agenda.generate_missing_data
       agenda.save
     end
-=end
   end
 
   def down

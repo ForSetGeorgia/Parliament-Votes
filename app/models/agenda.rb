@@ -123,67 +123,76 @@ class Agenda < ActiveRecord::Base
   # - keep first and second quote and text before last one
   # - text is not consitent on which quote is where so check for each quote type if the first is not founds
   def generate_official_law_title
-    if self.description.present?
-      quotes = ['„', '“', '"']
-      index1 = self.description.index(quotes[0])
-      index1 = self.description.index(quotes[2]) if index1.nil?
-      index1 = self.description.index(quotes[1]) if index1.nil?
+    text = self.description
+    text = self.name if text.nil?
+    quotes = ['„', '“', '"']
 
-      index2 = self.description.index(quotes[1], index1 ? index1+1 : 0)
-      index2 = self.description.index(quotes[2], index1 ? index1+1 : 0) if index2.nil?
-      index2 = self.description.index(quotes[0], index1 ? index1+1 : 0) if index2.nil?
+    index1 = text.index(quotes[0])
+    index1 = text.index(quotes[2]) if index1.nil?
+    index1 = text.index(quotes[1]) if index1.nil?
 
-      index3 = self.description.index(quotes[1], index2 ? index2+1 : 0)
-      index3 = self.description.index(quotes[2], index2 ? index2+1 : 0) if index3.nil?
-      index3 = self.description.index(quotes[0], index2 ? index2+1 : 0) if index3.nil?
+    index2 = text.index(quotes[1], index1 ? index1+1 : 0)
+    index2 = text.index(quotes[2], index1 ? index1+1 : 0) if index2.nil?
+    index2 = text.index(quotes[0], index1 ? index1+1 : 0) if index2.nil?
 
-      if index1 && index3
-        self.official_law_title = self.description[index1..index3-1]
-      elsif index1 && index2
-        self.official_law_title = self.description[index1..index2]
-      end
+    index3 = text.index(quotes[1], index2 ? index2+1 : 0)
+    index3 = text.index(quotes[2], index2 ? index2+1 : 0) if index3.nil?
+    index3 = text.index(quotes[0], index2 ? index2+1 : 0) if index3.nil?
+
+    if index1 && index3
+      self.official_law_title = text[index1..index3-1]
+    elsif index1 && index2
+      self.official_law_title = text[index1..index2]
+    else
+      self.official_law_title = self.name
     end
+
   end
 
   # law description - text between () but not reg number
   def generate_law_description
-    if self.description.present?
-      mod_desc = self.description.dup
-      mod_desc = self.description.gsub(self.registration_number, '') if self.registration_number.present?
-      index1 = mod_desc.index('(')
-      index2 = mod_desc.index(')', index1 ? index1+1 : 0)
-      # if index2 is not at the end of the string, check if there is another one after this
-      if index2 && index2 < mod_desc.length-1
-        index3 = index2        
-        index4 = index2
-        until index3.nil?
-          index3 = mod_desc.index(')', index3+1)
-          index4 = index3 if index3
-        end
+    text = self.description
+    text = self.name if text.nil?
 
-        index2 = index4        
+    mod_desc = text.dup
+    mod_desc = text.gsub(self.registration_number, '') if self.registration_number.present?
+    index1 = mod_desc.index('(')
+    index2 = mod_desc.index(')', index1 ? index1+1 : 0)
+    # if index2 is not at the end of the string, check if there is another one after this
+    if index2 && index2 < mod_desc.length-1
+      index3 = index2        
+      index4 = index2
+      until index3.nil?
+        index3 = mod_desc.index(')', index3+1)
+        index4 = index3 if index3
       end
 
-      if index1 && index2
-        self.law_description = mod_desc[index1..index2]
-      end
+      index2 = index4        
+    end
+
+    if index1 && index2
+      self.law_description = mod_desc[index1..index2]
     end
   end
 
-  # name 2 - all text in description minus reg #, session # and law description
+  # full name (law title) - all text in description minus reg #, session # and law description
   def generate_law_title
-    if self.description.present?
-      remove = []
-      remove << self.registration_number if self.registration_number.present?
-      remove << self.law_description if self.law_description.present?
-      remove << PREFIX
-      remove << POSTFIX      
+    text = self.description.dup
+    text = self.name.dup if text.nil?
 
-      text = self.description.dup
-      remove.flatten.each do |x|
-        text.gsub!(x, '')
-      end
-      self. law_title = text if text.present?
+    remove = []
+    remove << self.registration_number if self.registration_number.present?
+    remove << self.law_description if self.law_description.present?
+    remove << PREFIX
+    remove << POSTFIX      
+
+    remove.flatten.each do |x|
+      text.gsub!(x, '')
+    end
+    if text.present?
+      self.law_title = text if text.present?
+    else
+      self.law_title = self.name
     end
   end
 
