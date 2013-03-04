@@ -122,9 +122,12 @@ class Agenda < ActiveRecord::Base
   # official law title - in description " .... " .. "
   # - keep first and second quote and text before last one
   # - text is not consitent on which quote is where so check for each quote type if the first is not founds
-  def generate_official_law_title
+  def generate_official_law_title(use_description_field = true)
     text = self.description
-    text = self.name if text.nil?
+    if !use_description_field || text.nil?
+      text = self.name
+    end
+
     quotes = ['„', '“', '"']
 
     index1 = text.index(quotes[0])
@@ -143,8 +146,11 @@ class Agenda < ActiveRecord::Base
       self.official_law_title = text[index1..index3-1]
     elsif index1 && index2
       self.official_law_title = text[index1..index2]
-    else
+    elsif !use_description_field 
       self.official_law_title = self.name
+    else
+      # repeat process using name field
+      generate_official_law_title(false)
     end
 
   end
