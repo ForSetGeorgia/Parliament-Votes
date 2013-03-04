@@ -155,6 +155,10 @@ ka:
       title: "კონფერენცია: %{name} (%{date})"
       view_laws_only: მხოლოდ კანონების ნახვა
       view_all: ყველა საკითხის ნახვა 
+    edit_number_members: 
+      title: Edit Number of Members
+      not_found: The Conference could not be found.
+      conference: "Conference: %{name} (%{date})"
     agenda:
       title: "დღის წესრიგი: %{name} (%{date})"
       no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის

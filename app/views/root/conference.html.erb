@@ -1,5 +1,19 @@
 <% title t('.title', :name => @conference.name, :date => l(@conference.start_date, :format => :no_zone)) %>
 
+<div id="conference_description">
+  <ul>
+    <li>
+      <strong><%= Conference.human_attribute_name(:start_date) %>:</strong>
+      <%= l(@conference.start_date, :format => :no_zone) %>
+    </li>
+    <li>
+      <strong><%= UploadFile.human_attribute_name(:number_possible_members) %>:</strong>
+      <%= @conference.upload_file.number_possible_members %>
+      <%= link_to t('helpers.links.edit'), edit_number_members_path(@conference.id), :class => 'btn btn-mini fancybox' %>
+    </li>
+  </ul>
+</div>
+
   <div id="agenda_laws_only">
     <% if params[:laws_only].present? && params[:laws_only] == "false" %>
       <%= link_to t('.view_laws_only'), url_for(params.merge(:laws_only => 'true')), :class => 'btn btn-primary' %>

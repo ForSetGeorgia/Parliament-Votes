@@ -3,6 +3,7 @@
 <% if @agenda %>
 
 <%= semantic_form_for @agenda, :url => edit_agenda_path(params[:id]), :method => :post do |f| %>
+	<%= f.error_messages %>
 
   <div id="edit_form_heading">
     <p>

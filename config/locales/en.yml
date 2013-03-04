@@ -155,6 +155,10 @@ en:
       title: "Conference: %{name} (%{date})"
       view_laws_only: View Laws Only
       view_all: View All Items
+    edit_number_members: 
+      title: Edit Number of Members
+      not_found: The Conference could not be found.
+      conference: "Conference: %{name} (%{date})"
     agenda:
       title: "Agenda: %{name} (%{date})"
       no_results: No voting results exist for this agenda.

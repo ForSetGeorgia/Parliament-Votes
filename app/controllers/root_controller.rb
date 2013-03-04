@@ -1,6 +1,6 @@
 class RootController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :only => [:process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda] do |controller_instance|
+  before_filter :only => [:process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda, :edit_number_members] do |controller_instance|
     controller_instance.send(:valid_role?, User::ROLES[:process_files])
   end
 
@@ -28,6 +28,19 @@ class RootController < ApplicationController
 
   def conference
     @conference = Conference.find(params[:id])
+  end
+
+  def edit_number_members
+    @conference = Conference.find_by_id(params[:id])
+    if @conference 
+      @upload_file = UploadFile.find_by_id(@conference.id)
+
+      if request.post? 
+        @upload_file.update_number_members(params[:upload_file][:number_possible_members])
+        redirect_to conference_path(params[:id]), 
+            notice: t('app.msgs.success_updated', :obj => t('activerecord.models.conference'))
+      end
+    end
   end
 
   def agenda

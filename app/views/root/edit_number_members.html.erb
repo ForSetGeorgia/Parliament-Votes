@@ -1,0 +1,30 @@
+<% title t('.title') %>
+
+<% if @conference && @upload_file %>
+
+<%= semantic_form_for @upload_file, :url => edit_number_members_path(params[:id]), :method => :post do |f| %>
+	<%= f.error_messages %>
+
+  <div id="edit_form_heading">
+    <p>
+      <%= t('.conference', :name => @conference.name, :date => l(@conference.start_date, :format => :no_zone)) %>
+    </p>
+
+  </div>
+
+	<%= f.inputs do %>
+		<%= f.input :number_possible_members, :as => :string, :input_html => {:size => 5, :maxlength => 3} %>
+	<% end %>
+
+  <div>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<% else %>
+
+  <p>
+    <%= t('.not_found') %>
+  </p>
+
+<% end %>

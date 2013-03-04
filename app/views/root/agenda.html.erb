@@ -3,6 +3,14 @@
 <div id="agenda_description">
   <ul>
     <li>
+      <strong><%= Conference.human_attribute_name(:start_date) %>:</strong>
+      <%= l(@agenda.conference.start_date, :format => :no_zone) %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:number_possible_members) %>:</strong>
+      <%= @agenda.number_possible_members %>
+    </li>
+    <li>
       <strong><%= Agenda.human_attribute_name(:official_law_title) %>:</strong>
       <%= @agenda.official_law_title %>
     </li>

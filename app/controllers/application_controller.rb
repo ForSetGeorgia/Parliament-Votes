@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
 #    Rails.logger.debug "****************** prev urls session = #{session[:previous_urls]}"
 	end
 
-	FB_ACTIONS = ['edit_vote', 'add_vote', 'edit_agenda']
+	FB_ACTIONS = ['edit_vote', 'add_vote', 'edit_agenda', 'edit_number_members']
 	def layout_by_resource
     if !FB_ACTIONS.index(params[:action]).nil?
       "fancybox"

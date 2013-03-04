@@ -26,6 +26,19 @@ class UploadFile < ActiveRecord::Base
     end
   end
 
+  # update the number members in upload file and all its agendas
+  def update_number_members(number)
+    if number.present?
+      UploadFile.transaction do
+        self.number_possible_members = number
+        self.save
+
+        Agenda.where(:conference_id => self.conference.id).update_all(:number_possible_members => number)
+
+      end
+    end
+  end
+
   def unprocess_file
     # voting session & voting results
     if self.conference.present?
