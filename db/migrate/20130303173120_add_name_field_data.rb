@@ -1,14 +1,11 @@
 class AddNameFieldData < ActiveRecord::Migration
   def up
+=begin
     Agenda.laws_only(true).each do |agenda|
-      # recreate reg number for new patterns were found
-      agenda.generate_registration_number
-      
-      agenda.generate_official_law_title
-      agenda.generate_law_description
-      agenda.generate_law_title
+      agenda.generate_missing_data
       agenda.save
     end
+=end
   end
 
   def down
