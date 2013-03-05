@@ -83,9 +83,7 @@ class Agenda < ActiveRecord::Base
               self.session_number = "#{pre} #{CONSISTENT_SESSION_NAME[1]}"
             end  
 
-            if self.description.present?
-              generate_missing_data
-            end
+            generate_missing_data
 
             self.save
             found = true
@@ -98,9 +96,6 @@ class Agenda < ActiveRecord::Base
   end
 
   def generate_missing_data
-    # if the description is empty, use the name
-    self.description = self.name if !self.description.present?
-    
     generate_registration_number if !self.registration_number.present?
     generate_official_law_title if !self.official_law_title.present?
     generate_law_description if !self.law_description.present?
@@ -124,10 +119,11 @@ class Agenda < ActiveRecord::Base
   # - text is not consitent on which quote is where so check for each quote type if the first is not founds
   def generate_official_law_title(use_description_field = true)
     text = self.description
-    if !use_description_field || text.nil?
+    if !use_description_field || !text.present?
+puts "using name field for text"
       text = self.name
     end
-
+puts "text = #{text}"
     quotes = ['„', '“', '"']
 
     index1 = text.index(quotes[0])
@@ -143,12 +139,16 @@ class Agenda < ActiveRecord::Base
     index3 = text.index(quotes[0], index2 ? index2+1 : 0) if index3.nil?
 
     if index1 && index3
+puts "index1 and index3"
       self.official_law_title = text[index1..index3-1]
     elsif index1 && index2
+puts "index1 and index2"
       self.official_law_title = text[index1..index2]
     elsif !use_description_field 
+puts "just using name"
       self.official_law_title = self.name
     else
+puts "calling again"
       # repeat process using name field
       generate_official_law_title(false)
     end
@@ -158,7 +158,7 @@ class Agenda < ActiveRecord::Base
   # law description - text between () but not reg number
   def generate_law_description
     text = self.description
-    text = self.name if text.nil?
+    text = self.name if !text.present?
 
     mod_desc = text.dup
     mod_desc = text.gsub(self.registration_number, '') if self.registration_number.present?
@@ -184,7 +184,7 @@ class Agenda < ActiveRecord::Base
   # full name (law title) - all text in description minus reg #, session # and law description
   def generate_law_title
     text = self.description.dup
-    text = self.name.dup if text.nil?
+    text = self.name.dup if !text.present?
 
     remove = []
     remove << self.registration_number if self.registration_number.present?

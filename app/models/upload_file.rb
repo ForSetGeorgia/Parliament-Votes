@@ -12,7 +12,7 @@ class UploadFile < ActiveRecord::Base
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
   
   validate :file_does_not_exist
-  after_create :process_file
+  after_save :process_file
 
   def self.with_conference
     includes(:conference)
