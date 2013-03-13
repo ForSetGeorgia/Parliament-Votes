@@ -123,10 +123,8 @@ class Agenda < ActiveRecord::Base
   def generate_official_law_title(use_description_field = true)
     text = self.description
     if !use_description_field || !text.present?
-puts "using name field for text"
       text = self.name
     end
-puts "text = #{text}"
     quotes = ['„', '“', '"']
 
     index1 = text.index(quotes[0])
@@ -142,16 +140,12 @@ puts "text = #{text}"
     index3 = text.index(quotes[0], index2 ? index2+1 : 0) if index3.nil?
 
     if index1 && index3
-puts "index1 and index3"
       self.official_law_title = text[index1..index3-1]
     elsif index1 && index2
-puts "index1 and index2"
       self.official_law_title = text[index1..index2]
     elsif !use_description_field 
-puts "just using name"
       self.official_law_title = self.name
     else
-puts "calling again"
       # repeat process using name field
       generate_official_law_title(false)
     end

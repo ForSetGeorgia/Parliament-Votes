@@ -1,4 +1,5 @@
 <% if current_user.role?(User::ROLES[:process_files]) %>
+
   <%= form_tag process_file_path, :method => :post, :class => "form-inline", :id => 'upload_file', :multipart => true do %>
      <%= error_messages_for @upload_file  %> 
     
@@ -8,8 +9,13 @@
 
     <%= file_field_tag 'xml' %>
 
+    <label class="control-label" for="parliament_id">
+      <%= UploadFile.human_attribute_name(:parliament_id) %>
+      <%= select_tag 'parliament_id', options_from_collection_for_select(Parliament.sorted_name, "id", "name") %>
+    </label>
+
     <label class="control-label" for="number_possible_members">
-      <%= Agenda.human_attribute_name(:number_possible_members) %>
+      <%= UploadFile.human_attribute_name(:number_possible_members) %>
       <%= text_field_tag 'number_possible_members', Agenda.default_number_possible_members, 
             :class => 'input-mini', :size => 3, :maxlength => 3 %>
     </label>

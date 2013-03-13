@@ -6,11 +6,13 @@ class RootController < ApplicationController
 
   def index
     @upload_file = UploadFile.new
+    @upload_file.number_possible_members = Agenda.default_number_possible_members
   end
 
   def process_file
     @upload_file = UploadFile.new
     @upload_file.xml = params[:xml]
+    @upload_file.parliament_id = params[:parliament_id]
     @upload_file.number_possible_members = params[:number_possible_members]
 
     respond_to do |format|
@@ -33,7 +35,7 @@ class RootController < ApplicationController
   def edit_conference
     @conference = Conference.find_by_id(params[:id])
     if @conference 
-      @upload_file = UploadFile.find_by_id(@conference.id)
+      @upload_file = UploadFile.find_by_id(@conference.upload_file_id)
 
       if request.post? 
         @upload_file.update_data(params[:upload_file][:number_possible_members], params[:upload_file][:parliament_id])

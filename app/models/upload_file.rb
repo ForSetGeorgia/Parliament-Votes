@@ -9,7 +9,7 @@ class UploadFile < ActiveRecord::Base
 	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, 
       :conference_attributes, :file_processed, :number_possible_members, :parliament_id
 
-  validates :xml_file_name, :presence => true
+  validates :xml_file_name, :number_possible_members, :parliament_id, :presence => true
 
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
   
