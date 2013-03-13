@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130303173120) do
+ActiveRecord::Schema.define(:version => 20130313051131) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -88,6 +88,17 @@ ActiveRecord::Schema.define(:version => 20130303173120) do
   end
 
   add_index "groups", ["conference_id"], :name => "index_groups_on_conference_id"
+
+  create_table "parliaments", :force => true do |t|
+    t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "parliaments", ["name"], :name => "index_parliaments_on_name"
+  add_index "parliaments", ["start_date"], :name => "index_parliaments_on_start_date"
 
   create_table "upload_files", :force => true do |t|
     t.string   "xml_file_name"

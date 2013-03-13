@@ -1,4 +1,5 @@
 BootstrapStarter::Application.routes.draw do
+
 	#--------------------------------
 	# all resources should be within the scope block below
 	#--------------------------------
@@ -9,6 +10,7 @@ BootstrapStarter::Application.routes.draw do
 
 		namespace :admin do
 			resources :users
+      resources :parliaments
 		end
 
     # root controller

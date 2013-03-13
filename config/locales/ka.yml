@@ -10,6 +10,7 @@ ka:
       delegate: დელეგატი
       voting_session: კენჭისყრის სხდომა
       voting_result: კენჭისყრის შედეგები
+      parliament: Parliament
     attributes:
       user:
         email: ელ.ფოსტა
@@ -52,6 +53,11 @@ ka:
       group: 
         text: ფრაქცია
         short_name: ფრაქცია
+      parliament: 
+        name: Parliament Name
+        name_hint: "(e.g., 'მე-8 მოწვევის პარლამენტი')"
+        start_date: Start Date
+        end_date: End Date
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
@@ -136,6 +142,7 @@ ka:
       users_header: მომხმარებლები
       new_users: მომხმარებლის დამატება
       view_users: მომხმარებლების ნახვა
+      parliament: Parliament
     users:
       edit:
         title: ცვლილებების შეტანა მომხმარებლის გვერდზე

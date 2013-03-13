@@ -1,0 +1,29 @@
+<%- model_class = Parliament -%>
+<% title t '.title', :default => model_class.model_name.human %>
+
+  <p>
+    <strong><%= model_class.human_attribute_name(:name) %>:</strong>
+    <%= @parliament.name %>
+  </p>
+  <p>
+    <strong><%= model_class.human_attribute_name(:start_date) %>:</strong>
+    <%= l @parliament.start_date if @parliament.start_date %>
+  </p>
+  <p>
+    <strong><%= model_class.human_attribute_name(:end_date) %>:</strong>
+    <%= l @parliament.end_date if @parliament.end_date %>
+  </p>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              admin_parliaments_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_admin_parliament_path(@parliament), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              admin_parliament_path(@parliament),
+              :method => :delete,
+							:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
+              :class => 'btn btn-danger' %>
+	<%= link_to t('helpers.links.admin'), admin_path,
+  :class => 'btn' %>
+</div>
