@@ -2,7 +2,7 @@
 
 <% if @conference && @upload_file %>
 
-<%= semantic_form_for @upload_file, :url => edit_number_members_path(params[:id]), :method => :post do |f| %>
+<%= semantic_form_for @upload_file, :url => edit_conference_path(params[:id]), :method => :post do |f| %>
 	<%= f.error_messages %>
 
   <div id="edit_form_heading">
@@ -13,6 +13,7 @@
   </div>
 
 	<%= f.inputs do %>
+		<%= f.input :parliament, :include_blank => false %>
 		<%= f.input :number_possible_members, :as => :string, :input_html => {:size => 5, :maxlength => 3} %>
 	<% end %>
 

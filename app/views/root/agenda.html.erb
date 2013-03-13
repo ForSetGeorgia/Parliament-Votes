@@ -7,6 +7,10 @@
       <%= l(@agenda.conference.start_date, :format => :no_zone) %>
     </li>
     <li>
+      <strong><%= Agenda.human_attribute_name(:parliament_id) %>:</strong>
+      <%= @agenda.parliament.name %>
+    </li>
+    <li>
       <strong><%= Agenda.human_attribute_name(:number_possible_members) %>:</strong>
       <%= @agenda.number_possible_members %>
     </li>

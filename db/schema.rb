@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313051131) do
+ActiveRecord::Schema.define(:version => 20130313063116) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130313051131) do
     t.string   "law_title"
     t.string   "official_law_title"
     t.text     "law_description"
+    t.integer  "parliament_id"
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20130313051131) do
   add_index "agendas", ["law_id"], :name => "index_agendas_on_law_id"
   add_index "agendas", ["law_url"], :name => "index_agendas_on_law_url"
   add_index "agendas", ["number_possible_members"], :name => "index_agendas_on_number_possible_members"
+  add_index "agendas", ["parliament_id"], :name => "index_agendas_on_parliament_id"
   add_index "agendas", ["sort_order", "name"], :name => "index_agendas_on_sort_order_and_name"
 
   create_table "all_delegates", :force => true do |t|
@@ -109,10 +111,12 @@ ActiveRecord::Schema.define(:version => 20130313051131) do
     t.datetime "updated_at"
     t.boolean  "file_processed"
     t.integer  "number_possible_members", :default => 150
+    t.integer  "parliament_id"
   end
 
   add_index "upload_files", ["file_processed"], :name => "index_upload_files_on_file_processed"
   add_index "upload_files", ["number_possible_members"], :name => "index_upload_files_on_number_possible_members"
+  add_index "upload_files", ["parliament_id"], :name => "index_upload_files_on_parliament_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

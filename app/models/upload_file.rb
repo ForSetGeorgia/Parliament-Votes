@@ -2,10 +2,12 @@ class UploadFile < ActiveRecord::Base
   has_paper_trail
   
   has_one :conference, :dependent => :destroy
+  belongs_to :parliament
+
   accepts_nested_attributes_for :conference
 
 	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, 
-      :conference_attributes, :file_processed, :number_possible_members
+      :conference_attributes, :file_processed, :number_possible_members, :parliament_id
 
   validates :xml_file_name, :presence => true
 
@@ -26,14 +28,16 @@ class UploadFile < ActiveRecord::Base
     end
   end
 
-  # update the number members in upload file and all its agendas
-  def update_number_members(number)
-    if number.present?
+  # update the number members and parliament id in upload file and all its agendas
+  def update_data(number_members, parliament_id)
+    if number_members.present? && parliament_id.present?
       UploadFile.transaction do
-        self.number_possible_members = number
+        self.number_possible_members = number_members
+        self.parliament_id = parliament_id
         self.save
 
-        Agenda.where(:conference_id => self.conference.id).update_all(:number_possible_members => number)
+        Agenda.where(:conference_id => self.conference.id)
+          .update_all(:number_possible_members => number_members, :parliament_id => parliament_id)
 
       end
     end
@@ -108,7 +112,8 @@ class UploadFile < ActiveRecord::Base
               :level => agenda.at_css('Level').nil? ? nil : agenda.at_css('Level').text, 
               :name => agenda.at_css('Name').nil? ? nil : agenda.at_css('Name').text, 
               :description => agenda.at_css('Description').nil? ? nil : agenda.at_css('Description').text,
-              :number_possible_members => self.number_possible_members
+              :number_possible_members => self.number_possible_members,
+              :parliament_id => self.parliament_id
             )
 
             # add voting sessions for agenda          

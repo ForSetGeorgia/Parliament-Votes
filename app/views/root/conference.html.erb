@@ -7,14 +7,20 @@
       <%= l(@conference.start_date, :format => :no_zone) %>
     </li>
     <li>
+      <strong><%= UploadFile.human_attribute_name(:parliament_id) %>:</strong>
+      <%= @conference.upload_file.parliament.name %>
+    </li>
+    <li>
       <strong><%= UploadFile.human_attribute_name(:number_possible_members) %>:</strong>
       <%= @conference.upload_file.number_possible_members %>
-      <%= link_to t('helpers.links.edit'), edit_number_members_path(@conference.id), :class => 'btn btn-mini fancybox' %>
     </li>
   </ul>
 </div>
 
   <div id="agenda_laws_only">
+    <% if current_user.role?(User::ROLES[:process_files]) %>
+      <%= link_to t('helpers.links.edit_conference'), edit_conference_path(@conference.id), :class => 'btn btn-success fancybox' %>
+    <% end %>
     <% if params[:laws_only].present? && params[:laws_only] == "false" %>
       <%= link_to t('.view_laws_only'), url_for(params.merge(:laws_only => 'true')), :class => 'btn btn-primary' %>
     <% else %>

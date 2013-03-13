@@ -22,6 +22,8 @@ en:
         xml: XML File
         created_at: Date Added
         number_possible_members: Number Members
+        parliament_id: Parliament
+        parliament: Parliament
       conference:
         name: Conference Name
         start_date: Conference Date
@@ -38,6 +40,8 @@ en:
         official_law_title: Official Law Title
         law_title: Full Name
         law_description: Law Description
+        parliament_id: Parliament
+        parliament: Parliament
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N)
@@ -80,6 +84,7 @@ en:
       view_law_url: View Law
       make_law: Is Law
       unmake_law: Not Law
+      edit_conference: Edit Conference
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -162,8 +167,8 @@ en:
       title: "Conference: %{name} (%{date})"
       view_laws_only: View Laws Only
       view_all: View All Items
-    edit_number_members: 
-      title: Edit Number of Members
+    edit_conference: 
+      title: Edit Conference
       not_found: The Conference could not be found.
       conference: "Conference: %{name} (%{date})"
     agenda:

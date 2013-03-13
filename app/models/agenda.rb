@@ -4,14 +4,17 @@ class Agenda < ActiveRecord::Base
   
   has_one :voting_session, :dependent => :destroy
   belongs_to :conference
+  belongs_to :parliament
 
   accepts_nested_attributes_for :voting_session
 
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
       :is_law, :registration_number, :session_number, :number_possible_members, :law_url, :law_id,
-      :official_law_title, :law_description, :law_title
+      :official_law_title, :law_description, :law_title, :parliament_id
 
 	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
+
+  validates :number_possible_members, :parliament_id, :presence => true
 
   DEFAULT_NUMBER_MEMBERS = 150
   
