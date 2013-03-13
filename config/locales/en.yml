@@ -42,6 +42,7 @@ en:
         law_description: Law Description
         parliament_id: Parliament
         parliament: Parliament
+        sort_order: Order
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N)

@@ -27,6 +27,7 @@ private
     agendas.map do |agenda|
       [
         change_status_link(agenda),
+        agenda.sort_order,
         link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
           agenda_path(:id => agenda.id, :locale => I18n.locale, :laws_only => params[:laws_only])),
         agenda.law_title,
@@ -71,7 +72,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum]
+    columns = %w[agendas.sort_order agendas.sort_order agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum]
     columns[params[:iSortCol_0].to_i]
   end
 
