@@ -4,13 +4,13 @@ ka:
     models:
       user: მომხმარებელი
       upload_file: ფაილის ატვირთვა
-      conference: კონფერენცია
+      conference: სხდომა
       agenda: დღის წესრიგი  
       group: ჯგუფი
       delegate: დელეგატი
       voting_session: კენჭისყრის სხდომა
       voting_result: კენჭისყრის შედეგები
-      parliament: Parliament
+      parliament: პარლამენტი
     attributes:
       user:
         email: ელ.ფოსტა
@@ -22,31 +22,31 @@ ka:
         xml: XML ფაილი
         created_at: დამატების თარიღი
         number_possible_members: წევრების რაოდენობა
-        parliament_id: Parliament
+        parliament_id: პარლამენტი
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი
         number_laws: "# კანონები"
         number_sessions: "# სესიები"
       agenda:
-        name: Original Name from File
-        description: Original Description from File
+        name: საწყისი სახელი ფაილიდან
+        description: საწყისი აღწერა ფაილიდან
         session_number: მოსმენა
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
         law_url: კანონის ბმული
-        law_id: Law ID
-        official_law_title: Official Law Title
-        law_title: Full Name
-        law_description: Law Description
-        parliament_id: Parliament
-        sort_order: Order
+        law_id: კანონის ნომერი
+        official_law_title: ოფიციალური კანონის სათაური
+        law_title: სრული სახელი
+        law_description: კანონის აღწერა
+        parliament_id: პარლამენტი
+        sort_order: თანმიმდევრობა
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა)
         quorum: ქვორუმი
         results: შედეგები (დიახ / არა)
-        voting_conclusion: Original Voting Results
+        voting_conclusion: საწყისი კენჭისყრის შედეგები
       voting_result:
         present: რეგისტრაცია
         vote: კენჭისყრის შედეგი
@@ -57,10 +57,10 @@ ka:
         text: ფრაქცია
         short_name: ფრაქცია
       parliament: 
-        name: Parliament Name
-        name_hint: "(e.g., 'მე-8 მოწვევის პარლამენტი')"
-        start_date: Start Date
-        end_date: End Date
+        name: პარლამენტის სახელი
+        name_hint: "(მაგ., 'მე-8 მოწვევის პარლამენტი')"
+        start_date: დაწყების თარიღი
+        end_date: დასრულების თარიღი
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
@@ -79,11 +79,11 @@ ka:
       reset: საწყის კონფიგურაციაზე დაბრუნება
       view: ნახვა
       add_vote: ხმის დამატება
-      edit_law: Edit Law Info
+      edit_law: კანონის ინფორმაციის რედაქტირება
       view_law_url: კანონის ნახვა
-      make_law: Is Law
-      unmake_law: Not Law
-      edit_conference: Edit Conference
+      make_law: არის კანონი
+      unmake_law: არ არის კანონი
+      edit_conference: სხდომის რედაქტირება
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -118,7 +118,7 @@ ka:
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
       success_created: "%{obj} შექმნილია."
       success_updated: "%{obj} განახლებულია."
-      not_law: "The item '%{name}' is no longer marked as a law."
+      not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
   layouts:
     application:
       admin: ადმინისტრატო
@@ -146,7 +146,7 @@ ka:
       users_header: მომხმარებლები
       new_users: მომხმარებლის დამატება
       view_users: მომხმარებლების ნახვა
-      parliament: Parliament
+      parliament: პარლამენტი
     users:
       edit:
         title: ცვლილებების შეტანა მომხმარებლის გვერდზე
@@ -163,30 +163,30 @@ ka:
       upload_btn: ფაილის ატვირთვა
       processing: პროცესშია...
     conference:
-      title: "კონფერენცია: %{name} (%{date})"
+      title: "სხდომა: %{name} (%{date})"
       view_laws_only: მხოლოდ კანონების ნახვა
       view_all: ყველა საკითხის ნახვა 
     edit_conference: 
-      title: Edit Conference
-      not_found: The Conference could not be found.
-      conference: "Conference: %{name} (%{date})"
+      title: სხდომის რედაქტირება
+      not_found: სხდომა არ მოიძებნა.
+      conference: "სხდომა: %{name} (%{date})"
     agenda:
       title: "დღის წესრიგი: %{name} (%{date})"
       no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის
       not_present: არ ესწრებოდა
     edit_agenda: 
-      title: Edit Law
-      not_found: The Law could not be found.
-      agenda: "Law: %{name} (%{date})"
+      title: კანონის რედაქტირება
+      not_found: კანონი არ მოიძებნა.
+      agenda: "კანონი: %{name} (%{date})"
     edit_vote: 
       title: ხმის მიცემის რედაქტირება
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
-      agenda: "Law: %{name} (%{date})"
+      agenda: "კანონი: %{name} (%{date})"
       delegate: "დელეგატი: %{name}"
     add_vote: 
       title: გამოტოვებული ხმების დამატება
       non_available: ყველადელეგატმა მისცა ხმა.
-      not_found: The Law could not be found.
-      agenda: "Law: %{name} (%{date})"
+      not_found: კანონი არ მოიძებნა.
+      agenda: "კანონი: %{name} (%{date})"
       submit: ხმების შენახვა
 
