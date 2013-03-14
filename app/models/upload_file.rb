@@ -20,12 +20,18 @@ class UploadFile < ActiveRecord::Base
     includes(:conference)
   end
 
+  # if conference already on file with same date, throw error
   def file_does_not_exist
-    files = UploadFile.where(:xml_file_name => self.xml_file_name)
+    doc = Nokogiri::XML(self.xml.queued_for_write[:original])
+    conf = doc.at_css('Conference')
+    if conf.present?
+      already_exists = Conference.where(:start_date => conf.at_css('StartDate').text[0..9])
 
-    if files.present? && !self.id.present?
-      errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
+      if already_exists.present? && !self.id.present?
+        errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
+      end
     end
+
   end
 
   # update the number members and parliament id in upload file and all its agendas
