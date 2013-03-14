@@ -26,7 +26,10 @@ private
         upload_file.conference.number_laws,
         upload_file.conference.number_sessions,
         upload_file.xml_file_name,
-        I18n.l(upload_file.created_at, :format => :no_zone)
+        I18n.l(upload_file.created_at, :format => :no_zone),
+        link_to(I18n.t("helpers.links.destroy"), delete_file_path(:id => upload_file.id, :locale => I18n.locale), 
+          :data => { :confirm => I18n.t('.confirm', :default => I18n.t("helpers.links.confirm")) },
+          :class => 'btn btn-mini btn-danger')
       ]
     end
   end
@@ -50,7 +53,7 @@ private
   end
 
   def sort_column
-    columns = %w[conferences.name conferences.start_date upload_files.number_possible_members conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at]
+    columns = %w[conferences.name conferences.start_date upload_files.number_possible_members conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at conferences.name]
     columns[params[:iSortCol_0].to_i]
   end
 

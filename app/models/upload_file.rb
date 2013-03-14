@@ -3,11 +3,13 @@ class UploadFile < ActiveRecord::Base
   
   has_one :conference, :dependent => :destroy
   belongs_to :parliament
+  belongs_to :deleted_by, :class_name => "User", :foreign_key => "delete_by_id"
 
   accepts_nested_attributes_for :conference
 
 	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, 
-      :conference_attributes, :file_processed, :number_possible_members, :parliament_id, :is_deleted
+      :conference_attributes, :file_processed, :number_possible_members, :parliament_id, 
+      :is_deleted, :deleted_at, :deleted_by_id
 
   validates :xml_file_name, :number_possible_members, :parliament_id, :presence => true
 
@@ -35,6 +37,14 @@ class UploadFile < ActiveRecord::Base
       end
     end
 
+  end
+
+  # mark file as deleted
+  def mark_as_deleted(current_user)
+    self.is_deleted = true
+    self.deleted_at = Time.now
+    self.deleted_by_id = current_user.id
+    self.save
   end
 
   # update the number members and parliament id in upload file and all its agendas

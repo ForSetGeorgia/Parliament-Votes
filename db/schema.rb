@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(:version => 20130314055355) do
     t.integer  "number_possible_members", :default => 150
     t.integer  "parliament_id"
     t.boolean  "is_deleted",              :default => false
+    t.datetime "deleted_at"
+    t.integer  "deleted_by_id"
   end
 
   add_index "upload_files", ["file_processed"], :name => "index_upload_files_on_file_processed"

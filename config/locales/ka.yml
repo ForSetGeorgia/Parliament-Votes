@@ -3,7 +3,7 @@ ka:
   activerecord:
     models:
       user: მომხმარებელი
-      upload_file: ფაილის ატვირთვა
+      upload_file: XML ფაილი
       conference: სხდომა
       agenda: დღის წესრიგი  
       group: ჯგუფი
@@ -23,6 +23,7 @@ ka:
         created_at: დამატების თარიღი
         number_possible_members: წევრების რაოდენობა
         parliament_id: პარლამენტი
+        parliament: პარლამენტი
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი
@@ -40,6 +41,7 @@ ka:
         law_title: სრული სახელი
         law_description: კანონის აღწერა
         parliament_id: პარლამენტი
+        parliament: პარლამენტი
         sort_order: თანმიმდევრობა
       voting_session:
         passed: გავიდა
@@ -118,6 +120,7 @@ ka:
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
       success_created: "%{obj} შექმნილია."
       success_updated: "%{obj} განახლებულია."
+      success_deleted: "%{obj} was successfully deleted."
       not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
   layouts:
     application:

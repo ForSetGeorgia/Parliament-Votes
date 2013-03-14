@@ -15,6 +15,7 @@ BootstrapStarter::Application.routes.draw do
 
     # root controller
     match '/process_file', :to => 'root#process_file', :as => :process_file, :via => :post
+    match '/delete_file/:id', :to => 'root#delete_file', :as => :delete_file, :via => :get
     match '/conference/:id', :to => 'root#conference', :as => :conference, :via => :get
     match '/edit_conference/:id', :to => 'root#edit_conference', :as => :edit_conference, :via => :get
     match '/edit_conference/:id', :to => 'root#edit_conference', :as => :edit_conference, :via => :post

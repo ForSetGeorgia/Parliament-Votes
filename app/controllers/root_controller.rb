@@ -1,12 +1,23 @@
 class RootController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :only => [:process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda, :edit_conference] do |controller_instance|
+  before_filter :only => [:delete_file, :process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda, :edit_conference] do |controller_instance|
     controller_instance.send(:valid_role?, User::ROLES[:process_files])
   end
 
   def index
     @upload_file = UploadFile.new
     @upload_file.number_possible_members = Agenda.default_number_possible_members
+  end
+
+  def delete_file
+    upload_file = UploadFile.find_by_id(params[:id])
+
+    if upload_file.present?
+      upload_file.mark_as_deleted(current_user)
+    end
+
+		flash[:notice] =  t('app.msgs.success_deleted', :obj => t('activerecord.models.upload_file'))
+		redirect_to root_path(:locale => I18n.locale)    
   end
 
   def process_file

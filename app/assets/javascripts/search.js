@@ -85,7 +85,10 @@ $(document).ready(function(){
     "bFilter": false,
     "bInfo": false,
     "aaSorting": [[1, 'desc']],
-    "iDisplayLength": 25
+    "iDisplayLength": 25,
+    "aoColumnDefs": [
+      { 'bSortable': false, 'aTargets': [ 7 ] }
+    ]
   });
 
 });
