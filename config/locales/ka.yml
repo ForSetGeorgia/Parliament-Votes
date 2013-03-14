@@ -24,6 +24,9 @@ ka:
         number_possible_members: წევრების რაოდენობა
         parliament_id: პარლამენტი
         parliament: პარლამენტი
+        deleted_at: Date Deleted
+        is_deleted: Deleted?
+        deleted_by_id: Deleted By
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი
@@ -86,6 +89,7 @@ ka:
       make_law: არის კანონი
       unmake_law: არ არის კანონი
       edit_conference: სხდომის რედაქტირება
+      restore: Restore
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -121,6 +125,7 @@ ka:
       success_created: "%{obj} შექმნილია."
       success_updated: "%{obj} განახლებულია."
       success_deleted: "%{obj} was successfully deleted."
+      success_restored: "%{obj} was successfully restored."
       not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
   layouts:
     application:
@@ -150,6 +155,7 @@ ka:
       new_users: მომხმარებლის დამატება
       view_users: მომხმარებლების ნახვა
       parliament: პარლამენტი
+      deleted_files: Restore Deleted Files
     users:
       edit:
         title: ცვლილებების შეტანა მომხმარებლის გვერდზე
@@ -159,6 +165,8 @@ ka:
         title: ახალი მომხმარებელი
       show:
         title: მომხმარებლის დეტალები
+    deleted_files:
+      title: Restore Deleted Files
   root:
     index:
       title:
@@ -192,4 +200,3 @@ ka:
       not_found: კანონი არ მოიძებნა.
       agenda: "კანონი: %{name} (%{date})"
       submit: ხმების შენახვა
-

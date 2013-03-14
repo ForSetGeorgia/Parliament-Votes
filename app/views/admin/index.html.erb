@@ -1,12 +1,14 @@
 <% title t('.title') %>
 
-	<h3><%= t('.users_header')%></h3>
 	<ul class="standard">
 		<li>
      <%= link_to t('.view_users'), admin_users_path %>
     </li>
 		<li>
      <%= link_to t('.parliament'), admin_parliaments_path %>
+    </li>
+		<li>
+     <%= link_to t('.deleted_files'), deleted_files_path %>
     </li>
 	</ul>
 

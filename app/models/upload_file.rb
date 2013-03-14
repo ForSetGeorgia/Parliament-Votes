@@ -47,6 +47,14 @@ class UploadFile < ActiveRecord::Base
     self.save
   end
 
+  # undelete the file
+  def restore(current_user)
+    self.is_deleted = false
+    self.deleted_at = Time.now
+    self.deleted_by_id = current_user.id
+    self.save
+  end
+
   # update the number members and parliament id in upload file and all its agendas
   def update_data(number_members, parliament_id)
     if number_members.present? && parliament_id.present?

@@ -32,6 +32,12 @@ BootstrapStarter::Application.routes.draw do
     match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
     match '/search/agendas/:conference_id(/:laws_only)', :to => 'search#agendas', :as => :search_agendas, :via => :get, :defaults => {:format => 'json'}
     match '/search/files', :to => 'search#files', :as => :search_files, :via => :get, :defaults => {:format => 'json'}
+    match '/search/deleted_files', :to => 'search#deleted_files', :as => :search_deleted_files, :via => :get, :defaults => {:format => 'json'}
+
+    # admin
+    match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :deleted_files, :via => :get
+    match '/admin/restore_file/:id', :to => 'admin#restore_file', :as => :restore_file, :via => :get
+    
 
 		root :to => 'root#index'
 	  match "*path", :to => redirect("/#{I18n.default_locale}") # handles /en/fake/path/whatever

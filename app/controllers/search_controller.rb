@@ -1,6 +1,9 @@
 # encoding: utf-8
 class SearchController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :only => [:delete_files] do |controller_instance|
+    controller_instance.send(:valid_role?, User::ROLES[:lower_admin])
+  end
   
   def voting_results
     respond_to do |format|
@@ -17,6 +20,12 @@ class SearchController < ApplicationController
   def files
     respond_to do |format|
       format.json { render json: UploadFileDatatable.new(view_context) }
+    end
+  end
+
+  def deleted_files
+    respond_to do |format|
+      format.json { render json: DeletedFileDatatable.new(view_context) }
     end
   end
 
