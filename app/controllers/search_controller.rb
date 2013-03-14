@@ -19,7 +19,7 @@ class SearchController < ApplicationController
 
   def files
     respond_to do |format|
-      format.json { render json: UploadFileDatatable.new(view_context) }
+      format.json { render json: UploadFileDatatable.new(view_context, current_user) }
     end
   end
 

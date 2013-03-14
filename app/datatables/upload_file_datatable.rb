@@ -1,9 +1,11 @@
 class UploadFileDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
+  delegate :current_user, to: :@current_user
 
-  def initialize(view)
+  def initialize(view, current_user)
     @view = view
+    @current_user = current_user
   end
 
   def as_json(options = {})
@@ -27,10 +29,16 @@ private
         upload_file.conference.number_sessions,
         upload_file.xml_file_name,
         I18n.l(upload_file.created_at, :format => :no_zone),
-        link_to(I18n.t("helpers.links.destroy"), delete_file_path(:id => upload_file.id, :locale => I18n.locale), 
+        delete_link(upload_file)
+      ]
+    end
+  end
+
+  def delete_link(upload_file)
+    if @current_user.role?(User::ROLES[:process_files]) 
+      link_to(I18n.t("helpers.links.destroy"), delete_file_path(:id => upload_file.id, :locale => I18n.locale), 
           :data => { :confirm => I18n.t('.confirm', :default => I18n.t("helpers.links.confirm")) },
           :class => 'btn btn-mini btn-danger')
-      ]
     end
   end
 
