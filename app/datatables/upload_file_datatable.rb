@@ -9,7 +9,7 @@ class UploadFileDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: UploadFile.with_conference.count,
+      iTotalRecords: UploadFile.not_deleted.with_conference.count,
       iTotalDisplayRecords: upload_files.total_entries,
       aaData: data
     }
@@ -36,7 +36,7 @@ private
   end
 
   def fetch_upload_files
-    upload_files = UploadFile.with_conference.order("#{sort_column} #{sort_direction}")
+    upload_files = UploadFile.not_deleted.with_conference.order("#{sort_column} #{sort_direction}")
     upload_files = upload_files.page(page).per_page(per_page)
     upload_files
   end

@@ -15,7 +15,7 @@ class AgendaDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.by_conference(@conference_id).laws_only(@laws_only).count,
+      iTotalRecords: Agenda.not_deleted.by_conference(@conference_id).laws_only(@laws_only).count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -55,7 +55,7 @@ private
   end
 
   def fetch_agendas
-    agendas = Agenda.by_conference(@conference_id).laws_only(@laws_only).order("#{sort_column} #{sort_direction}")
+    agendas = Agenda.not_deleted.by_conference(@conference_id).laws_only(@laws_only).order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.name like :search or agendas.session_number like :search or agendas.registration_number like :search", search: "%#{params[:sSearch]}%")

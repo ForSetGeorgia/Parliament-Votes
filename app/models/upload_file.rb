@@ -7,11 +7,14 @@ class UploadFile < ActiveRecord::Base
   accepts_nested_attributes_for :conference
 
 	attr_accessible :xml, :xml_file_name, :xml_content_type, :xml_file_size, :xml_updated_at, 
-      :conference_attributes, :file_processed, :number_possible_members, :parliament_id
+      :conference_attributes, :file_processed, :number_possible_members, :parliament_id, :is_deleted
 
   validates :xml_file_name, :number_possible_members, :parliament_id, :presence => true
 
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
+
+  scope :not_deleted, where(:is_deleted => false)
+  scope :deleted, where(:is_deleted => true)
   
   validate :file_does_not_exist
   after_save :process_file

@@ -13,7 +13,7 @@ class VotingResultDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: VotingResult.by_session(@voting_session_id).count,
+      iTotalRecords: VotingResult.not_deleted.by_session(@voting_session_id).count,
       iTotalDisplayRecords: voting_results.total_entries,
       aaData: data
     }
@@ -60,7 +60,7 @@ private
   end
 
   def fetch_voting_results
-    voting_results = VotingResult.by_session(@voting_session_id).order("#{sort_column} #{sort_direction}")
+    voting_results = VotingResult.not_deleted.by_session(@voting_session_id).order("#{sort_column} #{sort_direction}")
     voting_results = voting_results.page(page).per_page(per_page)
     if params[:sSearch].present?
       voting_results = voting_results.where("delegates.first_name like :search", search: "%#{params[:sSearch]}%")

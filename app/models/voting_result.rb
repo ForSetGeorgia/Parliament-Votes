@@ -26,4 +26,8 @@ class VotingResult < ActiveRecord::Base
   def self.by_session(voting_session_id)
     includes(:delegate => :group, :voting_session => :agenda).where(:voting_session_id => voting_session_id)
   end
+
+  def self.not_deleted
+    includes(:voting_session => {:agenda => {:conference => :upload_file}}).where("upload_files.is_deleted = 0")
+  end
 end

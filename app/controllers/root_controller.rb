@@ -29,84 +29,112 @@ class RootController < ApplicationController
 
 
   def conference
-    @conference = Conference.find(params[:id])
+    @conference = Conference.not_deleted.find_by_id(params[:id])
+
+    if !@conference.present?
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
+    end
   end
 
   def edit_conference
-    @conference = Conference.find_by_id(params[:id])
-    if @conference 
-      @upload_file = UploadFile.find_by_id(@conference.upload_file_id)
+    @conference = Conference.not_deleted.find_by_id(params[:id])
+    if @conference.present? 
+      @upload_file = UploadFile.not_deleted.find_by_id(@conference.upload_file_id)
 
-      if request.post? 
+      if @upload_file && request.post? 
         @upload_file.update_data(params[:upload_file][:number_possible_members], params[:upload_file][:parliament_id])
         redirect_to conference_path(params[:id]), 
             notice: t('app.msgs.success_updated', :obj => t('activerecord.models.conference'))
       end
+    else 
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
     end
   end
 
   def agenda
-    @agenda = Agenda.find(params[:id])
+    @agenda = Agenda.not_deleted.find_by_id(params[:id])
+
+    if !@agenda.present?
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
+    end
   end
 
   def edit_agenda
-    @agenda = Agenda.find_by_id(params[:id])
+    @agenda = Agenda.not_deleted.find_by_id(params[:id])
     
-    @agenda.generate_missing_data
-    
-    if request.post?
-      @agenda.update_attributes(params[:agenda])
-      redirect_to agenda_path(@agenda.id), 
-          notice: t('app.msgs.success_updated', :obj => t('activerecord.models.agenda'))
+    if @agenda.present?  
+      @agenda.generate_missing_data
+      
+      if request.post?
+        @agenda.update_attributes(params[:agenda])
+        redirect_to agenda_path(@agenda.id), 
+            notice: t('app.msgs.success_updated', :obj => t('activerecord.models.agenda'))
+      end
+    else 
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
     end
   end
 
   def add_vote
-    @agenda = Agenda.find(params[:id])
+    @agenda = Agenda.not_deleted.find_by_id(params[:id])
     @groups = Group.by_conference(@agenda.conference_id)
     @available_delegates = AllDelegate.available_delegates(params[:id])
-    if request.post?
-      params[:delegates].keys.each do |key|
-        delegate = params[:delegates][key]
-        if delegate["vote"].present?
+    if @agenda.present?
+      if request.post?
+        params[:delegates].keys.each do |key|
+          delegate = params[:delegates][key]
+          if delegate["vote"].present?
 
-          # first create delegate record
-          del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], 
-            :group_id => delegate["group_id"],
-            :first_name => delegate["first_name"])
-          # now save voting result record
-          VotingResult.create(:voting_session_id => @agenda.voting_session.id, 
-                    :delegate_id => del.id,
-                    :present => true,
-                    :vote => delegate["vote"],
-                    :is_manual_add => true)
+            # first create delegate record
+            del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], 
+              :group_id => delegate["group_id"],
+              :first_name => delegate["first_name"])
+            # now save voting result record
+            VotingResult.create(:voting_session_id => @agenda.voting_session.id, 
+                      :delegate_id => del.id,
+                      :present => true,
+                      :vote => delegate["vote"],
+                      :is_manual_add => true)
+          end
         end
-      end
 
-      redirect_to agenda_path(@agenda.id), 
+        redirect_to agenda_path(@agenda.id), 
           notice: t('app.msgs.success_created', :obj => t('activerecord.models.voting_result'))
+      end
+    else
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
     end
   end
 
   def edit_vote
-    @voting_result = VotingResult.find_by_id(params[:id])
+    @voting_result = VotingResult.not_deleted.find_by_id(params[:id])
 
-    if request.post?
-      if @voting_result.vote.to_s != params[:voting_result][:vote]
-        # the vote chagned, save it
-        @voting_result.vote = params[:voting_result][:vote]
-        @voting_result.is_edited = true
-        @voting_result.save        
+    if @voting_result 
+      if request.post?
+        if @voting_result.vote.to_s != params[:voting_result][:vote]
+          # the vote chagned, save it
+          @voting_result.vote = params[:voting_result][:vote]
+          @voting_result.is_edited = true
+          @voting_result.save        
+        end
+        redirect_to agenda_path(@voting_result.voting_session.agenda.id), 
+            notice: t('app.msgs.success_updated', :obj => t('activerecord.models.voting_result'))
       end
-      redirect_to agenda_path(@voting_result.voting_session.agenda.id), 
-          notice: t('app.msgs.success_updated', :obj => t('activerecord.models.voting_result'))
+    else
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to root_path(:locale => I18n.locale)
     end
   end
 
   def not_law
-    @agenda = Agenda.find_by_id(params[:id])
+    @agenda = Agenda.not_deleted.find_by_id(params[:id])
 
-    if @agenda
+    if @agenda.present?
       @agenda.is_law = false
       @agenda.save
       flash[:notice] = t('app.msgs.not_law', :name => @agenda.name)

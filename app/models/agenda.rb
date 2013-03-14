@@ -30,6 +30,10 @@ class Agenda < ActiveRecord::Base
     end
   end
 
+  def self.not_deleted
+    includes(:conference => :upload_file).where("upload_files.is_deleted = 0")
+  end
+
   # get the last number of members from the db.
   # - if on exists, use default
   def self.default_number_possible_members

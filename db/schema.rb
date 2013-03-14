@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313063116) do
+ActiveRecord::Schema.define(:version => 20130314055355) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -112,9 +112,11 @@ ActiveRecord::Schema.define(:version => 20130313063116) do
     t.boolean  "file_processed"
     t.integer  "number_possible_members", :default => 150
     t.integer  "parliament_id"
+    t.boolean  "is_deleted",              :default => false
   end
 
   add_index "upload_files", ["file_processed"], :name => "index_upload_files_on_file_processed"
+  add_index "upload_files", ["is_deleted"], :name => "index_upload_files_on_is_deleted"
   add_index "upload_files", ["number_possible_members"], :name => "index_upload_files_on_number_possible_members"
   add_index "upload_files", ["parliament_id"], :name => "index_upload_files_on_parliament_id"
 
