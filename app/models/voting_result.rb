@@ -6,6 +6,8 @@ class VotingResult < ActiveRecord::Base
 
   attr_accessible :voting_session_id, :delegate_id, :present, :vote, :weight, :is_edited, :is_manual_add
 
+  ABSTAIN = 0
+
   def present_formatted
     if read_attribute(:present)
       I18n.t('helpers.boolean.y')
@@ -16,6 +18,8 @@ class VotingResult < ActiveRecord::Base
 
   def vote_formatted
     case read_attribute(:vote)
+      when 0
+        I18n.t('helpers.boolean.abstain')
       when 1
         I18n.t('helpers.boolean.y')
       else

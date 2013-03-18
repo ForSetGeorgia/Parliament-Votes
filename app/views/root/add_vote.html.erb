@@ -50,6 +50,10 @@
                   <%= radio_button_tag "delegates[#{index}][vote]", "3", false %>
                   <%= t('helpers.boolean.n') %>
                 </label>
+                <label for="<%= "delegates_#{index}_vote_0" %>" class="radio inline">
+                  <%= radio_button_tag "delegates[#{index}][vote]", "0", false %>
+                  <%= t('helpers.boolean.abstain') %>
+                </label>
               </td>
             </tr>
           <% end %>

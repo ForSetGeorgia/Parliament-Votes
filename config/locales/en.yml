@@ -48,7 +48,7 @@ en:
         sort_order: Order
       voting_session:
         passed: Passed
-        passed_yn: Passed (Y/N)
+        passed_yn: Passed (Y/N/Abs)
         quorum: Quorum
         results: Results (Y/N)
         voting_conclusion: Original Voting Results from File
@@ -96,6 +96,7 @@ en:
     boolean:
       y: "Yes"
       n: "No"
+      abstain: Abstain
   app:
     language:
       en: English

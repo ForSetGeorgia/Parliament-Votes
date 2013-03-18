@@ -143,7 +143,7 @@ class RootController < ApplicationController
   end
 
   def not_law
-    @agenda = Agenda.not_deleted.find_by_id(params[:id])
+    @agenda = Agenda.not_deleted.readonly(false).find_by_id(params[:id])
 
     if @agenda.present?
       @agenda.is_law = false

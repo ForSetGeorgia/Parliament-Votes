@@ -31,7 +31,7 @@ class Agenda < ActiveRecord::Base
   end
 
   def self.not_deleted
-    includes(:conference => :upload_file).where("upload_files.is_deleted = 0")
+    joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
   end
 
   # get the last number of members from the db.
@@ -53,8 +53,12 @@ class Agenda < ActiveRecord::Base
     self.voting_session.voting_results.select{|x| x.vote == 3}.count
   end
 
+  def total_abstain
+    self.voting_session.voting_results.select{|x| x.vote == 0}.count
+  end
+
   def total_not_present
-    self.number_possible_members - total_yes - total_no
+    self.number_possible_members - total_yes - total_no - total_abstain
   end
 
   def is_final_version?

@@ -79,6 +79,10 @@
         <%= @agenda.total_no %>
       </li>
       <li>
+        <span><%= t('helpers.boolean.abstain') %>:</span>
+        <%= @agenda.total_abstain %>
+      </li>
+      <li>
         <span><%= t('.not_present') %>:</span>
         <%= @agenda.total_not_present %>
       </li>
