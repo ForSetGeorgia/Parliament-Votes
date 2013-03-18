@@ -33,7 +33,6 @@
       data-source="<%= search_agendas_url(:conference_id => @conference.id, :format => :json) %>">
   <thead>
     <tr>
-      <th></th>
       <th><%= Agenda.human_attribute_name(:sort_order) %></th>
       <th><%= Agenda.human_attribute_name(:official_law_title) %></th>
       <th><%= Agenda.human_attribute_name(:law_title) %></th>
@@ -42,6 +41,7 @@
       <th><%= Agenda.human_attribute_name(:registration_number) %></th>
       <th><%= VotingSession.human_attribute_name(:passed_yn) %></th>
       <th><%= VotingSession.human_attribute_name(:quorum) %></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
