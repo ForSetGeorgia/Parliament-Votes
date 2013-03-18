@@ -34,6 +34,7 @@ class Admin::UsersController < ApplicationController
   # GET /admin/users/new.json
   def new
     @user = User.new
+    @roles = current_user.accessible_roles
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +45,9 @@ class Admin::UsersController < ApplicationController
   # GET /admin/users/1/edit
   def edit
     @user = User.find(params[:id])
-    if @user.role == User::ROLES[:admin] && current_user.role != User::ROLES[:admin]
+    @roles = current_user.accessible_roles
+
+    if @user.role == User::ROLES[:lower_admin] && current_user.role != User::ROLES[:lower_admin]
       redirect_to admin_users_path
     end
   end

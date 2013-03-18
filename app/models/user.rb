@@ -19,6 +19,12 @@ class User < ActiveRecord::Base
 		self.role = User::ROLES[:user] if self.role.nil?
 	end
 
+  # get list of roles that user has access to
+  # format: [ [name, value] ]
+  def accessible_roles
+    User::ROLES.select{|k,v| v <= self.role}.map{|key,value| [key.to_s.humanize, value.to_s]}
+  end
+
   # use role inheritence
   # - a role with a larger number can do everything that smaller numbers can do
   ROLES = {:user => 0, :process_files => 25, :lower_admin => 50,  :admin => 99}
