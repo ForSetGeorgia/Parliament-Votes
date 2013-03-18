@@ -62,6 +62,7 @@ class Admin::UsersController < ApplicationController
         format.html { redirect_to admin_users_path, notice: t('app.msgs.success_created', :obj => t('activerecord.models.user')) }
         format.json { render json: @user, status: :created, location: @user }
       else
+        @roles = current_user.accessible_roles
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -74,10 +75,17 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
 
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      success = if params[:user][:password].present? || params[:user][:password_confirmation].present?
+        @user.update_with_password(params[:user])
+      else
+        @user.update_without_password(params[:user])
+      end
+
+      if success
         format.html { redirect_to admin_users_path, notice: t('app.msgs.success_updated', :obj => t('activerecord.models.user')) }
         format.json { head :ok }
       else
+        @roles = current_user.accessible_roles
         format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
