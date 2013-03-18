@@ -48,7 +48,7 @@ ka:
         sort_order: თანმიმდევრობა
       voting_session:
         passed: გავიდა
-        passed_yn: გავიდა (დიახ / არა / Abstain)
+        passed_yn: გავიდა (დიახ / არა / არ მიუცია)
         quorum: ქვორუმი
         results: შედეგები (დიახ / არა)
         voting_conclusion: საწყისი კენჭისყრის შედეგები
@@ -96,7 +96,7 @@ ka:
     boolean:
       y: "დიახ"
       n: "არა"
-      abstain: Abstain
+      abstain: არ მიუცია
   app:
     language:
       en: English
