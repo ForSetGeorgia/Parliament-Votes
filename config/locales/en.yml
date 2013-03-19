@@ -93,6 +93,7 @@ en:
       edit_conference: Edit Conference
       restore: Restore
       add: Add
+      publish: Make Public
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"

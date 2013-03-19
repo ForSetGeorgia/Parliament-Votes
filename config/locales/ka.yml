@@ -93,6 +93,7 @@ ka:
       edit_conference: სხდომის რედაქტირება
       restore: აღდგენა
       add: Add
+      publish: Make Public
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"

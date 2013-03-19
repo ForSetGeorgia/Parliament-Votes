@@ -47,24 +47,29 @@ private
   end
 
   def has_session1(agenda)
-    if agenda.session_number1_id.present?
-      link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
-    else
-      link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+    if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
+      if agenda.session_number1_id.present?
+        link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), :class => 'btn btn-mini')
+      else
+        link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+      end
     end
   end
 
   def has_session2(agenda)
-    if agenda.session_number2_id.present?
-      link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
-    else
-      link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+    if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
+      if agenda.session_number2_id.present?
+        link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini')
+      else
+        link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+      end
     end
   end
 
   def can_publish(agenda)
-    if agenda.law_id.present? && agenda.law_url.present? && agenda.session_number1_id.present? && agenda.session_number2_id.present?
-      link_to("publish", "#", :class => 'btn btn-mini')
+    if agenda.law_id.present? && agenda.law_url.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
+      (agenda.session_number1_id.present? && agenda.session_number2_id.present?))
+      link_to(I18n.t('helpers.links.publish'), "#", :class => 'btn btn-mini btn-success')
     end
   end
 
