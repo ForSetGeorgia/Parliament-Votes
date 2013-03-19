@@ -46,8 +46,8 @@ ka:
         parliament_id: პარლამენტი
         parliament: პარლამენტი
         sort_order: თანმიმდევრობა
-        session_number1_id: Session I
-        session_number2_id: Session II
+        session_number1_id: I სესია
+        session_number2_id: II სესია
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა / არ მიუცია)
@@ -92,8 +92,8 @@ ka:
       unmake_law: არ არის კანონი
       edit_conference: სხდომის რედაქტირება
       restore: აღდგენა
-      add: Add
-      publish: Make Public
+      add: დამატება
+      publish: გამოქვეყნება
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -137,7 +137,7 @@ ka:
       admin: ადმინისტრატო
       menu_files: ფაილების ატვირთვა
       menu_conference: კანონები
-      menu_laws: Make Laws Public
+      menu_laws: კანონის გამოქვეყნება 
       sign_out: გასვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
       js_link_text: აგებულია
@@ -207,5 +207,5 @@ ka:
       agenda: "კანონი: %{name} (%{date})"
       submit: ხმების შენახვა
     laws:
-      title: Passed Laws to Make Public
-      can_publish: Make Public
+      title: მიღებული კანონის გამოქვეყნება 
+      can_publish: გამოქვეყნება
