@@ -83,7 +83,7 @@ private
     agendas = Agenda.not_deleted.final_laws.order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
-      agendas = agendas.where("agendas.name like :search or agendas.session_number like :search or agendas.registration_number like :search", search: "%#{params[:sSearch]}%")
+      agendas = agendas.where("agendas.name like :search or agendas.description like :search", search: "%#{params[:sSearch]}%")
     end
     agendas
   end
