@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class LawsDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
@@ -23,27 +25,50 @@ private
     agendas.map do |agenda|
       [
         link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
-          agenda_path(:id => agenda.id, :locale => I18n.locale, :laws_only => params[:laws_only])),
+          agenda_path(:id => agenda.id, :locale => I18n.locale)),
         agenda.law_title,
         agenda.law_description,
         agenda.session_number,
-        agenda.registration_number,
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no} / #{agenda.total_abstain})",
-        agenda.voting_session.nil? ? nil : "#{agenda.voting_session.quorum_formatted} (#{agenda.voting_session.result5})",
-        change_status_link(agenda)
+        has_law_ids(agenda),
+        has_session1(agenda),
+        has_session2(agenda),
+        can_publish(agenda)
       ]
     end
   end
 
-  def change_status_link(agenda)
-    if agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t('helpers.links.unmake_law'), not_law_path(:id => agenda.id, :locale => I18n.locale), 
-             :class => 'btn btn-mini')  
-    elsif !agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t('helpers.links.make_law'), edit_agenda_path(:id => agenda.id, :locale => I18n.locale), 
-             :class => 'btn btn-mini fancybox')  
+  def has_law_ids(agenda)
+    if agenda.law_id.present? && agenda.law_url.present?
+      agenda.law_id
+    else
+      link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
     end
   end
+
+  def has_session1(agenda)
+    if agenda.session_number1_id.present?
+      link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
+    else
+      link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+    end
+  end
+
+  def has_session2(agenda)
+    if agenda.session_number2_id.present?
+      link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
+    else
+      link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+    end
+  end
+
+  def can_publish(agenda)
+    if agenda.law_id.present? && agenda.law_url.present? && agenda.session_number1_id.present? && agenda.session_number2_id.present?
+      link_to("publish", "#", :class => 'btn btn-mini')
+    end
+  end
+
+
 
   def agendas
     @agendas ||= fetch_agendas
@@ -67,7 +92,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.sort_order agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum agendas.sort_order]
+    columns = %w[agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number voting_sessions.passed agendas.law_id agendas.session_number1_id agendas.session_number2_id agendas.official_law_title]
     columns[params[:iSortCol_0].to_i]
   end
 

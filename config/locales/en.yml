@@ -46,6 +46,8 @@ en:
         parliament_id: Parliament
         parliament: Parliament
         sort_order: Order
+        session_number1_id: Session I
+        session_number2_id: Session II
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N/Abs)
@@ -90,6 +92,7 @@ en:
       unmake_law: Not Law
       edit_conference: Edit Conference
       restore: Restore
+      add: Add
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -133,6 +136,7 @@ en:
       admin: Admin
       menu_files: Upload Files
       menu_conference: Laws
+      menu_laws: Make Laws Public
       sign_out: Sign Out
       js_link_title: "Visit JumpStart Georgia's website"
       js_link_text: Built by
@@ -201,4 +205,6 @@ en:
       not_found: The Law could not be found.
       agenda: "Law: %{name} (%{date})"
       submit: Save Votes
-
+    laws:
+      title: Passed Laws to Make Public
+      can_publish: Make Public

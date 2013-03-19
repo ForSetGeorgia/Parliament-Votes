@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319054456) do
+ActiveRecord::Schema.define(:version => 20130319072240) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20130319054456) do
     t.string   "official_law_title"
     t.text     "law_description"
     t.integer  "parliament_id"
+    t.integer  "session_number1_id"
+    t.integer  "session_number2_id"
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"
