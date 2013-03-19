@@ -120,12 +120,10 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "bFilter": false,
-    "bInfo": false,
-    "iDisplayLength": 50,
     "aoColumnDefs": [
       { 'bSortable': false, 'aTargets': [ 8 ] }
-    ]
+    ],
+    "iDisplayLength": 50
   });
 
 });
