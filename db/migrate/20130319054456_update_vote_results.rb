@@ -1,8 +1,10 @@
 class UpdateVoteResults < ActiveRecord::Migration
   def up
+=begin
     Agenda.not_deleted.laws_only(true).each do |agenda|
       agenda.voting_session.update_results
     end
+=end
   end
 
   def down
