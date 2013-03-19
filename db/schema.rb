@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314055355) do
+ActiveRecord::Schema.define(:version => 20130319054456) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -183,8 +183,11 @@ ActiveRecord::Schema.define(:version => 20130314055355) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "xml_id"
+    t.integer  "result0",           :default => 0
+    t.integer  "not_present",       :default => 0
   end
 
   add_index "voting_sessions", ["agenda_id"], :name => "index_voting_sessions_on_agenda_id"
+  add_index "voting_sessions", ["passed"], :name => "index_voting_sessions_on_passed"
 
 end

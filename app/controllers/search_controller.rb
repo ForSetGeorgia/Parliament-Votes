@@ -29,5 +29,11 @@ class SearchController < ApplicationController
     end
   end
 
+  def laws
+    respond_to do |format|
+      format.json { render json: LawsDatatable.new(view_context, current_user) }
+    end
+  end
+
 
 end

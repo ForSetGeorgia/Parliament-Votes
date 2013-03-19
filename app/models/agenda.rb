@@ -30,6 +30,11 @@ class Agenda < ActiveRecord::Base
     end
   end
 
+  def self.final_laws
+    laws_only(true)
+    .where('session_number in (?)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
+  end
+
   def self.not_deleted
     joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
   end
@@ -46,19 +51,23 @@ class Agenda < ActiveRecord::Base
   end
 
   def total_yes
-    self.voting_session.voting_results.select{|x| x.vote == 1}.count
+#    self.voting_session.voting_results.select{|x| x.vote == 1}.count
+    self.voting_session.result1
   end
 
   def total_no
-    self.voting_session.voting_results.select{|x| x.vote == 3}.count
+#    self.voting_session.voting_results.select{|x| x.vote == 3}.count
+    self.voting_session.result3
   end
 
   def total_abstain
-    self.voting_session.voting_results.select{|x| x.vote == 0}.count
+#    self.voting_session.voting_results.select{|x| x.vote == 0}.count
+    self.voting_session.result0
   end
 
   def total_not_present
-    self.number_possible_members - total_yes - total_no - total_abstain
+#    self.number_possible_members - total_yes - total_no - total_abstain
+    self.voting_session.not_present
   end
 
   def is_final_version?

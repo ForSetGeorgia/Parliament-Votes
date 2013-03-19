@@ -113,6 +113,10 @@ class RootController < ApplicationController
           end
         end
 
+
+        # update the voting session results
+        @agenda.voting_session.update_results      
+
         redirect_to agenda_path(@agenda.id), 
           notice: t('app.msgs.success_created', :obj => t('activerecord.models.voting_result'))
       end
@@ -131,7 +135,10 @@ class RootController < ApplicationController
           # the vote chagned, save it
           @voting_result.vote = params[:voting_result][:vote]
           @voting_result.is_edited = true
-          @voting_result.save        
+          @voting_result.save  
+
+          # update the voting session results
+          @voting_result.voting_session.update_results      
         end
         redirect_to agenda_path(@voting_result.voting_session.agenda.id), 
             notice: t('app.msgs.success_updated', :obj => t('activerecord.models.voting_result'))
@@ -156,4 +163,10 @@ class RootController < ApplicationController
     end
 
   end
+
+
+  def laws
+  end
+
+
 end

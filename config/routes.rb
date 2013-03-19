@@ -27,12 +27,14 @@ BootstrapStarter::Application.routes.draw do
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :get
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :post
     match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
+    match '/laws', :to => 'root#laws', :as => :laws, :via => :get
 
     # search controller
     match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
     match '/search/agendas/:conference_id(/:laws_only)', :to => 'search#agendas', :as => :search_agendas, :via => :get, :defaults => {:format => 'json'}
     match '/search/files', :to => 'search#files', :as => :search_files, :via => :get, :defaults => {:format => 'json'}
     match '/search/deleted_files', :to => 'search#deleted_files', :as => :search_deleted_files, :via => :get, :defaults => {:format => 'json'}
+    match '/search/laws', :to => 'search#laws', :as => :search_laws, :via => :get, :defaults => {:format => 'json'}
 
     # admin
     match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :deleted_files, :via => :get
