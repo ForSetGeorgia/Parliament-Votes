@@ -22,11 +22,11 @@ private
   def data
     upload_files.map do |upload_file|
       [
-        link_to(upload_file.conference.name, conference_path(:id => upload_file.conference.id, :locale => I18n.locale)),
-        I18n.l(upload_file.conference.start_date, :format => :no_zone),
+        upload_file.conference.present? ? link_to(upload_file.conference.name, conference_path(:id => upload_file.conference.id, :locale => I18n.locale)) : nil,
+        upload_file.conference.present? ? I18n.l(upload_file.conference.start_date, :format => :no_zone) : nil,
         upload_file.number_possible_members,
-        upload_file.conference.number_laws,
-        upload_file.conference.number_sessions,
+        upload_file.conference.present? ? upload_file.conference.number_laws : nil,
+        upload_file.conference.present? ? upload_file.conference.number_sessions : nil,
         upload_file.xml_file_name,
         I18n.l(upload_file.created_at, :format => :no_zone),
         delete_link(upload_file)
