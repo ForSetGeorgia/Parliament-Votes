@@ -210,5 +210,5 @@ ka:
       title: მიღებული კანონის გამოქვეყნება 
       can_publish: გამოქვეყნება
     session_match:
-      title: Find Match for %{session}
-      final_law_header: "Trying to Find Match for:"
+      title: მოძებნე %{session}
+      final_law_header: "ძიება:"
