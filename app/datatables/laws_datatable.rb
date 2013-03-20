@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 class LawsDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
@@ -51,9 +49,13 @@ private
   def has_session1(agenda)
     if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
       if agenda.session_number1_id.present?
-        link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), :class => 'btn btn-mini')
+        link_to(I18n.t('helpers.links.view'), 
+          agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), 
+          :class => 'btn btn-mini')
       else
-        link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+        link_to(I18n.t('helpers.links.add'), 
+          session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
+          :class => 'btn btn-mini btn-danger fancybox')
       end
     end
   end
@@ -63,7 +65,9 @@ private
       if agenda.session_number2_id.present?
         link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini')
       else
-        link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+        link_to(I18n.t('helpers.links.add'), 
+          session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
+          :class => 'btn btn-mini btn-danger fancybox')
       end
     end
   end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class SearchController < ApplicationController
   before_filter :authenticate_user!
   before_filter :only => [:delete_files] do |controller_instance|
@@ -32,6 +31,12 @@ class SearchController < ApplicationController
   def laws
     respond_to do |format|
       format.json { render json: LawsDatatable.new(view_context, current_user) }
+    end
+  end
+
+  def sessions
+    respond_to do |format|
+      format.json { render json: SessionsDatatable.new(view_context, current_user, params[:session], params[:agenda_id], params[:match_only]) }
     end
   end
 

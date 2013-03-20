@@ -209,3 +209,6 @@ en:
     laws:
       title: Passed Laws to Make Public
       can_publish: Make Public
+    session_match:
+      title: Find Match for %{session}
+      final_law_header: "Trying to Find Match for:"

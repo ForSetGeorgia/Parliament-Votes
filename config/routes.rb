@@ -28,6 +28,7 @@ BootstrapStarter::Application.routes.draw do
     match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :post
     match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
     match '/laws', :to => 'root#laws', :as => :laws, :via => :get
+    match '/session_match/:agenda_id/:session', :to => 'root#session_match', :as => :session_match, :via => :get
 
     # search controller
     match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
@@ -35,6 +36,7 @@ BootstrapStarter::Application.routes.draw do
     match '/search/files', :to => 'search#files', :as => :search_files, :via => :get, :defaults => {:format => 'json'}
     match '/search/deleted_files', :to => 'search#deleted_files', :as => :search_deleted_files, :via => :get, :defaults => {:format => 'json'}
     match '/search/laws', :to => 'search#laws', :as => :search_laws, :via => :get, :defaults => {:format => 'json'}
+    match '/search/sessions/:session/:agenda_id/:match_only', :to => 'search#sessions', :as => :search_sessions, :via => :get, :defaults => {:format => 'json'}
 
     # admin
     match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :deleted_files, :via => :get

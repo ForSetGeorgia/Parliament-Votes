@@ -4,6 +4,7 @@
     {
       $("#fancybox-content :input:visible:enabled:first").focus();
     }
+
   }
 
 	// if a link with 'fancybox-nested' class is clicked, get the html and replace with current html

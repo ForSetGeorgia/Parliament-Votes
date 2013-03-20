@@ -52,6 +52,6 @@ module BootstrapStarter
     config.assets.version = '1.0'
 
     # tell the assest pipeline to include the fancybox.js and font styles
-    config.assets.precompile += ['fancybox/layout.js']
+    config.assets.precompile += ['fancybox/layout.js', 'fancybox/search.js']
   end
 end

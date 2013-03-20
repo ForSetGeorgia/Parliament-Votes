@@ -38,6 +38,51 @@ class Agenda < ActiveRecord::Base
     .where('voting_sessions.passed = 1 and agendas.session_number in (?)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
   end
 
+  def self.passed_laws_by_session(session_number)
+    used_ids = claimed_session_ids(session_number)
+
+    x = laws_only(true)
+        .includes(:voting_session)
+    if used_ids.present?
+      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ? and agendas.id not in (?)', session_number, used_ids)
+    else
+      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ?', session_number)
+    end
+
+    return x
+  end
+
+  def self.passed_laws_by_session_matching(session_number, agenda_id)
+    used_ids = claimed_session_ids(session_number)
+
+    x = laws_only(true)
+        .includes(:voting_session)
+    if used_ids.present?
+      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ? and agendas.id not in (?)', session_number, used_ids)
+    else
+      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ?', session_number)
+    end
+
+    return x
+  end
+
+  def self.claimed_session_ids(session_number)
+    field = nil
+    ids = nil
+    if session_number.index(PREFIX[2])
+      field = 'session_number2_id'
+    elsif session_number.index(PREFIX[3])
+      field = 'session_number1_id'
+    end
+
+    if field
+      x = select(field).laws_only(true).not_deleted
+      ids = x.select{|x| x["#{field}"] != nil}.map{|x| x["#{field}"]}.uniq
+    end
+
+    return ids
+  end
+
   def self.not_deleted
     joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
   end
