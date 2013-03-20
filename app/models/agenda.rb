@@ -18,6 +18,7 @@ class Agenda < ActiveRecord::Base
   validates :number_possible_members, :parliament_id, :presence => true
 
   DEFAULT_NUMBER_MEMBERS = 150
+  MAKE_PUBLIC_PARAM = 'make_public'
   
   def self.by_conference(conference_id)
     includes(:voting_session => :voting_results).where(:conference_id => conference_id)

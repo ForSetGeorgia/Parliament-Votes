@@ -51,7 +51,7 @@ class RootController < ApplicationController
   def edit_conference
     @conference = Conference.not_deleted.find_by_id(params[:id])
     if @conference.present? 
-      @upload_file = UploadFile.not_deleted.find_by_id(@conference.upload_file_id)
+      @upload_file = UploadFile.not_deleted.readonly(false).find_by_id(@conference.upload_file_id)
 
       if @upload_file && request.post? 
         @upload_file.update_data(params[:upload_file][:number_possible_members], params[:upload_file][:parliament_id])
@@ -74,15 +74,20 @@ class RootController < ApplicationController
   end
 
   def edit_agenda
-    @agenda = Agenda.not_deleted.find_by_id(params[:id])
+    @agenda = Agenda.not_deleted.readonly(false).find_by_id(params[:id])
     
     if @agenda.present?  
       @agenda.generate_missing_data
       
       if request.post?
         @agenda.update_attributes(params[:agenda])
-        redirect_to agenda_path(@agenda.id), 
-            notice: t('app.msgs.success_updated', :obj => t('activerecord.models.agenda'))
+        if params[:return_to].present? && params[:return_to] == Agenda::MAKE_PUBLIC_PARAM
+          redirect_to laws_path, 
+              notice: t('app.msgs.success_updated', :obj => t('activerecord.models.agenda'))
+        else
+          redirect_to agenda_path(@agenda.id), 
+              notice: t('app.msgs.success_updated', :obj => t('activerecord.models.agenda'))
+        end
       end
     else 
 			flash[:info] =  t('app.msgs.does_not_exist')
@@ -91,7 +96,7 @@ class RootController < ApplicationController
   end
 
   def add_vote
-    @agenda = Agenda.not_deleted.find_by_id(params[:id])
+    @agenda = Agenda.not_deleted.readonly(false).find_by_id(params[:id])
     @groups = Group.by_conference(@agenda.conference_id)
     @available_delegates = AllDelegate.available_delegates(params[:id])
     if @agenda.present?
@@ -127,7 +132,7 @@ class RootController < ApplicationController
   end
 
   def edit_vote
-    @voting_result = VotingResult.not_deleted.find_by_id(params[:id])
+    @voting_result = VotingResult.not_deleted.readonly(false).find_by_id(params[:id])
 
     if @voting_result 
       if request.post?

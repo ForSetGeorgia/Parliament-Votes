@@ -40,9 +40,11 @@ private
 
   def has_law_ids(agenda)
     if agenda.law_id.present? && agenda.law_url.present?
-      agenda.law_id
+      link_to agenda.law_id, agenda.law_url, :target => :blank
     else
-      link_to(I18n.t('helpers.links.add'), "#", :class => 'btn btn-mini btn-danger')
+      link_to(I18n.t('helpers.links.add'), 
+        edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
+        :class => 'btn btn-mini btn-danger fancybox')
     end
   end
 

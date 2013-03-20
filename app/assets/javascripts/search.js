@@ -123,7 +123,18 @@ $(document).ready(function(){
     "aoColumnDefs": [
       { 'bSortable': false, 'aTargets': [ 8 ] }
     ],
-    "iDisplayLength": 50
+    "iDisplayLength": 50,
+    "fnInitComplete": function () {
+	    $("#laws_datatable td a.fancybox").fancybox({
+        transitionIn: 'elastic',
+        transitionOut: 'elastic',
+	      width: 400,
+		    onComplete: function ()
+		    {
+		      focus_fancybox_input();
+	      }
+      });
+    }
   });
 
 });
