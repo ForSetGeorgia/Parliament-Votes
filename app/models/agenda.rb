@@ -33,7 +33,8 @@ class Agenda < ActiveRecord::Base
 
   def self.final_laws
     laws_only(true)
-    .where('session_number in (?)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
+    .includes(:voting_session)
+    .where('voting_sessions.passed = 1 and agendas.session_number in (?)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
   end
 
   def self.not_deleted
