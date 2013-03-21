@@ -212,6 +212,6 @@ ka:
     session_match:
       title: მოძებნე %{session}
       final_law_header: "ძიება:"
-      possible_header: Possible Matches
-      possible_explanation: Possible matches are found by looking for records that have the same Registration Number or Official Law Title.
-      all_header: All Records
+      possible_header: შესაძლო შესატყვისები
+      possible_explanation: შესაძლო შესატყვისები მოიძებნა იმ ჩანაწერების მოძიებით, რომლებსაც აქვთ იგივე სარეგისტრაციო ნომერი ან ოფიციალური კანონის სათაური.
+      all_header: ყველა ჩანაწერი
