@@ -212,3 +212,6 @@ ka:
     session_match:
       title: მოძებნე %{session}
       final_law_header: "ძიება:"
+      possible_header: Possible Matches
+      possible_explanation: Possible matches are found by looking for records that have the same Registration Number or Official Law Title.
+      all_header: All Records

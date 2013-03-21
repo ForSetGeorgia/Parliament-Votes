@@ -19,6 +19,8 @@ class Agenda < ActiveRecord::Base
 
   DEFAULT_NUMBER_MEMBERS = 150
   MAKE_PUBLIC_PARAM = 'make_public'
+  QUOTES = ['„', '“', '"']
+
   
   def self.by_conference(conference_id)
     includes(:voting_session => :voting_results).where(:conference_id => conference_id)
@@ -32,21 +34,35 @@ class Agenda < ActiveRecord::Base
     end
   end
 
+  def self.not_deleted
+    joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
+  end
+
   def self.final_laws
     laws_only(true)
     .includes(:voting_session)
     .where('voting_sessions.passed = 1 and agendas.session_number in (?)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
   end
 
-  def self.passed_laws_by_session(session_number)
+  def self.passed_laws_by_session(session_number, agenda_id)
     used_ids = claimed_session_ids(session_number)
+    a = Agenda.includes(:conference).not_deleted.find_by_id(agenda_id)
+    q = 'voting_sessions.passed = 1 and agendas.session_number = ? and conferences.start_date <= ? '
+    full_query = [q]
+    full_query << session_number
 
-    x = laws_only(true)
-        .includes(:voting_session)
-    if used_ids.present?
-      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ? and agendas.id not in (?)', session_number, used_ids)
-    else
-      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ?', session_number)
+    if a.present?
+      # must have happened before this law
+      full_query << a.conference.start_date
+
+      if used_ids.present?
+        full_query << used_ids
+        q << 'and agendas.id not in (?) '
+      end
+
+      x = laws_only(true).not_deleted
+          .includes(:voting_session, :conference)
+          .where(full_query)
     end
 
     return x
@@ -54,16 +70,46 @@ class Agenda < ActiveRecord::Base
 
   def self.passed_laws_by_session_matching(session_number, agenda_id)
     used_ids = claimed_session_ids(session_number)
+    a = Agenda.includes(:conference).not_deleted.find_by_id(agenda_id)
+    q = 'voting_sessions.passed = 1 and agendas.session_number = ? and conferences.start_date <= ? '
+    full_query = [q]
+    full_query << session_number
 
-    x = laws_only(true)
-        .includes(:voting_session)
-    if used_ids.present?
-      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ? and agendas.id not in (?)', session_number, used_ids)
-    else
-      x = x.where('voting_sessions.passed = 1 and agendas.session_number = ?', session_number)
+    if a.present?
+      # must have happened before this law
+      full_query << a.conference.start_date
+
+      # use registration number and/or official law title to find match
+      if a.registration_number.present? && a.official_law_title.present?
+        full_query << a.registraion_number
+        full_query << "%#{a.official_law_title.gsub(QUOTES[0], '').gsub(QUOTES[1], '').gsub(QUOTES[2], '')}%"
+        q << 'and (agendas.registration_number = ? or agendas.official_law_title like ?) '
+      elsif a.registration_number.present?
+        full_query << a.registraion_number
+        q << 'and agendas.registration_number = ? '
+      elsif a.official_law_title.present?
+        full_query << "%#{a.official_law_title.gsub(QUOTES[0], '').gsub(QUOTES[1], '').gsub(QUOTES[2], '')}%"
+        q << 'and agendas.official_law_title like ? '
+      else
+        # no reg number or official title
+        # - defualt to name
+        full_query << "%#{a.name.gsub(QUOTES[0], '').gsub(QUOTES[1], '').gsub(QUOTES[2], '')}%"
+        q << 'and agendas.name like ? '
+      end
+
+
+      if used_ids.present?
+        full_query << used_ids
+        q << 'and agendas.id not in (?) '
+      end
+
+      x = laws_only(true).not_deleted
+          .includes(:voting_session, :conference)
+          .where(full_query)
     end
 
     return x
+
   end
 
   def self.claimed_session_ids(session_number)
@@ -81,10 +127,6 @@ class Agenda < ActiveRecord::Base
     end
 
     return ids
-  end
-
-  def self.not_deleted
-    joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
   end
 
   # get the last number of members from the db.
@@ -190,19 +232,18 @@ class Agenda < ActiveRecord::Base
     if !use_description_field || !text.present?
       text = self.name
     end
-    quotes = ['„', '“', '"']
 
-    index1 = text.index(quotes[0])
-    index1 = text.index(quotes[2]) if index1.nil?
-    index1 = text.index(quotes[1]) if index1.nil?
+    index1 = text.index(QUOTES[0])
+    index1 = text.index(QUOTES[2]) if index1.nil?
+    index1 = text.index(QUOTES[1]) if index1.nil?
 
-    index2 = text.index(quotes[1], index1 ? index1+1 : 0)
-    index2 = text.index(quotes[2], index1 ? index1+1 : 0) if index2.nil?
-    index2 = text.index(quotes[0], index1 ? index1+1 : 0) if index2.nil?
+    index2 = text.index(QUOTES[1], index1 ? index1+1 : 0)
+    index2 = text.index(QUOTES[2], index1 ? index1+1 : 0) if index2.nil?
+    index2 = text.index(QUOTES[0], index1 ? index1+1 : 0) if index2.nil?
 
-    index3 = text.index(quotes[1], index2 ? index2+1 : 0)
-    index3 = text.index(quotes[2], index2 ? index2+1 : 0) if index3.nil?
-    index3 = text.index(quotes[0], index2 ? index2+1 : 0) if index3.nil?
+    index3 = text.index(QUOTES[1], index2 ? index2+1 : 0)
+    index3 = text.index(QUOTES[2], index2 ? index2+1 : 0) if index3.nil?
+    index3 = text.index(QUOTES[0], index2 ? index2+1 : 0) if index3.nil?
 
     if index1 && index3
       self.official_law_title = text[index1..index3-1]

@@ -6,7 +6,7 @@ class SessionsDatatable
   delegate :session, to: :@session
   delegate :agenda_id, to: :@agenda_id
 
-  def initialize(view, current_user, session, agenda_id = nil, matches_only = false)
+  def initialize(view, current_user, session, agenda_id, matches_only = false)
     @view = view
     @current_user = current_user
     @session = session
@@ -17,7 +17,7 @@ class SessionsDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.not_deleted.passed_laws_by_session(@session).count,
+      iTotalRecords: agenda_query.count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -28,6 +28,7 @@ private
   def data
     agendas.map do |agenda|
       [
+        I18n.l(agenda.conference.start_date, :format => :no_zone),
         agenda.official_law_title.present? ? agenda.official_law_title : agenda.name,
         agenda.law_title,
         agenda.law_description,
@@ -43,8 +44,18 @@ private
     @agendas ||= fetch_agendas
   end
 
+  def agenda_query
+    if @matches_only == "true"
+Rails.logger.debug "++++++++++++++++++++++++ getting sessions that match"
+      Agenda.not_deleted.passed_laws_by_session_matching(@session, @agenda_id)
+    else
+Rails.logger.debug "++++++++++++++++++++++++ getting all sessions"
+      Agenda.not_deleted.passed_laws_by_session(@session, @agenda_id)
+    end
+  end
+
   def fetch_agendas
-    agendas = Agenda.not_deleted.passed_laws_by_session(@session).order("#{sort_column} #{sort_direction}")
+    agendas = agenda_query.order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.name like :search or agendas.description like :search", search: "%#{params[:sSearch]}%")
@@ -61,7 +72,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed]
+    columns = %w[conferences.start_date agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed]
     columns[params[:iSortCol_0].to_i]
   end
 

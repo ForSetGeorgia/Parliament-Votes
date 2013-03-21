@@ -4,6 +4,10 @@
   <h2><%= t('.final_law_header') %></h2>
   <ul>
     <li>
+      <strong><%= Conference.human_attribute_name(:start_date) %>:</strong>
+      <%= l(@agenda.conference.start_date, :format => :no_zone) %>
+    </li>
+    <li>
       <strong><%= Agenda.human_attribute_name(:official_law_title) %>:</strong>
       <%= @agenda.official_law_title %>
     </li>
@@ -34,19 +38,55 @@
   </ul>  
 </div>
 
-<table id="sessions_datatable" class="display table table-striped table-bordered" 
-      data-source="<%= search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => false.to_s, :format => :json) %>">
-  <thead>
-    <tr>
-      <th><%= Agenda.human_attribute_name(:official_law_title) %></th>
-      <th><%= Agenda.human_attribute_name(:law_title) %></th>
-      <th><%= Agenda.human_attribute_name(:law_description) %></th>
-      <th><%= Agenda.human_attribute_name(:session_number) %></th>
-      <th><%= Agenda.human_attribute_name(:registration_number) %></th>
-      <th><%= VotingSession.human_attribute_name(:passed_yn) %></th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+<div class="tabbable"> 
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab"><%= t('.possible_header') %></a></li>
+    <li><a href="#tab2" data-toggle="tab"><%= t('.all_header') %></a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <h2><%= t('.possible_header') %></h2>
+      <p>
+        <%= t('.possible_explanation') %>
+      </p>
+      <table id="possible_sessions_datatable" class="display table table-striped table-bordered" 
+            data-source="<%= search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => true.to_s, :format => :json) %>">
+        <thead>
+          <tr>
+            <th><%= Conference.human_attribute_name(:start_date) %></th>
+            <th><%= Agenda.human_attribute_name(:official_law_title) %></th>
+            <th><%= Agenda.human_attribute_name(:law_title) %></th>
+            <th><%= Agenda.human_attribute_name(:law_description) %></th>
+            <th><%= Agenda.human_attribute_name(:session_number) %></th>
+            <th><%= Agenda.human_attribute_name(:registration_number) %></th>
+            <th><%= VotingSession.human_attribute_name(:passed_yn) %></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <h2><%= t('.all_header') %></h2>
+      <table id="all_sessions_datatable" class="display table table-striped table-bordered" 
+            data-source="<%= search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => false.to_s, :format => :json) %>">
+        <thead>
+          <tr>
+            <th><%= Conference.human_attribute_name(:start_date) %></th>
+            <th><%= Agenda.human_attribute_name(:official_law_title) %></th>
+            <th><%= Agenda.human_attribute_name(:law_title) %></th>
+            <th><%= Agenda.human_attribute_name(:law_description) %></th>
+            <th><%= Agenda.human_attribute_name(:session_number) %></th>
+            <th><%= Agenda.human_attribute_name(:registration_number) %></th>
+            <th><%= VotingSession.human_attribute_name(:passed_yn) %></th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
 
