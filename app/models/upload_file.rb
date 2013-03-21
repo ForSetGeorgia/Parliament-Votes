@@ -32,7 +32,7 @@ class UploadFile < ActiveRecord::Base
       doc = Nokogiri::XML(file)
       conf = doc.at_css('Conference')
       if conf.present?
-        already_exists = Conference.where(:start_date => conf.at_css('StartDate').text[0..9])
+        already_exists = Conference.not_deleted.where(:start_date => conf.at_css('StartDate').text[0..9])
 
         if already_exists.present? && !self.id.present?
           errors.add(:xml, I18n.t('activerecord.messages.upload_file.already_exists', :file_name => self.xml_file_name))
