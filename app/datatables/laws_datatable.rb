@@ -26,7 +26,7 @@ private
           agenda_path(:id => agenda.id, :locale => I18n.locale)),
         agenda.law_title,
         agenda.law_description,
-        agenda.session_number,
+        agenda.registration_number,
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no} / #{agenda.total_abstain})",
         has_law_ids(agenda),
         has_session1(agenda),
@@ -103,7 +103,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number voting_sessions.passed agendas.law_id agendas.session_number1_id agendas.session_number2_id agendas.official_law_title]
+    columns = %w[agendas.official_law_title agendas.law_title agendas.law_description agendas.registration_number voting_sessions.passed agendas.law_id agendas.session_number1_id agendas.session_number2_id agendas.official_law_title]
     columns[params[:iSortCol_0].to_i]
   end
 
