@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319072240) do
+ActiveRecord::Schema.define(:version => 20130326183749) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -93,6 +93,17 @@ ActiveRecord::Schema.define(:version => 20130319072240) do
 
   add_index "groups", ["conference_id"], :name => "index_groups_on_conference_id"
 
+  create_table "notifications", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "notification_type"
+    t.integer  "identifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["notification_type", "identifier"], :name => "idx_notif_type"
+  add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
+
   create_table "parliaments", :force => true do |t|
     t.string   "name"
     t.date     "start_date"
@@ -125,9 +136,9 @@ ActiveRecord::Schema.define(:version => 20130319072240) do
   add_index "upload_files", ["parliament_id"], :name => "index_upload_files_on_parliament_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
-    t.integer  "role",                   :default => 0,  :null => false
+    t.string   "email",                  :default => "",   :null => false
+    t.string   "encrypted_password",     :default => "",   :null => false
+    t.integer  "role",                   :default => 0,    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -138,10 +149,14 @@ ActiveRecord::Schema.define(:version => 20130319072240) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "wants_notifications",    :default => true
+    t.string   "notification_language"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["notification_language"], :name => "index_users_on_notification_language"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["wants_notifications"], :name => "index_users_on_wants_notifications"
 
   create_table "versions", :force => true do |t|
     t.string   "item_type",  :null => false

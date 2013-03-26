@@ -73,6 +73,17 @@ en:
         already_exists: "'%{file_name}' has already been loaded"
       agenda:
         invalid_url: "is invalid. A valid url includes 'http://' or 'https://', i.e. 'http://parliament.ge/'"
+  mailer:
+    closing: "Sincerely,"
+    signature: votes.parliament.ge
+    unsubscribe: Click here to unsubscribe
+    notification:
+      new_user:
+        subject: "Welcome to votes.parliament.ge!"
+        message: "Thank you for becoming a member of votes.parliament.ge.  You can manage when you would like to receive emails from votes.parliament.ge by clicking on the following link."
+      new_file:
+        subject: "A new file has been loaded into votes.parliament.ge!"
+        message: "The file from the session on '%{date}' has been added. Click on the link below to view the contents of the file."
   helpers:
     actions: Actions
     links:
@@ -94,7 +105,7 @@ en:
       restore: Restore
       add: Add
       publish: Make Public
-      assign_session: Assign
+      assign_session: Add
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -133,13 +144,19 @@ en:
       success_deleted: "%{obj} was successfully deleted."
       success_restored: "%{obj} was successfully restored."
       not_law: "The item '%{name}' is no longer marked as a law."
-      assigned_session: "%{session} has been assigned."
+      assigned_session: "%{session} has been added to the law."
+      notification_yes: You will be sent notifications.
+      notification_no: You will not be sent notifications.
+      notification_new_file_all_success: You will recieve a notification whenever a file is added.
+      notification_new_file_none_success: You will not receive any notifications when files are added.
+      notification_language: You will be sent notifications in %{language}.
   layouts:
     application:
       admin: Admin
       menu_files: Upload Files
       menu_conference: Laws
       menu_laws: Make Laws Public
+      notifications: Notifications
       sign_out: Sign Out
       js_link_title: "Visit JumpStart Georgia's website"
       js_link_text: Built by
@@ -217,3 +234,16 @@ en:
       possible_header: Possible Matches
       possible_explanation: Possible matches are found by looking for records that have the same Registration Number or Official Law Title.
       all_header: All Records
+  notifications:
+    index:
+      title: Notifications
+      explain: "You can recieve email notifications whenever new laws are added to votes.parliament.ge.  Simply sign in via Facebook or sign up with votes.parliament.ge to subscribe."
+      all_sub_title: All Notifications
+      all_label: Do you want to recieve any notifications from this site?
+      all_no: "No, do not send me any notifications."
+      all_yes: "Yes, I want notifications sent to me."
+      new_file_sub_title: New File Notifications
+      new_files_all: Notify me when a file is added.
+      new_files_none: I do not want to receive notifications when a file is added.
+      language_sub_title: Notification Language
+      language_label: In what language do you want to receive the notifications?

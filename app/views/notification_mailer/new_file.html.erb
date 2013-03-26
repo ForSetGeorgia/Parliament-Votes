@@ -1,0 +1,4 @@
+<%= simple_format @message.message %>
+
+<%= link_to conference_url(:id => @message.url_id, :locale => @message.locale),
+						conference_url(:id => @message.url_id, :locale => @message.locale) %>

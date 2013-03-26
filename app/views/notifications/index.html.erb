@@ -1,0 +1,59 @@
+<% title t('.title') %>
+
+<% if user_signed_in? %>
+
+  <%= form_tag notifications_path, :id => "notifications" do %>
+  	<h3><%= t('.all_sub_title') %></h3>
+  	<div class="row clear">
+  		<div class="span12">
+  			<%= t('.all_label') %>
+  			<label for="enable_notifications_true" class="radio">
+  				<%= radio_button_tag 'enable_notifications', 'true', @enable_notifications %>
+  				<%= t('.all_yes') %>
+  			</label>
+  			<label for="enable_notifications_false" class="radio">
+  				<%= radio_button_tag 'enable_notifications', 'false', !@enable_notifications %>
+  				<%= t('.all_no') %>
+  			</label>
+  		</div>
+  	</div>
+
+
+  	<h3><%= t('.language_sub_title') %></h3>
+  	<div class="row clear" id="language_notifications">
+  		<div class="span12">
+  			<%= t('.language_label') %>
+				<% I18n.available_locales.each do |locale| %>
+					<label for="<%= "language_#{locale}"%>" class="radio">
+						<%= radio_button_tag 'language', locale, locale.to_s == @language ? true : false %>
+						<%= t("app.language.#{locale}") %>
+					</label>
+				<% end %>
+  		</div>
+  	</div>
+
+
+    <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
+    	<h3><%= t('.new_file_sub_title') %></h3>
+    	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="new_file_notifications">
+    		<div class="span3">
+    			<label for="files_all" class="checkbox">
+    				<%= check_box_tag 'files_all', 'true', @file_all %>
+    				<%= t('.new_files_all') %>
+    			</label>
+    		</div>
+    	</div>
+    <% end %>
+
+  	<div>
+  		<%= submit_tag nil, :class => 'btn btn-mini' %>
+  	</div>
+  <% end %>
+<% else %>
+  <p>
+    <%= t('.explain')%>
+  </p>
+  <p>
+    <%= link_to t('helpers.links.sign_in'), :new_user_session, :class => 'btn btn-mini' %>
+  </p>
+<% end %>

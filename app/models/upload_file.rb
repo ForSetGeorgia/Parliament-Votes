@@ -11,6 +11,8 @@ class UploadFile < ActiveRecord::Base
       :conference_attributes, :file_processed, :number_possible_members, :parliament_id, 
       :is_deleted, :deleted_at, :deleted_by_id
 
+	attr_accessor :send_notification, :was_processed
+
   validates :xml_file_name, :number_possible_members, :parliament_id, :presence => true
 
 	has_attached_file :xml, :url => "/system/upload_files/:id/:filename"
@@ -20,6 +22,11 @@ class UploadFile < ActiveRecord::Base
   
   validate :file_does_not_exist
   after_save :process_file
+	after_find :check_if_processed
+
+	def check_if_processed
+		self.was_processed = self.has_attribute?(:file_processed) && self.file_processed ? true : false
+	end
 
   def self.with_conference
     includes(:conference)

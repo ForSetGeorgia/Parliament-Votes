@@ -73,6 +73,17 @@ ka:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
       agenda:
         invalid_url: "არასწორია. სწორი ბმული შეიცავს  'http://' ან 'https://', მაგ. 'http://parliament.ge/'"
+  mailer:
+    closing: "პატივისცემით,"
+    signature: votes.parliament.ge
+    unsubscribe: გამოწერის გაუქმება
+    notification:
+      new_user:
+        subject: "კეთილი იყოს თქვენი მობრძანება votes.parliament.ge-ზე!"
+        message: "Thank you for becoming a member of votes.parliament.ge.  You can manage when you would like to receive emails from votes.parliament.ge by clicking on the following link."
+      new_file:
+        subject: "A new file has been loaded into votes.parliament.ge!"
+        message: "The file from the session on '%{date}' has been added. Click on the link below to view the contents of the file."
   helpers:
     actions: აირჩიეთ
     links:
@@ -94,7 +105,7 @@ ka:
       restore: აღდგენა
       add: დამატება
       publish: გამოქვეყნება
-      assign_session: Assign
+      assign_session: დამატება
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -133,13 +144,19 @@ ka:
       success_deleted: "%{obj} წარმატებით წაიშალა."
       success_restored: "%{obj} წარმატებით აღდგა."
       not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
-      assigned_session: "%{session} has been assigned."
+      assigned_session: "%{session} დაემატა კანონს."
+      notification_yes: თქვენ მიიღებთ შეტყობინებებს.
+      notification_no: თქვენ არ მიიღებთ შეტყობინებებს.
+      notification_new_file_all_success: You will recieve a notification whenever a file is added.
+      notification_new_file_none_success: You will not receive any notifications when files are added.
+      notification_language: თქვენ მიიღებთ შეტყობინებას %{language}.
   layouts:
     application:
       admin: ადმინისტრატო
       menu_files: ფაილების ატვირთვა
       menu_conference: კანონები
       menu_laws: კანონის გამოქვეყნება 
+      notifications: შეტყობინებები
       sign_out: გასვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
       js_link_text: აგებულია
@@ -217,3 +234,16 @@ ka:
       possible_header: შესაძლო შესატყვისები
       possible_explanation: შესაძლო შესატყვისები მოიძებნა იმ ჩანაწერების მოძიებით, რომლებსაც აქვთ იგივე სარეგისტრაციო ნომერი ან ოფიციალური კანონის სათაური.
       all_header: ყველა ჩანაწერი
+  notifications:
+    index:
+      title: შეტყობინებები
+      explain: "You can recieve email notifications whenever new laws are added to votes.parliament.ge.  Simply sign in via Facebook or sign up with votes.parliament.ge to subscribe."
+      all_sub_title: All Notifications
+      all_label: Do you want to recieve any notifications from this site?
+      all_no: "No, do not send me any notifications."
+      all_yes: "Yes, I want notifications sent to me."
+      new_file_sub_title: New File Notifications
+      new_files_all: Notify me when a file is added.
+      new_files_none: I do not want to receive notifications when a file is added.
+      language_sub_title: Notification Language
+      language_label: In what language do you want to receive the notifications?

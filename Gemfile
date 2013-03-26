@@ -29,6 +29,7 @@ gem "exception_notification", "2.5.2" # send an email when exception occurs
 #gem 'acts_as_commentable', '2.0.1' #comments
 gem "nokogiri", "~> 1.5.6" # read xml file
 gem "paper_trail", "~> 2.7.0" # keep audit log of all transactions
+gem "active_attr", "~> 0.5.1" # to create tabless models; using for contact form
 
 # Gems used only for assets and not required
 # in production environments by default.

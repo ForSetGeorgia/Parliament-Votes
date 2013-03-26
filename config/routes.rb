@@ -17,15 +17,11 @@ BootstrapStarter::Application.routes.draw do
     match '/process_file', :to => 'root#process_file', :as => :process_file, :via => :post
     match '/delete_file/:id', :to => 'root#delete_file', :as => :delete_file, :via => :get
     match '/conference/:id', :to => 'root#conference', :as => :conference, :via => :get
-    match '/edit_conference/:id', :to => 'root#edit_conference', :as => :edit_conference, :via => :get
-    match '/edit_conference/:id', :to => 'root#edit_conference', :as => :edit_conference, :via => :post
+    match '/edit_conference/:id', :to => 'root#edit_conference', :as => :edit_conference, :via => [:get, :post]
     match '/agenda/:id', :to => 'root#agenda', :as => :agenda, :via => :get
-    match '/edit_agenda/:id', :to => 'root#edit_agenda', :as => :edit_agenda, :via => :get
-    match '/edit_agenda/:id', :to => 'root#edit_agenda', :as => :edit_agenda, :via => :post
-    match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => :get
-    match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => :post
-    match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :get
-    match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => :post
+    match '/edit_agenda/:id', :to => 'root#edit_agenda', :as => :edit_agenda, :via => [:get, :post]
+    match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => [:get, :post]
+    match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => [:get, :post]
     match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
     match '/laws', :to => 'root#laws', :as => :laws, :via => :get
     match '/session_match/:agenda_id/:session', :to => 'root#session_match', :as => :session_match, :via => :get
@@ -43,6 +39,8 @@ BootstrapStarter::Application.routes.draw do
     match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :deleted_files, :via => :get
     match '/admin/restore_file/:id', :to => 'admin#restore_file', :as => :restore_file, :via => :get
     
+		# notifications
+		match '/notifications', :to => 'notifications#index', :as => :notifications, :via => [:get, :post]
 
 		root :to => 'root#index'
 	  match "*path", :to => redirect("/#{I18n.default_locale}") # handles /en/fake/path/whatever
