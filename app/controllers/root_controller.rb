@@ -181,4 +181,26 @@ class RootController < ApplicationController
 			redirect_to root_path(:locale => I18n.locale)
     end
   end
+
+
+  def save_session_match
+    @agenda = Agenda.not_deleted.readonly(false).find_by_id(params[:agenda_id])
+    @session_agenda = Agenda.not_deleted.find_by_id(params[:match_id])
+    
+    if @agenda.present? && @session_agenda.present?
+      if params[:session] == "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}"
+        # first session
+        @agenda.session_number1_id = @session_agenda.id
+        @agenda.save
+        flash[:notice] = t('app.msgs.assigned_session', :session => params[:session])
+      elsif params[:session] == "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}"
+        # second session
+        @agenda.session_number2_id = @session_agenda.id
+        @agenda.save
+        flash[:notice] = t('app.msgs.assigned_session', :session => params[:session])
+      end
+    end
+
+		redirect_to laws_path
+  end
 end

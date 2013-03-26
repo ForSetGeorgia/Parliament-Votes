@@ -29,6 +29,7 @@ BootstrapStarter::Application.routes.draw do
     match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
     match '/laws', :to => 'root#laws', :as => :laws, :via => :get
     match '/session_match/:agenda_id/:session', :to => 'root#session_match', :as => :session_match, :via => :get
+    match '/session_match/:agenda_id/:session/:match_id', :to => 'root#save_session_match', :as => :save_session_match, :via => :get
 
     # search controller
     match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}

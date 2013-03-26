@@ -94,6 +94,7 @@ ka:
       restore: აღდგენა
       add: დამატება
       publish: გამოქვეყნება
+      assign_session: Assign
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -132,6 +133,7 @@ ka:
       success_deleted: "%{obj} წარმატებით წაიშალა."
       success_restored: "%{obj} წარმატებით აღდგა."
       not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
+      assigned_session: "%{session} has been assigned."
   layouts:
     application:
       admin: ადმინისტრატო

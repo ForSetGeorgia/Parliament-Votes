@@ -94,6 +94,7 @@ en:
       restore: Restore
       add: Add
       publish: Make Public
+      assign_session: Assign
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -132,6 +133,7 @@ en:
       success_deleted: "%{obj} was successfully deleted."
       success_restored: "%{obj} was successfully restored."
       not_law: "The item '%{name}' is no longer marked as a law."
+      assigned_session: "%{session} has been assigned."
   layouts:
     application:
       admin: Admin
