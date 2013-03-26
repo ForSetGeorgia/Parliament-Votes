@@ -42,7 +42,7 @@ private
     else
       link_to(I18n.t('helpers.links.add'), 
         edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
-        :class => 'btn btn-mini btn-danger fancybox')
+        :class => 'btn btn-mini btn-danger fancybox_live')
     end
   end
 
@@ -55,7 +55,7 @@ private
       else
         link_to(I18n.t('helpers.links.add'), 
           session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
-          :class => 'btn btn-mini btn-danger fancybox')
+          :class => 'btn btn-mini btn-danger fancybox_live')
       end
     end
   end
@@ -67,7 +67,7 @@ private
       else
         link_to(I18n.t('helpers.links.add'), 
           session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
-          :class => 'btn btn-mini btn-danger fancybox')
+          :class => 'btn btn-mini btn-danger fancybox_live')
       end
     end
   end

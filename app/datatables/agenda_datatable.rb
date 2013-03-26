@@ -46,7 +46,7 @@ private
              :class => 'btn btn-mini')  
     elsif !agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
       link_to(I18n.t('helpers.links.make_law'), edit_agenda_path(:id => agenda.id, :locale => I18n.locale), 
-             :class => 'btn btn-mini fancybox')  
+             :class => 'btn btn-mini fancybox_live')  
     end
   end
 

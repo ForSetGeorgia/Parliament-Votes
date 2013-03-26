@@ -1,5 +1,28 @@
 var agenda_laws_only = true;
 var agenda_dt;
+var laws_dt;
+
+  function register_fancybox_live_click(){
+    $(function(){ 
+      $("a.fancybox_live").live("click", function() {
+        console.log('fancybox live click event');
+
+        $(this).filter(':not(.fb_on)').fancybox({
+          transitionIn: 'elastic',
+          transitionOut: 'elastic',
+          width: 400,
+          onComplete: function ()
+          {
+            focus_fancybox_input();
+          }
+        }).addClass('fb_on');
+
+        $(this).triggerHandler('click');
+        return false;
+      });
+    }); 
+  }
+
 
 $(document).ready(function(){
   var value = getParameterByName('laws_only');
@@ -28,8 +51,8 @@ $(document).ready(function(){
     ],
     "iDisplayLength": 150,
     "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]],
-    "fnInitComplete": function () {
-	    $("#voting_results_datatable td a.fancybox").fancybox({
+    "fnDrawCallback": function () {
+	    $("#voting_results_datatable td a.fancybox_live").fancybox({
         transitionIn: 'elastic',
         transitionOut: 'elastic',
 	      width: 400,
@@ -59,8 +82,8 @@ $(document).ready(function(){
     "fnServerParams": function ( aoData ) {
       aoData.push( { name: "laws_only", value: agenda_laws_only} );
     },
-    "fnInitComplete": function () {
-	    $("#agendas_datatable td a.fancybox").fancybox({
+    "fnDrawCallback": function () {
+	    $("#agendas_datatable td a.fancybox_live").fancybox({
         transitionIn: 'elastic',
         transitionOut: 'elastic',
 	      width: 400,
@@ -110,7 +133,8 @@ $(document).ready(function(){
   });
 
 
-  $('#laws_datatable').dataTable({
+
+  laws_dt = $('#laws_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": true,
@@ -124,8 +148,8 @@ $(document).ready(function(){
       { 'bSortable': false, 'aTargets': [ 8 ] }
     ],
     "iDisplayLength": 50,
-    "fnInitComplete": function () {
-	    $("#laws_datatable td a.fancybox").fancybox({
+    "fnDrawCallback": function () {
+	    $("#laws_datatable td a.fancybox_live").fancybox({
         transitionIn: 'elastic',
         transitionOut: 'elastic',
 	      width: 400,
@@ -136,6 +160,7 @@ $(document).ready(function(){
       });
     }
   });
+
 
 
 });

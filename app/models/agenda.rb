@@ -81,11 +81,11 @@ class Agenda < ActiveRecord::Base
 
       # use registration number and/or official law title to find match
       if a.registration_number.present? && a.official_law_title.present?
-        full_query << a.registraion_number
+        full_query << a.registration_number
         full_query << "%#{a.official_law_title.gsub(QUOTES[0], '').gsub(QUOTES[1], '').gsub(QUOTES[2], '')}%"
         q << 'and (agendas.registration_number = ? or agendas.official_law_title like ?) '
       elsif a.registration_number.present?
-        full_query << a.registraion_number
+        full_query << a.registration_number
         q << 'and agendas.registration_number = ? '
       elsif a.official_law_title.present?
         full_query << "%#{a.official_law_title.gsub(QUOTES[0], '').gsub(QUOTES[1], '').gsub(QUOTES[2], '')}%"
@@ -320,7 +320,7 @@ class Agenda < ActiveRecord::Base
 
   PREFIX = ['ერთი', 'III', 'II', 'I']
 
-  POSTFIX = ['მოსმენით', 'მოსმენა', 'მოსმ.', 'მოს.']
+  POSTFIX = ['მოსმენით', 'მოსმენა', 'მოსმ', 'მოს', 'მოს']
 
   CONSISTENT_SESSION_NAME = ['მოსმენით', 'მოსმენა']
 
