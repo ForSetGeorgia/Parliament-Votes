@@ -180,6 +180,28 @@ class Agenda < ActiveRecord::Base
     found = false
     if self.voting_session
       PREFIX.each do |pre|
+        if self.name.index(pre)
+          # found match
+          self.is_law = true
+
+          # add the correct complete postfix so there is consistency
+          if pre == PREFIX[0]
+            self.session_number = "#{pre} #{CONSISTENT_SESSION_NAME[0]}"
+          else
+            self.session_number = "#{pre} #{CONSISTENT_SESSION_NAME[1]}"
+          end  
+
+          generate_missing_data
+
+          self.save
+          found = true
+          break
+        end
+        break if found
+      end
+
+=begin code to check prefix and postfix
+      PREFIX.each do |pre|
         POSTFIX.each do |post|
           session = "#{pre} #{post}"
           if self.name.index(session)
@@ -202,6 +224,7 @@ class Agenda < ActiveRecord::Base
           break if found
         end
       end
+=end
     end
   end
 
@@ -213,10 +236,11 @@ class Agenda < ActiveRecord::Base
   end
 
   # look for registration number in description
-  # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  (07-2/3,05.11.2012)  || (#07-3/16. 22.11.2012)
+  # format: (07-3/32, 12.12.2012) || (07-2/5, 29.11.2012) ||  
+  #         (07-2/3,05.11.2012)  || (#07-3/16. 22.11.2012) || (N07-2/38;08.02.2013)
   def generate_registration_number
     if self.description.present?
-      reg = /\(\#{0,1}\d{2}-\d\/\d{1,2}(,||.) {0,5}\d{2}.\d{2}.\d{4}\)/
+      reg = /\((\#||N){0,1}\d{2}-\d\/\d{1,2}(,||.||;) {0,5}\d{2}.\d{2}.\d{4}\)/
       reg_num = reg.match(self.description)
       if reg_num
         self.registration_number = reg_num.to_s
@@ -313,6 +337,38 @@ class Agenda < ActiveRecord::Base
     x << "#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}"
     
     return x
+  end
+
+
+  # reprocess all laws to see if registration number can be found
+  # - the regexp to find the reg # changes often and this will help find
+  #   ones that were missed in the past
+  def self.reprocess_registration_number
+    count = 0
+    Agenda.transaction do
+      Agenda.laws_only(true).where(:registration_number => nil).each do |agenda|
+        agenda.generate_registration_number
+        if agenda.registration_number.present?
+          puts "found new registration number #{agenda.registration_number}"
+          agenda.save
+          count += 1
+        end
+      end
+    end
+    puts "**************** added #{count} registration numbers"
+  end
+
+  # reprocess all records that are not marked as laws to see if any have been skipped
+  def self.reprocess_items_not_laws
+    count = 0
+    Agenda.transaction do
+      Agenda.where(:is_law => 0).each_with_index do |agenda, index|
+        puts "index = #{index}" if index%50 == 0
+        agenda.check_is_law # this method does the saving
+        count += 1 if agenda.is_law
+      end
+    end
+    puts "**************** marked #{count} as laws"
   end
 
 
