@@ -35,7 +35,9 @@
           <%= link_to(t('app.common.app_name'), root_path(:locale => I18n.locale),:class=>"brand font")%>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to t('.menu_laws'), laws_path %>
+              <% if user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
+                <li><%= link_to t('.menu_laws'), laws_path %>
+              <% end %>
               <li><%= link_to t('.menu_files'), root_path(:locale => I18n.locale) %>
               <% if @agenda %>
                 <li><%= link_to t('.menu_conference'), conference_path(:id => @agenda.conference_id, :laws_only => params[:laws_only]) %>

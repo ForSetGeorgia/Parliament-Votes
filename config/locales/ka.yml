@@ -80,10 +80,10 @@ ka:
     notification:
       new_user:
         subject: "კეთილი იყოს თქვენი მობრძანება votes.parliament.ge-ზე!"
-        message: "Thank you for becoming a member of votes.parliament.ge.  You can manage when you would like to receive emails from votes.parliament.ge by clicking on the following link."
+        message: "გმადლობთ votes.parliament.ge-ში გაწევრიანებისთვის. თქვენ შეგიძლიათ მიიღოთ ელექტრონული შეტყობინებები votes.parliament.ge-დან ბმულზე გადასვლით."
       new_file:
-        subject: "A new file has been loaded into votes.parliament.ge!"
-        message: "The file from the session on '%{date}' has been added. Click on the link below to view the contents of the file."
+        subject: "ახალი ფაილი ჩაიტვირთა votes.parliament.ge-ზე!"
+        message: "ფაილი '%{date}' სესიიდან დამატებულია. გადადით ბმულზე ფაილის სანახავად."
   helpers:
     actions: აირჩიეთ
     links:
@@ -147,8 +147,8 @@ ka:
       assigned_session: "%{session} დაემატა კანონს."
       notification_yes: თქვენ მიიღებთ შეტყობინებებს.
       notification_no: თქვენ არ მიიღებთ შეტყობინებებს.
-      notification_new_file_all_success: You will recieve a notification whenever a file is added.
-      notification_new_file_none_success: You will not receive any notifications when files are added.
+      notification_new_file_all_success: თქვენ მიიღებთ შეტყობინებას ფაილის დამატების შესახებ.
+      notification_new_file_none_success: თქვენ არ მიიღებთ შეტყობინებას ფაილის დამატების შესახებ.
       notification_language: თქვენ მიიღებთ შეტყობინებას %{language}.
   layouts:
     application:
@@ -237,13 +237,13 @@ ka:
   notifications:
     index:
       title: შეტყობინებები
-      explain: "You can recieve email notifications whenever new laws are added to votes.parliament.ge.  Simply sign in via Facebook or sign up with votes.parliament.ge to subscribe."
-      all_sub_title: All Notifications
-      all_label: Do you want to recieve any notifications from this site?
-      all_no: "No, do not send me any notifications."
-      all_yes: "Yes, I want notifications sent to me."
-      new_file_sub_title: New File Notifications
-      new_files_all: Notify me when a file is added.
-      new_files_none: I do not want to receive notifications when a file is added.
-      language_sub_title: Notification Language
-      language_label: In what language do you want to receive the notifications?
+      explain: "თქვენ შეგიძლიათ მიიღოთ შეტყობინება votes.parliament.ge-ზე ფაილის დამატების შესახებ. სისტემაში შედით ფეისბუქის მეშვეობით ან დარეგისტრირდით votes.parliament.ge-ზე სიახლეების გამოსაწერად."
+      all_sub_title: ყველა შეტყობინება
+      all_label: გსურთ ამ საიტიდან შეტყობინებების მიღება?
+      all_no: "არა, არ გამომიგზავნოთ შეტყობინებები."
+      all_yes: "დიახ, მსურს შეტყობინებების მიღება."
+      new_file_sub_title: ახალი ფაილის შეტყობინება
+      new_files_all: შემატყობინეთ ფაილის დამატება.
+      new_files_none: არ მსურს ფაილის დამატების შესახებ შეტყობინებების მიღება.
+      language_sub_title: შეტყობინების ენა
+      language_label: რა ენაზე გსურთ შეტყობინების მიღება?
