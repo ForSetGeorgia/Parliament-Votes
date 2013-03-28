@@ -84,6 +84,9 @@ en:
       new_file:
         subject: "A new file has been loaded into votes.parliament.ge!"
         message: "The file from the session on '%{date}' has been added. Click on the link below to view the contents of the file."
+      change_vote:
+        subject: "Law votes have been changed"
+        message: "Votes have been chagned for the following laws."
   helpers:
     actions: Actions
     links:
@@ -150,6 +153,8 @@ en:
       notification_new_file_all_success: You will recieve a notification whenever a file is added.
       notification_new_file_none_success: You will not receive any notifications when files are added.
       notification_language: You will be sent notifications in %{language}.
+      notification_change_vote_all_success: You will recieve a notification whenever a vote is changed.
+      notification_change_vote_none_success: You will not receive any notifications when votes are changed.
   layouts:
     application:
       admin: Admin
@@ -247,3 +252,7 @@ en:
       new_files_none: I do not want to receive notifications when a file is added.
       language_sub_title: Notification Language
       language_label: In what language do you want to receive the notifications?
+      change_vote_sub_title: Vote Change Notifications
+      change_votes_all: Notify me when a vote is changed.
+      change_votes_none: I do not want to receive notifications when a vote is changed.
+

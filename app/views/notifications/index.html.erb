@@ -45,6 +45,18 @@
     	</div>
     <% end %>
 
+    <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
+    	<h3><%= t('.change_vote_sub_title') %></h3>
+    	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="change_vote_notifications">
+    		<div class="span3">
+    			<label for="change_votes_all" class="checkbox">
+    				<%= check_box_tag 'change_votes_all', 'true', @change_vote_all %>
+    				<%= t('.change_votes_all') %>
+    			</label>
+    		</div>
+    	</div>
+    <% end %>
+
   	<div>
   		<%= submit_tag nil, :class => 'btn btn-mini' %>
   	</div>

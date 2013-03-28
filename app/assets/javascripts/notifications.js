@@ -32,6 +32,7 @@ $(document).ready(function(){
 			// enable new file
 			enable_notifications('language');
 			enable_notifications('new_file');
+			enable_notifications('change_vote');
 		}
 
 		// if want all notifications turn on fields
@@ -40,9 +41,11 @@ $(document).ready(function(){
 			if ($(this).val() === 'true') {
 			  enable_all_fields('language');
 			  enable_all_fields('new_file');
+  			enable_all_fields('change_vote');
 			} else {
 			  disable_all_fields('language');
 			  disable_all_fields('new_file');
+  			disable_all_fields('change_vote');
 			}
 		});
 
@@ -54,6 +57,13 @@ $(document).ready(function(){
 		});
 		$('input#files_none').click(function(){
 			none_clicked('files');
+		});
+		// for change vote
+		$('input#change_votes_all').click(function(){
+			all_clicked('change_votes');
+		});
+		$('input#change_votes_none').click(function(){
+			none_clicked('change_votes');
 		});
 
 

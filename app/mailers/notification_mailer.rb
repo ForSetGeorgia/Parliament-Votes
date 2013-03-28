@@ -17,6 +17,13 @@ class NotificationMailer < ActionMailer::Base
     mail(:bcc => message.bcc, :subject => message.subject)
   end
 
+  ######### change vote
+
+  def change_vote(message)
+    @message = message
+    mail(:bcc => message.bcc, :subject => message.subject)
+  end
+
 
 
 end

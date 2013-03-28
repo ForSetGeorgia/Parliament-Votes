@@ -30,6 +30,7 @@ gem "exception_notification", "2.5.2" # send an email when exception occurs
 gem "nokogiri", "~> 1.5.6" # read xml file
 gem "paper_trail", "~> 2.7.0" # keep audit log of all transactions
 gem "active_attr", "~> 0.5.1" # to create tabless models; using for contact form
+gem "whenever", "~> 0.8.2", require: false # easily schedule cron jobs
 
 # Gems used only for assets and not required
 # in production environments by default.

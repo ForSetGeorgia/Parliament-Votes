@@ -39,6 +39,24 @@ class NotificationsController < ApplicationController
   					msg << I18n.t('app.msgs.notification_new_file_none_success')
           end
 
+          # process change vote notifications
+  				if params[:change_votes_all]
+  					# all notifications
+  					# delete anything on file first
+  					Notification.where(:notification_type => Notification::TYPES[:change_vote],
+  																					:user_id => current_user.id).delete_all
+  					# add all option
+  					Notification.create(:notification_type => Notification::TYPES[:change_vote],
+  																					:user_id => current_user.id)
+
+  					msg << I18n.t('app.msgs.notification_change_vote_all_success')
+  				else
+  					# delete all notifications
+  					Notification.where(:notification_type => Notification::TYPES[:change_vote],
+  																					:user_id => current_user.id).delete_all
+  					msg << I18n.t('app.msgs.notification_change_vote_none_success')
+          end
+
   			else
   				# indicate user does not want notifications
   				if current_user.wants_notifications
@@ -71,6 +89,16 @@ logger.debug "########## @language = #{@language}"
 
   		if @file_notifications.present? && @file_notifications.length == 1 && @file_notifications.first.identifier.nil?
 				@file_all = true
+  		end
+
+  		# get change vote data to load the form
+  		@change_vote_notifications = Notification.where(:notification_type => Notification::TYPES[:change_vote],
+  																			:user_id => current_user.id)
+
+  		@change_vote_all = false
+
+  		if @change_vote_notifications.present? && @change_vote_notifications.length == 1 && @change_vote_notifications.first.identifier.nil?
+				@change_vote_all = true
   		end
 
   		flash[:notice] = msg.join("<br />").html_safe if !msg.empty?

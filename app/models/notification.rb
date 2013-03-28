@@ -12,6 +12,10 @@ class Notification < ActiveRecord::Base
 		return new_item(TYPES[:new_file], locale)
 	end
 
+	def self.change_vote(locale)
+		return new_item(TYPES[:change_vote], locale)
+	end
+
 
 protected
 
