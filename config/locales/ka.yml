@@ -85,8 +85,8 @@ ka:
         subject: "ახალი ფაილი ჩაიტვირთა votes.parliament.ge-ზე!"
         message: "ფაილი '%{date}' სესიიდან დამატებულია. გადადით ბმულზე ფაილის სანახავად."
       change_vote:
-        subject: "Law votes have been changed"
-        message: "Votes have been chagned for the following laws."
+        subject: კანონის კენჭისყრის შედეგები შეცვლილია
+        message: კენჭისყრის შედეგები შეცვლიილა შემდეგი კანონებისთვის.
   helpers:
     actions: აირჩიეთ
     links:
@@ -153,8 +153,8 @@ ka:
       notification_new_file_all_success: თქვენ მიიღებთ შეტყობინებას ფაილის დამატების შესახებ.
       notification_new_file_none_success: თქვენ არ მიიღებთ შეტყობინებას ფაილის დამატების შესახებ.
       notification_language: თქვენ მიიღებთ შეტყობინებას %{language}.
-      notification_change_vote_all_success: You will recieve a notification whenever a vote is changed.
-      notification_change_vote_none_success: You will not receive any notifications when votes are changed.
+      notification_change_vote_all_success: თქვენ მიიღებთ კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინებას.
+      notification_change_vote_none_success: თქვენ არ მიიღებთ კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინებას.
   layouts:
     application:
       admin: ადმინისტრატო
@@ -252,7 +252,7 @@ ka:
       new_files_none: არ მსურს ფაილის დამატების შესახებ შეტყობინებების მიღება.
       language_sub_title: შეტყობინების ენა
       language_label: რა ენაზე გსურთ შეტყობინების მიღება?
-      change_vote_sub_title: Vote Change Notifications
-      change_votes_all: Notify me when a vote is changed.
-      change_votes_none: I do not want to receive notifications when a vote is changed.
+      change_vote_sub_title: კენჭისყრის შედეგების ცვლილების შეტყობინება
+      change_votes_all: შემატყობინეთ კენჭისყრის ცვლილებები.
+      change_votes_none: არ მსურს კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინების მიღება.
 
