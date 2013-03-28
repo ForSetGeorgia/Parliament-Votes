@@ -6,7 +6,7 @@ class Notification < ActiveRecord::Base
 
   validates :user_id, :notification_type, :presence => true
 
-  TYPES = {:new_file => 1}
+  TYPES = {:new_file => 1, :change_vote => 2, :law_is_public => 3}
 
 	def self.new_file(locale)
 		return new_item(TYPES[:new_file], locale)

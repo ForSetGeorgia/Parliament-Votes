@@ -38,7 +38,9 @@
               <% if user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
                 <li><%= link_to t('.menu_laws'), laws_path %>
               <% end %>
-              <li><%= link_to t('.menu_files'), root_path(:locale => I18n.locale) %>
+              <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
+                <li><%= link_to t('.menu_files'), root_path(:locale => I18n.locale) %>
+              <% end %>
               <% if @agenda %>
                 <li><%= link_to t('.menu_conference'), conference_path(:id => @agenda.conference_id, :laws_only => params[:laws_only]) %>
               <% end %>

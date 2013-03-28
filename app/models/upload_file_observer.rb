@@ -11,6 +11,8 @@ class UploadFileObserver < ActiveRecord::Observer
 	# after file has been created, send notification
 	def after_commit(file)
 		if file.send_notification && file.conference.present?
+      NotificationTrigger.add_new_file(file.id)
+=begin
 		  message = Message.new
 		  I18n.available_locales.each do |locale|
 				message.bcc = Notification.new_file(locale)
@@ -22,6 +24,7 @@ class UploadFileObserver < ActiveRecord::Observer
 				  NotificationMailer.new_file(message).deliver
 			  end
 		  end
+=end
     end
   end
 

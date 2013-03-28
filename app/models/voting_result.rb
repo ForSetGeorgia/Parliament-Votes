@@ -6,7 +6,15 @@ class VotingResult < ActiveRecord::Base
 
   attr_accessible :voting_session_id, :delegate_id, :present, :vote, :weight, :is_edited, :is_manual_add
 
+	attr_accessor :send_notification, :original_vote
+
   ABSTAIN = 0
+
+	after_find :set_original_vote
+
+	def set_original_vote
+		self.original_vote = read_attribute(:vote)
+	end
 
   def present_formatted
     if read_attribute(:present)

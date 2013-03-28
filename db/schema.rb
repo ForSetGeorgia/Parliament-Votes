@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326183749) do
+ActiveRecord::Schema.define(:version => 20130328075535) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -92,6 +92,16 @@ ActiveRecord::Schema.define(:version => 20130326183749) do
   end
 
   add_index "groups", ["conference_id"], :name => "index_groups_on_conference_id"
+
+  create_table "notification_triggers", :force => true do |t|
+    t.integer  "notification_type"
+    t.integer  "identifier"
+    t.boolean  "processed",         :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notification_triggers", ["notification_type"], :name => "index_notification_triggers_on_notification_type"
 
   create_table "notifications", :force => true do |t|
     t.integer  "user_id"
