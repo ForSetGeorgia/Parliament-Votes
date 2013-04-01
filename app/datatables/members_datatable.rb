@@ -20,7 +20,8 @@ private
   def data
     members.map do |member|
       [
-        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale))
+        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale)),
+        member.vote_count
       ]
     end
   end
@@ -47,7 +48,7 @@ private
   end
 
   def sort_column
-    columns = %w[all_delegates.first_name]
+    columns = %w[all_delegates.first_name all_delegates.vote_count]
     columns[params[:iSortCol_0].to_i]
   end
 

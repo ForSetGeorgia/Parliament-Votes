@@ -18,4 +18,11 @@ class SearchController < ApplicationController
     end
   end
 
+  def member_votes
+    respond_to do |format|
+      format.json { render json: MemberVotesDatatable.new(view_context, params[:first_name]) }
+    end
+  end
+
+
 end

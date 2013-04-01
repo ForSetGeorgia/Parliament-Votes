@@ -62,6 +62,7 @@ ka:
       voting_result:
         present: რეგისტრაცია
         vote: კენჭისყრის შედეგი
+        member_vote: "Member's Vote"
       delegate:
         first_name: სახელი
         title: წოდება
@@ -75,6 +76,7 @@ ka:
         end_date: დასრულების თარიღი
       all_delegate:
         first_name: სახელი
+        vote_count: "# Votes"
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"

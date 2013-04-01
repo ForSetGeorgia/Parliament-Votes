@@ -22,7 +22,7 @@ private
   def data
     voting_results.map do |voting_result|
       [
-        voting_result.delegate.first_name,
+        link_to(voting_result.delegate.first_name, member_path(:id => voting_result.delegate.all_delegate_id, :locale => I18n.locale)),
         voting_result.delegate.title,
         voting_result.delegate.group.present? ? voting_result.delegate.group.short_name : nil,
         voting_result.present_formatted,

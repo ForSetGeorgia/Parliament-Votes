@@ -1,3 +1,20 @@
 <% title t('.title', :name => @member.first_name) %>
 
-<%= "number of laws = #{@agendas.length}" %>
+<table id="member_votes_datatable" class="display table table-striped table-bordered" 
+      data-source="<%= search_member_votes_url(:first_name => @member.first_name, :format => :json) %>">
+  <thead>
+    <tr>
+      <th><%= Conference.human_attribute_name(:start_date_final) %></th>
+      <th><%= Agenda.human_attribute_name(:official_law_title) %></th>
+      <th><%= Agenda.human_attribute_name(:law_description) %></th>
+      <th><%= VotingSession.human_attribute_name(:passed) %></th>
+      <th><%= VotingSession.human_attribute_name(:result1) %></th>
+      <th><%= VotingSession.human_attribute_name(:result3) %></th>
+      <th><%= VotingSession.human_attribute_name(:result0) %></th>
+      <th><%= VotingResult.human_attribute_name(:member_vote) %></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+

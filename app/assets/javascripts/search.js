@@ -205,6 +205,20 @@ $(document).ready(function(){
     "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]]
   });
 
+  $('#member_votes_datatable').dataTable({
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sPaginationType": "bootstrap",
+    "bJQueryUI": true,
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": $('#member_votes_datatable').data('source'),
+    "oLanguage": {
+      "sUrl": gon.datatable_i18n_url
+    },
+    "iDisplayLength": 25,
+    "aaSorting": [[0, 'desc']]
+  });
+
 
 });
 

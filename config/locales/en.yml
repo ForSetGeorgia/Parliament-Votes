@@ -62,6 +62,7 @@ en:
       voting_result:
         present: Present
         vote: Vote
+        member_vote: "Member's Vote"
       delegate:
         first_name: Name
         title: Title
@@ -75,6 +76,7 @@ en:
         end_date: End Date
       all_delegate:
         first_name: Name
+        vote_count: "# Votes"
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"
