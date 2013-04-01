@@ -27,4 +27,12 @@ class AllDelegate < ActiveRecord::Base
     end
   end
 
+
+  def self.passed_laws_voting_history(name)
+    if name.present?
+      Agenda.includes(:conference => :delegates, :voting_session => :voting_results)
+        .not_deleted.final_laws
+        .where('delegates.first_name = ?', name)
+    end
+  end
 end

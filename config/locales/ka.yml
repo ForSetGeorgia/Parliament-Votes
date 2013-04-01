@@ -30,6 +30,7 @@ ka:
       conference:
         name: სხდომა
         start_date: სხდომის თარიღი
+        start_date_final: Passed Date
         number_laws: "# კანონები"
         number_sessions: "# სესიები"
       agenda:
@@ -54,6 +55,10 @@ ka:
         quorum: ქვორუმი
         results: შედეგები (დიახ / არა)
         voting_conclusion: საწყისი კენჭისყრის შედეგები
+        result1: "Yes"
+        result3: "No"
+        result0: Abstain
+        last_session_resutls: Final Vote
       voting_result:
         present: რეგისტრაცია
         vote: კენჭისყრის შედეგი
@@ -244,6 +249,12 @@ ka:
   root:
     index:
       title: Voting Records Database
+      laws_header: Passed Laws
+      members_header: Parliament Members
+    law:
+      title: "Law: %{name} (%{date})"
+    member:
+      title: "Parliament Member: %{name}"
   notifications:
     index:
       title: შეტყობინებები

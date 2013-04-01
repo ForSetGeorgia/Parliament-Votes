@@ -14,7 +14,8 @@ BootstrapStarter::Application.routes.draw do
 		end
 
     # root controller
-
+    match '/law/:id', :to => 'root#law', :as => :law, :via => :get
+    match '/member/:id', :to => 'root#member', :as => :member, :via => :get
 
     # admin
     match '/admin/upload_files', :to => 'admin#upload_files', :as => :admin_upload_files, :via => :get
@@ -42,6 +43,7 @@ BootstrapStarter::Application.routes.draw do
     match '/admin/search/sessions/:session/:agenda_id/:match_only', :to => 'admin_search#sessions', :as => :admin_search_sessions, :via => :get, :defaults => {:format => 'json'}
 
     # search controller
+    match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
     match '/search/passed_laws', :to => 'search#passed_laws', :as => :search_passed_laws, :via => :get, :defaults => {:format => 'json'}
     match '/search/members', :to => 'search#members', :as => :search_members, :via => :get, :defaults => {:format => 'json'}
     

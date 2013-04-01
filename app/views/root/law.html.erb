@@ -1,0 +1,78 @@
+<% title t('.title', :name => @agenda.official_law_title.present? ? @agenda.official_law_title : @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
+
+<div id="agenda_description">
+  <ul>
+    <li>
+      <strong><%= Conference.human_attribute_name(:start_date_final) %>:</strong>
+      <%= l(@agenda.conference.start_date, :format => :no_zone) %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:parliament_id) %>:</strong>
+      <%= @agenda.parliament.name %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:official_law_title) %>:</strong>
+      <%= @agenda.official_law_title %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:law_description) %>:</strong>
+      <%= @agenda.law_description %>
+    </li>
+    <li>
+      <strong><%= Agenda.human_attribute_name(:law_id) %>:</strong>
+      <%= @agenda.law_id %>
+    </li>    
+    <li>
+      <strong><%= Agenda.human_attribute_name(:law_url) %>:</strong>
+      <% if @agenda.law_url.present? %>
+        <%= link_to( 
+          t('helpers.links.view_law_url'), 
+          @agenda.law_url, :class => 'btn btn-mini', :target => :blank) %>
+      <% end %>
+    </li>    
+  </ul>
+  
+</div>
+
+<% if @agenda.voting_session.present? && @agenda.voting_session.voting_results.present? %>
+  <div id="agenda_counts">
+    <ul>
+      <li>
+        <span><%= t('helpers.boolean.y') %>:</span>
+        <%= @agenda.total_yes %>
+      </li>
+      <li>
+        <span><%= t('helpers.boolean.n') %>:</span>
+        <%= @agenda.total_no %>
+      </li>
+      <li>
+        <span><%= t('helpers.boolean.abstain') %>:</span>
+        <%= @agenda.total_abstain %>
+      </li>
+      <li>
+        <span><%= t('.not_present') %>:</span>
+        <%= @agenda.total_not_present %>
+      </li>
+    </ul>
+  </div>
+
+
+  <table id="voting_results_public_datatable" class="display table table-striped table-bordered" 
+        data-source="<%= search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
+    <thead>
+      <tr>
+        <th><%= Delegate.human_attribute_name(:first_name) %></th>
+        <th><%= Delegate.human_attribute_name(:title) %></th>
+        <th><%= Group.human_attribute_name(:short_name) %></th>
+        <th><%= VotingResult.human_attribute_name(:present) %></th>
+        <th><%= VotingResult.human_attribute_name(:vote) %></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+<% else %>
+  <p>
+    <%= t('.no_results') %>
+  </p>
+<% end %>

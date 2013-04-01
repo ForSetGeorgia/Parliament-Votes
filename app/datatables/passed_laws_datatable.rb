@@ -9,7 +9,7 @@ class PassedLawsDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.final_laws.count,
+      iTotalRecords: Agenda.includes(:conference).not_deleted.final_laws.count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -20,9 +20,13 @@ private
   def data
     agendas.map do |agenda|
       [
-        agenda.official_law_title.present? ? agenda.official_law_title : agenda.name,
+        agenda.conference.start_date,
+        link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
+          law_path(:id => agenda.id, :locale => I18n.locale)),
         agenda.law_description,
-        agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no} / #{agenda.total_abstain})"
+        agenda.total_yes,
+        agenda.total_no,
+        agenda.total_abstain,
       ]
     end
   end
@@ -32,7 +36,7 @@ private
   end
 
   def fetch_agendas
-    agendas = Agenda.final_laws.order("#{sort_column} #{sort_direction}")
+    agendas = Agenda.includes(:conference).not_deleted.final_laws.order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.official_law_title like :search or agendas.name like :search or agendas.law_description like :search", search: "%#{params[:sSearch]}%")
@@ -49,7 +53,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.official_law_title agendas.law_description law.total_yes]
+    columns = %w[conferences.start_date agendas.official_law_title agendas.law_description voting_sessions.result1 voting_sessions.result3 voting_sessions.result0]
     columns[params[:iSortCol_0].to_i]
   end
 

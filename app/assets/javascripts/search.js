@@ -172,7 +172,8 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 25
+    "iDisplayLength": 10,
+    "aaSorting": [[0, 'desc']]
   });
 
   $('#members_datatable').dataTable({
@@ -185,7 +186,23 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 25
+    "iDisplayLength": 50,
+    "bLengthChange": false
+
+  });
+
+  $('#voting_results_public_datatable').dataTable({
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sPaginationType": "bootstrap",
+    "bJQueryUI": true,
+    "bProcessing": true,
+    "bServerSide": true,
+    "sAjaxSource": $('#voting_results_public_datatable').data('source'),
+    "oLanguage": {
+      "sUrl": gon.datatable_i18n_url
+    },
+    "iDisplayLength": 150,
+    "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]]
   });
 
 

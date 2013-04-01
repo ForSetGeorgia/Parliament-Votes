@@ -20,7 +20,7 @@ private
   def data
     members.map do |member|
       [
-        member.first_name
+        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale))
       ]
     end
   end

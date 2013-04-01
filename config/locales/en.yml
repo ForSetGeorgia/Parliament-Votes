@@ -30,6 +30,7 @@ en:
       conference:
         name: Conference Name
         start_date: Conference Date
+        start_date_final: Passed Date
         number_laws: "# Laws"
         number_sessions: "# Sessions"
       agenda:
@@ -54,6 +55,10 @@ en:
         quorum: Quorum
         results: Results (Y/N)
         voting_conclusion: Original Voting Results from File
+        result1: "Yes"
+        result3: "No"
+        result0: Abstain
+        last_session_resutls: Final Vote
       voting_result:
         present: Present
         vote: Vote
@@ -244,6 +249,12 @@ en:
   root:
     index:
       title: Voting Records Database
+      laws_header: Passed Laws
+      members_header: Parliament Members
+    law:
+      title: "Law: %{name} (%{date})"
+    member:
+      title: "Parliament Member: %{name}"
   notifications:
     index:
       title: Notifications
