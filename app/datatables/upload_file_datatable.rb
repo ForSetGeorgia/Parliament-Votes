@@ -22,7 +22,7 @@ private
   def data
     upload_files.map do |upload_file|
       [
-        upload_file.conference.present? ? link_to(upload_file.conference.name, conference_path(:id => upload_file.conference.id, :locale => I18n.locale)) : nil,
+        upload_file.conference.present? ? link_to(upload_file.conference.name, admin_conference_path(:id => upload_file.conference.id, :locale => I18n.locale)) : nil,
         upload_file.conference.present? ? I18n.l(upload_file.conference.start_date, :format => :no_zone) : nil,
         upload_file.number_possible_members,
         upload_file.conference.present? ? upload_file.conference.number_laws : nil,
@@ -36,7 +36,7 @@ private
 
   def delete_link(upload_file)
     if @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t("helpers.links.destroy"), delete_file_path(:id => upload_file.id, :locale => I18n.locale), 
+      link_to(I18n.t("helpers.links.destroy"), admin_delete_file_path(:id => upload_file.id, :locale => I18n.locale), 
           :data => { :confirm => I18n.t('.confirm', :default => I18n.t("helpers.links.confirm")) },
           :class => 'btn btn-mini btn-danger')
     end

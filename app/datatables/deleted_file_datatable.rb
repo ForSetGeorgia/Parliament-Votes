@@ -28,7 +28,7 @@ private
         upload_file.conference.number_sessions,
         upload_file.xml_file_name,
         I18n.l(upload_file.created_at, :format => :no_zone),
-        link_to(I18n.t("helpers.links.restore"), restore_file_path(:id => upload_file.id, :locale => I18n.locale), 
+        link_to(I18n.t("helpers.links.restore"), admin_restore_file_path(:id => upload_file.id, :locale => I18n.locale), 
           :data => { :confirm => I18n.t('.confirm', :default => I18n.t("helpers.links.confirm")) },
           :class => 'btn btn-mini btn-primary')
       ]

@@ -2,7 +2,7 @@
 
 <% @message.message2.each do |msg| %>
   <%= link_to msg[0],
-						  agenda_url(:id => msg[1], :locale => @message.locale) %>
+						  admin_agenda_url(:id => msg[1], :locale => @message.locale) %>
 <% end %>
 
 

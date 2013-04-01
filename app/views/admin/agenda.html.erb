@@ -94,11 +94,11 @@
     <div id="add_buttons">
       <p>
         <% if @agenda.is_law %>
-          <%= link_to t('helpers.links.edit_law'), edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+          <%= link_to t('helpers.links.edit_law'), admin_edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
 
-          <%= link_to t('helpers.links.add_vote'), add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+          <%= link_to t('helpers.links.add_vote'), admin_add_vote_path(@agenda.id), :class => 'btn btn-success fancybox' %>
         <% else %>
-          <%= link_to t('helpers.links.make_law'), edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
+          <%= link_to t('helpers.links.make_law'), admin_edit_agenda_path(@agenda.id), :class => 'btn btn-success fancybox' %>
         <% end %>
       </p>
     
@@ -106,7 +106,7 @@
   <% end %>
 
   <table id="voting_results_datatable" class="display table table-striped table-bordered" 
-        data-source="<%= search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
+        data-source="<%= admin_search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
     <thead>
       <tr>
         <th></th>

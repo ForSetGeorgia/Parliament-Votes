@@ -28,7 +28,7 @@ private
   def data
     agendas.map do |agenda|
       [
-        link_to(I18n.t('helpers.links.assign_session'), save_session_match_path(:locale => I18n.locale, :agenda_id => @agenda_id, :session => @session, :match_id => agenda.id),
+        link_to(I18n.t('helpers.links.assign_session'), admin_save_session_match_path(:locale => I18n.locale, :agenda_id => @agenda_id, :session => @session, :match_id => agenda.id),
             :class => 'btn btn-mini btn-success'),
         I18n.l(agenda.conference.start_date, :format => :no_zone),
         agenda.official_law_title.present? ? agenda.official_law_title : agenda.name,

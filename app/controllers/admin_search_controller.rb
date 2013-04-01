@@ -1,5 +1,8 @@
-class SearchController < ApplicationController
+class AdminSearchController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :except => [:delete_files] do |controller_instance|
+    controller_instance.send(:valid_role?, User::ROLES[:process_files])
+  end
   before_filter :only => [:delete_files] do |controller_instance|
     controller_instance.send(:valid_role?, User::ROLES[:lower_admin])
   end

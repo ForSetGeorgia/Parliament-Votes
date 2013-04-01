@@ -163,6 +163,7 @@ en:
       menu_laws: Make Laws Public
       notifications: Notifications
       sign_out: Sign Out
+      sign_in: Sign In
       js_link_title: "Visit JumpStart Georgia's website"
       js_link_text: Built by
     unsupported_browser:
@@ -197,8 +198,7 @@ en:
         title: User Details
     deleted_files:
       title: Restore Deleted Files
-  root:
-    index:
+    upload_files:
       title:
       no_files: No files have been uploaded.
       upload_btn: Upload File
@@ -239,6 +239,9 @@ en:
       possible_header: Possible Matches
       possible_explanation: Possible matches are found by looking for records that have the same Registration Number or Official Law Title.
       all_header: All Records
+  root:
+    index:
+      title: Voting Records Database
   notifications:
     index:
       title: Notifications

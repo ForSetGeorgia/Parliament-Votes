@@ -163,6 +163,7 @@ ka:
       menu_laws: კანონის გამოქვეყნება 
       notifications: შეტყობინებები
       sign_out: გასვლა
+      sign_in: სისტემაში შესვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
       js_link_text: აგებულია
     unsupported_browser:
@@ -197,8 +198,7 @@ ka:
         title: მომხმარებლის დეტალები
     deleted_files:
       title: წაშლილი ფაილის აღდგენა
-  root:
-    index:
+    upload_files:
       title:
       no_files: ფაილი არ აიტვირთა.
       upload_btn: ფაილის ატვირთვა
@@ -238,7 +238,10 @@ ka:
       final_law_header: "ძიება:"
       possible_header: შესაძლო შესატყვისები
       possible_explanation: შესაძლო შესატყვისები მოიძებნა იმ ჩანაწერების მოძიებით, რომლებსაც აქვთ იგივე სარეგისტრაციო ნომერი ან ოფიციალური კანონის სათაური.
-      all_header: ყველა ჩანაწერი
+      all_header: ყველა ჩანაწერი  
+  root:
+    index:
+      title: Voting Records Database
   notifications:
     index:
       title: შეტყობინებები

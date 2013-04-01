@@ -74,8 +74,9 @@ class ApplicationController < ActionController::Base
 	end
 
 	FB_ACTIONS = ['edit_vote', 'add_vote', 'edit_agenda', 'edit_conference', 'session_match']
+  FB_CONTROLLER = 'admin'
 	def layout_by_resource
-    if !FB_ACTIONS.index(params[:action]).nil?
+    if FB_CONTROLLER == params[:controller] && FB_ACTIONS.index(params[:action]).present? 
       "fancybox"
     else
       "application"

@@ -28,7 +28,7 @@ private
       [
         agenda.sort_order,
         link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
-          agenda_path(:id => agenda.id, :locale => I18n.locale, :laws_only => params[:laws_only])),
+          admin_agenda_path(:id => agenda.id, :locale => I18n.locale, :laws_only => params[:laws_only])),
         agenda.law_title,
         agenda.law_description,
         agenda.session_number,
@@ -42,10 +42,10 @@ private
 
   def change_status_link(agenda)
     if agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t('helpers.links.unmake_law'), not_law_path(:id => agenda.id, :locale => I18n.locale), 
+      link_to(I18n.t('helpers.links.unmake_law'), admin_not_law_path(:id => agenda.id, :locale => I18n.locale), 
              :class => 'btn btn-mini')  
     elsif !agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t('helpers.links.make_law'), edit_agenda_path(:id => agenda.id, :locale => I18n.locale), 
+      link_to(I18n.t('helpers.links.make_law'), admin_edit_agenda_path(:id => agenda.id, :locale => I18n.locale), 
              :class => 'btn btn-mini fancybox_live')  
     end
   end

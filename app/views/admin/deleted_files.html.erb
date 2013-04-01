@@ -1,7 +1,7 @@
 <% title t('.title') %>
 
 <table id="deleted_files_datatable" class="display table table-striped table-bordered" 
-      data-source="<%= search_deleted_files_url(:format => :json) %>">
+      data-source="<%= admin_search_deleted_files_url(:format => :json) %>">
   <thead>
     <tr>
       <th><%= UploadFile.human_attribute_name(:deleted_at) %></th>

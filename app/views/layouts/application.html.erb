@@ -36,13 +36,13 @@
           <div class="container nav-collapse">
             <ul class="nav">
               <% if user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
-                <li><%= link_to t('.menu_laws'), laws_path %>
+                <li><%= link_to t('.menu_laws'), admin_laws_path %>
               <% end %>
               <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
-                <li><%= link_to t('.menu_files'), root_path(:locale => I18n.locale) %>
+                <li><%= link_to t('.menu_files'), admin_upload_files_path(:locale => I18n.locale) %>
               <% end %>
               <% if @agenda %>
-                <li><%= link_to t('.menu_conference'), conference_path(:id => @agenda.conference_id, :laws_only => params[:laws_only]) %>
+                <li><%= link_to t('.menu_conference'), admin_conference_path(:id => @agenda.conference_id, :laws_only => params[:laws_only]) %>
               <% end %>
             </ul>
             <ul class="nav pull-right">
@@ -71,6 +71,10 @@
 										</li>
 				          </ul>
 				        </li>
+              <% else %>
+				        <li>
+		 		         <%= link_to t('.sign_in'), new_user_session_path %>
+								</li>
 		          <% end %>
             </ul>
           </div><!--/.nav-collapse -->
@@ -83,24 +87,21 @@
 		    <div class="content">
 		      <div class="row">
 		         <div class="span12">
-              <% if user_signed_in? %>
-							  <% flash.each do |key, msg| %>
-								  <div class="alert <%= flash_translation(key) %> fade in">
-									  <a href="#" data-dismiss="alert" class="close">×</a>
-									  <%= msg %>
-								  </div>
-							  <% end %>
+						  <% flash.each do |key, msg| %>
+							  <div class="alert <%= flash_translation(key) %> fade in">
+								  <a href="#" data-dismiss="alert" class="close">×</a>
+								  <%= msg %>
+							  </div>
+						  <% end %>
 
-
-							  <% if content_for?(:title) %>
-								  <div class="page-header">
-								    <div class="block">
-			                <h1>
-  										  <%= yield(:title) %>
-									    </h1>
-									  </div>
+						  <% if content_for?(:title) %>
+							  <div class="page-header">
+							    <div class="block">
+		                <h1>
+										  <%= yield(:title) %>
+								    </h1>
 								  </div>
-							  <% end %>
+							  </div>
 						  <% end %>
 
 	            <%= yield %>

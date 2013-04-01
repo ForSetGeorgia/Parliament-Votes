@@ -50,7 +50,7 @@ private
 
   def vote_link(voting_result)
     if voting_result.voting_session.agenda.is_law && @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t('helpers.links.edit'), edit_vote_path(:id => voting_result.id, :locale => I18n.locale), 
+      link_to(I18n.t('helpers.links.edit'), admin_edit_vote_path(:id => voting_result.id, :locale => I18n.locale), 
              :class => 'btn btn-mini fancybox_live')  
     end
   end

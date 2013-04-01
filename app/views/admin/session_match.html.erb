@@ -50,7 +50,7 @@
         <%= t('.possible_explanation') %>
       </p>
       <table id="possible_sessions_datatable" class="display table table-striped table-bordered" 
-            data-source="<%= search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => true.to_s, :format => :json) %>">
+            data-source="<%= admin_search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => true.to_s, :format => :json) %>">
         <thead>
           <tr>
             <th><%= Conference.human_attribute_name(:start_date) %></th>
@@ -69,7 +69,7 @@
     <div class="tab-pane" id="tab2">
       <h2><%= t('.all_header') %></h2>
       <table id="all_sessions_datatable" class="display table table-striped table-bordered" 
-            data-source="<%= search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => false.to_s, :format => :json) %>">
+            data-source="<%= admin_search_sessions_url(:session => params[:session], :agenda_id => params[:agenda_id], :match_only => false.to_s, :format => :json) %>">
         <thead>
           <tr>
             <th><%= Conference.human_attribute_name(:start_date) %></th>

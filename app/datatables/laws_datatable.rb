@@ -23,7 +23,7 @@ private
     agendas.map do |agenda|
       [
         link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
-          agenda_path(:id => agenda.id, :locale => I18n.locale)),
+          admin_agenda_path(:id => agenda.id, :locale => I18n.locale)),
         agenda.law_title,
         agenda.law_description,
         agenda.registration_number,
@@ -41,7 +41,7 @@ private
       link_to agenda.law_id, agenda.law_url, :target => :blank
     else
       link_to(I18n.t('helpers.links.add'), 
-        edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
+        admin_edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
         :class => 'btn btn-mini btn-danger fancybox_live')
     end
   end
@@ -50,11 +50,11 @@ private
     if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
       if agenda.session_number1_id.present?
         link_to(I18n.t('helpers.links.view'), 
-          agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), 
+          admin_agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), 
           :class => 'btn btn-mini')
       else
         link_to(I18n.t('helpers.links.add'), 
-          session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
+          admin_session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
           :class => 'btn btn-mini btn-danger fancybox_live')
       end
     end
@@ -63,10 +63,10 @@ private
   def has_session2(agenda)
     if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
       if agenda.session_number2_id.present?
-        link_to(I18n.t('helpers.links.view'), agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini')
+        link_to(I18n.t('helpers.links.view'), admin_agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini')
       else
         link_to(I18n.t('helpers.links.add'), 
-          session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
+          admin_session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
           :class => 'btn btn-mini btn-danger fancybox_live')
       end
     end

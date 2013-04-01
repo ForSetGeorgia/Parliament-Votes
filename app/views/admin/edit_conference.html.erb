@@ -2,7 +2,7 @@
 
 <% if @conference && @upload_file %>
 
-<%= semantic_form_for @upload_file, :url => edit_conference_path(params[:id]), :method => :post do |f| %>
+<%= semantic_form_for @upload_file, :url => admin_edit_conference_path(params[:id]), :method => :post do |f| %>
 	<%= f.error_messages %>
 
   <div id="edit_form_heading">

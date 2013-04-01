@@ -14,30 +14,33 @@ BootstrapStarter::Application.routes.draw do
 		end
 
     # root controller
-    match '/process_file', :to => 'root#process_file', :as => :process_file, :via => :post
-    match '/delete_file/:id', :to => 'root#delete_file', :as => :delete_file, :via => :get
-    match '/conference/:id', :to => 'root#conference', :as => :conference, :via => :get
-    match '/edit_conference/:id', :to => 'root#edit_conference', :as => :edit_conference, :via => [:get, :post]
-    match '/agenda/:id', :to => 'root#agenda', :as => :agenda, :via => :get
-    match '/edit_agenda/:id', :to => 'root#edit_agenda', :as => :edit_agenda, :via => [:get, :post]
-    match '/edit_vote/:id', :to => 'root#edit_vote', :as => :edit_vote, :via => [:get, :post]
-    match '/add_vote/:id', :to => 'root#add_vote', :as => :add_vote, :via => [:get, :post]
-    match '/not_law/:id', :to => 'root#not_law', :as => :not_law, :via => :get
-    match '/laws', :to => 'root#laws', :as => :laws, :via => :get
-    match '/session_match/:agenda_id/:session', :to => 'root#session_match', :as => :session_match, :via => :get
-    match '/session_match/:agenda_id/:session/:match_id', :to => 'root#save_session_match', :as => :save_session_match, :via => :get
 
-    # search controller
-    match '/search/voting_results/:voting_session_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
-    match '/search/agendas/:conference_id(/:laws_only)', :to => 'search#agendas', :as => :search_agendas, :via => :get, :defaults => {:format => 'json'}
-    match '/search/files', :to => 'search#files', :as => :search_files, :via => :get, :defaults => {:format => 'json'}
-    match '/search/deleted_files', :to => 'search#deleted_files', :as => :search_deleted_files, :via => :get, :defaults => {:format => 'json'}
-    match '/search/laws', :to => 'search#laws', :as => :search_laws, :via => :get, :defaults => {:format => 'json'}
-    match '/search/sessions/:session/:agenda_id/:match_only', :to => 'search#sessions', :as => :search_sessions, :via => :get, :defaults => {:format => 'json'}
 
     # admin
-    match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :deleted_files, :via => :get
-    match '/admin/restore_file/:id', :to => 'admin#restore_file', :as => :restore_file, :via => :get
+    match '/admin/upload_files', :to => 'admin#upload_files', :as => :admin_upload_files, :via => :get
+    match '/admin/process_file', :to => 'admin#process_file', :as => :admin_process_file, :via => :post
+    match '/admin/delete_file/:id', :to => 'admin#delete_file', :as => :admin_delete_file, :via => :get
+    match '/admin/conference/:id', :to => 'admin#conference', :as => :admin_conference, :via => :get
+    match '/admin/edit_conference/:id', :to => 'admin#edit_conference', :as => :admin_edit_conference, :via => [:get, :post]
+    match '/admin/agenda/:id', :to => 'admin#agenda', :as => :admin_agenda, :via => :get
+    match '/admin/edit_agenda/:id', :to => 'admin#edit_agenda', :as => :admin_edit_agenda, :via => [:get, :post]
+    match '/admin/edit_vote/:id', :to => 'admin#edit_vote', :as => :admin_edit_vote, :via => [:get, :post]
+    match '/admin/add_vote/:id', :to => 'admin#add_vote', :as => :admin_add_vote, :via => [:get, :post]
+    match '/admin/not_law/:id', :to => 'admin#not_law', :as => :admin_not_law, :via => :get
+    match '/admin/laws', :to => 'admin#laws', :as => :admin_laws, :via => :get
+    match '/admin/session_match/:agenda_id/:session', :to => 'admin#session_match', :as => :admin_session_match, :via => :get
+    match '/admin/session_match/:agenda_id/:session/:match_id', :to => 'admin#save_session_match', :as => :admin_save_session_match, :via => :get
+    match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :admin_deleted_files, :via => :get
+    match '/admin/restore_file/:id', :to => 'admin#restore_file', :as => :admin_restore_file, :via => :get
+
+    # search controller
+    match '/admin/search/voting_results/:voting_session_id', :to => 'admin_search#voting_results', :as => :admin_search_voting_results, :via => :get, :defaults => {:format => 'json'}
+    match '/admin/search/agendas/:conference_id(/:laws_only)', :to => 'admin_search#agendas', :as => :admin_search_agendas, :via => :get, :defaults => {:format => 'json'}
+    match '/admin/search/files', :to => 'admin_search#files', :as => :admin_search_files, :via => :get, :defaults => {:format => 'json'}
+    match '/admin/search/deleted_files', :to => 'admin_search#deleted_files', :as => :admin_search_deleted_files, :via => :get, :defaults => {:format => 'json'}
+    match '/admin/search/laws', :to => 'admin_search#laws', :as => :admin_search_laws, :via => :get, :defaults => {:format => 'json'}
+    match '/admin/search/sessions/:session/:agenda_id/:match_only', :to => 'admin_search#sessions', :as => :admin_search_sessions, :via => :get, :defaults => {:format => 'json'}
+
     
 		# notifications
 		match '/notifications', :to => 'notifications#index', :as => :notifications, :via => [:get, :post]

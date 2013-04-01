@@ -2,7 +2,7 @@
 
 <% if @voting_result %>
 
-<%= semantic_form_for @voting_result, :url => edit_vote_path(params[:id]), :method => :post do |f| %>
+<%= semantic_form_for @voting_result, :url => admin_edit_vote_path(params[:id]), :method => :post do |f| %>
 	<%= f.error_messages %>
 
   <div id="edit_form_heading">

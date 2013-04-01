@@ -19,7 +19,7 @@
 
   <div id="agenda_laws_only">
     <% if current_user.role?(User::ROLES[:process_files]) %>
-      <%= link_to t('helpers.links.edit_conference'), edit_conference_path(@conference.id), :class => 'btn btn-success fancybox' %>
+      <%= link_to t('helpers.links.edit_conference'), admin_edit_conference_path(@conference.id), :class => 'btn btn-success fancybox' %>
     <% end %>
     <% if params[:laws_only].present? && params[:laws_only] == "false" %>
       <%= link_to t('.view_laws_only'), url_for(params.merge(:laws_only => 'true')), :class => 'btn btn-primary' %>
@@ -30,7 +30,7 @@
 
 
 <table id="agendas_datatable" class="display table table-striped table-bordered" 
-      data-source="<%= search_agendas_url(:conference_id => @conference.id, :format => :json) %>">
+      data-source="<%= admin_search_agendas_url(:conference_id => @conference.id, :format => :json) %>">
   <thead>
     <tr>
       <th><%= Agenda.human_attribute_name(:sort_order) %></th>
