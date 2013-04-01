@@ -33,7 +33,7 @@ BootstrapStarter::Application.routes.draw do
     match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :admin_deleted_files, :via => :get
     match '/admin/restore_file/:id', :to => 'admin#restore_file', :as => :admin_restore_file, :via => :get
 
-    # search controller
+    # admin search controller
     match '/admin/search/voting_results/:voting_session_id', :to => 'admin_search#voting_results', :as => :admin_search_voting_results, :via => :get, :defaults => {:format => 'json'}
     match '/admin/search/agendas/:conference_id(/:laws_only)', :to => 'admin_search#agendas', :as => :admin_search_agendas, :via => :get, :defaults => {:format => 'json'}
     match '/admin/search/files', :to => 'admin_search#files', :as => :admin_search_files, :via => :get, :defaults => {:format => 'json'}
@@ -41,6 +41,9 @@ BootstrapStarter::Application.routes.draw do
     match '/admin/search/laws', :to => 'admin_search#laws', :as => :admin_search_laws, :via => :get, :defaults => {:format => 'json'}
     match '/admin/search/sessions/:session/:agenda_id/:match_only', :to => 'admin_search#sessions', :as => :admin_search_sessions, :via => :get, :defaults => {:format => 'json'}
 
+    # search controller
+    match '/search/passed_laws', :to => 'search#passed_laws', :as => :search_passed_laws, :via => :get, :defaults => {:format => 'json'}
+    match '/search/members', :to => 'search#members', :as => :search_members, :via => :get, :defaults => {:format => 'json'}
     
 		# notifications
 		match '/notifications', :to => 'notifications#index', :as => :notifications, :via => [:get, :post]

@@ -68,6 +68,8 @@ ka:
         name_hint: "(მაგ., 'მე-8 მოწვევის პარლამენტი')"
         start_date: დაწყების თარიღი
         end_date: დასრულების თარიღი
+      all_delegate:
+        first_name: სახელი
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"

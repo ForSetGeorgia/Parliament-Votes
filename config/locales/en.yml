@@ -68,6 +68,8 @@ en:
         name_hint: "(e.g., 'The 8th Parliament')"
         start_date: Start Date
         end_date: End Date
+      all_delegate:
+        first_name: Name
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"
