@@ -35,10 +35,10 @@
           <%= link_to(t('app.common.app_name'), root_path(:locale => I18n.locale),:class=>"brand font")%>
           <div class="container nav-collapse">
             <ul class="nav">
-              <% if params[:controller] == 'admin' && user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
+              <% if user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
                 <li><%= link_to t('.menu_laws'), admin_laws_path %>
               <% end %>
-              <% if params[:controller] == 'admin' && user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
+              <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
                 <li><%= link_to t('.menu_files'), admin_upload_files_path(:locale => I18n.locale) %>
               <% end %>
               <% if params[:controller] == 'admin' && user_signed_in? && current_user.role?(User::ROLES[:process_files]) && @agenda %>
