@@ -118,6 +118,7 @@ en:
       add: Add
       publish: Make Public
       assign_session: Add
+      not_present: Not Present
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"
@@ -223,7 +224,6 @@ en:
     agenda:
       title: "Agenda: %{name} (%{date})"
       no_results: No voting results exist for this agenda.
-      not_present: Not Present
     edit_agenda: 
       title: Edit Law
       not_found: The Law could not be found.
@@ -255,6 +255,9 @@ en:
       members_header: Parliament Members
     law:
       title: "Law: %{name} (%{date})"
+      session3_summary_header: Session III Vote Summary
+      session2_summary_header: Session II Vote Summary
+      session1_summary_header: Session I Vote Summary
     member:
       title: "Parliament Member: %{name}"
   notifications:

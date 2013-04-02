@@ -118,6 +118,7 @@ ka:
       add: დამატება
       publish: გამოქვეყნება
       assign_session: დამატება
+      not_present: არ ესწრებოდა
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"
@@ -223,7 +224,6 @@ ka:
     agenda:
       title: "დღის წესრიგი: %{name} (%{date})"
       no_results: კენჭისყრის შედეგები არ მოიძებნა ამ დღის წესრიგისთვის
-      not_present: არ ესწრებოდა
     edit_agenda: 
       title: კანონის რედაქტირება
       not_found: კანონი არ მოიძებნა.
@@ -255,6 +255,9 @@ ka:
       members_header: პარლამენტის წევრები
     law:
       title: "კანონი: %{name} (%{date})"
+      session3_summary_header: III მოსმენის კენჭისყრის რეზიუმე
+      session2_summary_header: II მოსმენის კენჭისყრის რეზიუმე
+      session1_summary_header: I მოსმენის კენჭისყრის რეზიუმე
     member:
       title: "პარლამენტის წევრი: %{name}"
   notifications:

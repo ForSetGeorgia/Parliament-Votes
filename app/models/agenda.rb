@@ -5,6 +5,8 @@ class Agenda < ActiveRecord::Base
   has_one :voting_session, :dependent => :destroy
   belongs_to :conference
   belongs_to :parliament
+  belongs_to :session_number1, :class_name => 'Agenda', :foreign_key => 'session_number1_id'
+  belongs_to :session_number2, :class_name => 'Agenda', :foreign_key => 'session_number2_id'
 
   accepts_nested_attributes_for :voting_session
 
