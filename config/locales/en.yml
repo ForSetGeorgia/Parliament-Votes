@@ -229,7 +229,7 @@ en:
     edit_agenda: 
       title: Edit Law
       not_found: The Law could not be found.
-      agenda: "Law: %{name} (%{date})"
+      agenda: "Law"
     edit_vote: 
       title: Edit Vote
       not_found: The Voting Record could not be found.

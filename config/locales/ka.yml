@@ -229,7 +229,7 @@ ka:
     edit_agenda: 
       title: კანონის რედაქტირება
       not_found: კანონი არ მოიძებნა.
-      agenda: "კანონი: %{name} (%{date})"
+      agenda: "კანონი"
     edit_vote: 
       title: ხმის მიცემის რედაქტირება
       not_found: კენჭისყრის ჩანაწერი ვერ მოიძებნა.
