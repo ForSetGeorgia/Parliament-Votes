@@ -15,16 +15,24 @@ class Agenda < ActiveRecord::Base
       :official_law_title, :law_description, :law_title, :parliament_id,
       :session_number1_id, :session_number2_id, :is_public
 
+	attr_accessor :send_notification, :was_public
+
 	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
 
   validates :number_possible_members, :parliament_id, :presence => true
   validate :can_be_public
+	after_find :check_if_public
+  after_save :add_not_attended_members
 
   scope :public, where(:is_public => true)
 
   DEFAULT_NUMBER_MEMBERS = 150
   MAKE_PUBLIC_PARAM = 'make_public'
   QUOTES = ['„', '“', '"']
+
+	def check_if_public
+		self.was_public = self.has_attribute?(:is_public) && self.is_public ? true : false
+	end
 
   # in order for a law to be public, the following must be true
   # - is law
@@ -34,7 +42,6 @@ class Agenda < ActiveRecord::Base
   # - law_id exists
   # - session number in FINAL_VERSION
   # - session_number1_id and session_number2_id exist if III session
-
   def can_be_public
     if is_public
       has_error = false
@@ -52,6 +59,25 @@ class Agenda < ActiveRecord::Base
     end
   end
   
+  # if the law just became public, create vote results for not attended people
+  def add_not_attended_members
+    if !was_public && is_public && self.voting_session.present?
+      delegates = AllDelegate.available_delegates(self.id)
+      if delegates.present?
+        delegates.each do |member|
+          del = Delegate.create(:conference_id => self.conference_id, :xml_id => member.xml_id, 
+            :group_id => member.group_id,
+            :first_name => member.first_name)
+          # now save voting result record
+          VotingResult.create(:voting_session_id => self.voting_session.id, 
+                    :delegate_id => del.id,
+                    :present => false,
+                    :is_manual_add => true)
+        end
+      end
+    end
+  end
+
   def self.by_conference(conference_id)
     includes(:voting_session => :voting_results).where(:conference_id => conference_id)
   end

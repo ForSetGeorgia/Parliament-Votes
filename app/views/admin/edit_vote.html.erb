@@ -17,7 +17,8 @@
   </div>
 
 	<%= f.inputs do %>
-		<%= f.input :vote, :as => :radio, :collection => [[t('helpers.boolean.y'), 1], [t('helpers.boolean.n'), 3], [t('helpers.boolean.abstain'), VotingResult::ABSTAIN]], :label => false %>
+		<%= f.input :present, :as => :radio %>
+		<%= f.input :vote, :as => :radio, :collection => [[t('helpers.boolean.y'), 1], [t('helpers.boolean.n'), 3], [t('helpers.boolean.abstain'), VotingResult::ABSTAIN]] %>
 	<% end %>
 
   <div>

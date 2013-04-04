@@ -142,10 +142,11 @@ class AdminController < ApplicationController
 
     if @voting_result 
       if request.post?
-        if @voting_result.vote.to_s != params[:voting_result][:vote]
+        if @voting_result.vote.to_s != params[:voting_result][:vote] || @voting_result.present.to_s != params[:voting_result][:present]
           # the vote chagned, save it
           @voting_result.vote = params[:voting_result][:vote]
           @voting_result.is_edited = true
+          @voting_result.present = params[:voting_result][:present]
           @voting_result.save  
 
           # update the voting session results
