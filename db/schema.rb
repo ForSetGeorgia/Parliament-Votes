@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401204606) do
+ActiveRecord::Schema.define(:version => 20130404121736) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -51,10 +51,12 @@ ActiveRecord::Schema.define(:version => 20130401204606) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vote_count", :default => 0
+    t.integer  "vote_count",    :default => 0
+    t.integer  "parliament_id"
   end
 
   add_index "all_delegates", ["first_name"], :name => "index_all_delegates_on_first_name"
+  add_index "all_delegates", ["parliament_id"], :name => "index_all_delegates_on_parliament_id"
   add_index "all_delegates", ["vote_count"], :name => "index_all_delegates_on_vote_count"
   add_index "all_delegates", ["xml_id"], :name => "index_all_delegates_on_xml_id"
 
