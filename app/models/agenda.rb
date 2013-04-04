@@ -13,16 +13,29 @@ class Agenda < ActiveRecord::Base
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
       :is_law, :registration_number, :session_number, :number_possible_members, :law_url, :law_id,
       :official_law_title, :law_description, :law_title, :parliament_id,
-      :session_number1_id, :session_number2_id
+      :session_number1_id, :session_number2_id, :is_public
 
 	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
 
   validates :number_possible_members, :parliament_id, :presence => true
+  validate :can_be_public
+
+  scope :public, where(:is_public => true)
 
   DEFAULT_NUMBER_MEMBERS = 150
   MAKE_PUBLIC_PARAM = 'make_public'
   QUOTES = ['„', '“', '"']
 
+  # in order for a law to be public, the following must be true
+  # - session number in FINAL_VERSION
+  # - official law title exists
+  # - law_url exists
+  # - law_id exists
+  # - session_number1_id and session_number2_id exist if III session
+
+  def can_be_public
+
+  end
   
   def self.by_conference(conference_id)
     includes(:voting_session => :voting_results).where(:conference_id => conference_id)
