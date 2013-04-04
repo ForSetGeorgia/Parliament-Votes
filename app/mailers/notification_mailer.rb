@@ -1,6 +1,5 @@
 class NotificationMailer < ActionMailer::Base
   default :from => ENV['APPLICATION_FEEDBACK_FROM_EMAIL']
-  default :to => ENV['APPLICATION_FEEDBACK_TO_EMAIL']
 	layout 'mailer'
 
   ######### users
