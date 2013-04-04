@@ -27,14 +27,29 @@ class Agenda < ActiveRecord::Base
   QUOTES = ['„', '“', '"']
 
   # in order for a law to be public, the following must be true
-  # - session number in FINAL_VERSION
+  # - is law
+  # - passed vote
   # - official law title exists
   # - law_url exists
   # - law_id exists
+  # - session number in FINAL_VERSION
   # - session_number1_id and session_number2_id exist if III session
 
   def can_be_public
+    if is_public
+      has_error = false
+      if !is_law || !official_law_title.present? || !law_url.present? || !law_id.present?
+        has_error = true
+      elsif !(session_number.index(FINAL_VERSION[0]) || (session_number.index(FINAL_VERSION[1]) && session_number1_id.present? && session_number2_id.present?))
+        has_error = true
+      elsif !(self.voting_session.present? && self.voting_session.passed)
+        has_error = true
+      end
 
+      if has_error
+        errors.add(:is_public, I18n.t('activerecord.messages.upload_file.already_exists'))
+      end
+    end
   end
   
   def self.by_conference(conference_id)

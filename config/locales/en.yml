@@ -49,6 +49,7 @@ en:
         sort_order: Order
         session_number1_id: Session I
         session_number2_id: Session II
+        is_public: Make Law Public
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N/Abs)
@@ -82,6 +83,7 @@ en:
         already_exists: "'%{file_name}' has already been loaded"
       agenda:
         invalid_url: "is invalid. A valid url includes 'http://' or 'https://', i.e. 'http://parliament.ge/'"
+        cannot_be_public: "is not possible due to at least one of the following: item is not a law; official law title is missing; law number is missing; item is not the final session; law was not passed; or the I and II sessions have not been added to this law."
   mailer:
     closing: "Sincerely,"
     signature: votes.parliament.ge

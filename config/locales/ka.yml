@@ -49,6 +49,7 @@ ka:
         sort_order: თანმიმდევრობა
         session_number1_id: I სესია
         session_number2_id: II სესია
+        is_public: Make Law Public
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა / არ მიუცია)
@@ -82,6 +83,7 @@ ka:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
       agenda:
         invalid_url: "არასწორია. სწორი ბმული შეიცავს  'http://' ან 'https://', მაგ. 'http://parliament.ge/'"
+        cannot_be_public: "is not possible due to at least one of the following: item is not a law; official law title is missing; law number is missing; item is not the final session; law was not passed; or the I and II sessions have not been added to this law."
   mailer:
     closing: "პატივისცემით,"
     signature: votes.parliament.ge
