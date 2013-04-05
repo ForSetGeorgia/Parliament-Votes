@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :only => [:delete_file, :process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda, :edit_conference, :laws, :session_match] do |controller_instance|
+  before_filter :only => [:delete_file, :process_file, :add_url, :add_vote, :edit_vote, :is_law, :not_law, :edit_agenda, :edit_conference, :laws, :session_match, :make_public] do |controller_instance|
     controller_instance.send(:valid_role?, User::ROLES[:process_files])
   end
   before_filter :only => [:deleted_files, :restore_file] do |controller_instance|
@@ -176,7 +176,6 @@ class AdminController < ApplicationController
 
   end
 
-
   def laws
   end
 
@@ -227,6 +226,31 @@ class AdminController < ApplicationController
 			flash[:info] =  t('app.msgs.does_not_exist')
 			redirect_to admin_upload_files_path(:locale => I18n.locale)
     end
+  end
+
+  def make_public
+    @agenda = Agenda.not_deleted.readonly(false).find_by_id(params[:id])
+
+    if @agenda.present?
+      @agenda.is_public = true
+      @agenda.made_public_at = Time.now
+      if @agenda.save
+        flash[:notice] = t('app.msgs.law_is_public', :name => @agenda.official_law_title)
+      else
+        flash[:error] = '<ul>'.html_safe
+        @agenda.errors.full_messages.each_with_index do |msg, i|
+          flash[:error] << "<li>".html_safe
+          flash[:error] << msg
+          flash[:error] << "</li>".html_safe
+        end
+        flash[:error] << '</ul>'.html_safe
+      end
+      redirect_to admin_laws_path
+    else
+			flash[:info] =  t('app.msgs.does_not_exist')
+			redirect_to admin_laws_path(:locale => I18n.locale)
+    end
+
   end
 
 

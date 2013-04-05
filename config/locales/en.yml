@@ -83,7 +83,7 @@ en:
         already_exists: "'%{file_name}' has already been loaded"
       agenda:
         invalid_url: "is invalid. A valid url includes 'http://' or 'https://', i.e. 'http://parliament.ge/'"
-        cannot_be_public: "is not possible due to at least one of the following: item is not a law; official law title is missing; law number is missing; item is not the final session; law was not passed; or the I and II sessions have not been added to this law."
+        cannot_be_public: "is not possible for '%{name}' due to at least one of the following: item is not a law; official law title is missing; law number is missing; item is not the final session; law was not passed; or the I and II sessions have not been added to this law."
   mailer:
     closing: "Sincerely,"
     signature: votes.parliament.ge
@@ -160,6 +160,7 @@ en:
       success_restored: "%{obj} was successfully restored."
       not_law: "The item '%{name}' is no longer marked as a law."
       assigned_session: "%{session} has been added to the law."
+      law_is_public: "The Law '%{name}' has been made public."
       notification_yes: You will be sent notifications.
       notification_no: You will not be sent notifications.
       notification_new_file_all_success: You will recieve a notification whenever a file is added.

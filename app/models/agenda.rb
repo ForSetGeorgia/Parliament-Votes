@@ -13,7 +13,7 @@ class Agenda < ActiveRecord::Base
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
       :is_law, :registration_number, :session_number, :number_possible_members, :law_url, :law_id,
       :official_law_title, :law_description, :law_title, :parliament_id,
-      :session_number1_id, :session_number2_id, :is_public
+      :session_number1_id, :session_number2_id, :is_public, :made_public_at
 
 	attr_accessor :send_notification, :was_public
 
@@ -25,6 +25,7 @@ class Agenda < ActiveRecord::Base
   after_save :add_not_attended_members
 
   scope :public, where(:is_public => true)
+  scope :not_public, where(:is_public => false)
 
   DEFAULT_NUMBER_MEMBERS = 150
   MAKE_PUBLIC_PARAM = 'make_public'
@@ -43,7 +44,7 @@ class Agenda < ActiveRecord::Base
   # - session number in FINAL_VERSION
   # - session_number1_id and session_number2_id exist if III session
   def can_be_public
-    if is_public
+    if is_public && !was_public
       has_error = false
       if !is_law || !official_law_title.present? || !law_url.present? || !law_id.present?
         has_error = true
@@ -54,9 +55,11 @@ class Agenda < ActiveRecord::Base
       end
 
       if has_error
-        errors.add(:is_public, I18n.t('activerecord.messages.upload_file.already_exists'))
+        errors.add(:is_public, I18n.t('activerecord.messages.agenda.cannot_be_public', 
+                    :name => self.official_law_title.present? ? self.official_law_title : self.name))
       end
     end
+Rails.logger.debug("------------ can be made public - end")
   end
   
   # if the law just became public, create vote results for not attended people

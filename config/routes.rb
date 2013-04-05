@@ -29,6 +29,7 @@ BootstrapStarter::Application.routes.draw do
     match '/admin/add_vote/:id', :to => 'admin#add_vote', :as => :admin_add_vote, :via => [:get, :post]
     match '/admin/not_law/:id', :to => 'admin#not_law', :as => :admin_not_law, :via => :get
     match '/admin/laws', :to => 'admin#laws', :as => :admin_laws, :via => :get
+    match '/admin/make_public/:id', :to => 'admin#make_public', :as => :admin_make_public, :via => :get
     match '/admin/session_match/:agenda_id/:session', :to => 'admin#session_match', :as => :admin_session_match, :via => :get
     match '/admin/session_match/:agenda_id/:session/:match_id', :to => 'admin#save_session_match', :as => :admin_save_session_match, :via => :get
     match '/admin/deleted_files', :to => 'admin#deleted_files', :as => :admin_deleted_files, :via => :get

@@ -11,7 +11,7 @@ class LawsDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.not_deleted.final_laws.count,
+      iTotalRecords: Agenda.not_deleted.not_public.final_laws.count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -75,7 +75,7 @@ private
   def can_publish(agenda)
     if agenda.law_id.present? && agenda.law_url.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
       (agenda.session_number1_id.present? && agenda.session_number2_id.present?))
-      link_to(I18n.t('helpers.links.publish'), "#", :class => 'btn btn-mini btn-success')
+      link_to(I18n.t('helpers.links.publish'), admin_make_public_path(:id => agenda.id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
     end
   end
 
@@ -86,7 +86,7 @@ private
   end
 
   def fetch_agendas
-    agendas = Agenda.not_deleted.final_laws.order("#{sort_column} #{sort_direction}")
+    agendas = Agenda.not_deleted.not_public.final_laws.order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.name like :search or agendas.description like :search", search: "%#{params[:sSearch]}%")
