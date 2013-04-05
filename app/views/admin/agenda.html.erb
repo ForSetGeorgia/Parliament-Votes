@@ -62,6 +62,15 @@
             @agenda.law_url, :class => 'btn btn-mini', :target => :blank) %>
         <% end %>
       </li>    
+      <li>
+        <strong><%= Agenda.human_attribute_name(:is_public) %>:</strong>
+        <% if @agenda.is_public %>
+          <span class="law_is_public">
+            <%= t('helpers.boolean.y') %> - 
+            <%= t('app.common.made_public_on', :date => l(@agenda.made_public_at, :format => :no_zone)) %>
+          </span>
+        <% end %>
+      </li>
     <% end %>
   </ul>
   

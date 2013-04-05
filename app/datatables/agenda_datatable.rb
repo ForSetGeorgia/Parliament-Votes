@@ -35,8 +35,15 @@ private
         agenda.registration_number,
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.passed_formatted} (#{agenda.total_yes} / #{agenda.total_no} / #{agenda.total_abstain})",
         agenda.voting_session.nil? ? nil : "#{agenda.voting_session.quorum_formatted} (#{agenda.voting_session.result5})",
+        is_public_text(agenda),
         change_status_link(agenda)
       ]
+    end
+  end
+
+  def is_public_text(agenda)
+    if agenda.is_public
+      return "<span class=\"law_is_public\">#{I18n.t('helpers.boolean.y')}</span>"
     end
   end
 
@@ -72,7 +79,7 @@ private
   end
 
   def sort_column
-    columns = %w[agendas.sort_order agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum agendas.sort_order]
+    columns = %w[agendas.sort_order agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed voting_sessions.quorum agendas.is_public agendas.sort_order]
     columns[params[:iSortCol_0].to_i]
   end
 

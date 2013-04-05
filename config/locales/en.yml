@@ -49,7 +49,7 @@ en:
         sort_order: Order
         session_number1_id: Session I
         session_number2_id: Session II
-        is_public: Make Law Public
+        is_public: Is Law Public?
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N/Abs)
@@ -151,6 +151,7 @@ en:
       app_name: Voting Records
       edited: Edited  
       manually_added: Manually Added
+      made_public_on: "Made Public On: %{date}"
     msgs:
       does_not_exist: You tried to access a page that does not exist.
       not_authorized: You are not authorized to view that page.

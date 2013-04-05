@@ -75,7 +75,7 @@ $(document).ready(function(){
       "sUrl": gon.datatable_i18n_url
     },
     "aoColumnDefs": [
-      { 'bSortable': false, 'aTargets': [ 8 ] }
+      { 'bSortable': false, 'aTargets': [ 9 ] }
     ],
     "iDisplayLength": 50,
     "aLengthMenu": [[10, 20, 50, 100], [10, 20, 50, 100]],

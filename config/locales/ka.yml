@@ -49,7 +49,7 @@ ka:
         sort_order: თანმიმდევრობა
         session_number1_id: I სესია
         session_number2_id: II სესია
-        is_public: Make Law Public
+        is_public: Is Law Public?
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა / არ მიუცია)
@@ -151,6 +151,7 @@ ka:
       app_name: კენჭისყრის შედეგები
       edited: რედაქტირებულია
       manually_added: ხელით დამატებული 
+      made_public_on: "Made Public On: %{date}"
     msgs:
       does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
