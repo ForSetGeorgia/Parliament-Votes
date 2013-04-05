@@ -1,6 +1,6 @@
 class AddDelegateVoteCountData < ActiveRecord::Migration
   def up
-    AllDelegate.update_vote_count
+#    AllDelegate.update_vote_count
   end
 
   def down
