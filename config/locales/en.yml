@@ -90,16 +90,16 @@ en:
     unsubscribe: Click here to unsubscribe
     notification:
       new_user:
-        subject: "Welcome to votes.parliament.ge!"
+        subject: "Welcome to votes.parliament.ge"
         message: "Thank you for becoming a member of votes.parliament.ge.  You can manage when you would like to receive emails from votes.parliament.ge by clicking on the following link."
       new_file:
-        subject: "A new file has been loaded into votes.parliament.ge!"
-        message: "The file from the session on '%{date}' has been added. Click on the link below to view the contents of the file."
+        subject: "A new file has been loaded into votes.parliament.ge"
+        message: "The following files have been loaded."
       change_vote:
-        subject: "Law votes have been changed"
+        subject: "Law votes have been changed in votes.parliament.ge"
         message: "Votes have been chagned for the following laws."
       law_is_public:
-        subject: "A new law has been added"
+        subject: "A new law has been added to votes.parliament.ge"
         message: "The following law(s) are now available for viewing."
   helpers:
     actions: Actions

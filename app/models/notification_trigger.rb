@@ -57,23 +57,26 @@ class NotificationTrigger < ActiveRecord::Base
     triggers = NotificationTrigger.where(:notification_type => Notification::TYPES[:new_file]).not_processed
 
     if triggers.present?
-      triggers.map{|x| x.identifier}.uniq.each do |id|
-        conf = Conference.not_deleted.find_by_upload_file_id(id)
-        if conf.present?
-		      message = Message.new
-		      I18n.available_locales.each do |locale|
-				    message.bcc = Notification.new_file(locale)
-			      if message.bcc.length > 0
-				      message.locale = locale
-				      message.subject = I18n.t("mailer.notification.new_file.subject", :locale => locale)
-				      message.message = I18n.t("mailer.notification.new_file.message", :date => I18n.l(conf.start_date, :format => :no_zone), :locale => locale)
-				      message.url_id = conf.upload_file_id
-				      NotificationMailer.new_file(message).deliver
-			      end
-		      end
+      I18n.available_locales.each do |locale|
+        message = Message.new
+		    message.bcc = Notification.new_file(locale)
+        if message.bcc.length > 0
+	        message.locale = locale
+	        message.subject = I18n.t("mailer.notification.new_file.subject", :locale => locale)
+	        message.message = I18n.t("mailer.notification.new_file.message", :locale => locale)
+          message.message2 = []
+
+          triggers.map{|x| x.identifier}.uniq.each do |id|
+            conf = Conference.not_deleted.find_by_upload_file_id(id)
+            if conf.present?
+              message.message2 << [I18n.l(conf.start_date, :format => :no_zone, :locale => locale), conf.upload_file_id]
+		        end
+	        end
+
+          NotificationMailer.new_file(message).deliver if message.message2.present?
         end
       end
-
+    
       # mark these as processed
       NotificationTrigger.where(:id => triggers.map{|x| x.id}).update_all(:processed => true)
 

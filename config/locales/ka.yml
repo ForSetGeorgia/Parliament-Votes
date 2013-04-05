@@ -90,16 +90,16 @@ ka:
     unsubscribe: გამოწერის გაუქმება
     notification:
       new_user:
-        subject: "კეთილი იყოს თქვენი მობრძანება votes.parliament.ge-ზე!"
+        subject: "კეთილი იყოს თქვენი მობრძანება votes.parliament.ge-ზე"
         message: "გმადლობთ votes.parliament.ge-ში გაწევრიანებისთვის. თქვენ შეგიძლიათ მიიღოთ ელექტრონული შეტყობინებები votes.parliament.ge-დან ბმულზე გადასვლით."
       new_file:
-        subject: "ახალი ფაილი ჩაიტვირთა votes.parliament.ge-ზე!"
-        message: "ფაილი '%{date}' სესიიდან დამატებულია. გადადით ბმულზე ფაილის სანახავად."
+        subject: "A new file has been loaded into votes.parliament.ge"
+        message: "The following files have been loaded."
       change_vote:
-        subject: კანონის კენჭისყრის შედეგები შეცვლილია
+        subject: "Law votes have been changed in votes.parliament.ge"
         message: კენჭისყრის შედეგები შეცვლიილა შემდეგი კანონებისთვის.
       law_is_public:
-        subject: "A new law has been added"
+        subject: "A new law has been added to votes.parliament.ge"
         message: "The following law(s) are now available for viewing."
   helpers:
     actions: აირჩიეთ

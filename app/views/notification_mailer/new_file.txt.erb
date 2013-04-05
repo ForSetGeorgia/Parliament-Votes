@@ -1,3 +1,6 @@
 <%= @message.message %>
 
-<%= admin_conference_url(:id => @message.url_id, :locale => @message.locale) %>
+<% @message.message2.each do |msg| %>
+  <%= "#{msg[0]} - " %><%= admin_conference_url(:id => msg[1], :locale => @message.locale) %>
+<% end %>
+
