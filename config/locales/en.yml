@@ -98,6 +98,9 @@ en:
       change_vote:
         subject: "Law votes have been changed"
         message: "Votes have been chagned for the following laws."
+      law_is_public:
+        subject: "A new law has been added"
+        message: "The following law(s) are now available for viewing."
   helpers:
     actions: Actions
     links:
@@ -169,6 +172,8 @@ en:
       notification_language: You will be sent notifications in %{language}.
       notification_change_vote_all_success: You will recieve a notification whenever a vote is changed.
       notification_change_vote_none_success: You will not receive any notifications when votes are changed.
+      notification_law_is_public_all_success: You will recieve a notification whenever a law is made available.
+      notification_law_is_public_none_success: You will not receive any notifications when laws are made available.
   layouts:
     application:
       admin: Admin
@@ -280,4 +285,7 @@ en:
       change_vote_sub_title: Vote Change Notifications
       change_votes_all: Notify me when a vote is changed.
       change_votes_none: I do not want to receive notifications when a vote is changed.
+      law_is_public_sub_title: New Law Notifications
+      law_is_public_all: Notify me when a law becomes available.
+      law_is_public_none: I do not want to receive notifications when a law becomes available.
 

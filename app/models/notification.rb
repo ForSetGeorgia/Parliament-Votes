@@ -16,6 +16,10 @@ class Notification < ActiveRecord::Base
 		return new_item(TYPES[:change_vote], locale)
 	end
 
+	def self.law_is_public(locale)
+		return new_item(TYPES[:law_is_public], locale)
+	end
+
 
 protected
 

@@ -33,10 +33,10 @@
   	</div>
 
 
-    <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
+    <% if current_user.role?(User::ROLES[:process_files]) %>
     	<h3><%= t('.new_file_sub_title') %></h3>
     	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="new_file_notifications">
-    		<div class="span3">
+    		<div class="span12">
     			<label for="files_all" class="checkbox">
     				<%= check_box_tag 'files_all', 'true', @file_all %>
     				<%= t('.new_files_all') %>
@@ -45,10 +45,10 @@
     	</div>
     <% end %>
 
-    <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
+    <% if current_user.role?(User::ROLES[:process_files]) %>
     	<h3><%= t('.change_vote_sub_title') %></h3>
     	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="change_vote_notifications">
-    		<div class="span3">
+    		<div class="span12">
     			<label for="change_votes_all" class="checkbox">
     				<%= check_box_tag 'change_votes_all', 'true', @change_vote_all %>
     				<%= t('.change_votes_all') %>
@@ -56,6 +56,16 @@
     		</div>
     	</div>
     <% end %>
+
+  	<h3><%= t('.law_is_public_sub_title') %></h3>
+  	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="law_is_public_notifications">
+  		<div class="span12">
+  			<label for="law_is_public_all" class="checkbox">
+  				<%= check_box_tag 'law_is_public_all', 'true', @law_is_public_all %>
+  				<%= t('.law_is_public_all') %>
+  			</label>
+  		</div>
+  	</div>
 
   	<div>
   		<%= submit_tag nil, :class => 'btn btn-mini' %>

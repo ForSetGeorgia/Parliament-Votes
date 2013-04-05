@@ -23,6 +23,13 @@ class NotificationMailer < ActionMailer::Base
     mail(:bcc => message.bcc, :subject => message.subject)
   end
 
+  ######### law is public
+
+  def law_is_public(message)
+    @message = message
+    mail(:bcc => message.bcc, :subject => message.subject)
+  end
+
 
 
 end

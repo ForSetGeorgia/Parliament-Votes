@@ -57,6 +57,24 @@ class NotificationsController < ApplicationController
   					msg << I18n.t('app.msgs.notification_change_vote_none_success')
           end
 
+          # process law is public notifications
+  				if params[:law_is_public_all]
+  					# all notifications
+  					# delete anything on file first
+  					Notification.where(:notification_type => Notification::TYPES[:law_is_public],
+  																					:user_id => current_user.id).delete_all
+  					# add all option
+  					Notification.create(:notification_type => Notification::TYPES[:law_is_public],
+  																					:user_id => current_user.id)
+
+  					msg << I18n.t('app.msgs.notification_law_is_public_all_success')
+  				else
+  					# delete all notifications
+  					Notification.where(:notification_type => Notification::TYPES[:law_is_public],
+  																					:user_id => current_user.id).delete_all
+  					msg << I18n.t('app.msgs.notification_law_is_public_none_success')
+          end
+
   			else
   				# indicate user does not want notifications
   				if current_user.wants_notifications
@@ -65,8 +83,7 @@ class NotificationsController < ApplicationController
   				end
 
   				# delete any on record
-  				Notification.where(:notification_type => Notification::TYPES[:new_file],
-  																				:user_id => current_user.id).delete_all
+  				Notification.where(:user_id => current_user.id).delete_all
 
   				msg << I18n.t('app.msgs.notification_no')
   			end
@@ -99,6 +116,16 @@ logger.debug "########## @language = #{@language}"
 
   		if @change_vote_notifications.present? && @change_vote_notifications.length == 1 && @change_vote_notifications.first.identifier.nil?
 				@change_vote_all = true
+  		end
+
+  		# get law is public data to load the form
+  		@law_is_public_notifications = Notification.where(:notification_type => Notification::TYPES[:law_is_public],
+  																			:user_id => current_user.id)
+
+  		@law_is_public_all = false
+
+  		if @law_is_public_notifications.present? && @law_is_public_notifications.length == 1 && @law_is_public_notifications.first.identifier.nil?
+				@law_is_public_all = true
   		end
 
   		flash[:notice] = msg.join("<br />").html_safe if !msg.empty?

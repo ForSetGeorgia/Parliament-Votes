@@ -6,6 +6,7 @@ class NotificationTrigger < ActiveRecord::Base
   def self.process_all_types
     process_new_files
     process_changed_votes
+    process_law_is_public
   end
 
   #################
@@ -35,7 +36,7 @@ class NotificationTrigger < ActiveRecord::Base
 		        end
 	        end
 
-          NotificationMailer.change_vote(message).deliver
+          NotificationMailer.change_vote(message).deliver if message.message2.present?
         end
       end
 
@@ -78,6 +79,44 @@ class NotificationTrigger < ActiveRecord::Base
 
     end
   end
+
+  #################
+  ## law is public
+  #################
+  def self.add_law_is_public(id)
+    NotificationTrigger.create(:notification_type => Notification::TYPES[:law_is_public], :identifier => id)
+  end
+
+  def self.process_law_is_public
+    triggers = NotificationTrigger.where(:notification_type => Notification::TYPES[:law_is_public]).not_processed
+
+    if triggers.present?
+      I18n.available_locales.each do |locale|
+        message = Message.new
+	      message.bcc = Notification.law_is_public(locale)
+        if message.bcc.length > 0
+	        message.locale = locale
+	        message.subject = I18n.t("mailer.notification.law_is_public.subject", :locale => locale)
+	        message.message = I18n.t("mailer.notification.law_is_public.message", :locale => locale)
+          message.message2 = []
+
+          triggers.map{|x| x.identifier}.uniq.each do |id|
+            agenda = Agenda.not_deleted.public.find_by_id(id)
+            if agenda.present?
+              message.message2 << [agenda.official_law_title, agenda.id]
+		        end
+	        end
+
+          NotificationMailer.law_is_public(message).deliver if message.message2.present?
+        end
+      end
+
+      # mark these as processed
+      NotificationTrigger.where(:id => triggers.map{|x| x.id}).update_all(:processed => true)
+
+    end
+  end
+
 
 
 end

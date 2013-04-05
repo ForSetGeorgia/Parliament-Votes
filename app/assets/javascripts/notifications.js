@@ -33,6 +33,7 @@ $(document).ready(function(){
 			enable_notifications('language');
 			enable_notifications('new_file');
 			enable_notifications('change_vote');
+			enable_notifications('law_is_public');
 		}
 
 		// if want all notifications turn on fields
@@ -42,10 +43,12 @@ $(document).ready(function(){
 			  enable_all_fields('language');
 			  enable_all_fields('new_file');
   			enable_all_fields('change_vote');
+  			enable_all_fields('law_is_public');
 			} else {
 			  disable_all_fields('language');
 			  disable_all_fields('new_file');
   			disable_all_fields('change_vote');
+  			disable_all_fields('law_is_public');
 			}
 		});
 
@@ -64,6 +67,13 @@ $(document).ready(function(){
 		});
 		$('input#change_votes_none').click(function(){
 			none_clicked('change_votes');
+		});
+		// for law is public
+		$('input#law_is_public_all').click(function(){
+			all_clicked('law_is_public');
+		});
+		$('input#law_is_public_none').click(function(){
+			none_clicked('law_is_public');
 		});
 
 

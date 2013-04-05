@@ -59,7 +59,6 @@ class Agenda < ActiveRecord::Base
                     :name => self.official_law_title.present? ? self.official_law_title : self.name))
       end
     end
-Rails.logger.debug("------------ can be made public - end")
   end
   
   # if the law just became public, create vote results for not attended people
