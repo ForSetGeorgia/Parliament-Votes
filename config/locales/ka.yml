@@ -49,7 +49,7 @@ ka:
         sort_order: თანმიმდევრობა
         session_number1_id: I სესია
         session_number2_id: II სესია
-        is_public: Is Law Public?
+        is_public: არის კანონი საჯარო?
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა / არ მიუცია)
@@ -83,7 +83,7 @@ ka:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
       agenda:
         invalid_url: "არასწორია. სწორი ბმული შეიცავს  'http://' ან 'https://', მაგ. 'http://parliament.ge/'"
-        cannot_be_public: "is not possible for '%{name}' due to at least one of the following: item is not a law; official law title is missing; law number is missing; item is not the final session; law was not passed; or the I and II sessions have not been added to this law."
+        cannot_be_public: "შეუხლებელია '%{name}'-სთვის შემდეგი რომელიმე მიზეზის გამო: პუნქტი არაა კანონი; ოფიციალური კანონის სათაური აკლია; კანონის ნომერი აკლია; არაა საბოლოო მოსმენა; კანონი არ გავიდა; ან I და II მოსმენები არ აქვს დამატებული ამ კანონს."
   mailer:
     closing: "პატივისცემით,"
     signature: votes.parliament.ge
@@ -93,14 +93,14 @@ ka:
         subject: "კეთილი იყოს თქვენი მობრძანება votes.parliament.ge-ზე"
         message: "გმადლობთ votes.parliament.ge-ში გაწევრიანებისთვის. თქვენ შეგიძლიათ მიიღოთ ელექტრონული შეტყობინებები votes.parliament.ge-დან ბმულზე გადასვლით."
       new_file:
-        subject: "A new file has been loaded into votes.parliament.ge"
-        message: "The following files have been loaded."
+        subject: "ახალი ფაილი ჩაიტვირთა votes.parliament.ge-ზე"
+        message: "შემდეგი ფაილები ჩაიტვირთა."
       change_vote:
-        subject: "Law votes have been changed in votes.parliament.ge"
+        subject: "კანონის კენჭისყრის შედეგები შეიცვალა votes.parliament.ge-ზე"
         message: კენჭისყრის შედეგები შეცვლიილა შემდეგი კანონებისთვის.
       law_is_public:
-        subject: "A new law has been added to votes.parliament.ge"
-        message: "The following law(s) are now available for viewing."
+        subject: "ახალი კანონი დაემატა votes.parliament.ge-ს"
+        message: "შემდეგი კანონ(ებ)ის ნახვა არის შესაძლებელი."
   helpers:
     actions: აირჩიეთ
     links:
@@ -154,7 +154,7 @@ ka:
       app_name: კენჭისყრის შედეგები
       edited: რედაქტირებულია
       manually_added: ხელით დამატებული 
-      made_public_on: "Made Public On: %{date}"
+      made_public_on: "გახდა საჯარო: %{date}"
     msgs:
       does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
@@ -172,8 +172,8 @@ ka:
       notification_language: თქვენ მიიღებთ შეტყობინებას %{language}.
       notification_change_vote_all_success: თქვენ მიიღებთ კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინებას.
       notification_change_vote_none_success: თქვენ არ მიიღებთ კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინებას.
-      notification_law_is_public_all_success: You will recieve a notification whenever a law is made available.
-      notification_law_is_public_none_success: You will not receive any notifications when laws are made available.
+      notification_law_is_public_all_success: თქვენ მიიღებთ შეტყობინებას, როცა კანონი გახდება ხელმისაწვდომი.
+      notification_law_is_public_none_success: თქვენ არ მიიღებთ შეტყობინებას, როცა კანონი გახდება ხელმისაწვდომი.
   layouts:
     application:
       admin: ადმინისტრატო
@@ -285,7 +285,7 @@ ka:
       change_vote_sub_title: კენჭისყრის შედეგების ცვლილების შეტყობინება
       change_votes_all: შემატყობინეთ კენჭისყრის ცვლილებები.
       change_votes_none: არ მსურს კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინების მიღება.
-      law_is_public_sub_title: New Law Notifications
-      law_is_public_all: Notify me when a law becomes available.
-      law_is_public_none: I do not want to receive notifications when a law becomes available.
+      law_is_public_sub_title: ახალი კანონის შეტყობინება
+      law_is_public_all: "შემატყობინე, როცა კანონი გახდება ხელმისაწვდომი."
+      law_is_public_none: არ მინდა შეტყობინების მიღება, როცა კანონი გახდება ხელმისაწვდომი.
 
