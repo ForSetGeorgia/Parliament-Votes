@@ -1,4 +1,4 @@
-<% title t('.title', :name => @agenda.official_law_title.present? ? @agenda.official_law_title : @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)) %>
+<% title t('.title', :name => @agenda.official_law_title.present? ? @agenda.official_law_title : @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)).html_safe %>
 
 <div id="agenda_description">
   <ul>

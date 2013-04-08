@@ -164,7 +164,7 @@ ka:
       success_restored: "%{obj} წარმატებით აღდგა."
       not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
       assigned_session: "%{session} დაემატა კანონს."
-      law_is_public: "The Law '%{name}' has been made public."
+      law_is_public: "კანონი '%{name}' გახდა საჯარო."
       notification_yes: თქვენ მიიღებთ შეტყობინებებს.
       notification_no: თქვენ არ მიიღებთ შეტყობინებებს.
       notification_new_file_all_success: თქვენ მიიღებთ შეტყობინებას ფაილის დამატების შესახებ.
