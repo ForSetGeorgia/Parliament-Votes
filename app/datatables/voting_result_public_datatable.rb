@@ -1,18 +1,18 @@
 class VotingResultPublicDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
-  delegate :voting_session_id, to: :@voting_session_id
+  delegate :agendaid, to: :@agenda_id
 
-  def initialize(view, voting_session_id)
+  def initialize(view, agenda_id)
     @view = view
-    @voting_session_id = voting_session_id
+    @agenda_id = agenda_id
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: VotingResult.not_deleted.by_session(@voting_session_id).count,
-      iTotalDisplayRecords: voting_results.total_entries,
+      iTotalRecords: AllDelegate.votes_for_passed_law(@agenda_id).count,
+      iTotalDisplayRecords: all_delegates.length,
       aaData: data
     }
   end
@@ -20,32 +20,34 @@ class VotingResultPublicDatatable
 private
 
   def data
-    voting_results.map do |voting_result|
+    all_delegates.map do |all_delegate|
       [
-        link_to(voting_result.delegate.first_name, member_path(:id => voting_result.delegate.all_delegate_id, :locale => I18n.locale)),
-        voting_result.delegate.title,
-        voting_result.delegate.group.present? ? voting_result.delegate.group.short_name : nil,
-        voting_result.present_formatted,
-        voting_result.vote_formatted
+        link_to(all_delegate.first_name, member_path(:id => all_delegate.id, :locale => I18n.locale)),
+        all_delegate.session3_present_formatted,
+        all_delegate.session3_vote_formatted,
+        all_delegate.session2_present_formatted,
+        all_delegate.session2_vote_formatted,
+        all_delegate.session1_present_formatted,
+        all_delegate.session1_vote_formatted
       ]
     end
   end
 
-  def voting_results
-    @voting_results ||= fetch_voting_results
+  def all_delegates
+    @all_delegates ||= fetch_all_delegates
   end
 
-  def fetch_voting_results
-    voting_results = VotingResult.not_deleted.by_session(@voting_session_id).order("#{sort_column} #{sort_direction}")
-    voting_results = voting_results.page(page).per_page(per_page)
+  def fetch_all_delegates
+    search = nil
     if params[:sSearch].present?
-      voting_results = voting_results.where("delegates.first_name like :search", search: "%#{params[:sSearch]}%")
+      search = params[:sSearch]
     end
-    voting_results
+    
+    AllDelegate.votes_for_passed_law(@agenda_id, search, sort_column, sort_direction, per_page, page)
   end
 
   def page
-    params[:iDisplayStart].to_i/per_page + 1
+    params[:iDisplayStart].to_i/per_page
   end
 
   def per_page
@@ -53,9 +55,8 @@ private
   end
 
   def sort_column
-    columns = %w[delegates.first_name delegates.title groups.short_name voting_results.present voting_results.vote]
-    index = params[:iSortCol_0].to_i == 0 ? 1 : params[:iSortCol_0].to_i
-    columns[index]
+    columns = %w[ad.first_name s3.present s3.vote s2.present s2.vote s1.present s1.vote]
+    columns[params[:iSortCol_0].to_i]
   end
 
   def sort_direction

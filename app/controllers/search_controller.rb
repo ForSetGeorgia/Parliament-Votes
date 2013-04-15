@@ -14,7 +14,7 @@ class SearchController < ApplicationController
 
   def voting_results
     respond_to do |format|
-      format.json { render json: VotingResultPublicDatatable.new(view_context, params[:voting_session_id]) }
+      format.json { render json: VotingResultPublicDatatable.new(view_context, params[:agenda_id]) }
     end
   end
 

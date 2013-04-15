@@ -78,6 +78,12 @@ en:
       all_delegate:
         first_name: Name
         vote_count: "# Votes"
+        session3_present: Session III Present
+        session3_vote: Session III Vote
+        session2_present: Session II Present
+        session2_vote: Session II Vote
+        session1_present: Session I Present
+        session1_vote: Session I Vote
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"

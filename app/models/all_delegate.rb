@@ -4,6 +4,76 @@ class AllDelegate < ActiveRecord::Base
   has_many :delegates
   attr_accessible :xml_id, :group_id, :first_name, :title, :vote_count, :parliament_id
 
+  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote
+
+  def session3_present_formatted
+    if read_attribute(:session3_present).present?
+      if read_attribute(:session3_present)
+        I18n.t('helpers.boolean.y')
+      else
+        I18n.t('helpers.boolean.n')
+      end
+    end
+  end
+
+  def session3_vote_formatted
+    if read_attribute(:session3_vote).present?
+      case read_attribute(:session3_vote)
+        when 0
+          I18n.t('helpers.boolean.abstain')
+        when 1
+          I18n.t('helpers.boolean.y')
+        else
+          I18n.t('helpers.boolean.n')
+      end
+    end
+  end
+
+  def session2_present_formatted
+    if read_attribute(:session2_present).present?
+      if read_attribute(:session2_present)
+        I18n.t('helpers.boolean.y')
+      else
+        I18n.t('helpers.boolean.n')
+      end
+    end
+  end
+
+  def session2_vote_formatted
+    if read_attribute(:session2_vote).present?
+      case read_attribute(:session2_vote)
+        when 0
+          I18n.t('helpers.boolean.abstain')
+        when 1
+          I18n.t('helpers.boolean.y')
+        else
+          I18n.t('helpers.boolean.n')
+      end
+    end
+  end
+
+  def session1_present_formatted
+    if read_attribute(:session1_present).present?
+      if read_attribute(:session1_present)
+        I18n.t('helpers.boolean.y')
+      else
+        I18n.t('helpers.boolean.n')
+      end
+    end
+  end
+
+  def session1_vote_formatted
+    if read_attribute(:session1_vote).present?
+      case read_attribute(:session1_vote)
+        when 0
+          I18n.t('helpers.boolean.abstain')
+        when 1
+          I18n.t('helpers.boolean.y')
+        else
+          I18n.t('helpers.boolean.n')
+      end
+    end
+  end
 
   # get the delegates that were not present
   def self.available_delegates(agenda_id)
@@ -56,6 +126,39 @@ class AllDelegate < ActiveRecord::Base
       Agenda.joins(:conference => :delegates, :voting_session => :voting_results)
         .not_deleted.final_laws
         .where('delegates.id = voting_results.delegate_id and delegates.first_name = ?', name)
+    end
+  end
+
+  def self.votes_for_passed_law(agenda_id, search=nil, sort_col=nil, sort_dir=nil, limit=nil, offset=nil)
+    a = Agenda.includes(:conference).not_deleted.final_laws.find_by_id(agenda_id)
+
+    if a.present?
+      sql = "select ad.id, ad.first_name, s3.present as session3_present, s3.vote as session3_vote, s2.present as session2_present, s2.vote as session2_vote, s1.present as session1_present, s1.vote as session1_vote "
+      sql << "from all_delegates as ad "
+      sql << "left join  (select d.all_delegate_id, vr.present, vr.vote from delegates as d inner join voting_results as vr on vr.delegate_id = d.id inner join voting_sessions as vs on vs.id = vr.voting_session_id where vs.agenda_id = :session3_id "
+      sql << ") as s3 on s3.all_delegate_id = ad.id "
+      sql << "left join  (select d.all_delegate_id, vr.present, vr.vote from delegates as d inner join voting_results as vr on vr.delegate_id = d.id inner join voting_sessions as vs on vs.id = vr.voting_session_id where vs.agenda_id = :session2_id "
+      sql << ") as s2 on s2.all_delegate_id = ad.id "
+      sql << "left join  (select d.all_delegate_id, vr.present, vr.vote from delegates as d inner join voting_results as vr on vr.delegate_id = d.id inner join voting_sessions as vs on vs.id = vr.voting_session_id where vs.agenda_id = :session1_id "
+      sql << ") as s1 on s1.all_delegate_id = ad.id "
+      sql << "where ad.parliament_id = :parliament_id "
+      if search.present?
+        sql << "and ad.first_name like :search "
+      end
+      if sort_col.present? && sort_dir.present?
+        sql << "order by #{sort_col} #{sort_dir} "
+      end      
+      if limit.present?
+        sql << "limit #{limit} "
+      end      
+      if offset.present?
+        sql << "offset #{offset} "
+      end      
+
+      find_by_sql([sql, :session3_id => a.id, :session2_id => a.session_number2_id, :session1_id => a.session_number1_id, 
+                :parliament_id => a.parliament_id,
+                :search => "%#{search}%"])
+
     end
   end
 end

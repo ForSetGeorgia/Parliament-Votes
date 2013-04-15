@@ -201,8 +201,8 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 150,
-    "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]]
+    "iDisplayLength": 200,
+    "bLengthChange": false
   });
 
   $('#member_votes_datatable').dataTable({

@@ -107,14 +107,16 @@
  </div>
 
   <table id="voting_results_public_datatable" class="display table table-striped table-bordered" 
-        data-source="<%= search_voting_results_url(:voting_session_id => @agenda.voting_session.id, :format => :json) %>">
+        data-source="<%= search_voting_results_url(:agenda_id => @agenda.id, :format => :json) %>">
     <thead>
       <tr>
-        <th><%= Delegate.human_attribute_name(:first_name) %></th>
-        <th><%= Delegate.human_attribute_name(:title) %></th>
-        <th><%= Group.human_attribute_name(:short_name) %></th>
-        <th><%= VotingResult.human_attribute_name(:present) %></th>
-        <th><%= VotingResult.human_attribute_name(:vote) %></th>
+        <th><%= AllDelegate.human_attribute_name(:first_name) %></th>
+        <th><%= AllDelegate.human_attribute_name(:session3_present) %></th>
+        <th><%= AllDelegate.human_attribute_name(:session3_vote) %></th>
+        <th><%= AllDelegate.human_attribute_name(:session2_present) %></th>
+        <th><%= AllDelegate.human_attribute_name(:session2_vote) %></th>
+        <th><%= AllDelegate.human_attribute_name(:session1_present) %></th>
+        <th><%= AllDelegate.human_attribute_name(:session1_vote) %></th>
       </tr>
     </thead>
     <tbody>
