@@ -78,12 +78,12 @@ ka:
       all_delegate:
         first_name: სახელი
         vote_count: "# ხმები"
-        session3_present: Session III Present
-        session3_vote: Session III Vote
-        session2_present: Session II Present
-        session2_vote: Session II Vote
-        session1_present: Session I Present
-        session1_vote: Session I Vote
+        session3_present: III მოსმენაზე დასწრება
+        session3_vote: III მოსმენის ხმა
+        session2_present: II მოსმენაზე დასწრება
+        session2_vote: II მოსმენის ხმა
+        session1_present: I მოსმენაზე დასწრება
+        session1_vote: I მოსმენის ხმა
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
