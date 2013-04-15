@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130405070838) do
+ActiveRecord::Schema.define(:version => 20130415054352) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -45,7 +45,12 @@ ActiveRecord::Schema.define(:version => 20130405070838) do
   add_index "agendas", ["law_url"], :name => "index_agendas_on_law_url"
   add_index "agendas", ["made_public_at"], :name => "index_agendas_on_made_public_at"
   add_index "agendas", ["number_possible_members"], :name => "index_agendas_on_number_possible_members"
+  add_index "agendas", ["official_law_title"], :name => "index_agendas_on_official_law_title"
   add_index "agendas", ["parliament_id"], :name => "index_agendas_on_parliament_id"
+  add_index "agendas", ["registration_number"], :name => "index_agendas_on_registration_number"
+  add_index "agendas", ["session_number"], :name => "index_agendas_on_session_number"
+  add_index "agendas", ["session_number1_id"], :name => "index_agendas_on_session_number1_id"
+  add_index "agendas", ["session_number2_id"], :name => "index_agendas_on_session_number2_id"
   add_index "agendas", ["sort_order", "name"], :name => "index_agendas_on_sort_order_and_name"
 
   create_table "all_delegates", :force => true do |t|
