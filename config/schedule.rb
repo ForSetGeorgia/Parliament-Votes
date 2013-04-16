@@ -20,7 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 
 every 30.minutes do
-  runner "NotificationTrigger.process_all_types", :output => {:standard => "/var/log/cron.parlvotes_notifications.log", :error => "/var/log/cron.parlvotes_notifications.errors.log"}
+  runner "NotificationTrigger.process_all_types"
 end
 
 
