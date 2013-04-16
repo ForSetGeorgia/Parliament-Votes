@@ -14,6 +14,7 @@ $(document).ready(function(){
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 50,
+    "bAutoWidth": false,
     "aaSorting": [[1, 'asc']],
     "aoColumnDefs": [
       { 'bSortable': false, 'aTargets': [ 0 ] }
@@ -31,6 +32,7 @@ $(document).ready(function(){
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 50,
+    "bAutoWidth": false,
     "aaSorting": [[1, 'asc']],
     "aoColumnDefs": [
       { 'bSortable': false, 'aTargets': [ 0 ] }
