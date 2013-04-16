@@ -76,7 +76,7 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       success = if params[:user][:password].present? || params[:user][:password_confirmation].present?
-        @user.update_with_password(params[:user])
+        @user.update_attributes(params[:user])
       else
         @user.update_without_password(params[:user])
       end
