@@ -74,7 +74,7 @@ Rails.logger.debug "++++++++++++++++++++++++ getting all sessions"
   end
 
   def sort_column
-    columns = %w[conferences.start_date agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed]
+    columns = %w[conferences.start_date conferences.start_date agendas.official_law_title agendas.law_title agendas.law_description agendas.session_number agendas.registration_number voting_sessions.passed]
     columns[params[:iSortCol_0].to_i]
   end
 

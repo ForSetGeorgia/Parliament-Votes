@@ -13,7 +13,11 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 50
+    "iDisplayLength": 50,
+    "aaSorting": [[1, 'asc']],
+    "aoColumnDefs": [
+      { 'bSortable': false, 'aTargets': [ 0 ] }
+    ]
   });
 
   $('#all_sessions_datatable').dataTable({
@@ -26,7 +30,11 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 50
+    "iDisplayLength": 50,
+    "aaSorting": [[1, 'asc']],
+    "aoColumnDefs": [
+      { 'bSortable': false, 'aTargets': [ 0 ] }
+    ]
   });
 
 });    

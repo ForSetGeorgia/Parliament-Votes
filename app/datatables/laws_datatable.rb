@@ -37,39 +37,51 @@ private
   end
 
   def has_law_ids(agenda)
+    x = ''
+    x = link_to(agenda.law_id.present? && agenda.law_url.present? ? I18n.t('helpers.links.edit') : I18n.t('helpers.links.add'), 
+      admin_edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
+      :class => 'btn btn-mini btn-danger fancybox_live')
+
     if agenda.law_id.present? && agenda.law_url.present?
-      link_to agenda.law_id, agenda.law_url, :target => :blank
-    else
-      link_to(I18n.t('helpers.links.add'), 
-        admin_edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
-        :class => 'btn btn-mini btn-danger fancybox_live')
+      x << "<br /><br />".html_safe
+      x << link_to(I18n.t('helpers.links.view'), agenda.law_url, :target => :blank, :class => 'btn btn-mini')
     end
+
+
+    return x
   end
 
   def has_session1(agenda)
+    x = ''
     if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
+      x << link_to(agenda.session_number1_id.present? ? I18n.t('helpers.links.edit') : I18n.t('helpers.links.add'), 
+        admin_session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
+        :class => 'btn btn-mini btn-danger fancybox_live')
+
       if agenda.session_number1_id.present?
-        link_to(I18n.t('helpers.links.view'), 
+        x << "<br /><br />".html_safe
+        x << link_to(I18n.t('helpers.links.view'), 
           admin_agenda_path(:id => agenda.session_number1_id, :locale => I18n.locale), 
           :class => 'btn btn-mini')
-      else
-        link_to(I18n.t('helpers.links.add'), 
-          admin_session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[3]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
-          :class => 'btn btn-mini btn-danger fancybox_live')
       end
     end
+    return x
   end
 
   def has_session2(agenda)
+    x = ''
     if agenda.session_number.index(Agenda::FINAL_VERSION[0]).nil?
+      x << link_to(agenda.session_number2_id.present? ? I18n.t('helpers.links.edit') : I18n.t('helpers.links.add'), 
+        admin_session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
+        :class => 'btn btn-mini btn-danger fancybox_live')
+
       if agenda.session_number2_id.present?
-        link_to(I18n.t('helpers.links.view'), admin_agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini')
-      else
-        link_to(I18n.t('helpers.links.add'), 
-          admin_session_match_path(:agenda_id => agenda.id, :session => "#{Agenda::PREFIX[2]} #{Agenda::CONSISTENT_SESSION_NAME[1]}", :locale => I18n.locale), 
-          :class => 'btn btn-mini btn-danger fancybox_live')
+        x << "<br /><br />".html_safe
+        x << link_to(I18n.t('helpers.links.view'), admin_agenda_path(:id => agenda.session_number2_id, :locale => I18n.locale), :class => 'btn btn-mini')
       end
+
     end
+    return x
   end
 
   def can_publish(agenda)
