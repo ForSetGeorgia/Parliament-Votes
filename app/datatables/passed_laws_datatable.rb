@@ -9,7 +9,7 @@ class PassedLawsDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.includes(:conference).not_deleted.final_laws.count,
+      iTotalRecords: Agenda.includes(:conference).public_laws.count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -36,7 +36,7 @@ private
   end
 
   def fetch_agendas
-    agendas = Agenda.includes(:conference).not_deleted.final_laws.order("#{sort_column} #{sort_direction}")
+    agendas = Agenda.includes(:conference).public_laws.order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.official_law_title like :search or agendas.name like :search or agendas.law_description like :search", search: "%#{params[:sSearch]}%")

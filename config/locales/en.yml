@@ -64,6 +64,7 @@ en:
         present: Present
         vote: Vote
         member_vote: "Member's Vote"
+        member_present: Member Present
       delegate:
         first_name: Name
         title: Title

@@ -37,12 +37,14 @@ private
   def vote_text(voting_result)
     x = voting_result.vote_formatted
 
-    if voting_result.is_manual_add
-      x << "<span class=\"manually_added_vote\">#{I18n.t('app.common.manually_added')}</span>"
-    end
+    if x.present?
+      if voting_result.is_manual_add
+        x << "<span class=\"manually_added_vote\">#{I18n.t('app.common.manually_added')}</span>"
+      end
 
-    if voting_result.is_edited
-      x << "<span class=\"edited_vote\">#{I18n.t('app.common.edited')}</span>"
+      if voting_result.is_edited
+        x << "<span class=\"edited_vote\">#{I18n.t('app.common.edited')}</span>"
+      end
     end
 
     return x

@@ -202,7 +202,15 @@ $(document).ready(function(){
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 200,
-    "bLengthChange": false
+    "bLengthChange": false,
+    "fnDrawCallback": function () {
+      $("#voting_results_public_datatable td").filter(function() { return $.text([this]) == gon.table_cell_yes; })
+       .addClass("table_cell_yes");
+      $("#voting_results_public_datatable td").filter(function() { return $.text([this]) == gon.table_cell_no; })
+       .addClass("table_cell_no");
+      $("#voting_results_public_datatable td").filter(function() { return $.text([this]) == gon.table_cell_abstain; })
+       .addClass("table_cell_abstain");
+    }
   });
 
   $('#member_votes_datatable').dataTable({
@@ -216,7 +224,15 @@ $(document).ready(function(){
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 25,
-    "aaSorting": [[0, 'desc']]
+    "aaSorting": [[0, 'desc']],
+    "fnDrawCallback": function () {
+      $("#member_votes_datatable td").filter(function() { return $.text([this]) == gon.table_cell_yes; })
+       .addClass("table_cell_yes");
+      $("#member_votes_datatable td").filter(function() { return $.text([this]) == gon.table_cell_no; })
+       .addClass("table_cell_no");
+      $("#member_votes_datatable td").filter(function() { return $.text([this]) == gon.table_cell_abstain; })
+       .addClass("table_cell_abstain");
+    }
   });
 
 

@@ -25,13 +25,15 @@ class VotingResult < ActiveRecord::Base
   end
 
   def vote_formatted
-    case read_attribute(:vote)
-      when 0
-        I18n.t('helpers.boolean.abstain')
-      when 1
-        I18n.t('helpers.boolean.y')
-      else
-        I18n.t('helpers.boolean.n')
+    if read_attribute(:vote).present?
+      case read_attribute(:vote)
+        when 0
+          I18n.t('helpers.boolean.abstain')
+        when 1
+          I18n.t('helpers.boolean.y')
+        else
+          I18n.t('helpers.boolean.n')
+      end
     end
   end
 

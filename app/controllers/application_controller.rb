@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
 		else
 		  gon.datatable_i18n_url = ""
 		end
+
+    gon.table_cell_yes = I18n.t('helpers.boolean.y')
+    gon.table_cell_no = I18n.t('helpers.boolean.n')
+    gon.table_cell_abstain = I18n.t('helpers.boolean.abstain')
 	end
 
 	# after user logs in, go to admin page

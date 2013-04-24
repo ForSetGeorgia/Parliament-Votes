@@ -22,7 +22,7 @@ class Agenda < ActiveRecord::Base
   validates :number_possible_members, :parliament_id, :presence => true
   validate :can_be_public
 	after_find :check_if_public
-  after_save :add_not_attended_members
+  after_save :update_records_for_public_law
 
   scope :public, where(:is_public => true)
   scope :not_public, where(:is_public => false)
@@ -34,6 +34,10 @@ class Agenda < ActiveRecord::Base
 	def check_if_public
 		self.was_public = self.has_attribute?(:is_public) && self.is_public ? true : false
 	end
+
+  def self.public_laws
+    not_deleted.final_laws.public
+  end
 
   # in order for a law to be public, the following must be true
   # - is law
@@ -62,7 +66,8 @@ class Agenda < ActiveRecord::Base
   end
   
   # if the law just became public, create vote results for not attended people
-  def add_not_attended_members
+  # and update vote counts for all delegates
+  def update_records_for_public_law
     if !was_public && is_public && self.voting_session.present?
       delegates = AllDelegate.available_delegates(self.id)
       if delegates.present?
@@ -77,6 +82,9 @@ class Agenda < ActiveRecord::Base
                     :is_manual_add => true)
         end
       end
+
+      # update vote count
+      AllDelegate.update_vote_count(self.parliament_id)
     end
   end
 
