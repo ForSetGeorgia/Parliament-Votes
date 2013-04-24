@@ -116,6 +116,9 @@ class UploadFile < ActiveRecord::Base
         doc = Nokogiri::XML(file)
 
         UploadFile.transaction do
+          # get all delegates for this parliament
+          all_delegates = AllDelegate.where(:parliament_id => self.parliament_id)
+
           # conference
           conf = doc.at_css('Conference')
           if conf.present?
@@ -135,10 +138,12 @@ class UploadFile < ActiveRecord::Base
             # delegates
             doc.css("Delegate").each do |delegate|
               group_index = conference.groups.index{|x| x.xml_id.to_s == delegate.at_css('Group_id').text} if !delegate.at_css('Group_id').nil?
+              all_del_index = all_delegates.index{|x| x.xml_id.to_s == delegate.at_css('id').text && x.first_name == delegate.at_css('firstname').text}
               d = conference.delegates.create(:xml_id => delegate.at_css('id').text, 
                 :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
                 :first_name => delegate.at_css('firstname').nil? ? nil : delegate.at_css('firstname').text, 
-                :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text 
+                :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text,
+                :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id
               )
             end
 

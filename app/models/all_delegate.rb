@@ -95,7 +95,10 @@ class AllDelegate < ActiveRecord::Base
         exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
 
         if !exists.present?
-          AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
+          ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
+          # now add id to delegate record
+          delegate.all_delegate_id = ad.id if ad.present?
+          delegate.save
         end
       end
     end
