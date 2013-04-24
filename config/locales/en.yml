@@ -270,6 +270,7 @@ en:
       members_header: Parliament Members
     law:
       title: "Law: %{name} (%{date})"
+      by_one_session_summary_header: Vote Summary
       session3_summary_header: Session III Vote Summary
       session2_summary_header: Session II Vote Summary
       session1_summary_header: Session I Vote Summary

@@ -129,11 +129,14 @@ class AllDelegate < ActiveRecord::Base
     end
   end
 
-  def self.votes_for_passed_law(agenda_id, search=nil, sort_col=nil, sort_dir=nil, limit=nil, offset=nil)
+  def self.votes_for_passed_law(agenda_id, get_all_3_sessions="true", search=nil, sort_col=nil, sort_dir=nil, limit=nil, offset=nil)
     a = Agenda.includes(:conference).not_deleted.final_laws.find_by_id(agenda_id)
 
     if a.present?
-      sql = "select ad.id, ad.first_name, s3.present as session3_present, s3.vote as session3_vote, s2.present as session2_present, s2.vote as session2_vote, s1.present as session1_present, s1.vote as session1_vote "
+      sql = "select ad.id, ad.first_name, s3.present as session3_present, s3.vote as session3_vote " 
+      if get_all_3_sessions == "true"
+        sql << ", s2.present as session2_present, s2.vote as session2_vote, s1.present as session1_present, s1.vote as session1_vote "
+      end
       sql << "from all_delegates as ad "
       sql << "left join  (select d.all_delegate_id, vr.present, vr.vote from delegates as d inner join voting_results as vr on vr.delegate_id = d.id inner join voting_sessions as vs on vs.id = vr.voting_session_id where vs.agenda_id = :session3_id "
       sql << ") as s3 on s3.all_delegate_id = ad.id "

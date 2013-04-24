@@ -233,6 +233,22 @@ class Agenda < ActiveRecord::Base
     return x
   end
 
+  # see if record is ერთი მოსმენით
+  def is_by_one_session?
+    x = false
+    x = true if self.session_number.present? && self.session_number.index(FINAL_VERSION[0]).present? 
+    return x
+  end
+
+  # does record have data before the 3 sessions were being recorded
+  # parl id of 2 = 7th session
+  # 3 sessions were not recorded until after 7th session
+  def prior_to_all_session_data?
+    x = false
+    x = true if self.parliament_id.present? && self.parliament_id == 2
+    return x
+  end
+
   # if agenda is a law, set is_law, reg #, and session #
   def check_is_law
     found = false

@@ -270,6 +270,7 @@ ka:
       members_header: პარლამენტის წევრები
     law:
       title: "კანონი: %{name} (%{date})"
+      by_one_session_summary_header: კენჭისყრის რეზიუმე
       session3_summary_header: III მოსმენის კენჭისყრის რეზიუმე
       session2_summary_header: II მოსმენის კენჭისყრის რეზიუმე
       session1_summary_header: I მოსმენის კენჭისყრის რეზიუმე

@@ -2,16 +2,18 @@ class VotingResultPublicDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :agendaid, to: :@agenda_id
+  delegate :get_all_3_sessions, to: :@get_all_3_sessions
 
-  def initialize(view, agenda_id)
+  def initialize(view, agenda_id, get_all_3_sessions="true")
     @view = view
     @agenda_id = agenda_id
+    @get_all_3_sessions = get_all_3_sessions
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: AllDelegate.votes_for_passed_law(@agenda_id).count,
+      iTotalRecords: AllDelegate.votes_for_passed_law(@agenda_id, @get_all_3_sessions).count,
       iTotalDisplayRecords: all_delegates.length,
       aaData: data
     }
@@ -20,16 +22,26 @@ class VotingResultPublicDatatable
 private
 
   def data
-    all_delegates.map do |all_delegate|
-      [
-        link_to(all_delegate.first_name, member_path(:id => all_delegate.id, :locale => I18n.locale)),
-        all_delegate.session3_present_formatted,
-        all_delegate.session3_vote_formatted,
-        all_delegate.session2_present_formatted,
-        all_delegate.session2_vote_formatted,
-        all_delegate.session1_present_formatted,
-        all_delegate.session1_vote_formatted
-      ]
+    if @get_all_3_sessions == "true"
+      all_delegates.map do |all_delegate|
+        [
+          link_to(all_delegate.first_name, member_path(:id => all_delegate.id, :locale => I18n.locale)),
+          all_delegate.session3_present_formatted,
+          all_delegate.session3_vote_formatted,
+          all_delegate.session2_present_formatted,
+          all_delegate.session2_vote_formatted,
+          all_delegate.session1_present_formatted,
+          all_delegate.session1_vote_formatted
+        ]
+      end
+    else
+      all_delegates.map do |all_delegate|
+        [
+          link_to(all_delegate.first_name, member_path(:id => all_delegate.id, :locale => I18n.locale)),
+          all_delegate.session3_present_formatted,
+          all_delegate.session3_vote_formatted
+        ]
+      end
     end
   end
 
@@ -43,7 +55,7 @@ private
       search = params[:sSearch]
     end
     
-    AllDelegate.votes_for_passed_law(@agenda_id, search, sort_column, sort_direction, per_page, page)
+    AllDelegate.votes_for_passed_law(@agenda_id, @get_all_3_sessions, search, sort_column, sort_direction, per_page, page)
   end
 
   def page
