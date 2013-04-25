@@ -64,7 +64,7 @@ ka:
         present: რეგისტრაცია
         vote: კენჭისყრის შედეგი
         member_vote: წევრის ხმა
-        member_present: Member Present
+        member_present: წევრის დასწრება
       delegate:
         first_name: სახელი
         title: წოდება
