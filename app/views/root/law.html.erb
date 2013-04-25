@@ -132,7 +132,7 @@
 
   <% if @agenda.prior_to_all_session_data? || @agenda.is_by_one_session? %>
     <table id="voting_results_public_datatable" class="display table table-striped table-bordered" 
-          data-source="<%= search_voting_results_url(:agenda_id => @agenda.id, :get_all_3_sessions => false, :format => :json) %>">
+          data-source="<%= search_voting_results_url(:agenda_public_url_id => @agenda.public_url_id, :get_all_3_sessions => false, :format => :json) %>">
       <thead>
         <tr>
           <th><%= model_class_ad.human_attribute_name(:first_name) %></th>
@@ -146,7 +146,7 @@
 
   <% else %>
     <table id="voting_results_public_datatable" class="display table table-striped table-bordered" 
-          data-source="<%= search_voting_results_url(:agenda_id => @agenda.id, :format => :json) %>">
+          data-source="<%= search_voting_results_url(:agenda_public_url_id => @agenda.public_url_id, :format => :json) %>">
       <thead>
         <tr>
           <th><%= model_class_ad.human_attribute_name(:first_name) %></th>

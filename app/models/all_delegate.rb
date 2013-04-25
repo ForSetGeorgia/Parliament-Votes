@@ -118,7 +118,7 @@ class AllDelegate < ActiveRecord::Base
     sql << "inner join voting_sessions as vs on vs.agenda_id = a.id "
     sql << "inner join voting_results as vr on vr.voting_session_id = vs.id and vr.delegate_id = d.id "
     sql << "inner join upload_files as uf on uf.id = c.upload_file_id "
-    sql << "where a.is_law = 1 and a.is_public = 1 and vs.passed = 1 and a.session_number in (:session_number) and uf.is_deleted = 0 "
+    sql << "where a.is_law = 1 and a.is_public = 1 and a.public_url_id is not null and a.public_url_id != '' and vs.passed = 1 and a.session_number in (:session_number) and uf.is_deleted = 0 "
     sql << "and ad.parliament_id = :parl_id "
     sql << "group by ad.id, ad.first_name"
     find_by_sql([sql, :session_number => ["#{Agenda::FINAL_VERSION[0]} #{Agenda::CONSISTENT_SESSION_NAME[0]}", "#{Agenda::FINAL_VERSION[1]} #{Agenda::CONSISTENT_SESSION_NAME[1]}"], :parl_id => parliament_id])
@@ -132,9 +132,9 @@ class AllDelegate < ActiveRecord::Base
     end
   end
 
-  def self.votes_for_passed_law(agenda_id, get_all_3_sessions="true", search=nil, sort_col=nil, sort_dir=nil, limit=nil, offset=nil)
+  def self.votes_for_passed_law(agenda_public_url_id, get_all_3_sessions="true", search=nil, sort_col=nil, sort_dir=nil, limit=nil, offset=nil)
     x = []
-    a = Agenda.includes(:conference).public_laws.find_by_id(agenda_id)
+    a = Agenda.includes(:conference).public_laws.find_by_public_url_id(agenda_public_url_id)
 
     if a.present?
       sql = "select ad.id, ad.first_name, s3.present as session3_present, s3.vote as session3_vote " 

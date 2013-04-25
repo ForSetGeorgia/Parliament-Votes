@@ -13,7 +13,7 @@ class Agenda < ActiveRecord::Base
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
       :is_law, :registration_number, :session_number, :number_possible_members, :law_url, :law_id,
       :official_law_title, :law_description, :law_title, :parliament_id,
-      :session_number1_id, :session_number2_id, :is_public, :made_public_at
+      :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id
 
 	attr_accessor :send_notification, :was_public
 
@@ -23,6 +23,7 @@ class Agenda < ActiveRecord::Base
   validate :can_be_public
 	after_find :check_if_public
   after_save :update_records_for_public_law
+  before_save :add_public_url_id
 
   scope :public, where(:is_public => true)
   scope :not_public, where(:is_public => false)
@@ -36,7 +37,11 @@ class Agenda < ActiveRecord::Base
 	end
 
   def self.public_laws
-    not_deleted.final_laws.public
+    not_deleted.final_laws.public.with_public_url_id
+  end
+
+  def self.with_public_url_id
+    where("public_url_id is not null and public_url_id != ''")
   end
 
   # in order for a law to be public, the following must be true
@@ -65,6 +70,18 @@ class Agenda < ActiveRecord::Base
     end
   end
   
+  # if the law is to become public, add public url id if it does not already exist
+  def add_public_url_id
+    if !was_public && is_public && !self.public_url_id.present? && self.voting_session.present?
+      next_id = 1
+      max_id = Agenda.maximum('public_url_id')
+      
+      next_id = max_id + 1 if max_id.present?
+
+      self.public_url_id = next_id
+    end
+  end
+
   # if the law just became public, create vote results for not attended people
   # and update vote counts for all delegates
   def update_records_for_public_law

@@ -24,7 +24,7 @@ private
       [
         agenda.conference.start_date,
         link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
-          law_path(:id => agenda.id, :locale => I18n.locale)),
+          law_path(:id => agenda.public_url_id, :locale => I18n.locale)),
         agenda.law_description,
         agenda.voting_session.passed_formatted,
         agenda.total_yes,
