@@ -18,6 +18,8 @@ en:
         password_confirmation: Password Confirmation
         role: Role
         remember_me: Remeber Me
+        new_password: New Password
+        new_password_confirmation: New Password Confirmation
       upload_file:
         xml: XML File
         created_at: Date Added
@@ -131,6 +133,14 @@ en:
       publish: Make Public
       assign_session: Add
       not_present: Not Present
+      sign_in2: Sign In
+      sign_in: "Already have an account?"
+      sign_up2: Sign Up
+      sign_up: "Don't have an account yet?"
+      sign_out: Sign Out
+      forgot_password: Forgot Password?
+      password_reset: Send Password Reset Instructions
+      sign_in_provider: "Sign in with %{provider}"
     titles:
       new: "New %{model}"
       edit: "Edit %{model}"

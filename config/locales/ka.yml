@@ -18,6 +18,8 @@ ka:
         password_confirmation: გაიმეორეთ პაროლი
         role: როლი
         remember_me: დამიმახსოვრე
+        new_password: New Password
+        new_password_confirmation: New Password Confirmation
       upload_file:
         xml: XML ფაილი
         created_at: დამატების თარიღი
@@ -131,6 +133,14 @@ ka:
       publish: გამოქვეყნება
       assign_session: დამატება
       not_present: არ ესწრებოდა
+      sign_in2: სისტემაში შესვლა
+      sign_in: უკვე გაქვთ ანგარიში?
+      sign_up2: რეგისტრაცია
+      sign_up: არ გაქვთ ანგარიში ჯერ?
+      sign_out: გასვლა
+      forgot_password: დაგავიწყდათ პაროლი?
+      password_reset: პაროლის აღდგენის ინსტრუქციის გაგზავნა
+      sign_in_provider: "სისტემაში შესვლა %{provider}"
     titles:
       new: "ახალი %{model}"
       edit: "შეცვლა %{model}"

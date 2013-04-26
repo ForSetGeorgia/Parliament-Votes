@@ -8,6 +8,8 @@ gem "json"
 gem "jquery-rails", "1.0.19"
 gem "fancybox-rails", "~> 0.1.4" # use fancybox js
 gem "devise", "2.0.4" # user authentication
+gem 'omniauth' # to login via facebook
+gem 'omniauth-facebook' # to login via facebook
 gem "cancan", "~> 1.6.8" # user authorization
 gem "formtastic", "2.1.1" # create forms easier
 gem "formtastic-bootstrap", :git => "https://github.com/cgunther/formtastic-bootstrap.git", :branch => "bootstrap-2"
