@@ -57,5 +57,9 @@ ka:
         subject: 'დადასტურების ინსტრუქციები'
       reset_password_instructions:
         subject: 'პაროლის აღსადგენი ინსტრუქციები'
+        hello: Hello %{email}!
+        p1: "Someone has requested a link to change your password, and you can do this through the link below."
+        p2: "If you didn't request this, please ignore this email."
+        p3: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         subject: 'ბლოკის მოსახსნელი ინსტრუქციები'

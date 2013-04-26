@@ -56,5 +56,9 @@ en:
         subject: 'Confirmation instructions'
       reset_password_instructions:
         subject: 'Reset password instructions'
+        hello: Hello %{email}!
+        p1: "Someone has requested a link to change your password, and you can do this through the link below."
+        p2: "If you didn't request this, please ignore this email."
+        p3: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         subject: 'Unlock Instructions'
