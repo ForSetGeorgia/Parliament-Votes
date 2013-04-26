@@ -43,5 +43,11 @@ class AdminSearchController < ApplicationController
     end
   end
 
+  def users
+    respond_to do |format|
+      format.json { render json: UsersDatatable.new(view_context, current_user) }
+    end
+  end
+
 
 end

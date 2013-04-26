@@ -43,6 +43,7 @@ BootstrapStarter::Application.routes.draw do
     match '/admin/search/deleted_files', :to => 'admin_search#deleted_files', :as => :admin_search_deleted_files, :via => :get, :defaults => {:format => 'json'}
     match '/admin/search/laws', :to => 'admin_search#laws', :as => :admin_search_laws, :via => :get, :defaults => {:format => 'json'}
     match '/admin/search/sessions/:session/:agenda_id/:match_only', :to => 'admin_search#sessions', :as => :admin_search_sessions, :via => :get, :defaults => {:format => 'json'}
+    match '/admin/search/users', :to => 'admin_search#users', :as => :admin_search_users, :via => :get, :defaults => {:format => 'json'}
 
     # search controller
     match '/search/voting_results/:agenda_public_url_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
