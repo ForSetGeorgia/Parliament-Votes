@@ -39,7 +39,7 @@ $(document).ready(function(){
   $('#voting_results_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#voting_results_datatable').data('source'),
@@ -67,7 +67,7 @@ $(document).ready(function(){
   agenda_dt = $('#agendas_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#agendas_datatable').data('source'),
@@ -98,7 +98,7 @@ $(document).ready(function(){
   $('#upload_files_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#upload_files_datatable').data('source'),
@@ -117,7 +117,7 @@ $(document).ready(function(){
   $('#deleted_files_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#deleted_files_datatable').data('source'),
@@ -137,7 +137,7 @@ $(document).ready(function(){
   laws_dt = $('#laws_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#laws_datatable').data('source'),
@@ -165,7 +165,7 @@ $(document).ready(function(){
   $('#passed_laws_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#passed_laws_datatable').data('source'),
@@ -179,7 +179,7 @@ $(document).ready(function(){
   $('#members_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#members_datatable').data('source'),
@@ -194,7 +194,7 @@ $(document).ready(function(){
   $('#voting_results_public_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#voting_results_public_datatable').data('source'),
@@ -216,7 +216,7 @@ $(document).ready(function(){
   $('#member_votes_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#member_votes_datatable').data('source'),
@@ -238,7 +238,7 @@ $(document).ready(function(){
   $('#users_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
-    "bJQueryUI": true,
+    "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
     "sAjaxSource": $('#users_datatable').data('source'),

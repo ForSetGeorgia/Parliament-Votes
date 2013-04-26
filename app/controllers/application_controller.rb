@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
 
 	def initialize_gon
 		gon.set = true
-		gon.highlight_first_form_field = true
+
+    gon.highlight_first_form_field = true if params[:controller].index('devise/').present?
 
 		if I18n.locale == :ka
 		  gon.datatable_i18n_url = "/datatable_ka.txt"
