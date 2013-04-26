@@ -26,8 +26,8 @@ ka:
       signed_out: 'გამოსვლა.'
     passwords:
       edit:
-        title: Change Your Password
-        submit: Change My Password
+        title: შეცვალე შენი პაროლი
+        submit: შეცვალე ჩემი პაროლი
       send_instructions: 'პაროლის აღსადგენ ინტსრუქციბს  მიიღებთ  ელექტრონული ფოსტით.'
       updated: 'თქვენი პაროლი წარმატებით შეიცვალა შეგიძლიათ შეხვიდეთ სისტემაში.'
       updated_not_active: 'თქვენი პაროლი წარმატებით შეიცვალა.'
