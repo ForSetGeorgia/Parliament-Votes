@@ -1,17 +1,17 @@
 class MemberVotesDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
-  delegate :first_name, to: :@first_name
+  delegate :xml_id, to: :@xml_id
 
-  def initialize(view, first_name)
+  def initialize(view, xml_id)
     @view = view
-    @first_name = first_name
+    @xml_id = xml_id
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: AllDelegate.passed_laws_voting_history(@first_name).count,
+      iTotalRecords: AllDelegate.passed_laws_voting_history(@xml_id).count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -42,7 +42,7 @@ private
   end
 
   def fetch_agendas
-    agendas = AllDelegate.passed_laws_voting_history(@first_name).order("#{sort_column} #{sort_direction}")
+    agendas = AllDelegate.passed_laws_voting_history(@xml_id).order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.official_law_title like :search or agendas.name like :search or agendas.law_description like :search", search: "%#{params[:sSearch]}%")

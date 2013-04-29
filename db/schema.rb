@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130426053000) do
+ActiveRecord::Schema.define(:version => 20130429193231) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -98,7 +98,9 @@ ActiveRecord::Schema.define(:version => 20130426053000) do
 
   add_index "delegates", ["all_delegate_id"], :name => "index_delegates_on_all_delegate_id"
   add_index "delegates", ["conference_id"], :name => "index_delegates_on_conference_id"
+  add_index "delegates", ["first_name"], :name => "index_delegates_on_first_name"
   add_index "delegates", ["group_id"], :name => "index_delegates_on_group_id"
+  add_index "delegates", ["xml_id"], :name => "index_delegates_on_xml_id"
 
   create_table "groups", :force => true do |t|
     t.integer  "conference_id"

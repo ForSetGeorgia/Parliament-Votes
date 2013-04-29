@@ -20,7 +20,7 @@ class SearchController < ApplicationController
 
   def member_votes
     respond_to do |format|
-      format.json { render json: MemberVotesDatatable.new(view_context, params[:first_name]) }
+      format.json { render json: MemberVotesDatatable.new(view_context, params[:id]) }
     end
   end
 

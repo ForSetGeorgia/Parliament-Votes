@@ -6,7 +6,7 @@
 <% title t('.title', :name => @member.first_name) %>
 
 <table id="member_votes_datatable" class="display table table-striped table-bordered" 
-      data-source="<%= search_member_votes_url(:first_name => @member.first_name, :format => :json) %>">
+      data-source="<%= search_member_votes_url(:id => @member.xml_id, :format => :json) %>">
   <thead>
     <tr>
       <th><%= model_class_c.human_attribute_name(:start_date_final) %></th>

@@ -49,7 +49,7 @@ BootstrapStarter::Application.routes.draw do
     match '/search/voting_results/:agenda_public_url_id', :to => 'search#voting_results', :as => :search_voting_results, :via => :get, :defaults => {:format => 'json'}
     match '/search/passed_laws', :to => 'search#passed_laws', :as => :search_passed_laws, :via => :get, :defaults => {:format => 'json'}
     match '/search/members', :to => 'search#members', :as => :search_members, :via => :get, :defaults => {:format => 'json'}
-    match '/search/member_votes/:first_name', :to => 'search#member_votes', :as => :search_member_votes, :via => :get, :defaults => {:format => 'json'}
+    match '/search/member_votes/:id', :to => 'search#member_votes', :as => :search_member_votes, :via => :get, :defaults => {:format => 'json'}
     
 		# notifications
 		match '/notifications', :to => 'notifications#index', :as => :notifications, :via => [:get, :post]

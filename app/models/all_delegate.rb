@@ -124,11 +124,11 @@ class AllDelegate < ActiveRecord::Base
     find_by_sql([sql, :session_number => ["#{Agenda::FINAL_VERSION[0]} #{Agenda::CONSISTENT_SESSION_NAME[0]}", "#{Agenda::FINAL_VERSION[1]} #{Agenda::CONSISTENT_SESSION_NAME[1]}"], :parl_id => parliament_id])
   end
 
-  def self.passed_laws_voting_history(name)
-    if name.present?
+  def self.passed_laws_voting_history(xml_id)
+    if xml_id.present?
       Agenda.includes(:conference => :delegates, :voting_session => :voting_results)
         .public_laws
-        .where('delegates.id = voting_results.delegate_id and delegates.first_name = ?', name)
+        .where('delegates.id = voting_results.delegate_id and delegates.xml_id = ?', xml_id)
     end
   end
 
