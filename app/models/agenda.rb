@@ -225,22 +225,22 @@ class Agenda < ActiveRecord::Base
 
   def total_yes
 #    self.voting_session.voting_results.select{|x| x.vote == 1}.count
-    self.voting_session.result1
+    self.voting_session.result1 if self.voting_session
   end
 
   def total_no
 #    self.voting_session.voting_results.select{|x| x.vote == 3}.count
-    self.voting_session.result3
+    self.voting_session.result3 if self.voting_session
   end
 
   def total_abstain
 #    self.voting_session.voting_results.select{|x| x.vote == 0}.count
-    self.voting_session.result0
+    self.voting_session.result0 if self.voting_session
   end
 
   def total_not_present
 #    self.number_possible_members - total_yes - total_no - total_abstain
-    self.voting_session.not_present
+    self.voting_session.not_present if self.voting_session
   end
 
   def is_final_version?

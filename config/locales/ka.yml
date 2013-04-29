@@ -33,6 +33,7 @@ ka:
         name: სხდომა
         start_date: სხდომის თარიღი
         start_date_final: გასვლის თარიღი
+        start_date_vote: Vote Date
         number_laws: "# კანონები"
         number_sessions: "# სესიები"
       agenda:
@@ -133,6 +134,7 @@ ka:
       publish: გამოქვეყნება
       assign_session: დამატება
       not_present: არ ესწრებოდა
+      not_present2: არ მიუცია / არ ესწრებოდა*
       sign_in2: სისტემაში შესვლა
       sign_in: უკვე გაქვთ ანგარიში?
       sign_up2: რეგისტრაცია

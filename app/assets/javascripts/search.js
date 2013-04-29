@@ -193,7 +193,7 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 50,
+    "iDisplayLength": 10,
     "bLengthChange": false
 
   });

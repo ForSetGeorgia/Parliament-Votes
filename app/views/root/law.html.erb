@@ -1,33 +1,31 @@
 <%- model_class_vs = VotingSession -%>
 <%- model_class_ad = AllDelegate -%>
 <%- model_class_vr = VotingResult -%>
+<%- model_class_c = Conference -%>
+<%- model_class_a = Agenda -%>
 
 <% title t('.title', :name => @agenda.official_law_title.present? ? @agenda.official_law_title : @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)).html_safe %>
 
 <div id="agenda_description">
   <ul>
     <li>
-      <strong><%= Conference.human_attribute_name(:start_date_final) %>:</strong>
+      <strong><%= model_class_c.human_attribute_name(:start_date_final) %>:</strong>
       <%= l(@agenda.conference.start_date, :format => :no_zone) %>
     </li>
     <li>
-      <strong><%= Agenda.human_attribute_name(:parliament_id) %>:</strong>
+      <strong><%= model_class_a.human_attribute_name(:parliament_id) %>:</strong>
       <%= @agenda.parliament.name %>
     </li>
     <li>
-      <strong><%= Agenda.human_attribute_name(:official_law_title) %>:</strong>
+      <strong><%= model_class_a.human_attribute_name(:official_law_title) %>:</strong>
       <%= @agenda.official_law_title %>
     </li>
     <li>
-      <strong><%= Agenda.human_attribute_name(:law_description) %>:</strong>
-      <%= @agenda.law_description %>
-    </li>
-    <li>
-      <strong><%= Agenda.human_attribute_name(:law_id) %>:</strong>
+      <strong><%= model_class_a.human_attribute_name(:law_id) %>:</strong>
       <%= @agenda.law_id %>
     </li>    
     <li>
-      <strong><%= Agenda.human_attribute_name(:law_url) %>:</strong>
+      <strong><%= model_class_a.human_attribute_name(:law_url) %>:</strong>
       <% if @agenda.law_url.present? %>
         <%= link_to( 
           t('helpers.links.view_law_url'), 
@@ -44,17 +42,67 @@
       <thead>
         <tr>
           <th><%= model_class_vs.model_name.human %></th>
+          <th><%= model_class_c.human_attribute_name(:start_date_vote) %></th>
           <th><%= t('helpers.boolean.y') %></th>
           <th><%= t('helpers.boolean.n') %></th>
           <th><%= t('helpers.boolean.abstain') %></th>
-          <th><%= t('helpers.links.not_present') %></th>
+          <th><%= t('helpers.links.not_present2') %></th>
         </tr>
       </thead>
       <tbody>
+        <% if !(@agenda.prior_to_all_session_data? || @agenda.is_by_one_session?) %>
+          <% if @agenda.session_number1_id.present? %>
+            <tr>
+              <td>
+                <%= t('.session1_summary_header') %>
+              </td>
+              <td>
+                <%= @agenda.session_number1.conference.start_date %>
+              </td>
+              <td>
+                <%= @agenda.session_number1.total_yes %>
+              </td>
+              <td>
+                <%= @agenda.session_number1.total_no %>
+              </td>
+              <td>
+                <%= @agenda.session_number1.total_abstain %>
+              </td>
+              <td>
+                <%= @agenda.session_number1.total_not_present %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @agenda.session_number2_id.present? %>
+            <tr>
+              <td>
+                <%= t('.session2_summary_header') %>
+              </td>
+              <td>
+                <%= @agenda.session_number2.conference.start_date %>
+              </td>
+              <td>
+                <%= @agenda.session_number2.total_yes %>
+              </td>
+              <td>
+                <%= @agenda.session_number2.total_no %>
+              </td>
+              <td>
+                <%= @agenda.session_number2.total_abstain %>
+              </td>
+              <td>
+                <%= @agenda.session_number2.total_not_present %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
         <% if @agenda.prior_to_all_session_data? || @agenda.is_by_one_session? %>
           <tr>
             <td>
               <%= t('.by_one_session_summary_header') %>
+            </td>
+            <td>
+              <%= @agenda.conference.start_date %>
             </td>
             <td>
               <%= @agenda.total_yes %>
@@ -75,6 +123,9 @@
               <%= t('.session3_summary_header') %>
             </td>
             <td>
+              <%= @agenda.conference.start_date %>
+            </td>
+            <td>
               <%= @agenda.total_yes %>
             </td>
             <td>
@@ -87,44 +138,6 @@
               <%= @agenda.total_not_present %>
             </td>
           </tr>
-          <% if @agenda.session_number2_id.present? %>
-            <tr>
-              <td>
-                <%= t('.session2_summary_header') %>
-              </td>
-              <td>
-                <%= @agenda.session_number2.total_yes %>
-              </td>
-              <td>
-                <%= @agenda.session_number2.total_no %>
-              </td>
-              <td>
-                <%= @agenda.session_number2.total_abstain %>
-              </td>
-              <td>
-                <%= @agenda.session_number2.total_not_present %>
-              </td>
-            </tr>
-          <% end %>
-          <% if @agenda.session_number1_id.present? %>
-            <tr>
-              <td>
-                <%= t('.session1_summary_header') %>
-              </td>
-              <td>
-                <%= @agenda.session_number1.total_yes %>
-              </td>
-              <td>
-                <%= @agenda.session_number1.total_no %>
-              </td>
-              <td>
-                <%= @agenda.session_number1.total_abstain %>
-              </td>
-              <td>
-                <%= @agenda.session_number1.total_not_present %>
-              </td>
-            </tr>
-          <% end %>
         <% end %>
       </tbody>
     </table>
@@ -136,7 +149,6 @@
       <thead>
         <tr>
           <th><%= model_class_ad.human_attribute_name(:first_name) %></th>
-          <th><%= model_class_vr.human_attribute_name(:present) %></th>
           <th><%= model_class_vr.human_attribute_name(:vote) %></th>
         </tr>
       </thead>
@@ -150,12 +162,9 @@
       <thead>
         <tr>
           <th><%= model_class_ad.human_attribute_name(:first_name) %></th>
-          <th><%= model_class_ad.human_attribute_name(:session3_present) %></th>
-          <th><%= model_class_ad.human_attribute_name(:session3_vote) %></th>
-          <th><%= model_class_ad.human_attribute_name(:session2_present) %></th>
-          <th><%= model_class_ad.human_attribute_name(:session2_vote) %></th>
-          <th><%= model_class_ad.human_attribute_name(:session1_present) %></th>
           <th><%= model_class_ad.human_attribute_name(:session1_vote) %></th>
+          <th><%= model_class_ad.human_attribute_name(:session2_vote) %></th>
+          <th><%= model_class_ad.human_attribute_name(:session3_vote) %></th>
         </tr>
       </thead>
       <tbody>

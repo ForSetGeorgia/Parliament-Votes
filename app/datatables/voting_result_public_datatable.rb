@@ -26,19 +26,15 @@ private
       all_delegates.map do |all_delegate|
         [
           link_to(all_delegate.first_name, member_path(:id => all_delegate.id, :locale => I18n.locale)),
-          all_delegate.session3_present_formatted,
-          all_delegate.session3_vote_formatted,
-          all_delegate.session2_present_formatted,
+          all_delegate.session1_vote_formatted,
           all_delegate.session2_vote_formatted,
-          all_delegate.session1_present_formatted,
-          all_delegate.session1_vote_formatted
+          all_delegate.session3_vote_formatted
         ]
       end
     else
       all_delegates.map do |all_delegate|
         [
           link_to(all_delegate.first_name, member_path(:id => all_delegate.id, :locale => I18n.locale)),
-          all_delegate.session3_present_formatted,
           all_delegate.session3_vote_formatted
         ]
       end
@@ -67,7 +63,11 @@ private
   end
 
   def sort_column
-    columns = %w[ad.first_name s3.present s3.vote s2.present s2.vote s1.present s1.vote]
+    if @get_all_3_sessions == "true"
+      columns = %w[ad.first_name s1.vote s2.vote s3.vote]
+    else
+      columns = %w[ad.first_name s3.vote]
+    end
     columns[params[:iSortCol_0].to_i]
   end
 

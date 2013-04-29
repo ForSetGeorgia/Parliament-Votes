@@ -33,6 +33,7 @@ en:
         name: Conference Name
         start_date: Conference Date
         start_date_final: Passed Date
+        start_date_vote: Vote Date
         number_laws: "# Laws"
         number_sessions: "# Sessions"
       agenda:
@@ -133,6 +134,7 @@ en:
       publish: Make Public
       assign_session: Add
       not_present: Not Present
+      not_present2: Abstain / Not Present*
       sign_in2: Sign In
       sign_in: "Already have an account?"
       sign_up2: Sign Up
