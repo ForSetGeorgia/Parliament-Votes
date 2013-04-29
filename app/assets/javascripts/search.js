@@ -42,6 +42,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#voting_results_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -70,6 +71,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#agendas_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -101,6 +103,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#upload_files_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -120,6 +123,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#deleted_files_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -140,6 +144,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#laws_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -168,6 +173,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#passed_laws_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -182,6 +188,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#members_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -197,6 +204,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#voting_results_public_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -219,6 +227,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#member_votes_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -241,6 +250,7 @@ $(document).ready(function(){
     "bJQueryUI": false,
     "bProcessing": true,
     "bServerSide": true,
+    "bDestroy": true,
     "sAjaxSource": $('#users_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
