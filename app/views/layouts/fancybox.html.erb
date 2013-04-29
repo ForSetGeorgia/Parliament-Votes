@@ -1,5 +1,6 @@
 <%# load_media = params[:load_media].present? && params[:load_media] != 'false' %>
 <% load_media = true %>
+<% load_media_js = false %>
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <head>
@@ -63,7 +64,7 @@
     <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <% if load_media %>
+    <% if load_media_js %>
       <%= javascript_include_tag("fancybox/layout") %>
 		  <script type="text/javascript">
 			  I18n.defaultLocale = "<%= I18n.default_locale %>";
