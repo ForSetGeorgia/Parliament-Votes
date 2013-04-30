@@ -203,8 +203,8 @@ class UploadFile < ActiveRecord::Base
               # make sure all of the voting session results are up to date
               ag.voting_session.update_results if ag.is_law
 
-              # if this is a law, look for new delegates
-              AllDelegate.add_if_new(ag.conference.delegates, self.parliament_id) if ag.is_law
+              # if this is a law, look for new delegates in voting result records
+              AllDelegate.add_if_new(ag.voting_session.voting_results.map{|x| x.delegate}, self.parliament_id) if ag.is_law
             end
 
             # update the conference with the number of laws and sessions
