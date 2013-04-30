@@ -102,6 +102,9 @@ class Agenda < ActiveRecord::Base
 
       # update vote count
       AllDelegate.update_vote_count(self.parliament_id)
+    elsif was_public && !is_public && self.voting_session.present?
+      # law is no longer public - update vote counts
+      AllDelegate.update_vote_count(self.parliament_id)
     end
   end
 

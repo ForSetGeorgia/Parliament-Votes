@@ -132,6 +132,7 @@ en:
       restore: Restore
       add: Add
       publish: Make Public
+      unpublish: Remove From Public
       assign_session: Add
       not_present: Not Present
       not_present2: Abstain / Not Present*
@@ -184,6 +185,7 @@ en:
       not_law: "The item '%{name}' is no longer marked as a law."
       assigned_session: "%{session} has been added to the law."
       law_is_public: "The Law '%{name}' has been made public."
+      law_is_not_public: "The Law '%{name}' is no longer available to the public."
       notification_yes: You will be sent notifications.
       notification_no: You will not be sent notifications.
       notification_new_file_all_success: You will recieve a notification whenever a file is added.

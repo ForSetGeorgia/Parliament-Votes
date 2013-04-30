@@ -106,7 +106,12 @@ class AllDelegate < ActiveRecord::Base
 
   def self.update_vote_count(parliament_id)
     x = passed_laws_vote_count(parliament_id)
-    update(x.map{|x| x.id}, x.map{|x| {"vote_count" => x.vote_count}}) 
+    if x.present?
+      update(x.map{|x| x.id}, x.map{|x| {"vote_count" => x.vote_count}}) 
+    else
+      # no laws are public so make sure vote counts are 0
+      where(:parliament_id => parliament_id).update_all(:vote_count => 0)
+    end
   end
 
   def self.passed_laws_vote_count(parliament_id)

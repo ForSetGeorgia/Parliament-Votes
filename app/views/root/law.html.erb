@@ -32,6 +32,17 @@
           @agenda.law_url, :class => 'btn btn-mini', :target => :blank) %>
       <% end %>
     </li>    
+    <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) && @agenda.is_public%>
+      <li>
+        <span class="law_is_public">
+          <%= t('app.common.made_public_on', :date => l(@agenda.made_public_at, :format => :no_zone)) %>
+        </span>
+        <%= link_to( 
+          t('helpers.links.unpublish'), 
+          admin_unpublish_path(@agenda.id), :class => 'btn btn-mini btn-danger',
+					:data => { :confirm => I18n.t('.confirm', :default => I18n.t("helpers.links.confirm")) }) %>
+      </li>
+    <% end %>
   </ul>
   
 </div>
