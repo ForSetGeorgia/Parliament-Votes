@@ -18,8 +18,8 @@ ka:
         password_confirmation: გაიმეორეთ პაროლი
         role: როლი
         remember_me: დამიმახსოვრე
-        new_password: New Password
-        new_password_confirmation: New Password Confirmation
+        new_password: ახალი პაროლი
+        new_password_confirmation: ახალი პაროლის დადასტურება
       upload_file:
         xml: XML ფაილი
         created_at: დამატების თარიღი
@@ -33,7 +33,7 @@ ka:
         name: სხდომა
         start_date: სხდომის თარიღი
         start_date_final: გასვლის თარიღი
-        start_date_vote: Vote Date
+        start_date_vote: კენჭისყრის თარიღი
         number_laws: "# კანონები"
         number_sessions: "# სესიები"
       agenda:
