@@ -11,21 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501072130) do
+ActiveRecord::Schema.define(:version => 20130501095613) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
-    t.integer  "sort_order",                   :default => 0
+    t.integer  "sort_order",                                         :default => 0
     t.integer  "level"
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "xml_id"
-    t.boolean  "is_law",                       :default => false
+    t.boolean  "is_law",                                             :default => false
     t.string   "registration_number"
     t.string   "session_number"
-    t.integer  "number_possible_members",      :default => 150
+    t.integer  "number_possible_members",                            :default => 150
     t.string   "law_url"
     t.string   "law_id"
     t.string   "law_title"
@@ -34,10 +34,11 @@ ActiveRecord::Schema.define(:version => 20130501072130) do
     t.integer  "parliament_id"
     t.integer  "session_number1_id"
     t.integer  "session_number2_id"
-    t.boolean  "is_public",                    :default => false
+    t.boolean  "is_public",                                          :default => false
     t.datetime "made_public_at"
     t.integer  "public_url_id"
     t.string   "registration_number_original"
+    t.binary   "law_url_text",                 :limit => 2147483647
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"

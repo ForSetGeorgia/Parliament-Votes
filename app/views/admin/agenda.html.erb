@@ -55,11 +55,16 @@
         <%= @agenda.law_id %>
       </li>    
       <li>
-        <strong><%= Agenda.human_attribute_name(:law_url) %>:</strong>
-        <% if @agenda.law_url.present? %>
+        <strong><%= Agenda.human_attribute_name(:law_url_text) %>:</strong>
+        <% if @agenda.law_url_text.present? %>
           <%= link_to( 
-            t('helpers.links.view_law_url'), 
-            @agenda.law_url, :class => 'btn btn-mini', :target => :blank) %>
+            t('helpers.links.view'), 
+            "#law_url_text", :id => 'fancybox_inline', :class => 'btn btn-mini', :target => :blank) %>
+          <div style="display:none;">
+            <div id="law_url_text">
+              <%= @agenda.law_url_text.force_encoding("UTF-8").html_safe %>
+            </div>
+          </div>
         <% end %>
       </li>    
       <li>

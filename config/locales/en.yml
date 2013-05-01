@@ -43,6 +43,7 @@ en:
         registration_number: Registration Number
         number_possible_members: Number Members
         law_url: URL to Law
+        law_url_text: Law Text
         law_id: Law ID
         official_law_title: Official Law Title
         law_title: Full Name

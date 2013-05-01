@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class Agenda < ActiveRecord::Base
+  require 'open-uri'
   has_paper_trail
   
   has_one :voting_session, :dependent => :destroy
@@ -11,19 +12,20 @@ class Agenda < ActiveRecord::Base
   accepts_nested_attributes_for :voting_session
 
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
-      :is_law, :registration_number, :registration_number_original, :session_number, :number_possible_members, :law_url, :law_id,
+      :is_law, :registration_number, :registration_number_original, :session_number, :number_possible_members, :law_url, :law_id, :law_url_text,
       :official_law_title, :law_description, :law_title, :parliament_id,
       :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id
 
-	attr_accessor :send_notification, :was_public
+	attr_accessor :send_notification, :was_public, :law_url_original
 
 	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
 
   validates :number_possible_members, :parliament_id, :presence => true
   validate :can_be_public
-	after_find :check_if_public
+	after_find :set_original_values
   after_save :update_records_for_public_law
   before_save :add_public_url_id
+  before_save :get_law_url_text
 
   scope :public, where(:is_public => true)
   scope :not_public, where(:is_public => false)
@@ -32,8 +34,9 @@ class Agenda < ActiveRecord::Base
   MAKE_PUBLIC_PARAM = 'make_public'
   QUOTES = ['„', '“', '"']
 
-	def check_if_public
+	def set_original_values
 		self.was_public = self.has_attribute?(:is_public) && self.is_public ? true : false
+		self.law_url_original = self.has_attribute?(:law_url) && self.law_url ? self.law_url : nil
 	end
 
   def self.public_laws
@@ -79,6 +82,18 @@ class Agenda < ActiveRecord::Base
       next_id = max_id + 1 if max_id.present?
 
       self.public_url_id = next_id
+    end
+  end
+
+  # if a law url was added/changed, get the text and save it
+  def get_law_url_text
+    if self.law_url_original != self.law_url
+      self.law_url_text = '' #reset value
+      doc = Nokogiri::HTML(open(self.law_url))
+      t = doc.css('table')
+      t.each do |table|
+        self.law_url_text << table.to_s.force_encoding("UTF-8")
+      end
     end
   end
 

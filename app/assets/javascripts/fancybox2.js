@@ -39,5 +39,8 @@ $(document).ready(function(){
 	  }
   });
 
+  $("a#fancybox_inline").fancybox({
+		'hideOnContentClick': true
+	});
 
 });

@@ -43,6 +43,7 @@ ka:
         registration_number: რეგისტრაციის ნომერი
         number_possible_members: წევრების რაოდენობა
         law_url: კანონის ბმული
+        law_url_text: კანონის ტექსტი
         law_id: კანონის ნომერი
         official_law_title: ოფიციალური კანონის სათაური
         law_title: სრული სახელი
