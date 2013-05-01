@@ -136,6 +136,7 @@ en:
       assign_session: Add
       not_present: Not Present
       not_present2: Abstain / Not Present*
+      not_present2_footnote: "* - The voting system does not allow a person to record Abstain so it is possible that they were present, wanted to vote Abstain, but could not."
       sign_in2: Sign In
       sign_in: "Already have an account?"
       sign_up2: Sign Up

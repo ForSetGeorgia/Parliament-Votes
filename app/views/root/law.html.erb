@@ -60,6 +60,13 @@
           <th><%= t('helpers.links.not_present2') %></th>
         </tr>
       </thead>
+      <tfoot>
+        <tr>
+          <td colspan="6">
+            <%= t('helpers.links.not_present2_footnote') %>
+          </td>
+        </tr>
+      </tfoot>
       <tbody>
         <% if !(@agenda.prior_to_all_session_data? || @agenda.is_by_one_session?) %>
           <% if @agenda.session_number1_id.present? %>
