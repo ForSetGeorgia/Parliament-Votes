@@ -132,7 +132,7 @@ ka:
       restore: აღდგენა
       add: დამატება
       publish: გამოქვეყნება
-      unpublish: Remove From Public
+      unpublish: საჯაროდან ამოღება
       assign_session: დამატება
       not_present: არ ესწრებოდა
       not_present2: არ მიუცია / არ ესწრებოდა*
@@ -185,7 +185,7 @@ ka:
       not_law: "პუნქტი '%{name}' აღარ არის მონიშნული კანონად."
       assigned_session: "%{session} დაემატა კანონს."
       law_is_public: "კანონი '%{name}' გახდა საჯარო."
-      law_is_not_public: "The Law '%{name}' is no longer available to the public."
+      law_is_not_public: "კანონი  '%{name}' აღარ არის საჯარო."
       notification_yes: თქვენ მიიღებთ შეტყობინებებს.
       notification_no: თქვენ არ მიიღებთ შეტყობინებებს.
       notification_new_file_all_success: თქვენ მიიღებთ შეტყობინებას ფაილის დამატების შესახებ.

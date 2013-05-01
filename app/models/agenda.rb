@@ -11,7 +11,7 @@ class Agenda < ActiveRecord::Base
   accepts_nested_attributes_for :voting_session
 
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
-      :is_law, :registration_number, :session_number, :number_possible_members, :law_url, :law_id,
+      :is_law, :registration_number, :registration_number_original, :session_number, :number_possible_members, :law_url, :law_id,
       :official_law_title, :law_description, :law_title, :parliament_id,
       :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id
 
@@ -345,7 +345,9 @@ class Agenda < ActiveRecord::Base
       reg = /\((\#||N){0,1}\d{2}-\d\/\d{1,2}(,||.||;) {0,5}\d{2}.\d{2}.\d{4}\)/
       reg_num = reg.match(self.description)
       if reg_num
-        self.registration_number = reg_num.to_s
+        self.registration_number_original = reg_num.to_s
+        # convert to same format: 07-3/32, 12.12.2012 
+        self.registration_number = reg_num.to_s.gsub(/[\(N\#\)]/, '').gsub(/\.\s/, ', ').gsub(';', ', ').gsub(/,\d/,', ')
       end
     end
   end
@@ -390,7 +392,7 @@ class Agenda < ActiveRecord::Base
     text = self.name if !text.present?
 
     mod_desc = text.dup
-    mod_desc = text.gsub(self.registration_number, '') if self.registration_number.present?
+    mod_desc = text.gsub(self.registration_number_original, '') if self.registration_number_original.present?
     index1 = mod_desc.index('(')
     index2 = mod_desc.index(')', index1 ? index1+1 : 0)
     # if index2 is not at the end of the string, check if there is another one after this
@@ -416,7 +418,7 @@ class Agenda < ActiveRecord::Base
     text = self.name.dup if !text.present?
 
     remove = []
-    remove << self.registration_number if self.registration_number.present?
+    remove << self.registration_number_original if self.registration_number_original.present?
     remove << self.law_description if self.law_description.present?
     remove << PREFIX
     remove << POSTFIX      
