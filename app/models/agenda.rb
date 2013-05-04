@@ -47,6 +47,25 @@ class Agenda < ActiveRecord::Base
     where("public_url_id is not null and public_url_id != ''")
   end
 
+  def self.laws_only(yes=false)
+    if yes
+      where(:is_law => 1)
+    else
+      where(:is_law => [0,1])
+    end
+  end
+
+  def self.not_deleted
+    joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
+  end
+
+  # if this a law from the old system, session number will not exist
+  def self.final_laws
+    laws_only(true)
+    .includes(:voting_session)
+    .where('voting_sessions.passed = 1 and (agendas.session_number in (?) or agendas.parliament_id = 2)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
+  end
+
   # in order for a law to be public, the following must be true
   # - is law
   # - passed vote
@@ -58,9 +77,9 @@ class Agenda < ActiveRecord::Base
   def can_be_public
     if is_public && !was_public
       has_error = false
-      if !is_law || !official_law_title.present? || !law_url.present? || !law_id.present?
+      if !is_law || !official_law_title.present? || !law_url_text.present? || !law_id.present?
         has_error = true
-      elsif !(session_number.index(FINAL_VERSION[0]) || (session_number.index(FINAL_VERSION[1]) && session_number1_id.present? && session_number2_id.present?))
+      elsif parliament_id != 2 && !(session_number.index(FINAL_VERSION[0]) || (session_number.index(FINAL_VERSION[1]) && session_number1_id.present? && session_number2_id.present?))
         has_error = true
       elsif !(self.voting_session.present? && self.voting_session.passed)
         has_error = true
@@ -125,24 +144,6 @@ class Agenda < ActiveRecord::Base
 
   def self.by_conference(conference_id)
     includes(:voting_session => :voting_results).where(:conference_id => conference_id)
-  end
-
-  def self.laws_only(yes=false)
-    if yes
-      where(:is_law => 1)
-    else
-      where(:is_law => [0,1])
-    end
-  end
-
-  def self.not_deleted
-    joins(:conference => :upload_file).where("upload_files.is_deleted = 0")
-  end
-
-  def self.final_laws
-    laws_only(true)
-    .includes(:voting_session)
-    .where('voting_sessions.passed = 1 and agendas.session_number in (?)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
   end
 
   def self.passed_laws_by_session(session_number, agenda_id)
@@ -263,8 +264,9 @@ class Agenda < ActiveRecord::Base
 
   def is_final_version?
     x = false
-    
-    if self.session_number.present?
+    if self.parliament_id == 2
+      x = true
+    elsif self.session_number.present?
       FINAL_VERSION.each do |final|
         if self.session_number.index(final)
           x = true

@@ -34,18 +34,20 @@ class UploadFile < ActiveRecord::Base
 
   # if conference already on file with same date, throw error
   def file_does_not_exist
-    file = self.xml.queued_for_write[:original]
-    if file.present?
-      doc = Nokogiri::XML(file)
-      conf = doc.at_css('Conference')
-      if conf.present?
-        already_exists = Conference.not_deleted.where(:start_date => conf.at_css('StartDate').text[0..9])
+    if self.xml_updated_at.present? && self.xml_content_type.present?
+      file = self.xml.queued_for_write[:original]
+      if file.present?
+        doc = Nokogiri::XML(file)
+        conf = doc.at_css('Conference')
+        if conf.present?
+          already_exists = Conference.not_deleted.where(:start_date => conf.at_css('StartDate').text[0..9])
 
-        if already_exists.present? && !self.id.present?
-          errors.add(:xml, I18n.t('activerecord.messages.agendas.cannot_be_public', :file_name => self.xml_file_name))
+          if already_exists.present? && !self.id.present?
+            errors.add(:xml, I18n.t('activerecord.messages.agendas.cannot_be_public', :file_name => self.xml_file_name))
+          end
         end
+        file.rewind
       end
-      file.rewind
     end
   end
 
@@ -103,8 +105,8 @@ class UploadFile < ActiveRecord::Base
       self.conference.delete
     end
 
-    self.file_processed = false
     self.save
+    self.file_processed = false
   end
 
 

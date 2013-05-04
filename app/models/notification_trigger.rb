@@ -106,7 +106,7 @@ class NotificationTrigger < ActiveRecord::Base
           triggers.map{|x| x.identifier}.uniq.each do |id|
             agenda = Agenda.not_deleted.public.find_by_id(id)
             if agenda.present?
-              message.message2 << [agenda.official_law_title, agenda.id]
+              message.message2 << [agenda.official_law_title, agenda.public_url_id]
 		        end
 	        end
 

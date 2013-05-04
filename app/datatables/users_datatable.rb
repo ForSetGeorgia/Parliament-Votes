@@ -61,7 +61,7 @@ Rails.logger.debug "++++++++++++++++++++++++ no admins"
     users = user_query.order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     if params[:sSearch].present?
-      users = users.where("all_delegates.first_name like :search", search: "%#{params[:sSearch]}%")
+      users = users.where("users.email like :search", search: "%#{params[:sSearch]}%")
     end
     users
   end

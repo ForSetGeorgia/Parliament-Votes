@@ -53,6 +53,12 @@ $(document).ready(function(){
     "iDisplayLength": 150,
     "aLengthMenu": [[25, 50, 100, 150], [25, 50, 100, 150]],
     "fnDrawCallback": function () {
+      $("#voting_results_datatable td").filter(function() { return $.text([this]) == gon.table_cell_yes; })
+       .addClass("table_cell_yes");
+      $("#voting_results_datatable td").filter(function() { return $.text([this]) == gon.table_cell_no; })
+       .addClass("table_cell_no");
+      $("#voting_results_datatable td").filter(function() { return $.text([this]) == gon.table_cell_abstain; })
+       .addClass("table_cell_abstain");
 	    $("#voting_results_datatable td a.fancybox_live").fancybox({
         transitionIn: 'elastic',
         transitionOut: 'elastic',
