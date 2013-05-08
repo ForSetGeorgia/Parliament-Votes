@@ -109,7 +109,7 @@ class Agenda < ActiveRecord::Base
 
   # if a law url was added/changed, get the text and save it
   def get_law_url_text
-    if self.law_url.present?
+    if self.has_attribute?(:law_url_text) && self.law_url.present?
       if self.law_url_original != self.law_url
         self.law_url_text = '' #reset value
         doc = Nokogiri::HTML(open(self.law_url))
