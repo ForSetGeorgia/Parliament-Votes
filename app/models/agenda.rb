@@ -11,10 +11,13 @@ class Agenda < ActiveRecord::Base
 
   accepts_nested_attributes_for :voting_session
 
+	has_attached_file :law_file, :url => "/system/law_files/:id/:filename"
+
   attr_accessible :xml_id, :conference_id, :sort_order, :level, :name, :description, :voting_session_attributes,
       :is_law, :registration_number, :registration_number_original, :session_number, :number_possible_members, :law_url, :law_id, :law_url_text,
       :official_law_title, :law_description, :law_title, :parliament_id,
-      :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id
+      :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id,
+      :law_file, :law_file_file_name, :law_file_content_type, :law_file_file_size, :law_file_updated_at
 
 	attr_accessor :send_notification, :was_public, :law_url_original
 
@@ -106,13 +109,18 @@ class Agenda < ActiveRecord::Base
 
   # if a law url was added/changed, get the text and save it
   def get_law_url_text
-    if self.law_url_original != self.law_url
-      self.law_url_text = '' #reset value
-      doc = Nokogiri::HTML(open(self.law_url))
-      t = doc.css('table')
-      t.each do |table|
-        self.law_url_text << table.to_s.force_encoding("UTF-8")
+    if self.law_url.present?
+      if self.law_url_original != self.law_url
+        self.law_url_text = '' #reset value
+        doc = Nokogiri::HTML(open(self.law_url))
+        t = doc.css('table')
+        t.each do |table|
+          self.law_url_text << table.to_s.force_encoding("UTF-8")
+        end
       end
+    else
+      # no url, so reset text
+      self.law_url_text = nil
     end
   end
 
