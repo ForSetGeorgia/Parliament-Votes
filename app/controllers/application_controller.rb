@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
 
 	# after user logs in, go to admin page
 	def after_sign_in_path_for(resource)
-		session[:previous_urls].last || root_path
+		session[:previous_urls].present? ? session[:previous_urls].last : root_path
 	end
 
   def valid_role?(role)

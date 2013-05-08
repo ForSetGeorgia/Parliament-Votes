@@ -21,7 +21,7 @@ class AddOldRecords < ActiveRecord::Migration
       puts 'getting unique dates and # of laws for each date'
       sql = "SELECT distinct kan_date, count(*) as count FROM `parl.ge`.`kanonebi` "
       sql << "where kan_date < '2012-08-01' and lang='geo' and kan_id in (select distinct kan_id from `parl.ge`.parl_voting_main) "
-      sql << "group by kan_date ORDER BY `kanonebi`.`kan_date` ASC limit 3"
+      sql << "group by kan_date ORDER BY `kanonebi`.`kan_date` ASC"
       dates = connection.execute(sql)
 
       # get votes per law
@@ -39,7 +39,7 @@ class AddOldRecords < ActiveRecord::Migration
 
       # get laws
       puts 'getting laws'
-      sql = "SELECT kan_id, kan_name, kan_date, kan_num, kan_text FROM `parl.ge`.`kanonebi` where kan_date < '2012-08-01' and lang='geo' and "
+      sql = "SELECT kan_id, kan_name, kan_date, kan_num, kan_text, kan_file FROM `parl.ge`.`kanonebi` where kan_date < '2012-08-01' and lang='geo' and "
       sql << "kan_id in (select distinct kan_id from `parl.ge`.parl_voting_main) ORDER BY `kanonebi`.`kan_date` ASC"
       all_laws = connection.execute(sql)
 
@@ -63,9 +63,9 @@ class AddOldRecords < ActiveRecord::Migration
 
 
       # create records
-      dates.each do |d|
+      dates.each_with_index do |d, d_index|
         date = d.to_a[0]
-        puts "####### - new date: #{date}"
+        puts "####### - new date: #{date}; #{d_index} of #{dates.count}"
 
         # get laws for this date
         puts '- getting laws for this date'
@@ -91,8 +91,9 @@ class AddOldRecords < ActiveRecord::Migration
           end
 
           # create agenda for each law
-          laws.each do |law|
+          laws.each_with_index do |law, l_index|
             puts '-----------------'
+            puts "------ law #{l_index} of #{law.length}"
             # get votes for this law
             sql = "select cevr_id, result_id from `parl.ge`.parl_voting where kan_id = #{law[0]} ORDER BY cevr_id"
             votes = connection.execute(sql)
@@ -101,8 +102,23 @@ class AddOldRecords < ActiveRecord::Migration
               puts "- law haw #{votes.count} votes"
               # create agenda
               puts '- creating agenda'
+              # if law has file instead of law text, get the file
+              law_file = nil
+              if law[5].present? && law[5].strip.length > 0
+                puts "--------> adding law_file: '#{law[5]}'"
+                law_file_url = "http://test.parliament.ge/_special/kan/files/#{law[5]}"
+                law_file = open(law_file_url)
+                if law_file
+                  # create the file name that paperclip will read in
+                  extension = File.extname(URI.parse(law_file_url).path)
+                  law_file.define_singleton_method(:original_filename) do
+                    "#{law[3]}#{extension}"
+                  end
+                end
+              end
+              puts "--> law url text length = #{law[4].length}"
               agenda = conf.agendas.create(:xml_id => law[0], :name => law[1], :is_law => 1, :number_possible_members => file.number_possible_members,
-                :law_id => law[3], :law_url_text => law[4], :official_law_title => law[1], :parliament_id => 2)
+                :law_id => law[3], :law_url_text => law[4], :official_law_title => law[1], :parliament_id => 2, :law_file => law_file)
               
               # create voting session
               puts '- creating voting session'

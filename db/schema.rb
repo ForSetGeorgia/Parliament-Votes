@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508122502) do
+ActiveRecord::Schema.define(:version => 20130508191719) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(:version => 20130508122502) do
     t.integer  "public_url_id"
     t.string   "registration_number_original"
     t.binary   "law_url_text",                 :limit => 2147483647
-    t.string   "law_file_law_file_name"
+    t.string   "law_file_file_name"
     t.string   "law_file_content_type"
-    t.integer  "law_file_law_file_size"
+    t.integer  "law_file_file_size"
     t.datetime "law_file_updated_at"
   end
 

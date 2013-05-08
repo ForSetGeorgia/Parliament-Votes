@@ -123,10 +123,10 @@ class AllDelegate < ActiveRecord::Base
     sql << "inner join voting_sessions as vs on vs.agenda_id = a.id "
     sql << "inner join voting_results as vr on vr.voting_session_id = vs.id and vr.delegate_id = d.id "
     sql << "inner join upload_files as uf on uf.id = c.upload_file_id "
-    sql << "where a.is_law = 1 and a.is_public = 1 and a.public_url_id is not null and a.public_url_id != '' and vs.passed = 1 and a.session_number in (:session_number) and uf.is_deleted = 0 "
+    sql << "where a.is_law = 1 and a.is_public = 1 and vs.passed = 1 and uf.is_deleted = 0 and a.public_url_id is not null and a.public_url_id != '' "
     sql << "and ad.parliament_id = :parl_id "
     sql << "group by ad.id, ad.first_name"
-    find_by_sql([sql, :session_number => ["#{Agenda::FINAL_VERSION[0]} #{Agenda::CONSISTENT_SESSION_NAME[0]}", "#{Agenda::FINAL_VERSION[1]} #{Agenda::CONSISTENT_SESSION_NAME[1]}"], :parl_id => parliament_id])
+    find_by_sql([sql, :parl_id => parliament_id])
   end
 
   def self.passed_laws_voting_history(xml_id)

@@ -43,4 +43,11 @@ $(document).ready(function(){
 		'hideOnContentClick': true
 	});
 
+	$("a#fancybox_pdf").fancybox({
+    'width': $(window).width() * .8,
+    'height': $(window).height() * .8,
+    'type':'iframe',
+		'hideOnContentClick': true
+  });
+
 });

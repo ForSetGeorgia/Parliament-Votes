@@ -15,18 +15,24 @@
       <th><%= model_class_vs.human_attribute_name(:result1) %></th>
       <th><%= model_class_vs.human_attribute_name(:result3) %></th>
       <th><%= model_class_vs.human_attribute_name(:result0) %></th>
-      <th><%= t('helpers.links.not_present2') %></th>
+      <% if @member.parliament_id == 2 %>
+        <th><%= t('helpers.links.not_present') %></th>
+      <% else %>
+        <th><%= t('helpers.links.not_present2') %></th>
+      <% end %>
       <th><%= model_class_vr.human_attribute_name(:member_present) %></th>
       <th><%= model_class_vr.human_attribute_name(:member_vote) %></th>
     </tr>
   </thead>
-  <tfoot>
-    <tr>
-      <td colspan="9">
-        <%= t('helpers.links.not_present2_footnote') %>
-      </td>
-    </tr>
-  </tfoot>
+  <% if @member.parliament_id != 2 %>
+    <tfoot>
+      <tr>
+        <td colspan="6">
+          <%= t('helpers.links.not_present2_footnote') %>
+        </td>
+      </tr>
+    </tfoot>
+  <% end %>
   <tbody>
   </tbody>
 </table>

@@ -80,7 +80,7 @@ class Agenda < ActiveRecord::Base
   def can_be_public
     if is_public && !was_public
       has_error = false
-      if !is_law || !official_law_title.present? || !law_url_text.present? || !law_id.present?
+      if !is_law || !official_law_title.present? || !has_law_text? || !law_id.present?
         has_error = true
       elsif parliament_id != 2 && !(session_number.index(FINAL_VERSION[0]) || (session_number.index(FINAL_VERSION[1]) && session_number1_id.present? && session_number2_id.present?))
         has_error = true
@@ -94,7 +94,16 @@ class Agenda < ActiveRecord::Base
       end
     end
   end
-  
+
+  # law text can be string or file so check for both  
+  def has_law_text?
+    if law_url_text.present? || law_file_file_name.present?
+      return true
+    else
+      return false
+    end
+  end
+
   # if the law is to become public, add public url id if it does not already exist
   def add_public_url_id
     if !was_public && is_public && !self.public_url_id.present? && self.voting_session.present?
@@ -120,7 +129,7 @@ class Agenda < ActiveRecord::Base
       end
     else
       # no url, so reset text
-      self.law_url_text = nil
+      self.law_url_text = nil if self.law_url_original.present?
     end
   end
 

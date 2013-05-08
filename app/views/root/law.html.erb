@@ -35,6 +35,10 @@
             <%= @agenda.law_url_text.force_encoding("UTF-8").html_safe %>
           </div>
         </div>
+      <% elsif @agenda.law_file_file_name.present? %>
+        <%= link_to( 
+          t('helpers.links.view'), 
+          @agenda.law_file.url, :id => 'fancybox_pdf', :class => 'btn btn-mini', :target => :blank) %>
       <% end %>
     </li>    
     <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) && @agenda.is_public%>
@@ -62,16 +66,22 @@
           <th><%= t('helpers.boolean.y') %></th>
           <th><%= t('helpers.boolean.n') %></th>
           <th><%= t('helpers.boolean.abstain') %></th>
-          <th><%= t('helpers.links.not_present2') %></th>
+          <% if @agenda.parliament_id == 2 %>
+            <th><%= t('helpers.links.not_present') %></th>
+          <% else %>
+            <th><%= t('helpers.links.not_present2') %></th>
+          <% end %>
         </tr>
       </thead>
-      <tfoot>
-        <tr>
-          <td colspan="6">
-            <%= t('helpers.links.not_present2_footnote') %>
-          </td>
-        </tr>
-      </tfoot>
+      <% if @agenda.parliament_id != 2 %>
+        <tfoot>
+          <tr>
+            <td colspan="6">
+              <%= t('helpers.links.not_present2_footnote') %>
+            </td>
+          </tr>
+        </tfoot>
+      <% end %>
       <tbody>
         <% if !(@agenda.prior_to_all_session_data? || @agenda.is_by_one_session?) %>
           <% if @agenda.session_number1_id.present? %>
