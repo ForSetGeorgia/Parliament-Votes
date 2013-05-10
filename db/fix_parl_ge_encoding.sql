@@ -139,3 +139,10 @@ ALTER TABLE parl_cevrebi MODIFY damatebiti_info	longtext CHARACTER SET latin1;
 ALTER TABLE parl_cevrebi MODIFY damatebiti_info longtext CHARACTER SET binary;
 ALTER TABLE parl_cevrebi MODIFY damatebiti_info longtext CHARACTER SET utf8;
 
+################################
+
+
+create index idx_vote_kan_id on parl_voting (kan_id);
+create index idx_vote_cevr_id on parl_voting (cevr_id);
+
+

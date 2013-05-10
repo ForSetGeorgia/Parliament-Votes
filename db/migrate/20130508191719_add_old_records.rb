@@ -14,7 +14,7 @@ class AddOldRecords < ActiveRecord::Migration
 
       # get party names
       puts 'get party names'
-      sql = "select fraqcia_id, fraqcia_name from `parl.ge`.parl_fraqciebi_utf8 where lang='geo' and mocveva_id = 6"
+      sql = "select fraqcia_id, fraqcia_name from `parl.ge`.parl_fraqciebi where lang='geo' and mocveva_id = 6"
       parties = connection.execute(sql)
 
       # get unique dates and # of laws for each date
@@ -33,7 +33,7 @@ class AddOldRecords < ActiveRecord::Migration
 
       # get parl members
       puts 'getting parl members'
-      sql = "SELECT cevri_id, concat(name, ' ', lastname) as name, fraqcia_id FROM `parl.ge`.`parl_cevrebi_utf8` "
+      sql = "SELECT cevri_id, concat(name, ' ', lastname) as name, fraqcia_id FROM `parl.ge`.`parl_cevrebi` "
       sql << "where mocveva_id = 6 and lang='geo'"
       members = connection.execute(sql)
 
@@ -61,11 +61,15 @@ class AddOldRecords < ActiveRecord::Migration
         end
       end
 
+      laws_added = 0
 
       # create records
       dates.each_with_index do |d, d_index|
         date = d.to_a[0]
-        puts "####### - new date: #{date}; #{d_index} of #{dates.count}"
+        puts "###### - laws added so far: #{laws_added} of #{all_laws.count}"
+
+        puts "###################################################"
+        puts "####### - new date: #{date}; #{d_index+1} of #{dates.count}"
 
         # get laws for this date
         puts '- getting laws for this date'
@@ -93,7 +97,7 @@ class AddOldRecords < ActiveRecord::Migration
           # create agenda for each law
           laws.each_with_index do |law, l_index|
             puts '-----------------'
-            puts "------ law #{l_index} of #{law.length}"
+            puts "------ law #{l_index+1} of #{laws.length}"
             # get votes for this law
             sql = "select cevr_id, result_id from `parl.ge`.parl_voting where kan_id = #{law[0]} ORDER BY cevr_id"
             votes = connection.execute(sql)
@@ -165,6 +169,7 @@ class AddOldRecords < ActiveRecord::Migration
                 return
               end            
               agenda.save
+              laws_added += 1
             else
               puts "@@@@@@@@ law does not have any votes: #{law[0]}"
             end              
