@@ -1,8 +1,9 @@
 class AllDelegate < ActiveRecord::Base
   has_paper_trail
+  is_impressionable :counter_cache => true
 
   has_many :delegates
-  attr_accessible :xml_id, :group_id, :first_name, :title, :vote_count, :parliament_id
+  attr_accessible :xml_id, :group_id, :first_name, :title, :vote_count, :parliament_id, :impressions_count
 
   attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote
 

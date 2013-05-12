@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508122502) do
+ActiveRecord::Schema.define(:version => 20130512140704) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20130508122502) do
     t.string   "law_file_content_type"
     t.integer  "law_file_file_size"
     t.datetime "law_file_updated_at"
+    t.integer  "impressions_count",                                  :default => 0
   end
 
   add_index "agendas", ["conference_id"], :name => "index_agendas_on_conference_id"
@@ -68,8 +69,9 @@ ActiveRecord::Schema.define(:version => 20130508122502) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vote_count",    :default => 0
+    t.integer  "vote_count",        :default => 0
     t.integer  "parliament_id"
+    t.integer  "impressions_count", :default => 0
   end
 
   add_index "all_delegates", ["first_name"], :name => "index_all_delegates_on_first_name"
@@ -118,6 +120,30 @@ ActiveRecord::Schema.define(:version => 20130508122502) do
   end
 
   add_index "groups", ["conference_id"], :name => "index_groups_on_conference_id"
+
+  create_table "impressions", :force => true do |t|
+    t.string   "impressionable_type"
+    t.integer  "impressionable_id"
+    t.integer  "user_id"
+    t.string   "controller_name"
+    t.string   "action_name"
+    t.string   "view_name"
+    t.string   "request_hash"
+    t.string   "ip_address"
+    t.string   "session_hash"
+    t.text     "message"
+    t.text     "referrer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "impressions", ["controller_name", "action_name", "ip_address"], :name => "controlleraction_ip_index"
+  add_index "impressions", ["controller_name", "action_name", "request_hash"], :name => "controlleraction_request_index"
+  add_index "impressions", ["controller_name", "action_name", "session_hash"], :name => "controlleraction_session_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "ip_address"], :name => "poly_ip_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "request_hash"], :name => "poly_request_index"
+  add_index "impressions", ["impressionable_type", "impressionable_id", "session_hash"], :name => "poly_session_index"
+  add_index "impressions", ["user_id"], :name => "index_impressions_on_user_id"
 
   create_table "notification_triggers", :force => true do |t|
     t.integer  "notification_type"

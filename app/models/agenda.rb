@@ -2,6 +2,7 @@
 class Agenda < ActiveRecord::Base
   require 'open-uri'
   has_paper_trail
+  is_impressionable :counter_cache => true
   
   has_one :voting_session, :dependent => :destroy
   belongs_to :conference
@@ -17,7 +18,7 @@ class Agenda < ActiveRecord::Base
       :is_law, :registration_number, :registration_number_original, :session_number, :number_possible_members, :law_url, :law_id, :law_url_text,
       :official_law_title, :law_description, :law_title, :parliament_id,
       :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id,
-      :law_file, :law_file_file_name, :law_file_content_type, :law_file_file_size, :law_file_updated_at
+      :law_file, :law_file_file_name, :law_file_content_type, :law_file_file_size, :law_file_updated_at, :impressions_count
 
 	attr_accessor :send_notification, :was_public, :law_url_original
 
