@@ -179,7 +179,7 @@ class AddOldRecords < ActiveRecord::Migration
 
       # update all delegate vote counts
       puts "updating all delegate vote count"
-      AllDelegate.update_vote_count(2)
+      AllDelegate.update_vote_counts(2)
 
     end
   end

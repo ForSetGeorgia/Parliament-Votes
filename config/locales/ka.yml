@@ -76,13 +76,19 @@ ka:
         text: ფრაქცია
         short_name: ფრაქცია
       parliament: 
+        start_year: დაწყების წელი
+        end_year: დასასრულის წელი
+      parliament_translation: 
         name: პარლამენტის სახელი
         name_hint: "(მაგ., 'მე-8 მოწვევის პარლამენტი')"
-        start_year: Start Year
-        end_year: End Year
       all_delegate:
         first_name: სახელი
+        parliament_id: პარლამენტი
         vote_count: "# ხმები"
+        yes_count: "# დადებითი ხმა"
+        no_count: "# უარყოფითი ხმა"
+        abstain_count: "# არ მიუცია ხმა"
+        absent_count: "#-ჯერ გაცდენა"
         session3_present: III მოსმენაზე დასწრება
         session3_vote: III მოსმენის ხმა
         session2_present: II მოსმენაზე დასწრება

@@ -76,13 +76,19 @@ en:
         text: Party
         short_name: Party
       parliament: 
-        name: Parliament Name
-        name_hint: "(e.g., 'The 8th Parliament')"
         start_year: Start Year
         end_year: End Year
+      parliament_translation: 
+        name: Parliament Name
+        name_hint: "(e.g., 'The 8th Parliament')"
       all_delegate:
         first_name: Name
+        parliament_id: Parliament
         vote_count: "# Votes"
+        yes_count: "# Yes Votes"
+        no_count: "# No Votes"
+        abstain_count: "# Abstain Votes"
+        absent_count: "# Times Absent"
         session3_present: Session III Present
         session3_vote: Session III Vote
         session2_present: Session II Present

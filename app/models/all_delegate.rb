@@ -3,9 +3,16 @@ class AllDelegate < ActiveRecord::Base
   is_impressionable :counter_cache => true
 
   has_many :delegates
-  attr_accessible :xml_id, :group_id, :first_name, :title, :vote_count, :parliament_id, :impressions_count
+  belongs_to :parliament
+
+  attr_accessible :xml_id, :group_id, :first_name, :title, :parliament_id, :impressions_count,
+    :vote_count, :yes_count, :no_count, :abstain_count, :absent_count 
 
   attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote
+
+  def self.with_parliament
+    includes(:parliament => :parliament_translations)
+  end
 
   def session3_present_formatted
     if read_attribute(:session3_present).present?
@@ -105,31 +112,6 @@ class AllDelegate < ActiveRecord::Base
     end
   end
 
-  def self.update_vote_count(parliament_id)
-    x = passed_laws_vote_count(parliament_id)
-    if x.present?
-      update(x.map{|x| x.id}, x.map{|x| {"vote_count" => x.vote_count}}) 
-    else
-      # no laws are public so make sure vote counts are 0
-      where(:parliament_id => parliament_id).update_all(:vote_count => 0)
-    end
-  end
-
-  def self.passed_laws_vote_count(parliament_id)
-    sql = "select ad.id, ad.first_name, count(*) as vote_count "
-    sql << "from all_delegates as ad "
-    sql << "inner join delegates as d on d.all_delegate_id = ad.id "
-    sql << "inner join conferences as c on c.id = d.conference_id "
-    sql << "inner join agendas as a on a.conference_id = c.id "
-    sql << "inner join voting_sessions as vs on vs.agenda_id = a.id "
-    sql << "inner join voting_results as vr on vr.voting_session_id = vs.id and vr.delegate_id = d.id "
-    sql << "inner join upload_files as uf on uf.id = c.upload_file_id "
-    sql << "where a.is_law = 1 and a.is_public = 1 and vs.passed = 1 and uf.is_deleted = 0 and a.public_url_id is not null and a.public_url_id != '' "
-    sql << "and ad.parliament_id = :parl_id "
-    sql << "group by ad.id, ad.first_name"
-    find_by_sql([sql, :parl_id => parliament_id])
-  end
-
   def self.passed_laws_voting_history(xml_id)
     if xml_id.present?
       Agenda.includes(:conference => :delegates, :voting_session => :voting_results)
@@ -177,4 +159,96 @@ class AllDelegate < ActiveRecord::Base
     end
     return x
   end
+
+  def self.update_vote_counts(parliament_id)
+    # total votes
+    x = passed_laws_vote_count(parliament_id)
+    if x.present?
+      update(x.map{|x| x.id}, x.map{|x| {"vote_count" => x.vote_count}}) 
+    else
+      # no laws are public so make sure vote counts are 0
+      where(:parliament_id => parliament_id).update_all(:vote_count => 0)
+    end
+
+    # yes votes
+    x = passed_laws_yes_count(parliament_id)
+    if x.present?
+      update(x.map{|x| x.id}, x.map{|x| {"yes_count" => x.vote_count}}) 
+    else
+      # no laws are public so make sure vote counts are 0
+      where(:parliament_id => parliament_id).update_all(:yes_count => 0)
+    end
+
+    # no votes
+    x = passed_laws_no_count(parliament_id)
+    if x.present?
+      update(x.map{|x| x.id}, x.map{|x| {"no_count" => x.vote_count}}) 
+    else
+      # no laws are public so make sure vote counts are 0
+      where(:parliament_id => parliament_id).update_all(:no_count => 0)
+    end
+
+    # abstain votes
+    x = passed_laws_abstain_count(parliament_id)
+    if x.present?
+      update(x.map{|x| x.id}, x.map{|x| {"abstain_count" => x.vote_count}}) 
+    else
+      # no laws are public so make sure vote counts are 0
+      where(:parliament_id => parliament_id).update_all(:abstain_count => 0)
+    end
+
+    # absent votes
+    x = passed_laws_absent_count(parliament_id)
+    if x.present?
+      update(x.map{|x| x.id}, x.map{|x| {"absent_count" => x.vote_count}}) 
+    else
+      # no laws are public so make sure vote counts are 0
+      where(:parliament_id => parliament_id).update_all(:absent_count => 0)
+    end
+
+  end
+
+
+protected
+
+  def self.passed_laws_vote_count_query
+    sql = "select ad.id, ad.first_name, count(*) as vote_count "
+    sql << "from all_delegates as ad "
+    sql << "inner join delegates as d on d.all_delegate_id = ad.id "
+    sql << "inner join conferences as c on c.id = d.conference_id "
+    sql << "inner join agendas as a on a.conference_id = c.id "
+    sql << "inner join voting_sessions as vs on vs.agenda_id = a.id "
+    sql << "inner join voting_results as vr on vr.voting_session_id = vs.id and vr.delegate_id = d.id "
+    sql << "inner join upload_files as uf on uf.id = c.upload_file_id "
+    sql << "where a.is_law = 1 and a.is_public = 1 and vs.passed = 1 and uf.is_deleted = 0 and a.public_url_id is not null and a.public_url_id != '' "
+    sql << "and ad.parliament_id = :parl_id "
+    sql << "[placeholder] "    
+    sql << "group by ad.id, ad.first_name"
+  end
+
+  def self.passed_laws_vote_count(parliament_id)
+    sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.present = 1')
+    find_by_sql([sql, :parl_id => parliament_id])
+  end
+
+  def self.passed_laws_yes_count(parliament_id)
+    sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.vote = 1 and vr.present = 1')
+    find_by_sql([sql, :parl_id => parliament_id])
+  end
+
+  def self.passed_laws_no_count(parliament_id)
+    sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.vote = 3 and vr.present = 1')
+    find_by_sql([sql, :parl_id => parliament_id])
+  end
+
+  def self.passed_laws_abstain_count(parliament_id)
+    sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.vote = 0 and vr.present = 1')
+    find_by_sql([sql, :parl_id => parliament_id])
+  end
+
+  def self.passed_laws_absent_count(parliament_id)
+    sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.present = 0')
+    find_by_sql([sql, :parl_id => parliament_id])
+  end
+
 end

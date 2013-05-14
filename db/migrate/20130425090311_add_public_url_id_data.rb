@@ -6,7 +6,7 @@ class AddPublicUrlIdData < ActiveRecord::Migration
     end
 
     # update vote counts
-    AllDelegate.update_vote_count(1)
+    AllDelegate.update_vote_counts(1)
   end
 
   def down

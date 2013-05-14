@@ -9,7 +9,7 @@ class MembersDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: AllDelegate.count,
+      iTotalRecords: AllDelegate.with_parliament.count,
       iTotalDisplayRecords: members.total_entries,
       aaData: data
     }
@@ -21,7 +21,12 @@ private
     members.map do |member|
       [
         link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale)),
-        member.vote_count
+        member.parliament.name_formatted,
+        member.vote_count,
+        member.yes_count,
+        member.no_count,
+        member.abstain_count,
+        member.absent_count
       ]
     end
   end
@@ -31,7 +36,7 @@ private
   end
 
   def fetch_members
-    members = AllDelegate.order("#{sort_column} #{sort_direction}")
+    members = AllDelegate.with_parliament.order("#{sort_column} #{sort_direction}")
     members = members.page(page).per_page(per_page)
     if params[:sSearch].present?
       members = members.where("all_delegates.first_name like :search", search: "%#{params[:sSearch]}%")
@@ -48,7 +53,7 @@ private
   end
 
   def sort_column
-    columns = %w[all_delegates.first_name all_delegates.vote_count]
+    columns = %w[all_delegates.first_name parliaments.start_year all_delegates.vote_count all_delegates.yes_count all_delegates.no_count all_delegates.abstain_count all_delegates.absent_count]
     columns[params[:iSortCol_0].to_i]
   end
 

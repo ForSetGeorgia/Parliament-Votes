@@ -1,9 +1,46 @@
 <%- model_class_vs = VotingSession -%>
+<%- model_class_ad = AllDelegate -%>
 <%- model_class_vr = VotingResult -%>
 <%- model_class_c = Conference -%>
 <%- model_class_a = Agenda -%>
 
 <% title t('.title', :name => @member.first_name) %>
+
+
+<table class="display table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th><%= model_class_ad.human_attribute_name(:parliament_id) %></th>
+      <th><%= model_class_ad.human_attribute_name(:vount_count) %></th>
+      <th><%= model_class_ad.human_attribute_name(:yes_count) %></th>
+      <th><%= model_class_ad.human_attribute_name(:no_count) %></th>
+      <th><%= model_class_ad.human_attribute_name(:abstain_count) %></th>
+      <th><%= model_class_ad.human_attribute_name(:absent_count) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <%= @member.parliament.name_formatted %>
+      </td>
+      <td>
+        <%= @member.vote_count %>
+      </td>
+      <td>
+        <%= @member.yes_count %>
+      </td>
+      <td>
+        <%= @member.no_count %>
+      </td>
+      <td>
+        <%= @member.abstain_count %>
+      </td>
+      <td>
+        <%= @member.absent_count %>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <table id="member_votes_datatable" class="display table table-striped table-bordered" 
       data-source="<%= search_member_votes_url(:id => @member.xml_id, :format => :json) %>">
