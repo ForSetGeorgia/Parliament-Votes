@@ -78,8 +78,8 @@ ka:
       parliament: 
         name: პარლამენტის სახელი
         name_hint: "(მაგ., 'მე-8 მოწვევის პარლამენტი')"
-        start_date: დაწყების თარიღი
-        end_date: დასრულების თარიღი
+        start_year: Start Year
+        end_year: End Year
       all_delegate:
         first_name: სახელი
         vote_count: "# ხმები"

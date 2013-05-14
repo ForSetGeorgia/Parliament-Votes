@@ -30,7 +30,11 @@ class Admin::ParliamentsController < ApplicationController
   # GET /parliaments/new.json
   def new
     @parliament = Parliament.new
-		gon.edit_parliament = true
+    # create the translation object for however many locales there are
+    # so the form will properly create all of the nested form fields
+    I18n.available_locales.each do |locale|
+			@parliament.parliament_translations.build(:locale => locale)
+		end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,9 +45,6 @@ class Admin::ParliamentsController < ApplicationController
   # GET /parliaments/1/edit
   def edit
     @parliament = Parliament.find(params[:id])
-		gon.edit_parliament = true
-		gon.start_date = @parliament.start_date.strftime('%m/%d/%Y') if !@parliament.start_date.nil?
-		gon.end_date = @parliament.end_date.strftime('%m/%d/%Y') if !@parliament.end_date.nil?
   end
 
   # POST /parliaments
@@ -56,9 +57,6 @@ class Admin::ParliamentsController < ApplicationController
         format.html { redirect_to admin_parliaments_path, notice: t('app.msgs.success_created', :obj => t('activerecord.models.parliament')) }
         format.json { render json: @parliament, status: :created, location: @parliament }
       else
-    		gon.edit_parliament = true
-		    gon.start_date = @parliament.start_date.strftime('%m/%d/%Y') if !@parliament.start_date.nil?
-		    gon.end_date = @parliament.end_date.strftime('%m/%d/%Y') if !@parliament.end_date.nil?
         format.html { render action: "new" }
         format.json { render json: @parliament.errors, status: :unprocessable_entity }
       end
@@ -75,9 +73,6 @@ class Admin::ParliamentsController < ApplicationController
         format.html { redirect_to admin_parliaments_path, notice: t('app.msgs.success_updated', :obj => t('activerecord.models.parliament')) }
         format.json { head :ok }
       else
-    		gon.edit_parliament = true
-		    gon.start_date = @parliament.start_date.strftime('%m/%d/%Y') if !@parliament.start_date.nil?
-		    gon.end_date = @parliament.end_date.strftime('%m/%d/%Y') if !@parliament.end_date.nil?
         format.html { render action: "edit" }
         format.json { render json: @parliament.errors, status: :unprocessable_entity }
       end

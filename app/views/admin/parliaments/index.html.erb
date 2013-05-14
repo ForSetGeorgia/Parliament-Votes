@@ -13,8 +13,8 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:start_date) %></th>
-      <th><%= model_class.human_attribute_name(:end_date) %></th>
+      <th><%= model_class.human_attribute_name(:start_year) %></th>
+      <th><%= model_class.human_attribute_name(:end_year) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -22,8 +22,8 @@
     <% @parliaments.each do |parliament| %>
       <tr>
         <td><%= parliament.name %></td>
-        <td><%= l parliament.start_date if parliament.start_date %></td>
-        <td><%= l parliament.end_date if parliament.end_date %></td>
+        <td><%= parliament.start_year %></td>
+        <td><%= parliament.end_year %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_admin_parliament_path(parliament), :class => 'btn btn-mini' %>

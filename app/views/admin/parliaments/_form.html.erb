@@ -1,10 +1,23 @@
 <%= semantic_form_for([:admin,@parliament], :html => { :class => 'form-horizontal' }) do |f| %>
 	<%= f.error_messages %>
 
+  <% @parliament.parliament_translations.sort{|x,y| x.locale <=> y.locale}.each do |trans| %>
+		<%= f.fields_for :parliament_translations, trans do |translation| %>
+
+			<div id="form-<%= trans.locale %>" class="multilanguage">
+				<h3><%= t("app.language.#{trans.locale}") %></h3>
+
+				<%= translation.input :name, :input_html => {:size =>50}, :hint => t('activerecord.attributes.parliament.name_hint') %>
+				<%= translation.hidden_field :locale , :value => trans.locale %>
+			</div>
+
+		<% end %>
+	<% end %>
+
+
 	<%= f.inputs do %>
-		<%= f.input :name, :input_html => {:size =>50}, :hint => t('activerecord.attributes.parliament.name_hint') %>
-		<%= f.input :start_date, :as => :string, :input_html => {:size => 35}  %>
-		<%= f.input :end_date, :as => :string, :input_html => {:size => 35}  %>
+		<%= f.input :start_year, :as => :string, :input_html => {:size => 20, :maxlength => 4}  %>
+		<%= f.input :end_year, :as => :string, :input_html => {:size => 20, :maxlength => 4}  %>
 
 	<% end %>
 

@@ -6,12 +6,12 @@
     <%= @parliament.name %>
   </p>
   <p>
-    <strong><%= model_class.human_attribute_name(:start_date) %>:</strong>
-    <%= l @parliament.start_date if @parliament.start_date %>
+    <strong><%= model_class.human_attribute_name(:start_year) %>:</strong>
+    <%= @parliament.start_year %>
   </p>
   <p>
-    <strong><%= model_class.human_attribute_name(:end_date) %>:</strong>
-    <%= l @parliament.end_date if @parliament.end_date %>
+    <strong><%= model_class.human_attribute_name(:end_year) %>:</strong>
+    <%= @parliament.end_year %>
   </p>
 
 <div class="form-actions">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130512140704) do
+ActiveRecord::Schema.define(:version => 20130514092552) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
@@ -166,16 +166,29 @@ ActiveRecord::Schema.define(:version => 20130512140704) do
   add_index "notifications", ["notification_type", "identifier"], :name => "idx_notif_type"
   add_index "notifications", ["user_id"], :name => "index_notifications_on_user_id"
 
-  create_table "parliaments", :force => true do |t|
+  create_table "parliament_translations", :force => true do |t|
+    t.integer  "parliament_id"
+    t.string   "locale"
     t.string   "name"
-    t.date     "start_date"
-    t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "parliaments", ["name"], :name => "index_parliaments_on_name"
-  add_index "parliaments", ["start_date"], :name => "index_parliaments_on_start_date"
+  add_index "parliament_translations", ["locale"], :name => "index_parliament_translations_on_locale"
+  add_index "parliament_translations", ["name"], :name => "index_parliament_translations_on_name"
+  add_index "parliament_translations", ["parliament_id"], :name => "index_parliament_translations_on_parliament_id"
+
+  create_table "parliaments", :force => true do |t|
+    t.string   "name_old"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "start_year"
+    t.integer  "end_year"
+  end
+
+  add_index "parliaments", ["end_year"], :name => "index_parliaments_on_end_year"
+  add_index "parliaments", ["name_old"], :name => "index_parliaments_on_name"
+  add_index "parliaments", ["start_year"], :name => "index_parliaments_on_start_year"
 
   create_table "upload_files", :force => true do |t|
     t.string   "xml_file_name"
