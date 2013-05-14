@@ -43,6 +43,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#voting_results_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -78,6 +79,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#agendas_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -110,6 +112,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#upload_files_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -130,6 +133,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#deleted_files_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -151,6 +155,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#laws_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -181,6 +186,7 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
+    "bStateSave": true,
     "aoColumns": [{"sWidth":"100px"},null,null,null,null,null],
     "sAjaxSource": $('#passed_laws_datatable').data('source'),
     "oLanguage": {
@@ -198,6 +204,7 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
+    "bStateSave": true,
     "sAjaxSource": $('#members_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -215,6 +222,7 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
+    "bStateSave": true,
     "sAjaxSource": $('#voting_results_public_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -239,6 +247,7 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
+    "bStateSave": true,
     "sAjaxSource": $('#member_votes_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -262,6 +271,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#users_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url

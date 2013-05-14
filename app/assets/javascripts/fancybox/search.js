@@ -10,6 +10,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#possible_sessions_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
@@ -29,6 +30,7 @@ $(document).ready(function(){
     "bProcessing": true,
     "bServerSide": true,
     "bDestroy": true,
+    "bStateSave": true,
     "sAjaxSource": $('#all_sessions_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
