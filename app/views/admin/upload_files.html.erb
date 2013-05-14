@@ -11,7 +11,7 @@
 
     <label class="control-label" for="parliament_id">
       <%= UploadFile.human_attribute_name(:parliament_id) %>
-      <%= select_tag 'parliament_id', options_from_collection_for_select(Parliament.sorted_name, "id", "name") %>
+      <%= select_tag 'parliament_id', options_from_collection_for_select(@parliaments, "id", "name_formatted") %>
     </label>
 
     <label class="control-label" for="number_possible_members">

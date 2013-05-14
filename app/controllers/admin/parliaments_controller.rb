@@ -7,7 +7,7 @@ class Admin::ParliamentsController < ApplicationController
   # GET /parliaments
   # GET /parliaments.json
   def index
-    @parliaments = Parliament.sorted_name
+    @parliaments = Parliament.sorted_start_year
 
     respond_to do |format|
       format.html # index.html.erb

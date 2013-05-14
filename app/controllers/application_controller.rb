@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
 	before_filter :set_locale
 	before_filter :initialize_gon
+	before_filter :preload_global_variables
 	before_filter :store_location
 
 	layout :layout_by_resource
@@ -51,6 +52,10 @@ class ApplicationController < ActionController::Base
     gon.table_cell_yes = I18n.t('helpers.boolean.y')
     gon.table_cell_no = I18n.t('helpers.boolean.n')
     gon.table_cell_abstain = I18n.t('helpers.boolean.abstain')
+	end
+
+	def preload_global_variables
+    @parliaments = Parliament.sorted_start_year
 	end
 
 	# after user logs in, go to admin page

@@ -9,7 +9,11 @@ class Parliament < ActiveRecord::Base
   accepts_nested_attributes_for :parliament_translations
   attr_accessible :name_old, :start_year, :end_year, :id, :parliament_translations_attributes
 
-  def self.sorted_name
+  def self.sorted_start_year
     with_translations(I18n.locale).order("parliaments.start_year desc, parliament_translations.name asc")
+  end
+
+  def name_formatted
+    "#{start_year} - #{end_year} (#{name})"
   end
 end
