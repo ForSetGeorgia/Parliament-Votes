@@ -35,14 +35,13 @@
           <%= link_to(t('app.common.app_name'), root_path(:locale => I18n.locale),:class=>"brand font")%>
           <div class="container nav-collapse">
             <ul class="nav">
+              <li><%= link_to t('.menu_public_laws'), laws_path %>
+              <li><%= link_to t('.menu_public_members'), members_path %>
               <% if user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
                 <li><%= link_to t('.menu_laws'), admin_laws_path %>
               <% end %>
               <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
                 <li><%= link_to t('.menu_files'), admin_upload_files_path(:locale => I18n.locale) %>
-              <% end %>
-              <% if params[:controller] == 'admin' && user_signed_in? && current_user.role?(User::ROLES[:process_files]) && @agenda %>
-                <li><%= link_to t('.menu_conference'), admin_conference_path(:id => @agenda.conference_id, :laws_only => params[:laws_only]) %>
               <% end %>
             </ul>
             <ul class="nav pull-right">

@@ -209,9 +209,7 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 10,
-    "bLengthChange": false
-
+    "iDisplayLength": 10
   });
 
   $('#voting_results_public_datatable').dataTable({

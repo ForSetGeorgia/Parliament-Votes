@@ -1,0 +1,29 @@
+<%- model_class_vs = VotingSession -%>
+<%- model_class_c = Conference -%>
+<%- model_class_a = Agenda -%>
+
+<% title t('.title') %>
+
+<table id="passed_laws_datatable" class="display table table-striped table-bordered" 
+      data-source="<%= search_passed_laws_url(:format => :json) %>">
+  <thead>
+    <tr>
+      <th><%= model_class_c.human_attribute_name(:start_date_final) %></th>
+      <th><%= model_class_a.human_attribute_name(:official_law_title) %></th>
+      <th><%= model_class_vs.human_attribute_name(:result1) %></th>
+      <th><%= model_class_vs.human_attribute_name(:result3) %></th>
+      <th><%= model_class_vs.human_attribute_name(:result0) %></th>
+      <th><%= t('helpers.links.not_present2') %></th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan="6">
+        <%= t('helpers.links.not_present2_footnote') %>
+      </td>
+    </tr>
+  </tfoot>
+  <tbody>
+  </tbody>
+</table>
+

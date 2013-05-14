@@ -15,8 +15,10 @@ BootstrapStarter::Application.routes.draw do
 		end
 
     # root controller
-    match '/law/:id', :to => 'root#law', :as => :law, :via => :get
-    match '/member/:id', :to => 'root#member', :as => :member, :via => :get
+    match '/laws/', :to => 'root#laws_index', :as => :laws, :via => :get
+    match '/laws/:id', :to => 'root#laws_show', :as => :law, :via => :get
+    match '/members/', :to => 'root#members_index', :as => :members, :via => :get
+    match '/members/:id', :to => 'root#members_show', :as => :member, :via => :get
 
     # admin
     match '/admin/upload_files', :to => 'admin#upload_files', :as => :admin_upload_files, :via => :get

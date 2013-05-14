@@ -200,8 +200,9 @@ ka:
   layouts:
     application:
       admin: ადმინისტრატო
+      menu_public_laws: კანონები
+      menu_public_members: პარლამენტის წევრები
       menu_files: ფაილების ატვირთვა
-      menu_conference: კანონები
       menu_laws: კანონის გამოქვეყნება 
       notifications: შეტყობინებები
       sign_out: გასვლა
@@ -283,15 +284,17 @@ ka:
   root:
     index:
       title: კენჭისყრის ჩანაწერების მონაცემთა ბაზა
-      laws_header: გასული კანონები
-      members_header: პარლამენტის წევრები
-    law:
+    laws_index:
+      title: გასული კანონები
+    laws_show:
       title: "კანონი: %{name} (%{date})"
       by_one_session_summary_header: კენჭისყრის რეზიუმე
       session3_summary_header: III მოსმენის კენჭისყრის რეზიუმე
       session2_summary_header: II მოსმენის კენჭისყრის რეზიუმე
       session1_summary_header: I მოსმენის კენჭისყრის რეზიუმე
-    member:
+    members_index:
+      title: პარლამენტის წევრები
+    members_show:
       title: "პარლამენტის წევრი: %{name}"
   notifications:
     index:

@@ -3,7 +3,10 @@ class RootController < ApplicationController
   def index
   end
 
-  def law
+  def laws_index
+  end
+
+  def laws_show
     @agenda = Agenda.public_laws.find_by_public_url_id(params[:id])
     if @agenda.present?
 		  respond_to do |format|
@@ -19,7 +22,10 @@ class RootController < ApplicationController
     end
   end
 
-  def member
+  def members_index
+  end
+
+  def members_show
     @member = AllDelegate.find_by_id(params[:id])
 
     if @member.present?

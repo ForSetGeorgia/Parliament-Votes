@@ -1,0 +1,17 @@
+<%- model_class_ad = AllDelegate -%>
+
+<% title t('.title') %>
+
+
+<table id="members_datatable" class="display table table-striped table-bordered" 
+      data-source="<%= search_members_url(:format => :json) %>">
+  <thead>
+    <tr>
+      <th><%= model_class_ad.human_attribute_name(:first_name) %></th>
+      <th><%= model_class_ad.human_attribute_name(:vote_count) %></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
