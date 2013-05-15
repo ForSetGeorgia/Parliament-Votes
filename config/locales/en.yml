@@ -293,6 +293,8 @@ en:
       title: Voting Records Database
     laws_index:
       title: Passed Laws
+      start_date: Start Date
+      end_date: End Date
     laws_show:
       title: "Law: %{name} (%{date})"
       by_one_session_summary_header: Vote Summary

@@ -1,6 +1,12 @@
 $(document).ready(function(){
 
 	if(gon.passed_laws_filter){
+    var locale = I18n.currentLocale();
+    if (locale == "en"){
+      locale = "";
+    }
+    $.datepicker.setDefaults( $.datepicker.regional[ locale ] );
+
 		// load the date pickers
 		$('#start_date').datepicker({
 				dateFormat: 'yy-mm-dd', 
