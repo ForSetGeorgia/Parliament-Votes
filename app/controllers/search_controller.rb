@@ -2,7 +2,7 @@ class SearchController < ApplicationController
   
   def passed_laws
     respond_to do |format|
-      format.json { render json: PassedLawsDatatable.new(view_context, params[:parliament]) }
+      format.json { render json: PassedLawsDatatable.new(view_context, params[:parliament], params[:start_date], params[:end_date]) }
     end
   end
 

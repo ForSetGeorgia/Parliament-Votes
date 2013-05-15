@@ -2,16 +2,20 @@ class PassedLawsDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :parliament, to: :@parliament
+  delegate :start_date, to: :@start_date
+  delegate :end_date, to: :@end_date
 
-  def initialize(view, parliament)
+  def initialize(view, parliament, start_date, end_date)
     @view = view
     @parliament = parliament.class == String ? parliament.split(",") : parliament
+    @start_date = start_date
+    @end_date = end_date
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Agenda.includes(:conference).public_laws.with_parliament(@parliament).count,
+      iTotalRecords: Agenda.public_laws.with_parliament(@parliament, @start_date, @end_date).count,
       iTotalDisplayRecords: agendas.total_entries,
       aaData: data
     }
@@ -39,7 +43,7 @@ private
   end
 
   def fetch_agendas
-    agendas = Agenda.includes(:conference).public_laws.with_parliament(@parliament).order("#{sort_column} #{sort_direction}")
+    agendas = Agenda.public_laws.with_parliament(@parliament, @start_date, @end_date).order("#{sort_column} #{sort_direction}")
     agendas = agendas.page(page).per_page(per_page)
     if params[:sSearch].present?
       agendas = agendas.where("agendas.official_law_title like :search or agendas.name like :search or agendas.law_description like :search", search: "%#{params[:sSearch]}%")

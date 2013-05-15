@@ -5,14 +5,21 @@
 
 <% title t('.title') %>
 
-<div id="parliament_options">
-<label><%= model_class_ad.human_attribute_name(:parliament_id) %>:</label>
-<% @parliaments.each_with_index do |p, index| %>
-  <label for="<%= p.id%>" class="checkbox inline">
-    <%= check_box_tag 'law_parliament_options_checkbox', p.id, index == 0 ? true : false, :id => p.id%>
-    <%= p.name_formatted %>
-  </label>
-<% end %>
+<div class="row-fluid">
+  <div id="parliament_options" class="span7">
+    <label><%= model_class_ad.human_attribute_name(:parliament_id) %>:</label>
+    <% @parliaments.each_with_index do |p, index| %>
+      <label for="<%= p.id%>" class="checkbox inline">
+        <%= check_box_tag 'law_parliament_options_checkbox', p.id, index == 0 ? true : false, :id => p.id%>
+        <%= p.name_formatted %>
+      </label>
+    <% end %>
+  </div>
+  <div id="date_options" class="span5">
+    <label><%= model_class_c.human_attribute_name(:start_date_final) %>:</label>
+		<%= text_field_tag 'start_date', nil, :class => 'input-small', :placeholder => 'start date' %>
+		<%= text_field_tag 'end_date', nil, :class => 'input-small', :placeholder => 'end date' %>
+  </div>
 </div>
 
 <table id="passed_laws_datatable" class="display table table-striped table-bordered" 

@@ -1,6 +1,7 @@
 var agenda_laws_only = true;
 var agenda_dt;
 var laws_dt;
+var passed_laws_dt;
 
 function register_fancybox_live_click(){
   $(function(){ 
@@ -193,7 +194,7 @@ $(document).ready(function(){
   });
 
 
-  var passed_laws_dt = $('#passed_laws_datatable').dataTable({
+  passed_laws_dt = $('#passed_laws_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
@@ -210,13 +211,24 @@ $(document).ready(function(){
     "iDisplayLength": 10,
     "aaSorting": [[0, 'desc']],
     "fnServerParams": function ( aoData ) {
-      aoData.push( { name: "parliament", value: get_law_parliament_options} );
+      aoData.push( { name: "parliament", value: get_law_parliament_options} ),
+      aoData.push( { name: "start_date", value: $('#start_date').val()} ),
+      aoData.push( { name: "end_date", value: $('#end_date').val()} )
     }
   });
 
   // when options change, update datatable
   $('input[name="law_parliament_options_checkbox"]').click(function(){
+console.log('parl options click');
     passed_laws_dt.fnDraw();
+  });
+  $('input[name="start_date"]').change(function(){
+console.log('start date change');
+//    passed_laws_dt.fnDraw();
+  });
+  $('input[name="end_date"]').change(function(){
+console.log('end date change');
+//    passed_laws_dt.fnDraw();
   });
 
   var member_dt = $('#members_datatable').dataTable({

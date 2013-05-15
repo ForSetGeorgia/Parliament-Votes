@@ -4,6 +4,7 @@ class RootController < ApplicationController
   end
 
   def laws_index
+    gon.passed_laws_filter = true
   end
 
   def laws_show
