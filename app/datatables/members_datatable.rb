@@ -6,7 +6,6 @@ class MembersDatatable
   def initialize(view, parliament)
     @view = view
     @parliament = parliament.class == String ? parliament.split(",") : parliament
-Rails.logger.debug("///////////////////// parliament = #{@parliament}")
   end
 
   def as_json(options = {})

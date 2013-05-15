@@ -24,9 +24,17 @@ function register_fancybox_live_click(){
 }
 
 
-function get_parliament_options(){
+function get_law_parliament_options(){
   x = [];
-  $('input[name="parliament_options_checkbox"]:checked').each(function(){
+  $('input[name="law_parliament_options_checkbox"]:checked').each(function(){
+    x.push($(this).val());
+  });
+  return x;
+}
+
+function get_member_parliament_options(){
+  x = [];
+  $('input[name="member_parliament_options_checkbox"]:checked').each(function(){
     x.push($(this).val());
   });
   return x;
@@ -185,7 +193,7 @@ $(document).ready(function(){
   });
 
 
-  $('#passed_laws_datatable').dataTable({
+  var passed_laws_dt = $('#passed_laws_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
@@ -194,13 +202,21 @@ $(document).ready(function(){
     "bDestroy": true,
     "bAutoWidth": false,
     "bStateSave": true,
-    "aoColumns": [{"sWidth":"100px"},null,null,null,null,null],
+    "aoColumns": [{"sWidth":"100px"},null,null,null,null,null,null],
     "sAjaxSource": $('#passed_laws_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 10,
-    "aaSorting": [[0, 'desc']]
+    "aaSorting": [[0, 'desc']],
+    "fnServerParams": function ( aoData ) {
+      aoData.push( { name: "parliament", value: get_law_parliament_options} );
+    }
+  });
+
+  // when options change, update datatable
+  $('input[name="law_parliament_options_checkbox"]').click(function(){
+    passed_laws_dt.fnDraw();
   });
 
   var member_dt = $('#members_datatable').dataTable({
@@ -218,12 +234,12 @@ $(document).ready(function(){
     },
     "iDisplayLength": 10,
     "fnServerParams": function ( aoData ) {
-      aoData.push( { name: "parliament", value: get_parliament_options} );
+      aoData.push( { name: "parliament", value: get_member_parliament_options} );
     }
   });
 
   // when options change, update datatable
-  $('input[name="parliament_options_checkbox"]').click(function(){
+  $('input[name="member_parliament_options_checkbox"]').click(function(){
     member_dt.fnDraw();
   });
 

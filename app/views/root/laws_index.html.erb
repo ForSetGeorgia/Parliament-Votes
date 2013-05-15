@@ -1,8 +1,19 @@
 <%- model_class_vs = VotingSession -%>
 <%- model_class_c = Conference -%>
 <%- model_class_a = Agenda -%>
+<%- model_class_ad = AllDelegate -%>
 
 <% title t('.title') %>
+
+<div id="parliament_options">
+<label><%= model_class_ad.human_attribute_name(:parliament_id) %>:</label>
+<% @parliaments.each_with_index do |p, index| %>
+  <label for="<%= p.id%>" class="checkbox inline">
+    <%= check_box_tag 'law_parliament_options_checkbox', p.id, index == 0 ? true : false, :id => p.id%>
+    <%= p.name_formatted %>
+  </label>
+<% end %>
+</div>
 
 <table id="passed_laws_datatable" class="display table table-striped table-bordered" 
       data-source="<%= search_passed_laws_url(:format => :json) %>">
@@ -10,6 +21,7 @@
     <tr>
       <th><%= model_class_c.human_attribute_name(:start_date_final) %></th>
       <th><%= model_class_a.human_attribute_name(:official_law_title) %></th>
+      <th><%= model_class_a.human_attribute_name(:parliament_id) %></th>
       <th><%= model_class_vs.human_attribute_name(:result1) %></th>
       <th><%= model_class_vs.human_attribute_name(:result3) %></th>
       <th><%= model_class_vs.human_attribute_name(:result0) %></th>
@@ -18,7 +30,7 @@
   </thead>
   <tfoot>
     <tr>
-      <td colspan="6">
+      <td colspan="7">
         <%= t('helpers.links.not_present2_footnote') %>
       </td>
     </tr>

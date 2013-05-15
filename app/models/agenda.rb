@@ -70,6 +70,14 @@ class Agenda < ActiveRecord::Base
     .where('voting_sessions.passed = 1 and (agendas.session_number in (?) or agendas.parliament_id = 2)', ["#{FINAL_VERSION[0]} #{CONSISTENT_SESSION_NAME[0]}", "#{FINAL_VERSION[1]} #{CONSISTENT_SESSION_NAME[1]}"])
   end
 
+  def self.with_parliament(ids=nil)
+    x = includes(:parliament => :parliament_translations)
+    if ids.present? && ids.class == Array
+      x = x.where(:parliament_id => ids)      
+    end
+    return x
+  end
+
   # in order for a law to be public, the following must be true
   # - is law
   # - passed vote
