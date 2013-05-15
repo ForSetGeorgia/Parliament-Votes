@@ -215,6 +215,7 @@ en:
       sign_in: Sign In
       js_link_title: "Visit JumpStart Georgia's website"
       js_link_text: Built by
+      disclaimer: "This project was made possible by the generous support of the American people through the United States Agency for International Development (USAID) and with the funding from National Democratic Institute for International Affairs (NDI). The contents of this website do not necessarily reflect the views of NDI, USAID or the United States Government."
     unsupported_browser:
       title: Unsupported Browser
       p1: We are sorry to report that your browser is out of date and will not properly render the content from this website.
