@@ -2,34 +2,41 @@ var agenda_laws_only = true;
 var agenda_dt;
 var laws_dt;
 
-  function register_fancybox_live_click(){
-    $(function(){ 
-      $("a.fancybox_live").live("click", function() {
-        console.log('fancybox live click event');
+function register_fancybox_live_click(){
+  $(function(){ 
+    $("a.fancybox_live").live("click", function() {
+      console.log('fancybox live click event');
 
-        $(this).filter(':not(.fb_on)').fancybox({
-          transitionIn: 'elastic',
-          transitionOut: 'elastic',
-          width: 400,
-          onComplete: function ()
-          {
-            focus_fancybox_input();
-          }
-        }).addClass('fb_on');
+      $(this).filter(':not(.fb_on)').fancybox({
+        transitionIn: 'elastic',
+        transitionOut: 'elastic',
+        width: 400,
+        onComplete: function ()
+        {
+          focus_fancybox_input();
+        }
+      }).addClass('fb_on');
 
-        $(this).triggerHandler('click');
-        return false;
-      });
-    }); 
-  }
+      $(this).triggerHandler('click');
+      return false;
+    });
+  }); 
+}
 
+
+function get_parliament_options(){
+  x = [];
+  $('input[name="parliament_options_checkbox"]:checked').each(function(){
+    x.push($(this).val());
+  });
+  return x;
+}
 
 $(document).ready(function(){
   var value = getParameterByName('laws_only');
   if (value == "false"){
     agenda_laws_only = false;
   }
-
 
   $.extend( $.fn.dataTableExt.oStdClasses, {
       "sWrapper": "dataTables_wrapper form-inline"
@@ -196,7 +203,7 @@ $(document).ready(function(){
     "aaSorting": [[0, 'desc']]
   });
 
-  $('#members_datatable').dataTable({
+  var member_dt = $('#members_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
@@ -209,7 +216,15 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 10
+    "iDisplayLength": 10,
+    "fnServerParams": function ( aoData ) {
+      aoData.push( { name: "parliament", value: get_parliament_options} );
+    }
+  });
+
+  // when options change, update datatable
+  $('input[name="parliament_options_checkbox"]').click(function(){
+    member_dt.fnDraw();
   });
 
   $('#voting_results_public_datatable').dataTable({

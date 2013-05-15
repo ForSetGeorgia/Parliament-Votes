@@ -10,8 +10,12 @@ class AllDelegate < ActiveRecord::Base
 
   attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote
 
-  def self.with_parliament
-    includes(:parliament => :parliament_translations)
+  def self.with_parliament(ids=nil)
+    x = includes(:parliament => :parliament_translations)
+    if ids.present? && ids.class == Array
+      x = x.where(:parliament_id => ids)      
+    end
+    return x
   end
 
   def session3_present_formatted

@@ -1,22 +1,25 @@
 class MembersDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
+  delegate :parliament, to: :@parliament
 
-  def initialize(view)
+  def initialize(view, parliament)
     @view = view
+    @parliament = parliament.class == String ? parliament.split(",") : parliament
+Rails.logger.debug("///////////////////// parliament = #{@parliament}")
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: AllDelegate.with_parliament.count,
+      iTotalRecords: AllDelegate.with_parliament(@parliament).count,
       iTotalDisplayRecords: members.total_entries,
       aaData: data
     }
   end
 
 private
-
+  
   def data
     members.map do |member|
       [
@@ -36,7 +39,7 @@ private
   end
 
   def fetch_members
-    members = AllDelegate.with_parliament.order("#{sort_column} #{sort_direction}")
+    members = AllDelegate.with_parliament(@parliament).order("#{sort_column} #{sort_direction}")
     members = members.page(page).per_page(per_page)
     if params[:sSearch].present?
       members = members.where("all_delegates.first_name like :search", search: "%#{params[:sSearch]}%")

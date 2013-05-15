@@ -2,6 +2,16 @@
 
 <% title t('.title') %>
 
+<div id="parliament_options">
+<label><%= model_class_ad.human_attribute_name(:parliament_id) %>:</label>
+<% @parliaments.each_with_index do |p, index| %>
+  <label for="<%= p.id%>" class="checkbox inline">
+    <%= check_box_tag 'parliament_options_checkbox', p.id, index == 0 ? true : false, :id => p.id%>
+    <%# check_box_tag 'parliament_options_checkbox', p.id, true, :id => p.id%>
+    <%= p.name_formatted %>
+  </label>
+<% end %>
+</div>
 
 <table id="members_datatable" class="display table table-striped table-bordered" 
       data-source="<%= search_members_url(:format => :json) %>">
