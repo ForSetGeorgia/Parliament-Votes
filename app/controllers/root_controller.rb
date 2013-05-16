@@ -1,10 +1,21 @@
 class RootController < ApplicationController
 
   def index
+    if request.post?
+      if params[:law_title].present?
+        redirect_to laws_path(:q => params[:law_title], 
+          :parliament => params[:parliament].present? && params[:parliament].class == Array ? params[:parliament].join(",") : nil)
+      elsif params[:member_name].present?
+        redirect_to members_path(:q => params[:member_name], 
+          :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil)
+      end
+    end
   end
 
   def laws_index
     gon.passed_laws_filter = true
+    gon.initial_search = params[:q]
+    @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
   end
 
   def laws_show
@@ -24,6 +35,8 @@ class RootController < ApplicationController
   end
 
   def members_index
+    gon.initial_search = params[:q]
+    @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
   end
 
   def members_show

@@ -33,7 +33,7 @@ class AddOldRecords < ActiveRecord::Migration
 
       # get parl members
       puts 'getting parl members'
-      sql = "SELECT cevri_id, concat(name, ' ', lastname) as name, fraqcia_id FROM `parl.ge`.`parl_cevrebi` "
+      sql = "SELECT cevri_id, concat(lastname, ' ', name) as name, fraqcia_id FROM `parl.ge`.`parl_cevrebi` "
       sql << "where mocveva_id = 6 and lang='geo'"
       members = connection.execute(sql)
 

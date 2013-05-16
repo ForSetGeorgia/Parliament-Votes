@@ -54,6 +54,7 @@ ka:
         session_number1_id: I სესია
         session_number2_id: II სესია
         is_public: არის კანონი საჯარო?
+        public_law_title: კანონის სათაური
       voting_session:
         passed: გავიდა
         passed_yn: გავიდა (დიახ / არა / არ მიუცია)
@@ -83,6 +84,7 @@ ka:
         name_hint: "(მაგ., 'მე-8 მოწვევის პარლამენტი')"
       all_delegate:
         first_name: სახელი
+        public_first_name: პარლამენტის წევრი
         parliament_id: პარლამენტი
         vote_count: "# ხმები"
         yes_count: "# დადებითი ხმა"
@@ -290,7 +292,8 @@ ka:
       all_header: ყველა ჩანაწერი  
   root:
     index:
-      title: კენჭისყრის ჩანაწერების მონაცემთა ბაზა
+      title: კენჭისყრის შედეგები
+      search: ძიება
     laws_index:
       title: გასული კანონები
       start_date: დაწყების თარიღი

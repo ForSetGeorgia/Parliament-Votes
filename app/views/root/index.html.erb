@@ -1,3 +1,51 @@
-&lt;search&gt;
+<%- model_class_a = Agenda -%>
+<%- model_class_ad = AllDelegate -%>
+
+<% title t('.title') %>
+
+<div id="home_search" class="row-fluid">
+  <div class="span3"></div>
+  <div class="span7">
+    <%= form_tag(root_path, :method => :post, :class => 'form-horizontal formtastic') do %>
+
+      <div class="string control-group optional stringish" id="law_title_input">
+        <label class=" control-label" for="law_title">
+          <%= model_class_a.human_attribute_name(:public_law_title) %>
+        </label>
+        <div class="controls">
+          <input id="law_title" name="law_title" type="text"/>
+        </div>
+      </div>
+
+      <div class="string control-group optional stringish" id="member_name_input">
+        <label class=" control-label" for="member_name">
+          <%= model_class_ad.human_attribute_name(:public_first_name) %>
+        </label>
+        <div class="controls">
+          <input id="member_name" name="member_name" type="text"/>
+        </div>
+      </div>
+
+
+      <div class="check_boxes control-group optional" id="parliament_input">
+        <label class=" control-label"><%= model_class_ad.human_attribute_name(:parliament_id) %></label>
+        <div class="choices controls">
+          <% @parliaments.each_with_index do |p, index| %>
+            <label class="choice checkbox" for="parliament_<%= p.id%>">
+              <%= check_box_tag 'parliament[]', p.id, index == 0 ? true : false, :id => "parliament_#{p.id}", :'data-start' => p.start_year, :'data-end' => p.end_year %>
+              <%= p.name_formatted %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div id="submit_button" class="controls">
+        <input class="btn btn-primary" name="commit" type="submit" value="<%= t('.search' )%>">
+      </div>
+      
+    <% end %>
+  </div>
+  <div class="span2"></div>
+</div>
 
 

@@ -54,6 +54,7 @@ en:
         session_number1_id: Session I
         session_number2_id: Session II
         is_public: Is Law Public?
+        public_law_title: Law Title
       voting_session:
         passed: Passed
         passed_yn: Passed (Y/N/Abs)
@@ -83,6 +84,7 @@ en:
         name_hint: "(e.g., 'The 8th Parliament')"
       all_delegate:
         first_name: Name
+        public_first_name: Member of Parliament
         parliament_id: Parliament
         vote_count: "# Votes"
         yes_count: "# Yes Votes"
@@ -290,7 +292,8 @@ en:
       all_header: All Records
   root:
     index:
-      title: Voting Records Database
+      title: Search Voting Records
+      search: Search
     laws_index:
       title: Passed Laws
       start_date: Start Date

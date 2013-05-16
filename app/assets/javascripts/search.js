@@ -202,7 +202,7 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
-    "bStateSave": true,
+    "bStateSave": false,
     "aoColumns": [{"sWidth":"100px"},null,null,null,null,null,null],
     "sAjaxSource": $('#passed_laws_datatable').data('source'),
     "oLanguage": {
@@ -210,6 +210,7 @@ $(document).ready(function(){
     },
     "iDisplayLength": 10,
     "aaSorting": [[0, 'desc']],
+    "oSearch": {"sSearch": gon.initial_search},
     "fnServerParams": function ( aoData ) {
       aoData.push( { name: "parliament", value: get_law_parliament_options} ),
       aoData.push( { name: "start_date", value: $('#start_date').val()} ),
@@ -230,12 +231,13 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
-    "bStateSave": true,
+    "bStateSave": false,
     "sAjaxSource": $('#members_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 10,
+    "oSearch": {"sSearch": gon.initial_search},
     "fnServerParams": function ( aoData ) {
       aoData.push( { name: "parliament", value: get_member_parliament_options} );
     }
