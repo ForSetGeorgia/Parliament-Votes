@@ -18,7 +18,7 @@ class RootController < ApplicationController
 
   def laws_index
     gon.passed_laws_filter = true
-    gon.initial_search = params[:q]
+    gon.initial_search = params[:q].present? ? params[:q] : ""
     @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
   end
 
@@ -39,13 +39,13 @@ class RootController < ApplicationController
   end
 
   def members_index
-    gon.initial_search = params[:q]
+    gon.initial_search = params[:q].present? ? params[:q] : ""
     @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
   end
 
   def members_show
     @member = AllDelegate.find_by_id(params[:id])
-    gon.initial_search = params[:q]
+    gon.initial_search = params[:q].present? ? params[:q] : ""
 
     if @member.present?
 		  respond_to do |format|
