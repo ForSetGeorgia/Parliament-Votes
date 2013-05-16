@@ -2,6 +2,8 @@ var agenda_laws_only = true;
 var agenda_dt;
 var laws_dt;
 var passed_laws_dt;
+var member_dt;
+var member_votes_dt;
 
 function register_fancybox_live_click(){
   $(function(){ 
@@ -223,7 +225,7 @@ $(document).ready(function(){
     passed_laws_dt.fnDraw();
   });
 
-  var member_dt = $('#members_datatable').dataTable({
+  member_dt = $('#members_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
@@ -273,7 +275,7 @@ $(document).ready(function(){
     }
   });
 
-  $('#member_votes_datatable').dataTable({
+  member_votes_dt = $('#member_votes_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
@@ -296,6 +298,10 @@ $(document).ready(function(){
        .addClass("table_cell_no");
       $("#member_votes_datatable td").filter(function() { return $.text([this]) == gon.table_cell_abstain; })
        .addClass("table_cell_abstain");
+    },
+    "fnServerParams": function ( aoData ) {
+      aoData.push( { name: "start_date", value: $('#start_date').val()} ),
+      aoData.push( { name: "end_date", value: $('#end_date').val()} )
     }
   });
 

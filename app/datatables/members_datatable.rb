@@ -3,11 +3,15 @@ class MembersDatatable
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :parliament, to: :@parliament
   delegate :law_title, to: :@law_title
+  delegate :start_date, to: :@start_date
+  delegate :end_date, to: :@end_date
 
-  def initialize(view, parliament, law_title=nil)
+  def initialize(view, parliament, law_title, start_date, end_date)
     @view = view
     @parliament = parliament.class == String ? parliament.split(",") : parliament
     @law_title = law_title
+    @start_date = start_date
+    @end_date = end_date
   end
 
   def as_json(options = {})
@@ -24,7 +28,7 @@ private
   def data
     members.map do |member|
       [
-        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale, :q => @law_title)),
+        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale, :q => @law_title, :start_date => @start_date, :end_date => @end_date)),
         member.parliament.name_formatted,
         member.vote_count,
         member.yes_count,

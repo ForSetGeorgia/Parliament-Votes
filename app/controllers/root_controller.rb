@@ -1,23 +1,28 @@
 class RootController < ApplicationController
 
   def index
+    gon.datatable_date_filter = true
     if request.post?
       if params[:law_title].present? && params[:member_name].present?
         redirect_to members_path(:q => params[:member_name], 
           :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil,
-          :law_title => params[:law_title])
+          :law_title => params[:law_title], 
+          :start_date => params[:start_date].present? ? params[:start_date] : nil, 
+          :end_date => params[:end_date].present? ? params[:end_date] : nil)
       elsif params[:law_title].present?
         redirect_to laws_path(:q => params[:law_title], 
           :parliament => params[:parliament].present? && params[:parliament].class == Array ? params[:parliament].join(",") : nil)
       elsif params[:member_name].present?
         redirect_to members_path(:q => params[:member_name], 
-          :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil)
+          :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil, 
+          :start_date => params[:start_date].present? ? params[:start_date] : nil, 
+          :end_date => params[:end_date].present? ? params[:end_date] : nil)
       end
     end
   end
 
   def laws_index
-    gon.passed_laws_filter = true
+    gon.datatable_date_filter = true
     gon.initial_search = params[:q].present? ? params[:q] : ""
     @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
   end
@@ -46,6 +51,7 @@ class RootController < ApplicationController
   def members_show
     @member = AllDelegate.find_by_id(params[:id])
     gon.initial_search = params[:q].present? ? params[:q] : ""
+    gon.datatable_date_filter = true
 
     if @member.present?
 		  respond_to do |format|

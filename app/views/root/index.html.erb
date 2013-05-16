@@ -1,5 +1,6 @@
 <%- model_class_a = Agenda -%>
 <%- model_class_ad = AllDelegate -%>
+<%- model_class_c = Conference -%>
 
 <% title t('.title') %>
 
@@ -36,6 +37,15 @@
               <%= p.name_formatted %>
             </label>
           <% end %>
+        </div>
+      </div>
+
+
+      <div class="check_boxes control-group optional" id="parliament_input">
+        <label class=" control-label"><%= model_class_c.human_attribute_name(:start_date_final) %></label>
+        <div class="choices controls">
+		      <%= text_field_tag 'start_date', nil, :class => 'input-small', :placeholder => t('app.common.start_date') %>
+		      <%= text_field_tag 'end_date', nil, :class => 'input-small', :placeholder => t('app.common.end_date') %>
         </div>
       </div>
 

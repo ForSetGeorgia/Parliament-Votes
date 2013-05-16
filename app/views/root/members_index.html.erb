@@ -2,9 +2,9 @@
 
 <% title t('.title') %>
 
-<% if params[:law_title].present? %>
+<% if params[:law_title].present? || params[:start_date].present? || params[:end_date].present? %>
   <div id="double_search">
-    <%= t('.double_search', :law_title => params[:law_title]) %>
+    <%= t('.double_search') %>
   </div>
 <% end %>
 
@@ -24,7 +24,7 @@
 </div>
 
 <table id="members_datatable" class="display table table-striped table-bordered" 
-      data-source="<%= search_members_url(:format => :json, :law_title => params[:law_title]) %>">
+      data-source="<%= search_members_url(:format => :json, :law_title => params[:law_title], :start_date => params[:start_date], :end_date => params[:end_date]) %>">
   <thead>
     <tr>
       <th><%= model_class_ad.human_attribute_name(:first_name) %></th>

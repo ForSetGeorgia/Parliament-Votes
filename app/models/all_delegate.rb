@@ -116,12 +116,22 @@ class AllDelegate < ActiveRecord::Base
     end
   end
 
-  def self.passed_laws_voting_history(xml_id)
+  def self.passed_laws_voting_history(xml_id, start_date=nil, end_date=nil)
+    x = nil
     if xml_id.present?
-      Agenda.includes(:conference => :delegates, :voting_session => :voting_results)
+      x = Agenda.includes(:conference => :delegates, :voting_session => :voting_results)
         .public_laws
         .where('delegates.id = voting_results.delegate_id and delegates.xml_id = ?', xml_id)
+
+      if start_date.present?
+        x = x.where('conferences.start_date >= ?', start_date)
+      end
+      if end_date.present?
+        x = x.where('conferences.start_date <= ?', end_date)
+      end
     end
+
+    return x
   end
 
   def self.votes_for_passed_law(agenda_public_url_id, get_all_3_sessions="true", search=nil, sort_col=nil, sort_dir=nil, limit=nil, offset=nil)

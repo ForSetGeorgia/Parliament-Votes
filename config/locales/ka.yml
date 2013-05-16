@@ -185,6 +185,8 @@ ka:
       edited: რედაქტირებულია
       manually_added: ხელით დამატებული 
       made_public_on: "გახდა საჯარო: %{date}"
+      start_date: დაწყების თარიღი
+      end_date: დასრულების თარიღი
     msgs:
       does_not_exist: თქვენ ცდილობთ იხილოთ გვერდი, რომელიც არ არსებობს.
       not_authorized: თქვენ არ გაქვთ უფლება იხილოთ ეს გვერდი.
@@ -296,8 +298,6 @@ ka:
       search: ძიება
     laws_index:
       title: გასული კანონები
-      start_date: დაწყების თარიღი
-      end_date: დასრულების თარიღი
     laws_show:
       title: "კანონი: %{name} (%{date})"
       by_one_session_summary_header: კენჭისყრის რეზიუმე
@@ -306,7 +306,7 @@ ka:
       session1_summary_header: I მოსმენის კენჭისყრის რეზიუმე
     members_index:
       title: პარლამენტის წევრები
-      double_search: "თქვენ მიერ '%{law_title}' კანონის ძიება გაგრძელდება მას შედეგ, რაც აირჩევთ პარლამენტის წევრს ქვემოთ."
+      double_search: "ძიება გაგრძელდება მას შემდეგ, რაც ქვემოთ ირჩევთ პარლამენტის წევრს."
     members_show:
       title: "პარლამენტის წევრი: %{name}"
   notifications:

@@ -8,7 +8,7 @@ class SearchController < ApplicationController
 
   def members
     respond_to do |format|
-      format.json { render json: MembersDatatable.new(view_context, params[:parliament], params[:law_title]) }
+      format.json { render json: MembersDatatable.new(view_context, params[:parliament], params[:law_title], params[:start_date], params[:end_date]) }
     end
   end
 
@@ -20,7 +20,7 @@ class SearchController < ApplicationController
 
   def member_votes
     respond_to do |format|
-      format.json { render json: MemberVotesDatatable.new(view_context, params[:id]) }
+      format.json { render json: MemberVotesDatatable.new(view_context, params[:id], params[:start_date], params[:end_date]) }
     end
   end
 

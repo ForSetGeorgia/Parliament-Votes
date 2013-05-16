@@ -185,6 +185,8 @@ en:
       edited: Edited  
       manually_added: Manually Added
       made_public_on: "Made Public On: %{date}"
+      start_date: Start Date
+      end_date: End Date
     msgs:
       does_not_exist: You tried to access a page that does not exist.
       not_authorized: You are not authorized to view that page.
@@ -296,8 +298,6 @@ en:
       search: Search
     laws_index:
       title: Passed Laws
-      start_date: Start Date
-      end_date: End Date
     laws_show:
       title: "Law: %{name} (%{date})"
       by_one_session_summary_header: Vote Summary
@@ -306,7 +306,7 @@ en:
       session1_summary_header: Session I Vote Summary
     members_index:
       title: Parliament Members
-      double_search: Your search for the law '%{law_title}' will continue after you select the Parliament Member below.
+      double_search: Your search will continue after you select the Parliament Member below.
     members_show:
       title: "Parliament Member: %{name}"
   notifications:
