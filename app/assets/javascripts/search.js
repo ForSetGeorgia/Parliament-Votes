@@ -219,16 +219,7 @@ $(document).ready(function(){
 
   // when options change, update datatable
   $('input[name="law_parliament_options_checkbox"]').click(function(){
-console.log('parl options click');
     passed_laws_dt.fnDraw();
-  });
-  $('input[name="start_date"]').change(function(){
-console.log('start date change');
-//    passed_laws_dt.fnDraw();
-  });
-  $('input[name="end_date"]').change(function(){
-console.log('end date change');
-//    passed_laws_dt.fnDraw();
   });
 
   var member_dt = $('#members_datatable').dataTable({

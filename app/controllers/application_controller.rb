@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
 	before_filter :set_locale
-	before_filter :initialize_gon
 	before_filter :preload_global_variables
+	before_filter :initialize_gon
 	before_filter :store_location
 
 	layout :layout_by_resource
@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     { :locale => I18n.locale }
   end
 
+	def preload_global_variables
+    @parliaments = Parliament.sorted_start_year
+	end
+
 	def initialize_gon
 		gon.set = true
 
@@ -52,10 +56,14 @@ class ApplicationController < ActionController::Base
     gon.table_cell_yes = I18n.t('helpers.boolean.y')
     gon.table_cell_no = I18n.t('helpers.boolean.n')
     gon.table_cell_abstain = I18n.t('helpers.boolean.abstain')
-	end
 
-	def preload_global_variables
-    @parliaments = Parliament.sorted_start_year
+    if @parliaments.present?
+      gon.parl_start_year = @parliaments.first.start_year.to_s
+      gon.parl_end_year = @parliaments.first.end_year > Time.now.year ? Time.now.year.to_s : @parliaments.first.end_year.to_s
+    else
+      gon.parl_start_year = "2010"
+      gon.parl_end_year = Time.now.year.to_s
+    end
 	end
 
 	# after user logs in, go to admin page

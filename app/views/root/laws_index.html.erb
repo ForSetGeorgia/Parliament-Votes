@@ -10,7 +10,7 @@
     <label><%= model_class_ad.human_attribute_name(:parliament_id) %>:</label>
     <% @parliaments.each_with_index do |p, index| %>
       <label for="<%= p.id%>" class="checkbox inline">
-        <%= check_box_tag 'law_parliament_options_checkbox', p.id, index == 0 ? true : false, :id => p.id%>
+        <%= check_box_tag 'law_parliament_options_checkbox', p.id, index == 0 ? true : false, :id => p.id, :'data-start' => p.start_year, :'data-end' => p.end_year %>
         <%= p.name_formatted %>
       </label>
     <% end %>
