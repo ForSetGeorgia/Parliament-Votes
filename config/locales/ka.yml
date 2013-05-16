@@ -293,8 +293,8 @@ ka:
       title: კენჭისყრის ჩანაწერების მონაცემთა ბაზა
     laws_index:
       title: გასული კანონები
-      start_date: Start Date
-      end_date: End Date
+      start_date: დაწყების თარიღი
+      end_date: დასრულების თარიღი
     laws_show:
       title: "კანონი: %{name} (%{date})"
       by_one_session_summary_header: კენჭისყრის რეზიუმე
