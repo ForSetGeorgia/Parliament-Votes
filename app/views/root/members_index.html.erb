@@ -2,6 +2,12 @@
 
 <% title t('.title') %>
 
+<% if params[:law_title].present? %>
+  <div id="double_search">
+    <%= t('.double_search', :law_title => params[:law_title]) %>
+  </div>
+<% end %>
+
 <div id="parliament_options">
 <label><%= model_class_ad.human_attribute_name(:parliament_id) %>:</label>
 <% @parliaments.each_with_index do |p, index| %>
@@ -18,7 +24,7 @@
 </div>
 
 <table id="members_datatable" class="display table table-striped table-bordered" 
-      data-source="<%= search_members_url(:format => :json) %>">
+      data-source="<%= search_members_url(:format => :json, :law_title => params[:law_title]) %>">
   <thead>
     <tr>
       <th><%= model_class_ad.human_attribute_name(:first_name) %></th>

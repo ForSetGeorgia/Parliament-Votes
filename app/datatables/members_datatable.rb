@@ -2,10 +2,12 @@ class MembersDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
   delegate :parliament, to: :@parliament
+  delegate :law_title, to: :@law_title
 
-  def initialize(view, parliament)
+  def initialize(view, parliament, law_title=nil)
     @view = view
     @parliament = parliament.class == String ? parliament.split(",") : parliament
+    @law_title = law_title
   end
 
   def as_json(options = {})
@@ -22,7 +24,7 @@ private
   def data
     members.map do |member|
       [
-        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale)),
+        link_to(member.first_name, member_path(:id => member.id, :locale => I18n.locale, :q => @law_title)),
         member.parliament.name_formatted,
         member.vote_count,
         member.yes_count,

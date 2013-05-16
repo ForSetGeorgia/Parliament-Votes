@@ -306,6 +306,7 @@ en:
       session1_summary_header: Session I Vote Summary
     members_index:
       title: Parliament Members
+      double_search: Your search for the law '%{law_title}' will continue after you select the Parliament Member below.
     members_show:
       title: "Parliament Member: %{name}"
   notifications:

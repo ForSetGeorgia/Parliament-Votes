@@ -281,13 +281,14 @@ $(document).ready(function(){
     "bServerSide": true,
     "bDestroy": true,
     "bAutoWidth": false,
-    "bStateSave": true,
+    "bStateSave": false,
     "sAjaxSource": $('#member_votes_datatable').data('source'),
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
     "iDisplayLength": 25,
     "aaSorting": [[0, 'desc']],
+    "oSearch": {"sSearch": gon.initial_search},
     "fnDrawCallback": function () {
       $("#member_votes_datatable td").filter(function() { return $.text([this]) == gon.table_cell_yes; })
        .addClass("table_cell_yes");

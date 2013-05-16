@@ -2,7 +2,11 @@ class RootController < ApplicationController
 
   def index
     if request.post?
-      if params[:law_title].present?
+      if params[:law_title].present? && params[:member_name].present?
+        redirect_to members_path(:q => params[:member_name], 
+          :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil,
+          :law_title => params[:law_title])
+      elsif params[:law_title].present?
         redirect_to laws_path(:q => params[:law_title], 
           :parliament => params[:parliament].present? && params[:parliament].class == Array ? params[:parliament].join(",") : nil)
       elsif params[:member_name].present?
@@ -41,6 +45,7 @@ class RootController < ApplicationController
 
   def members_show
     @member = AllDelegate.find_by_id(params[:id])
+    gon.initial_search = params[:q]
 
     if @member.present?
 		  respond_to do |format|

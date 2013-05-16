@@ -8,7 +8,7 @@ class SearchController < ApplicationController
 
   def members
     respond_to do |format|
-      format.json { render json: MembersDatatable.new(view_context, params[:parliament]) }
+      format.json { render json: MembersDatatable.new(view_context, params[:parliament], params[:law_title]) }
     end
   end
 
