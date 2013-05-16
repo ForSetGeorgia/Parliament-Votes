@@ -145,7 +145,7 @@ ka:
       assign_session: დამატება
       not_present: არ ესწრებოდა
       not_present2: არ მიუცია / არ ესწრებოდა*
-      not_present2_footnote: "* - The voting system does not allow a person to record Abstain so it is possible that they were present, wanted to vote Abstain, but could not."
+      not_present2_footnote: "* - კენჭისყრის სისტემა არ აძლევს ადამიანს საშუალებას, დააფიქსიროს ხმის მიცემისგან „თავის შეკავება“, ამიტომ შესაძლებელია, ის ესწრებოდა სხდომას, უნდოდა ხმის მიცემისგან თავის შეკავების დაფიქსირება, მაგრამ ვერ შეძლო."
       sign_in2: სისტემაში შესვლა
       sign_in: უკვე გაქვთ ანგარიში?
       sign_up2: რეგისტრაცია
@@ -306,7 +306,7 @@ ka:
       session1_summary_header: I მოსმენის კენჭისყრის რეზიუმე
     members_index:
       title: პარლამენტის წევრები
-      double_search: Your search for the law '%{law_title}' will continue after you select the Parliament Member below.
+      double_search: "თქვენ მიერ '%{law_title}' კანონის ძიება გაგრძელდება მას შედეგ, რაც აირჩევთ პარლამენტის წევრს ქვემოთ."
     members_show:
       title: "პარლამენტის წევრი: %{name}"
   notifications:
