@@ -1,0 +1,4 @@
+<% @no_index_meta = true %>
+<% @agendas.each do |id| %>
+  <%= link_to law_path(id), law_path(id) %>
+<% end %>

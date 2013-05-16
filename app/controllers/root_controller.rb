@@ -43,5 +43,13 @@ class RootController < ApplicationController
     end
   end
 
+  def laws_all
+    @agendas = Agenda.public_laws.map{|x| x.public_url_id}
+  end
+
+  def members_all
+    @members = AllDelegate.select("id").map{|x| x.id}
+  end
+
 
 end
