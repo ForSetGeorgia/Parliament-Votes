@@ -39,8 +39,9 @@ class AddOldRecords < ActiveRecord::Migration
 
       # get laws
       puts 'getting laws'
-      sql = "SELECT kan_id, kan_name, kan_date, kan_num, kan_text, kan_file FROM `parl.ge`.`kanonebi` where kan_date < '2012-08-01' and lang='geo' and "
-      sql << "kan_id in (select distinct kan_id from `parl.ge`.parl_voting_main) ORDER BY `kanonebi`.`kan_date` ASC"
+      sql = "SELECT kan_id, kan_name, kan_date, kan_num, kan_text, kan_file FROM `parl.ge`.`kanonebi` where kan_date < '2012-08-01' and lang='geo' "
+      sql << "and kan_id in (select distinct kan_id from `parl.ge`.parl_voting_main) "
+      sql << "ORDER BY `kanonebi`.`kan_date` ASC"
       all_laws = connection.execute(sql)
 
       # get all delegates
@@ -63,6 +64,8 @@ class AddOldRecords < ActiveRecord::Migration
 
       laws_added = 0
 
+      start = Time.now
+
       # create records
       dates.each_with_index do |d, d_index|
         date = d.to_a[0]
@@ -76,7 +79,7 @@ class AddOldRecords < ActiveRecord::Migration
         laws = all_laws.select{|x| x[2] == date}
 
         if laws.present?
-          puts "- found #{laws.length}"
+          puts "- found #{laws.count}"
           # create the file record
           puts "- creating file record"        
           file = UploadFile.create(:xml_file_name => 'transfer', :file_processed => 1,
@@ -97,7 +100,7 @@ class AddOldRecords < ActiveRecord::Migration
           # create agenda for each law
           laws.each_with_index do |law, l_index|
             puts '-----------------'
-            puts "------ law #{l_index+1} of #{laws.length}"
+            puts "------ law #{l_index+1} of #{laws.count}"
             # get votes for this law
             sql = "select cevr_id, result_id from `parl.ge`.parl_voting where kan_id = #{law[0]} ORDER BY cevr_id"
             votes = connection.execute(sql)
@@ -136,39 +139,39 @@ class AddOldRecords < ActiveRecord::Migration
                   member = members.to_a[m_index]
                   ad_index = all_delegates.index{|x| x.xml_id == member[0]}
                   g_index = conf.groups.index{|x| x.xml_id == member[2]}
-                  # create delegate record
-                  d = conf.delegates.create(:xml_id => member[0], :first_name => member[1],
-                    :group_id => g_index.nil? ? nil : conf.groups[g_index].id, 
-                    :all_delegate_id => ad_index.nil? ? nil : all_delegates[ad_index].id)
+                  d_index = conf.delegates.index{|x| x.xml_id == member[0] && x.first_name == member[1]}
 
-                  # create voting records
-                  v = nil
-                  case vote[1] 
-                    when 1 # abstain
-                      v = 0
-                    when 51 # yes
-                      v = 1
-                    when 53 # no
-                      v = 3
+                  # the delegate record could already exist from a previous law in this conference
+                  if conf.delegates.present? && d_index.present?
+                    # pull existing delegate record
+                    d = conf.delegates[d_index]
+                  else
+                    # create delegate record
+                    d = conf.delegates.create(:xml_id => member[0], :first_name => member[1],
+                      :group_id => g_index.nil? ? nil : conf.groups[g_index].id, 
+                      :all_delegate_id => ad_index.nil? ? nil : all_delegates[ad_index].id)
                   end
-                  voting_session.voting_results.create(:delegate_id => d.id, :present => vote[1] == 5 ? 0 : 1, :vote => v)
+
+                  # some laws have duplicate vote records, so only add if this vote has not been added
+                  if !voting_session.voting_results.present? || voting_session.voting_results.index{|x| x.delegate_id == d.id}.nil? 
+                    # create voting records
+                    v = nil
+                    case vote[1] 
+                      when 1 # abstain
+                        v = 0
+                      when 51 # yes
+                        v = 1
+                      when 53 # no
+                        v = 3
+                    end
+                    voting_session.voting_results.create(:delegate_id => d.id, :present => vote[1] == 5 ? 0 : 1, :vote => v)
+                  end
                 end
               end
 
               # update voting session reuslts
-              puts "- updating voting session results"
               voting_session.update_results
 
-              # make law public
-              puts "- making law public"
-              agenda.is_public = 1
-              agenda.made_public_at = Time.now
-              if !agenda.valid?
-                puts "*** agenda errors (#{law[0]}): #{agenda.errors.full_messages}"
-                raise ActiveRecord::Rollback
-                return
-              end            
-              agenda.save
               laws_added += 1
             else
               puts "@@@@@@@@ law does not have any votes: #{law[0]}"
@@ -177,8 +180,38 @@ class AddOldRecords < ActiveRecord::Migration
         end
       end
 
-      # update all delegate vote counts
-      puts "updating all delegate vote count"
+      puts "###################################################"
+      puts "###################################################"
+      puts "###################################################"
+
+      puts "time to add new laws = #{Time.now - start} seconds"
+
+      puts "###################################################"
+      puts "###################################################"
+      puts "###################################################"
+
+      # make all new laws public
+      agendas = Agenda.where(:parliament_id => 2)
+      puts "making #{agendas.length} laws public"
+      start = Time.now
+      agendas.each_with_index do |agenda, index|
+        puts "-- index = #{index} at #{Time.now}" if index % 100 == 0        
+
+        agenda.not_update_vote_count = true
+        agenda.is_public = 1
+        agenda.made_public_at = Time.now
+        if !agenda.valid?
+          puts "*** agenda errors (#{agenda.xml_id}): #{agenda.errors.full_messages}"
+          raise ActiveRecord::Rollback
+          return
+        end            
+        agenda.save
+      end
+      puts "time to make laws public = #{Time.now - start} seconds"
+
+      puts "###################################################"
+      puts "###################################################"
+      puts "updating vote count for delegates"
       AllDelegate.update_vote_counts(2)
 
     end

@@ -20,7 +20,7 @@ class Agenda < ActiveRecord::Base
       :session_number1_id, :session_number2_id, :is_public, :made_public_at, :public_url_id,
       :law_file, :law_file_file_name, :law_file_content_type, :law_file_file_size, :law_file_updated_at, :impressions_count
 
-	attr_accessor :send_notification, :was_public, :law_url_original
+	attr_accessor :send_notification, :was_public, :law_url_original, :not_update_vote_count
 
 	validates :law_url, :format => {:with => URI::regexp(['http','https']), :message => I18n.t('activerecord.messages.agenda.invalid_url')},  :if => "!law_url.blank?"
 
@@ -167,10 +167,10 @@ class Agenda < ActiveRecord::Base
       end
 
       # update vote count
-      AllDelegate.update_vote_counts(self.parliament_id)
+      AllDelegate.update_vote_counts(self.parliament_id) if self.not_update_vote_count
     elsif was_public && !is_public && self.voting_session.present?
       # law is no longer public - update vote counts
-      AllDelegate.update_vote_counts(self.parliament_id)
+      AllDelegate.update_vote_counts(self.parliament_id) if self.not_update_vote_count
     end
   end
 
