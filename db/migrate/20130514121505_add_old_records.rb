@@ -186,34 +186,6 @@ class AddOldRecords < ActiveRecord::Migration
 
       puts "time to add new laws = #{Time.now - start} seconds"
 
-      puts "###################################################"
-      puts "###################################################"
-      puts "###################################################"
-
-      # make all new laws public
-      agendas = Agenda.where(:parliament_id => 2)
-      puts "making #{agendas.length} laws public"
-      start = Time.now
-      agendas.each_with_index do |agenda, index|
-        puts "-- index = #{index} at #{Time.now}" if index % 100 == 0        
-
-        agenda.not_update_vote_count = true
-        agenda.is_public = 1
-        agenda.made_public_at = Time.now
-        if !agenda.valid?
-          puts "*** agenda errors (#{agenda.xml_id}): #{agenda.errors.full_messages}"
-          raise ActiveRecord::Rollback
-          return
-        end            
-        agenda.save
-      end
-      puts "time to make laws public = #{Time.now - start} seconds"
-
-      puts "###################################################"
-      puts "###################################################"
-      puts "updating vote count for delegates"
-      AllDelegate.update_vote_counts(2)
-
     end
   end
 

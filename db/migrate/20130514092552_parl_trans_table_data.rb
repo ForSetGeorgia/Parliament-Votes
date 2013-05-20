@@ -1,6 +1,8 @@
 # encoding: UTF-8
 class ParlTransTableData < ActiveRecord::Migration
   def up
+    ParliamentTranslation.delete_all
+
     ParliamentTranslation.create(:parliament_id => 2, :locale => 'ka', :name => 'მე-7 მოწვევის პარლამენტი')
     ParliamentTranslation.create(:parliament_id => 2, :locale => 'en', :name => 'The 7th Parliament')
 
