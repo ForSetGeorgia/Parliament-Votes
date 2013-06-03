@@ -103,8 +103,8 @@ class AllDelegate < ActiveRecord::Base
   def self.available_delegates(agenda_id)
     # get all delegates in the conference
     agenda = Agenda.find_by_id(agenda_id)
-    used_delegates = Delegate.joins(:voting_results => :voting_session).select("distinct delegates.xml_id").where("voting_sessions.agenda_id = ?", agenda_id)
     if agenda.present?
+      used_delegates = Delegate.joins(:voting_results => :voting_session).select("distinct delegates.xml_id").where("voting_sessions.agenda_id = ?", agenda_id)
       if used_delegates.present?
         AllDelegate.where("parliament_id = ? and xml_id not in (?)", agenda.parliament_id, used_delegates.map{|x| x.xml_id}).order("first_name")
       else

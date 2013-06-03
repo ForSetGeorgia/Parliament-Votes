@@ -95,11 +95,16 @@ class Agenda < ActiveRecord::Base
   def can_be_public
     if is_public && !was_public
       has_error = false
+Rails.logger.debug "**************************"
       if !is_law || !official_law_title.present? || !has_law_text? || !law_id.present?
+Rails.logger.debug "*********** - 1"
+Rails.logger.debug "****** is law = #{is_law}; title present = #{official_law_title.present?}; law text = #{has_law_text?}; law id = #{law_id.present?}"
         has_error = true
       elsif parliament_id != 2 && !(session_number.index(FINAL_VERSION[0]) || (session_number.index(FINAL_VERSION[1]) && session_number1_id.present? && session_number2_id.present?))
+Rails.logger.debug "*********** - 2"
         has_error = true
       elsif !(self.voting_session.present? && self.voting_session.passed)
+Rails.logger.debug "*********** - 3"
         has_error = true
       end
 
@@ -134,15 +139,19 @@ class Agenda < ActiveRecord::Base
   # if a law url was added/changed, get the text and save it
   def get_law_url_text
     if self.has_attribute?(:law_url_text) && self.law_url.present?
+Rails.logger.debug "********** law url present"
       if self.law_url_original != self.law_url
+Rails.logger.debug "********** law url different"
         self.law_url_text = '' #reset value
         doc = Nokogiri::HTML(open(self.law_url))
         t = doc.css('table')
         t.each do |table|
+Rails.logger.debug "********** adding text"
           self.law_url_text << table.to_s.force_encoding("UTF-8")
         end
       end
     else
+Rails.logger.debug "********** law url not present"
       # no url, so reset text
       self.law_url_text = nil if self.law_url_original.present?
     end
@@ -155,22 +164,33 @@ class Agenda < ActiveRecord::Base
       delegates = AllDelegate.available_delegates(self.id)
       if delegates.present?
         delegates.each do |member|
-          del = Delegate.create(:conference_id => self.conference_id, :xml_id => member.xml_id, 
-            :group_id => member.group_id,
-            :first_name => member.first_name)
+          # see if delegate record already exists
+          d = Delegate.where(:conference_id => self.conference_id, :all_delegate_id => member.id)
+          del = nil
+          if d.present?
+            del = d.first
+          else
+            del = Delegate.create(:conference_id => self.conference_id, :xml_id => member.xml_id, 
+              :group_id => member.group_id,
+              :first_name => member.first_name,
+              :all_delegate_id => member.id)
+          end
+
           # now save voting result record
-          VotingResult.create(:voting_session_id => self.voting_session.id, 
-                    :delegate_id => del.id,
-                    :present => false,
-                    :is_manual_add => true)
+          if del.present?
+            VotingResult.create(:voting_session_id => self.voting_session.id, 
+                      :delegate_id => del.id,
+                      :present => false,
+                      :is_manual_add => true)
+          end
         end
       end
 
       # update vote count
-      AllDelegate.update_vote_counts(self.parliament_id) if self.not_update_vote_count
+      AllDelegate.update_vote_counts(self.parliament_id) if !self.not_update_vote_count
     elsif was_public && !is_public && self.voting_session.present?
       # law is no longer public - update vote counts
-      AllDelegate.update_vote_counts(self.parliament_id) if self.not_update_vote_count
+      AllDelegate.update_vote_counts(self.parliament_id) if !self.not_update_vote_count
     end
   end
 
