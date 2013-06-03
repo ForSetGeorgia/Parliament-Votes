@@ -6,8 +6,8 @@
 
 <% title t('.title', :name => @member.first_name) %>
 
-
-<table class="display table table-striped table-bordered">
+<h2><%= t('.stats_header') %></h2>
+<table id="member_stats" class="display table table-striped table-bordered">
   <thead>
     <tr>
       <th><%= model_class_ad.human_attribute_name(:parliament_id) %></th>
@@ -42,6 +42,8 @@
   </tbody>
 </table>
 
+
+<h2><%= t('.voting_header') %></h2>
 <div class="row-fluid">
   <div id="parliament_options" class="span8">
   </div>
@@ -57,6 +59,8 @@
     <tr>
       <th><%= model_class_c.human_attribute_name(:start_date_final) %></th>
       <th><%= model_class_a.human_attribute_name(:public_law_title) %></th>
+      <th><%= model_class_vr.human_attribute_name(:member_present) %></th>
+      <th><%= model_class_vr.human_attribute_name(:member_vote) %></th>
       <th><%= model_class_vs.human_attribute_name(:result1) %></th>
       <th><%= model_class_vs.human_attribute_name(:result3) %></th>
       <th><%= model_class_vs.human_attribute_name(:result0) %></th>
@@ -65,8 +69,6 @@
       <% else %>
         <th><%= t('helpers.links.not_present2') %></th>
       <% end %>
-      <th><%= model_class_vr.human_attribute_name(:member_present) %></th>
-      <th><%= model_class_vr.human_attribute_name(:member_vote) %></th>
     </tr>
   </thead>
   <% if @member.parliament_id != 2 %>

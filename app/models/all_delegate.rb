@@ -29,15 +29,19 @@ class AllDelegate < ActiveRecord::Base
   end
 
   def session3_vote_formatted
-    if read_attribute(:session3_vote).present?
-      case read_attribute(:session3_vote)
-        when 0
-          I18n.t('helpers.boolean.abstain')
-        when 1
-          I18n.t('helpers.boolean.y')
+    case read_attribute(:session3_vote)
+      when 0
+        I18n.t('helpers.boolean.abstain')
+      when 1
+        I18n.t('helpers.boolean.y')
+      when 3
+        I18n.t('helpers.boolean.n')
+      else
+        if read_attribute(:parliament_id) == 1
+          I18n.t('helpers.links.not_present2')
         else
-          I18n.t('helpers.boolean.n')
-      end
+          I18n.t('helpers.links.not_present')
+        end
     end
   end
 
@@ -52,15 +56,19 @@ class AllDelegate < ActiveRecord::Base
   end
 
   def session2_vote_formatted
-    if read_attribute(:session2_vote).present?
-      case read_attribute(:session2_vote)
-        when 0
-          I18n.t('helpers.boolean.abstain')
-        when 1
-          I18n.t('helpers.boolean.y')
+    case read_attribute(:session2_vote)
+      when 0
+        I18n.t('helpers.boolean.abstain')
+      when 1
+        I18n.t('helpers.boolean.y')
+      when 3
+        I18n.t('helpers.boolean.n')
+      else
+        if read_attribute(:parliament_id) == 1
+          I18n.t('helpers.links.not_present2')
         else
-          I18n.t('helpers.boolean.n')
-      end
+          I18n.t('helpers.links.not_present')
+        end
     end
   end
 
@@ -75,15 +83,19 @@ class AllDelegate < ActiveRecord::Base
   end
 
   def session1_vote_formatted
-    if read_attribute(:session1_vote).present?
-      case read_attribute(:session1_vote)
-        when 0
-          I18n.t('helpers.boolean.abstain')
-        when 1
-          I18n.t('helpers.boolean.y')
+    case read_attribute(:session1_vote)
+      when 0
+        I18n.t('helpers.boolean.abstain')
+      when 1
+        I18n.t('helpers.boolean.y')
+      when 3
+        I18n.t('helpers.boolean.n')
+      else
+        if read_attribute(:parliament_id) == 1
+          I18n.t('helpers.links.not_present2')
         else
-          I18n.t('helpers.boolean.n')
-      end
+          I18n.t('helpers.links.not_present')
+        end
     end
   end
 
@@ -139,7 +151,7 @@ class AllDelegate < ActiveRecord::Base
     a = Agenda.includes(:conference).public_laws.find_by_public_url_id(agenda_public_url_id)
 
     if a.present?
-      sql = "select ad.id, ad.first_name, s3.present as session3_present, s3.vote as session3_vote " 
+      sql = "select ad.id, ad.first_name, ad.parliament_id, s3.present as session3_present, s3.vote as session3_vote " 
       if get_all_3_sessions == "true"
         sql << ", s2.present as session2_present, s2.vote as session2_vote, s1.present as session1_present, s1.vote as session1_vote "
       end

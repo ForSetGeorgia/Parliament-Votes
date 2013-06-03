@@ -55,13 +55,25 @@ html, body {
   body {
   	margin-top: 0;
   }
-  #wrapper > .container {
-  	padding: 1em;
-  }
 	.navbar-fixed-top  {
 		margin: 0;
 	}
+  #wrapper > .container {
+  	padding: 1em 1em 90px;
+  }
 }
+
+@media (max-width: 767px)
+{
+  body {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+// set width of when navbar should collapse
+@navbarCollapseWidth: 979px;
+
 
 .container > ul.nav  {
 	line-height: 20px;

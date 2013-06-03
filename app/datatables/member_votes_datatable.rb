@@ -29,12 +29,12 @@ private
         agenda.conference.start_date,
         link_to(agenda.official_law_title.present? ? agenda.official_law_title : agenda.name, 
           law_path(:id => agenda.public_url_id, :locale => I18n.locale)),
+        agenda.voting_session.voting_results.present? ? agenda.voting_session.voting_results[0].present_formatted : nil,
+        agenda.voting_session.voting_results.present? ? agenda.voting_session.voting_results[0].vote_formatted : nil,
         agenda.total_yes,
         agenda.total_no,
         agenda.total_abstain,
-        agenda.total_not_present,
-        agenda.voting_session.voting_results.present? ? agenda.voting_session.voting_results[0].present_formatted : nil,
-        agenda.voting_session.voting_results.present? ? agenda.voting_session.voting_results[0].vote_formatted : nil
+        agenda.total_not_present
       ]
     end
   end
@@ -61,7 +61,7 @@ private
   end
 
   def sort_column
-    columns = %w[conferences.start_date agendas.official_law_title voting_sessions.result1 voting_sessions.result3 voting_sessions.result0 voting_sessions.not_present voting_results.present voting_results.vote]
+    columns = %w[conferences.start_date agendas.official_law_title voting_results.present voting_results.vote voting_sessions.result1 voting_sessions.result3 voting_sessions.result0 voting_sessions.not_present]
     columns[params[:iSortCol_0].to_i]
   end
 

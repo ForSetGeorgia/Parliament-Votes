@@ -25,15 +25,19 @@ class VotingResult < ActiveRecord::Base
   end
 
   def vote_formatted
-    if read_attribute(:vote).present?
-      case read_attribute(:vote)
-        when 0
-          I18n.t('helpers.boolean.abstain')
-        when 1
-          I18n.t('helpers.boolean.y')
+    case read_attribute(:vote)
+      when 0
+        I18n.t('helpers.boolean.abstain')
+      when 1
+        I18n.t('helpers.boolean.y')
+      when 3
+        I18n.t('helpers.boolean.n')
+      else
+        if self.voting_session.agenda.parliament_id == 1 
+          I18n.t('helpers.links.not_present2')
         else
-          I18n.t('helpers.boolean.n')
-      end
+          I18n.t('helpers.links.not_present')
+        end
     end
   end
 

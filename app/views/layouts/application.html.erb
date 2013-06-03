@@ -37,19 +37,19 @@
             <span class="icon-bar"></span>
           </a>
           <%= link_to(t('app.common.app_name'), root_path(:locale => I18n.locale),:class=>"brand font")%>
-          <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to t('.menu_public_laws'), laws_path %>
               <li><%= link_to t('.menu_public_members'), members_path %>
-              <% if user_signed_in? && current_user.role?(User::ROLES[:lower_admin]) %>
-                <li><%= link_to t('.menu_laws'), admin_laws_path %>
-              <% end %>
-              <% if user_signed_in? && current_user.role?(User::ROLES[:process_files]) %>
-                <li><%= link_to t('.menu_files'), admin_upload_files_path(:locale => I18n.locale) %>
-              <% end %>
             </ul>
+          <div class="container nav-collapse">
             <ul class="nav pull-right">
 		          <% if user_signed_in? %>
+                <% if current_user.role?(User::ROLES[:lower_admin]) %>
+                  <li><%= link_to t('.menu_laws'), admin_laws_path %>
+                <% end %>
+                <% if current_user.role?(User::ROLES[:process_files]) %>
+                  <li><%= link_to t('.menu_files'), admin_upload_files_path(:locale => I18n.locale) %>
+                <% end %>
 				        <li class="dropdown">
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 				                <%= current_user.nickname %>
@@ -117,13 +117,14 @@
     <div class="push"><!--//--></div>
 
     <footer class="clear">
-			<div id="left">&copy; 2013</div>
-		  <div id="middle">
+			<div id="left">
         <%= link_to(image_tag('usaid.gif'), 'http://www.usaid.gov/', :target => :blank) %>
         <%= link_to(image_tag('ndi-logo.png', :width => '132'), 'http://ndi.org/', :target => :blank) %>
         <%= link_to(image_tag('parliament-logo2.png', :width => '106'), 'http://parliament.ge//', :target => :blank) %>
         <br />
         <%= t('.disclaimer') %>
+        <br />
+        &copy; 2013
 			</div>
 			<div id="right" class="clear">
 				<ul>

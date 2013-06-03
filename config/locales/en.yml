@@ -61,9 +61,9 @@ en:
         quorum: Quorum
         results: Results (Y/N)
         voting_conclusion: Original Voting Results from File
-        result1: "Yes"
-        result3: "No"
-        result0: Abstain
+        result1: Yes Votes
+        result3: No Votes
+        result0: Abstain Votes
         last_session_resutls: Final Vote
       voting_result:
         present: Present
@@ -86,11 +86,11 @@ en:
         first_name: Name
         public_first_name: Member of Parliament
         parliament_id: Parliament
-        vote_count: "# Votes"
-        yes_count: "# Yes Votes"
-        no_count: "# No Votes"
-        abstain_count: "# Abstain Votes"
-        absent_count: "# Times Absent"
+        vote_count: "Total Votes Cast"
+        yes_count: "Yes Votes"
+        no_count: "No Votes"
+        abstain_count: "Abstain Votes"
+        absent_count: "Times Absent"
         session3_present: Session III Present
         session3_vote: Session III Vote
         session2_present: Session II Present
@@ -219,7 +219,7 @@ en:
       sign_in: Sign In
       js_link_title: "Visit JumpStart Georgia's website"
       js_link_text: Built by
-      disclaimer: "This project was made possible by the generous support of the American people through the United States Agency for International Development (USAID) and with the funding from National Democratic Institute for International Affairs (NDI). The contents of this website do not necessarily reflect the views of NDI, USAID or the United States Government."
+      disclaimer: "The Voting Records Database is made possible with the support of the American people through the United States Agency for International Development (USAID).  The project is also funded by National Democratic Institute (NDI). The contents of this website do not necessarily reflect the views of NDI, USAID or the United States Government."
     unsupported_browser:
       title: Unsupported Browser
       p1: We are sorry to report that your browser is out of date and will not properly render the content from this website.
@@ -309,6 +309,8 @@ en:
       double_search: Your search will continue after you select the Parliament Member below.
     members_show:
       title: "Parliament Member: %{name}"
+      stats_header: Statistics
+      voting_header: Voting Records
   notifications:
     index:
       title: Notifications
