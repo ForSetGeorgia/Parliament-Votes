@@ -84,8 +84,8 @@
       <th colspan="4" class="header-center"><%= t('.overall_votes_header') %></th>
     </tr>
     <tr>
-      <th><%= model_class_vs.human_attribute_name(:result1) %></th>
-      <th><%= model_class_vs.human_attribute_name(:result3) %></th>
+      <th><%= model_class_vs.human_attribute_name(:result1_alt) %></th>
+      <th><%= model_class_vs.human_attribute_name(:result3_alt) %></th>
       <% if @member.parliament_id == 2 %>
         <th><%= model_class_vs.human_attribute_name(:result0) %></th>
         <th><%= t('helpers.links.not_present') %></th>

@@ -1,3 +1,5 @@
+<%- model_class_vs = VotingSession -%>
+
 <% title t('.title', :name => @agenda.official_law_title.present? ? @agenda.official_law_title : @agenda.name, :date => l(@agenda.conference.start_date, :format => :no_zone)).html_safe %>
 
 <div id="agenda_description">
@@ -90,8 +92,8 @@
     <table class="display table table-striped table-bordered">
       <thead>
         <tr>
-          <th><%= t('helpers.boolean.y') %></th>
-          <th><%= t('helpers.boolean.n') %></th>
+          <th><%= model_class_vs.human_attribute_name(:result1_alt) %></th>
+          <th><%= model_class_vs.human_attribute_name(:result3_alt) %></th>
           <% if @agenda.parliament_id == 2 %>
             <th><%= t('helpers.boolean.abstain') %></th>
             <th><%= t('helpers.links.not_present') %></th>

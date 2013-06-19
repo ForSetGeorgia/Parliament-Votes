@@ -63,6 +63,8 @@ ka:
         voting_conclusion: საწყისი კენჭისყრის შედეგები
         result1: "დიახ"
         result3: "არა"
+        result1_alt: მომხრე
+        result3_alt: მოწინააღმდეგე
         result0: არ მიუცია
         last_session_resutls: საბოლოო ხმა
       voting_result:

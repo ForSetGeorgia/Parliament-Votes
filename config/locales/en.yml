@@ -63,6 +63,8 @@ en:
         voting_conclusion: Original Voting Results from File
         result1: Yes Votes
         result3: No Votes
+        result1_alt: Votes For
+        result3_alt: Votes Against
         result0: Abstain Votes
         last_session_resutls: Final Vote
       voting_result:
