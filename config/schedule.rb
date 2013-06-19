@@ -19,8 +19,10 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 30.minutes do
-  runner "NotificationTrigger.process_all_types"
+case @environment
+when 'production'
+  every 30.minutes do
+    runner "NotificationTrigger.process_all_types"
+  end
 end
-
 
