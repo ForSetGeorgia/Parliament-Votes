@@ -311,6 +311,7 @@ en:
       title: "Parliament Member: %{name}"
       stats_header: Statistics
       voting_header: Voting Records
+      overall_votes_header: Overall Law Votes
   notifications:
     index:
       title: Notifications

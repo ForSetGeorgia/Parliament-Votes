@@ -57,10 +57,14 @@
       data-source="<%= search_member_votes_url(:id => @member.xml_id, :format => :json) %>">
   <thead>
     <tr>
-      <th><%= model_class_c.human_attribute_name(:start_date_final) %></th>
-      <th><%= model_class_a.human_attribute_name(:public_law_title) %></th>
-      <th><%= model_class_vr.human_attribute_name(:member_present) %></th>
-      <th><%= model_class_vr.human_attribute_name(:member_vote) %></th>
+      <th rowspan="2""><%= model_class_c.human_attribute_name(:start_date_final) %></th>
+      <th rowspan="2"><%= model_class_a.human_attribute_name(:public_law_title) %></th>
+      <th rowspan="2"><%= model_class_vr.human_attribute_name(:member_present) %></th>
+      <th rowspan="2"><%= model_class_vr.human_attribute_name(:member_vote) %></th>
+
+      <th colspan="4" class="header-center"><%= t('.overall_votes_header') %></th>
+    </tr>
+    <tr>
       <th><%= model_class_vs.human_attribute_name(:result1) %></th>
       <th><%= model_class_vs.human_attribute_name(:result3) %></th>
       <th><%= model_class_vs.human_attribute_name(:result0) %></th>

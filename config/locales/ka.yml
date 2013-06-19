@@ -311,6 +311,7 @@ ka:
       title: "პარლამენტის წევრი: %{name}"
       stats_header: სტატისტიკა
       voting_header: კენჭისყრის შედეგები
+      overall_votes_header: იმავე კანონპროექტზე კენჭისყრის შედეგები
   notifications:
     index:
       title: სიახლეების გამოწერა
