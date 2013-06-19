@@ -144,8 +144,10 @@ en:
       unpublish: Remove From Public
       assign_session: Add
       not_present: Not Present
-      not_present2: Abstain / Not Present*
-      not_present2_footnote: "* - The voting system does not allow a person to record Abstain so it is possible that they were present, wanted to vote Abstain, but could not."
+      not_present2: "Abstain / Not Present*"
+      not_present2_footnote: "* - The current voting system does not allow an MP to vote 'Abstain', therefore, it is not possible to distinguish between 'Abstain' and 'Not Present'."
+      abstain2: "Abstain†"
+      abstain2_footnote: "† - This result is only possible when MPs ask the Organizational Department to change their vote to 'Abstain'."
       sign_in2: Sign In
       sign_in: "Already have an account?"
       sign_up2: Sign Up

@@ -65,10 +65,11 @@
           <th><%= model_class_c.human_attribute_name(:start_date_vote) %></th>
           <th><%= t('helpers.boolean.y') %></th>
           <th><%= t('helpers.boolean.n') %></th>
-          <th><%= t('helpers.boolean.abstain') %></th>
           <% if @agenda.parliament_id == 2 %>
+            <th><%= t('helpers.boolean.abstain') %></th>
             <th><%= t('helpers.links.not_present') %></th>
           <% else %>
+            <th><%= t('helpers.links.abstain2') %></th>
             <th><%= t('helpers.links.not_present2') %></th>
           <% end %>
         </tr>
@@ -77,7 +78,12 @@
         <tfoot>
           <tr>
             <td colspan="6">
-              <%= t('helpers.links.not_present2_footnote') %>
+              <p>
+                <%= t('helpers.links.abstain2_footnote') %>
+              </p>
+              <p>
+                <%= t('helpers.links.not_present2_footnote') %>
+              </p>
             </td>
           </tr>
         </tfoot>
@@ -200,6 +206,20 @@
           <th><%= model_class_ad.human_attribute_name(:session3_vote) %></th>
         </tr>
       </thead>
+      <% if @agenda.parliament_id != 2 %>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <p>
+                <%= t('helpers.links.abstain2_footnote') %>
+              </p>
+              <p>
+                <%= t('helpers.links.not_present2_footnote') %>
+              </p>
+            </td>
+          </tr>
+        </tfoot>
+      <% end %>
       <tbody>
       </tbody>
     </table>

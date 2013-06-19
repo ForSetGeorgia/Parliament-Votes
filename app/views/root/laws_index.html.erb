@@ -36,14 +36,19 @@
       <th><%= model_class_a.human_attribute_name(:parliament_id) %></th>
       <th><%= model_class_vs.human_attribute_name(:result1) %></th>
       <th><%= model_class_vs.human_attribute_name(:result3) %></th>
-      <th><%= model_class_vs.human_attribute_name(:result0) %></th>
+      <th><%= t('helpers.links.abstain2') %></th>
       <th><%= t('helpers.links.not_present2') %></th>
     </tr>
   </thead>
   <tfoot>
     <tr>
       <td colspan="7">
-        <%= t('helpers.links.not_present2_footnote') %>
+        <p>
+          <%= t('helpers.links.abstain2_footnote') %>
+        </p>
+        <p>
+          <%= t('helpers.links.not_present2_footnote') %>
+        </p>
       </td>
     </tr>
   </tfoot>
