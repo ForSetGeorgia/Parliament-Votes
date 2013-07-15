@@ -234,7 +234,69 @@ class AllDelegate < ActiveRecord::Base
 
   end
 
+  def self.merge_delegates(id_to_keep, id_to_remove)
+    if id_to_keep.present? && id_to_remove.present?
+      AllDelegate.transaction do
+        to_keep = AllDelegate.includes(:delegates => :voting_results).where(:id => id_to_keep)
+        to_remove = AllDelegate.includes(:delegates => :voting_results).where(:id => id_to_remove)
+    
+        if to_keep.present? && to_remove.present?
+          to_keep_results = to_keep.first.delegates.map{|x| x.voting_results}.flatten
 
+          to_remove.first.delegates.each do |del|
+puts "delegate id #{del.id}"          
+            update_del_id = false
+            del.voting_results.each do |vr|
+puts "- voting record id #{vr.id}"          
+              # if to_keep does not have a vote for this session, add it
+              # if it does have a vote, assume want to keep the vote for the to_keep record
+              if to_keep_results.index{|x| vr.voting_session_id == x.voting_session_id}.nil?
+puts "-- need to copy vote result"          
+                # see if delegate record exists for this conference
+                to_keep_delegate = to_keep.first.delegates.select{|x| x.conference_id == del.conference_id}
+                # if records exists, update vote results record with this id
+                # otherwise update to_remove del id to reference id_to_keep
+                if to_keep_delegate.present?
+puts "--- delegate exists for to keep, just updating vote result record"          
+                  # record exists, update vote results record to use to_keep del id
+                  vr.delegate_id = to_keep_delegate.first.id
+                  vr.save
+                else
+puts "--- delegate record not exists"          
+                  # update to_remove delegate to reference id_to_keep
+                  # - this is actually done after for loop so that
+                  #   no errors occur due to changing the id before finished 
+                  #   going through all vote records of this delegate
+                  update_del_id = true
+                end
+              end
+            end        
+            if update_del_id
+puts "---* updating delegate record to be for record to_keep"          
+              del.all_delegate_id = to_keep.first.id
+              del.first_name = to_keep.first.first_name
+              del.xml_id = to_keep.first.xml_id
+              del.group_id = to_keep.first.xml_id
+              del.title = to_keep.first.title
+              del.save
+            end
+          end
+        end
+        
+        # now delete the delegate/voting result records for to_remove
+puts "********** deleting records"          
+        del_ids = Delegate.select('id').where(:all_delegate_id => id_to_remove)
+        VotingResult.where(:delegate_id => del_ids.map{|x| x.id}).delete_all
+        Delegate.where(:id => del_ids.map{|x| x.id}).delete_all
+        AllDelegate.delete(id_to_remove)
+
+        # update vote counts
+puts "********** updating vote counts"          
+        AllDelegate.update_vote_counts(to_keep.first.parliament_id)
+      end
+    end
+  end
+  
 protected
 
   def self.passed_laws_vote_count_query
