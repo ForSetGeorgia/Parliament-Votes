@@ -234,7 +234,32 @@ class AllDelegate < ActiveRecord::Base
 
   end
 
+  # delete all of the delegate records
+  # - do this instead of destroy_all for destory all will do hundreds of queries and be slow
+  def self.delete_delegate_records(id)
+puts "++++++++++++++++++++++++++++++++++"
+puts "** deleting delegate #{id} **"
+puts "++++++++++++++++++++++++++++++++++"
+    if id.present?
+      AllDelegate.transaction do
+        del = AllDelegate.find_by_id(id)
+        if del.present?
+          del_ids = Delegate.select('id').where(:all_delegate_id => id)
+          VotingResult.where(:delegate_id => del_ids.map{|x| x.id}).delete_all
+          Delegate.where(:id => del_ids.map{|x| x.id}).delete_all
+          AllDelegate.delete(id)
+
+          # update the vote counts for every law in this parliament
+          Agenda.update_law_vote_results(del.parliament_id)
+        end
+      end
+    end
+  end
+
   def self.merge_delegates(id_to_keep, id_to_remove)
+puts "**********************************"
+puts "** to keep = #{id_to_keep}; to remove = #{id_to_remove} **"
+puts "**********************************"
     if id_to_keep.present? && id_to_remove.present?
       AllDelegate.transaction do
         to_keep = AllDelegate.includes(:delegates => :voting_results).where(:id => id_to_keep)
@@ -242,6 +267,10 @@ class AllDelegate < ActiveRecord::Base
     
         if to_keep.present? && to_remove.present?
           to_keep_results = to_keep.first.delegates.map{|x| x.voting_results}.flatten
+
+          # merge the impression counts
+          to_keep.first.impressions_count += to_remove.first.impressions_count
+          to_keep.first.save
 
           to_remove.first.delegates.each do |del|
 puts "delegate id #{del.id}"          
@@ -282,19 +311,14 @@ puts "---* updating delegate record to be for record to_keep"
             end
           end
         end
-        
+
         # now delete the delegate/voting result records for to_remove
 puts "********** deleting records"          
-        del_ids = Delegate.select('id').where(:all_delegate_id => id_to_remove)
-        VotingResult.where(:delegate_id => del_ids.map{|x| x.id}).delete_all
-        Delegate.where(:id => del_ids.map{|x| x.id}).delete_all
-        AllDelegate.delete(id_to_remove)
-
-        # update vote counts
-puts "********** updating vote counts"          
-        AllDelegate.update_vote_counts(to_keep.first.parliament_id)
+        delete_delegate_records(id_to_remove)
       end
     end
+puts "**********************************"
+puts "**********************************"
   end
   
 protected

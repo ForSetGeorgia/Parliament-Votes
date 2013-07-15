@@ -545,6 +545,15 @@ Rails.logger.debug "********** law url not present"
   end
 
 
+  # update the vote counts for every public law in the parliament group
+  def self.update_law_vote_results(parliament_id)
+    Agenda.transaction do
+      Agenda.where(:is_public => true, :parliament_id => parliament_id).each do |a|
+        a.voting_session.update_results
+      end
+    end
+  end
+
   private
 
   PREFIX = ['ერთი', 'III', 'II', 'I']
