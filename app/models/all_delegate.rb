@@ -315,6 +315,10 @@ puts "---* updating delegate record to be for record to_keep"
         # now delete the delegate/voting result records for to_remove
 puts "********** deleting records"          
         delete_delegate_records(id_to_remove)
+        
+        # now update vote counts of all delegates
+puts "********** updating delegate vote counts"          
+        update_vote_counts(to_keep.first.parliament_id)
       end
     end
 puts "**********************************"
