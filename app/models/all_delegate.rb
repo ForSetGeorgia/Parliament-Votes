@@ -256,6 +256,43 @@ puts "++++++++++++++++++++++++++++++++++"
     end
   end
 
+  # delete all vote records for this delegate that occur before teh end date
+  def self.delete_vote_records_before_date(id, end_date)
+    if id.present? && end_date.present?
+puts "**********************************"
+puts "** deleting vote records for = #{id}; before = #{end_date} **"
+puts "**********************************"
+      AllDelegate.transaction do
+        del = AllDelegate.find_by_id(id)
+        if del.present?
+          # get list of all conference ids that occur before the date
+          conf_ids = Conference.select('conferences.id').joins(:agendas).where(["conferences.start_date < ? and agendas.parliament_id = ?", end_date, del.parliament_id]).map{|x| x.id}.uniq.sort
+          if conf_ids.present?
+  puts "********** found #{conf_ids.length} conference ids"
+            # get all delegate records for this person
+            del_ids = Delegate.select('id').where(:all_delegate_id => id, :conference_id => conf_ids)
+  puts "********** found #{del_ids.length} delegate ids"
+
+            if del_ids.present?
+    puts "********** deleting voting results"
+              VotingResult.where(:delegate_id => del_ids.map{|x| x.id}).delete_all
+    puts "********** deleting delegate records"
+              Delegate.where(:id => del_ids.map{|x| x.id}).delete_all
+
+              # update the vote counts for every law in this parliament
+    puts "********** updating law vote counts"
+              Agenda.update_law_vote_results(del.parliament_id)
+
+              # now update vote counts of all delegates
+    puts "********** updating delegate vote counts"
+              update_vote_counts(del.parliament_id)
+            end
+          end          
+        end
+      end
+    end
+  end
+  
   def self.merge_delegates(id_to_keep, id_to_remove)
 puts "**********************************"
 puts "** to keep = #{id_to_keep}; to remove = #{id_to_remove} **"
@@ -328,7 +365,10 @@ puts "**********************************"
 protected
 
   def self.passed_laws_vote_count_query
-    sql = "select ad.id, ad.first_name, count(*) as vote_count "
+    sql = "select ad.id, ad.first_name, if(isnull(x.vote_count), 0, x.vote_count) as vote_count "
+    sql << "from all_delegates as ad "
+    sql << "left join ("
+    sql << "select ad.id, ad.first_name, count(*) as vote_count "
     sql << "from all_delegates as ad "
     sql << "inner join delegates as d on d.all_delegate_id = ad.id "
     sql << "inner join conferences as c on c.id = d.conference_id "
@@ -339,7 +379,9 @@ protected
     sql << "where a.is_law = 1 and a.is_public = 1 and vs.passed = 1 and uf.is_deleted = 0 and a.public_url_id is not null and a.public_url_id != '' "
     sql << "and ad.parliament_id = :parl_id "
     sql << "[placeholder] "    
-    sql << "group by ad.id, ad.first_name"
+    sql << "group by ad.id, ad.first_name "
+    sql << ") as x on x.id = ad.id "
+    sql << "and ad.parliament_id = :parl_id "
   end
 
   def self.passed_laws_vote_count(parliament_id)
