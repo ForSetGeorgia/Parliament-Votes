@@ -151,6 +151,19 @@ class AllDelegate < ActiveRecord::Base
     a = Agenda.includes(:conference).public_laws.find_by_public_url_id(agenda_public_url_id)
 
     if a.present?
+      # get list of unique all delegate ids that have voting results
+      # - only want to get votes for these people
+      ids = [a.id]
+      if get_all_3_sessions == "true"
+        ids << a.session_number2_id
+        ids << a.session_number1_id
+      end
+            
+      all_ids = Delegate.select('delegates.all_delegate_id')
+            .joins(:voting_results => :voting_session)
+            .where('voting_sessions.agenda_id in (?)', ids)
+            .map{|x| x.all_delegate_id}.uniq      
+
       sql = "select ad.id, ad.first_name, ad.parliament_id, s3.present as session3_present, s3.vote as session3_vote " 
       if get_all_3_sessions == "true"
         sql << ", s2.present as session2_present, s2.vote as session2_vote, s1.present as session1_present, s1.vote as session1_vote "
@@ -165,6 +178,7 @@ class AllDelegate < ActiveRecord::Base
         sql << ") as s1 on s1.all_delegate_id = ad.id "
       end
       sql << "where ad.parliament_id = :parliament_id "
+      sql << "and ad.id in (:all_delegate_ids) "
       if search.present?
         sql << "and ad.first_name like :search "
       end
@@ -179,7 +193,7 @@ class AllDelegate < ActiveRecord::Base
       end      
 
       x = find_by_sql([sql, :session3_id => a.id, :session2_id => a.session_number2_id, :session1_id => a.session_number1_id, 
-                :parliament_id => a.parliament_id,
+                :parliament_id => a.parliament_id, :all_delegate_ids => all_ids,
                 :search => "%#{search}%"])
 
     end
