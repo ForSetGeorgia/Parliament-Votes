@@ -186,6 +186,40 @@ Rails.logger.debug "********** law url not present"
         end
       end
 
+      # if this law has an assigned session1 and session2, add missing delegate records to those too
+      sessions = [self.session_number1_id, self.session_number2_id]
+      sessions.each do |session|
+        if session.present?
+          attached_session = Agenda.find_by_id(session)
+          if attached_session.present?
+            delegates = AllDelegate.available_delegates(attached_session.id)
+            if delegates.present?
+              delegates.each do |member|
+                # see if delegate record already exists
+                d = Delegate.where(:conference_id => attached_session.conference_id, :all_delegate_id => member.id)
+                del = nil
+                if d.present?
+                  del = d.first
+                else
+                  del = Delegate.create(:conference_id => attached_session.conference_id, :xml_id => member.xml_id, 
+                    :group_id => member.group_id,
+                    :first_name => member.first_name,
+                    :all_delegate_id => member.id)
+                end
+
+                # now save voting result record
+                if del.present?
+                  VotingResult.create(:voting_session_id => attached_session.voting_session.id, 
+                            :delegate_id => del.id,
+                            :present => false,
+                            :is_manual_add => true)
+                end
+              end
+            end
+          end
+        end
+      end
+
       # update vote count
       AllDelegate.update_vote_counts(self.parliament_id) if !self.not_update_vote_count
     elsif was_public && !is_public && self.voting_session.present?
