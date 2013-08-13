@@ -65,7 +65,8 @@ BootstrapStarter::Application.routes.draw do
 		namespace :api do
 			#v1
 	    match '/v1' => 'v1#index', :via => :get
-	    match '/v1/q' => 'v1#q', :via => :get, :defaults => {:format => 'json'}
+	    match '/v1/member_votes' => 'v1#member_votes', :via => :get, :defaults => {:format => 'json'}
+	    match '/v1/members' => 'v1#members', :via => :get, :defaults => {:format => 'json'}
 		end
 
 

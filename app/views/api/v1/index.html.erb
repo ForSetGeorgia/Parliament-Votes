@@ -1,15 +1,198 @@
 <% title "API - V1" %>
 
-query params
-<br />
-- member_id
-<br />
-- with_laws
-<br />
-<br />
+<p>
+  This is Version 1 of the api for votes.parliament.ge.  
+  Last updated on 2013-08-13.
+</p>
 
-general format
-<br />
-- possible present values
-<br />
-- possible vote values
+<p>
+  All methos return JSON formatted data.
+</p>
+
+<p>
+  Only Parliament Members and laws passed during the 2012-2016 Parliament will be returned in this version of the api.
+</p>
+
+
+<h2><a href="./v1/members">members</a></h2>
+<p>
+  This method will get a list of all members in the system.  
+  This method is helpful to get the ID of a Parliament Member that is needed for input into the other methods provided in this api.
+</p>
+<p>  
+  The return format will be like the following:
+</p>
+<pre>
+[
+  {id: 1, name: "John Doe"},
+  {id: 2, name: "Jane Doe"},
+  .
+  .
+  .
+]
+</pre>
+
+
+<h2><a href="./v1/member_votes?member_id=1&with_laws=true">member_votes</a></h2>
+<p>
+  This method will get a list of all laws a Parliament Member has voted on.
+</p>
+<p>
+  The query parameters for this method are the following:
+</p>
+<ul>
+  <li>
+    member_id (required) - ID of Parliament Member to get vote records for.
+  </li>
+  <li>
+    with_laws (optional) - If 'true', all laws the Parliament Member has voted on will be returned.
+    If 'false' or not provided, only a summary of the Parliament Member's vote history will be returned.
+  </li>
+  <li>
+    passed_after (optional) - A date to get laws that were passed on or after this date.
+    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+  </li>
+  <li>
+    passed_before (optional) - A date to get laws that were passed on or before this date.
+    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+  </li>
+  <li>
+    made_public_after (optional) - A date to get laws that were made avialable to the public on votes.parliament.ge on or after this date.
+    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+  </li>
+  <li>
+    made_public_before (optional) - A date to get laws that were made avialable to the public on votes.parliament.ge on or before this date.
+    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+  </li>
+</ul>
+
+<p>  
+  The return format will be like the following:
+</p>
+<pre>
+{
+  member:
+  {
+    internal_id,
+    name,
+    vote_summary:
+    {
+      total_votes,
+      yes_votes,
+      no_votes,
+      abstain_votes,
+      absent,
+    },
+    laws: 
+    [
+      {
+        law_id,
+        internal_id,
+        title,
+        released_to_public_at
+        sessions: 
+        {
+          session_1: 
+          {
+            date,
+            present,
+            vote,
+            summary: 
+            {
+              total_yes,
+              total_no,
+              total_abstain,
+              total_absent
+            }
+          },
+          session_2: 
+          {
+            date,
+            present,
+            vote,
+            summary: 
+            {
+              total_yes,
+              total_no,
+              total_abstain,
+              total_absent
+            }
+          },
+          session_3: 
+          {
+            date,
+            present,
+            vote,
+            summary: 
+            {
+              total_yes,
+              total_no,
+              total_abstain,
+              total_absent
+            }
+          }
+        }
+      },
+      .
+      .
+      .
+    ]
+  }
+}
+</pre>
+
+<p>Notes:</p>
+<ul>
+  <li>
+    If the querystring parameter <code>with_laws</code> is not provided or is not 'true', 
+    the <code>laws</code> array will not be provided.
+  </li>
+  <li>
+    The querystring parameters <code>passed_after</code> and <code>passed_before</code>
+    refer to the <code>date</code> value in the <code>session_3</code> hash.
+  </li>
+  <li>
+    The querystring parameters <code>made_public_after</code> and <code>made_public_before</code>
+    refer to the <code>released_to_public_at</code> value in the <code>laws</code> array.
+  </li>
+  <li>
+    The possible values for <code>present</code> in the <code>session_x</code> hashes are the following:
+    <ul>
+      <li>
+        <%= I18n.t('helpers.boolean.y') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.boolean.n') %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    The possible values for <code>vote</code> in the <code>session_x</code> hashes are the following:
+    <ul>
+      <li>
+        <%= I18n.t('helpers.boolean.y') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.boolean.n') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.boolean.abstain') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.links.not_present') %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    It is possible for a law to be passed after only 1 session of voting.  
+    When this occurs, only <code>session_1</code> will be returned in the <code>sessions</code> hash.
+  </li>
+  <li>
+    The Parliament voting system does not allow a Parliament Member to vote 'Abstain', therefore, 
+    it is not possible to distinguish between 'Abstain' and 'Not Present'.
+  </li>
+  <li>
+    The Parliament voting system only records text in Georgian, therefore, if you are using the English 
+    portion of the votes.parliament.ge api, all text will be in Georgian.
+  </li>
+</ul>

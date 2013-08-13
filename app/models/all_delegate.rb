@@ -383,16 +383,31 @@ puts "**********************************"
   ### api
   #######################################
   #######################################
-  
+  # get all members and their id
+  # returns: 
+  # [ {id, name}, {id, name}, ... ]
+  def self.api_v1_members()
+    x = []
+    members = AllDelegate.select('id, first_name').where(:parliament_id => 1).order("first_name asc")
+    if members.present?
+      members.each do |member|
+        h = Hash.new
+        x << h
+        h[:id] = member.id
+        h[:name] = member.first_name
+      end
+    end
+    return x
+  end
+
+  # get vote history for a member of parliament
   # return: 
 =begin
   {
     member:
     {
-      id (this is your id),
       internal_id,
       name,
-      party (if we get this data from you),
       vote_summary:
       {
         total_votes,
@@ -440,7 +455,6 @@ puts "**********************************"
               date
               present (yes/no)
               vote (yes/no/abstain)
-####              one_hearing_only (yes/no)
               summary: 
               {
                 total_yes,
@@ -457,7 +471,7 @@ puts "**********************************"
     }
   }  
 =end  
-  def self.api_v1_by_member(member_id, with_laws=false)
+  def self.api_v1_member_votes(member_id, with_laws=false, passed_after=nil, passed_before=nil, made_public_after=nil, made_public_before=nil)
     h = Hash.new
     if member_id.present?
       member = find_by_id(member_id)
@@ -498,6 +512,18 @@ puts "**********************************"
           sql << "	inner join delegates as d on vr.delegate_id = d.id "
           sql << "	where d.all_delegate_id = :all_delegate_id "
           sql << "	and a.is_public = 1 and a.public_url_id is not null "
+          if passed_after.present?
+            sql << "and c.start_date >= :passed_after "
+          end
+          if passed_before.present?
+            sql << "and c.start_date <= :passed_before "
+          end
+          if made_public_after.present?
+            sql << "and a.made_public_at >= :made_public_after "
+          end
+          if made_public_before.present?
+            sql << "and a.made_public_at <= :made_public_before "
+          end
           sql << ") as s3 "
           sql << "left join ( "
           sql << "	select a.id, c.start_date, vs.id as voting_session_id, vs.result1, vs.result3, vs.result0, vs.not_present "
@@ -527,8 +553,11 @@ puts "**********************************"
           sql << "	inner join delegates as d on vr.delegate_id = d.id "
           sql << "	where d.all_delegate_id = :all_delegate_id "
           sql << ") as s1v on s1v.voting_session_id = s1.voting_session_id "
-              
-          member_laws = find_by_sql([sql, :all_delegate_id => member_id])
+          sql << "order by s3.start_date desc "
+          
+          member_laws = find_by_sql([sql, :all_delegate_id => member_id, 
+              :passed_after => passed_after, :passed_before => passed_before, 
+              :made_public_before => made_public_before, :made_public_after => made_public_after])
               
           if member_laws.present?
             # populate the law array            
@@ -536,8 +565,8 @@ puts "**********************************"
               law = Hash.new
               h[:member][:laws] << law
               
-              law[:law_id] = member_law[:law_id]
               law[:internal_id] = member_law[:public_url_id]
+              law[:law_id] = member_law[:law_id]
               law[:title] = member_law[:title]
               law[:released_to_public_at] = member_law[:made_public_at]
               sessions = Hash.new
