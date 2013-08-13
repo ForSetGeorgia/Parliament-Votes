@@ -7,11 +7,14 @@ class Api::V1Controller < ApplicationController
   end
   
   def members
-      respond_to do |format|
-        format.json { 
-          render json: AllDelegate.api_v1_members()
-        }
-      end
+    respond_to do |format|
+      format.json { 
+        render json: AllDelegate.api_v1_members()
+      }
+    end
+
+    # record call to google analytics
+    record_analytics("members")
   end
   
   def member_votes
@@ -39,10 +42,31 @@ class Api::V1Controller < ApplicationController
             passed_after, passed_before, made_public_after, made_public_before)
         }
       end
+      
+      # record call to google analytics
+      record_analytics("member_votes")
     else
       # member id not provided, go back to index page
       redirect_to :action => 'index'
     end
   end
+
+protected
+
+  # record call to google analytics
+  def record_analytics(api_method)
+    ga_id = nil
+    domain = nil
+    if Rails.env.production?
+      ga_id = 'UA-12801815-23'
+      domain = 'votes.parliament.ge'
+    elsif Rails.env.staging?
+      ga_id = 'UA-12801815-15'
+      domain = 'dev-parlvote.jumpstart.ge'
+    end
+    # page view format is (title, url)
+    Gabba::Gabba.new(ga_id, domain).page_view("api:v1:#{api_method}", request.fullpath) if ga_id.present?
+  end  
+  
 
 end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'bundler', '~> 1.2.0'
+gem 'bundler', '~> 1.3.0'
 gem "rails", "3.1.10"
 gem "mysql2", "~> 0.3.11" # this gem works better with utf-8
 
@@ -34,6 +34,7 @@ gem "paper_trail", "~> 2.7.0" # keep audit log of all transactions
 gem "active_attr", "~> 0.5.1" # to create tabless models; using for contact form
 gem "whenever", "~> 0.8.2", require: false # easily schedule cron jobs
 gem "impressionist", "~> 1.1.1" # keep track of views
+gem "gabba", "~> 1.0.1" # send to google analytics from server side
 
 # Gems used only for assets and not required
 # in production environments by default.
