@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
 	before_filter :set_locale
-	before_filter :preload_global_variables
-	before_filter :initialize_gon
+  before_filter :preload_global_variables
+  before_filter :initialize_gon
 	before_filter :store_location
 
 	layout :layout_by_resource
@@ -39,30 +39,36 @@ class ApplicationController < ActionController::Base
   end
 
 	def preload_global_variables
-    @parliaments = Parliament.sorted_start_year
+    # only load if not using the api
+	  if params[:controller].index('api') != 0
+      @parliaments = Parliament.sorted_start_year
+    end
 	end
 
 	def initialize_gon
-		gon.set = true
+    # only load if not using the api
+	  if params[:controller].index('api') != 0
+		  gon.set = true
 
-    gon.highlight_first_form_field = true if params[:controller].index('devise/').present?
+      gon.highlight_first_form_field = true if params[:controller].index('devise/').present?
 
-		if I18n.locale == :ka
-		  gon.datatable_i18n_url = "/datatable_ka.txt"
-		else
-		  gon.datatable_i18n_url = ""
-		end
+		  if I18n.locale == :ka
+		    gon.datatable_i18n_url = "/datatable_ka.txt"
+		  else
+		    gon.datatable_i18n_url = ""
+		  end
 
-    gon.table_cell_yes = I18n.t('helpers.boolean.y')
-    gon.table_cell_no = I18n.t('helpers.boolean.n')
-    gon.table_cell_abstain = I18n.t('helpers.boolean.abstain')
+      gon.table_cell_yes = I18n.t('helpers.boolean.y')
+      gon.table_cell_no = I18n.t('helpers.boolean.n')
+      gon.table_cell_abstain = I18n.t('helpers.boolean.abstain')
 
-    if @parliaments.present?
-      gon.parl_start_year = @parliaments.first.start_year.to_s
-      gon.parl_end_year = @parliaments.first.end_year > Time.now.year ? Time.now.year.to_s : @parliaments.first.end_year.to_s
-    else
-      gon.parl_start_year = "2010"
-      gon.parl_end_year = Time.now.year.to_s
+      if @parliaments.present?
+        gon.parl_start_year = @parliaments.first.start_year.to_s
+        gon.parl_end_year = @parliaments.first.end_year > Time.now.year ? Time.now.year.to_s : @parliaments.first.end_year.to_s
+      else
+        gon.parl_start_year = "2010"
+        gon.parl_end_year = Time.now.year.to_s
+      end
     end
 	end
 

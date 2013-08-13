@@ -376,6 +376,201 @@ puts "**********************************"
 puts "**********************************"
   end
   
+  
+  
+  #######################################
+  #######################################
+  ### api
+  #######################################
+  #######################################
+  
+  # return: 
+=begin
+  {
+    member:
+    {
+      id (this is your id),
+      internal_id,
+      name,
+      party (if we get this data from you),
+      vote_summary:
+      {
+        total_votes,
+        yes_votes,
+        no_votes,
+        abstain_votes,
+        absent,
+      },
+      laws: [
+        {
+          law_id,
+          internal_id,
+          title,
+          released_to_public_at (date law data was made public in our system),
+          sessions: 
+          {
+            session_1: 
+            {
+              date
+              present (yes/no)
+              vote (yes/no/abstain)
+              summary: 
+              {
+                total_yes,
+                total_no,
+                total_abstain,
+                total_absent
+              }
+            },
+            session_2: 
+            {
+              date
+              present (yes/no)
+              vote (yes/no/abstain)
+              summary: 
+              {
+                total_yes,
+                total_no,
+                total_abstain,
+                total_absent
+              }
+            },
+            session_3: 
+            {
+              date
+              present (yes/no)
+              vote (yes/no/abstain)
+####              one_hearing_only (yes/no)
+              summary: 
+              {
+                total_yes,
+                total_no,
+                total_abstain,
+                total_absent
+              }
+            }
+          }
+        },
+        { another law },
+        { another law } ...
+      ]
+    }
+  }  
+=end  
+  def self.api_v1_by_member(member_id, with_laws=false)
+    h = Hash.new
+    if member_id.present?
+      member = find_by_id(member_id)
+      if member.present?
+        # create member hash
+        h[:internal_id] = member.id
+        h[:name] = member.first_name
+        # add vote summary
+        vote_summary = Hash.new
+        h[:vote_summary] = vote_summary
+        vote_summary[:total_votes] = member.vote_count
+        vote_summary[:yes_votes] = member.yes_count
+        vote_summary[:no_votes] = member.no_count
+        vote_summary[:abstain_votes] = member.abstain_count
+        vote_summary[:absent] = member.absent_count
+        # add laws if desired
+        if with_laws
+          h[:laws] = []
+          
+          # get law data
+          sql = "select s3.public_url_id, s3.law_id, s3.made_public_at,s3.official_law_title as title, s1.start_date as s1_date, s1v.present as s1_present, s1v.vote as s1_vote, "
+          sql << "s2.start_date as s2_date, s2v.present as s2_present, s2v.vote as s2_vote, s3.start_date as s3_date, s3.present as s3_present, s3.vote as s3_vote "
+          sql << "from (select a.id, a.session_number1_id, a.session_number2_id,  "
+          sql << "	a.public_url_id, a.law_id, a.made_public_at, a.official_law_title,  "
+          sql << "	c.start_date, vr.present, vr.vote "
+          sql << "	from  "
+          sql << "	agendas as a "
+          sql << "	inner join conferences as c on c.id = a.conference_id "
+          sql << "	inner join voting_sessions as vs on vs.agenda_id = a.id "
+          sql << "	inner join voting_results as vr on vr.voting_session_id = vs.id "
+          sql << "	inner join delegates as d on vr.delegate_id = d.id "
+          sql << "	where d.all_delegate_id = :all_delegate_id "
+          sql << "	and a.is_public = 1 and a.public_url_id is not null "
+          sql << ") as s3 "
+          sql << "left join ( "
+          sql << "	select a.id, c.start_date, vs.id as voting_session_id "
+          sql << "	from  "
+          sql << "	agendas as a "
+          sql << "	inner join conferences as c on c.id = a.conference_id "
+          sql << "	inner join voting_sessions as vs on vs.agenda_id = a.id "
+          sql << ") as s2 on s2.id = s3.session_number2_id "
+          sql << "left join ( "
+          sql << "	select a.id, c.start_date, vs.id as voting_session_id "
+          sql << "	from  "
+          sql << "	agendas as a "
+          sql << "	inner join conferences as c on c.id = a.conference_id "
+          sql << "	inner join voting_sessions as vs on vs.agenda_id = a.id "
+          sql << ") as s1 on s1.id = s3.session_number1_id "
+          sql << "left join ( "
+          sql << "	select vr.present, vr.vote, vr.voting_session_id "
+          sql << "	from  "
+          sql << "	voting_results as vr "
+          sql << "	inner join delegates as d on vr.delegate_id = d.id "
+          sql << "	where d.all_delegate_id = :all_delegate_id "
+          sql << ") as s2v on s2v.voting_session_id = s2.voting_session_id "
+          sql << "left join ( "
+          sql << "	select vr.present, vr.vote, vr.voting_session_id "
+          sql << "	from  "
+          sql << "	voting_results as vr "
+          sql << "	inner join delegates as d on vr.delegate_id = d.id "
+          sql << "	where d.all_delegate_id = :all_delegate_id "
+          sql << ") as s1v on s1v.voting_session_id = s1.voting_session_id "
+              
+          member_laws = find_by_sql([sql, :all_delegate_id => member_id])
+              
+          if member_laws.present?
+            # populate the law array            
+            member_laws.each do |member_law|
+              law = Hash.new
+              h[:laws] << law
+              
+              law[:law_id] = member_law[:law_id]
+              law[:internal_id] = member_law[:public_url_id]
+              law[:title] = member_law[:title]
+              law[:released_to_public_at] = member_law[:made_public_at]
+              sessions = Hash.new
+              law[:sessions] = sessions
+              # if the law does not have a first or second session, 
+              # then law is 1 hearing only
+              if member_law[:s1_date].present? && member_law[:s2_date].present?
+                s1 = Hash.new
+                sessions[:session_1] = s1
+                s1[:date] = member_law[:s1_date]
+                s1[:present] = member_law[:s1_present]
+                s1[:vote] = member_law[:s1_vote]
+                s2 = Hash.new
+                sessions[:session_2] = s2
+                s2[:date] = member_law[:s2_date]
+                s2[:present] = member_law[:s2_present]
+                s2[:vote] = member_law[:s2_vote]
+                s3 = Hash.new
+                sessions[:session_3] = s3
+                s3[:date] = member_law[:s3_date]
+                s3[:present] = member_law[:s3_present]
+                s3[:vote] = member_law[:s3_vote]
+              else 
+                s1 = Hash.new
+                sessions[:session_1] = s1
+                s1[:date] = member_law[:s3_date]
+                s1[:present] = member_law[:s3_present]
+                s1[:vote] = member_law[:s3_vote]
+              end
+              
+            end
+          end
+        end
+      end
+    end
+    return h
+  end
+
+
+  
 protected
 
   def self.passed_laws_vote_count_query
@@ -422,5 +617,6 @@ protected
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.present = 0')
     find_by_sql([sql, :parl_id => parliament_id])
   end
+
 
 end
