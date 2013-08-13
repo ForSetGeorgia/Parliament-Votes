@@ -59,6 +59,18 @@ BootstrapStarter::Application.routes.draw do
 		# notifications
 		match '/notifications', :to => 'notifications#index', :as => :notifications, :via => [:get, :post]
 
+
+    # api
+		match '/api', :to => 'api#index', :as => :api, :via => :get
+		namespace :api do
+			#v1
+	    match '/v1' => 'v1#index', :via => :get
+	    match '/v1/q' => 'v1#q', :via => :get, :defaults => {:format => 'json'}
+		end
+
+
+
+
 		root :to => 'root#index'
 	  match "*path", :to => redirect("/#{I18n.default_locale}") # handles /en/fake/path/whatever
 	end
