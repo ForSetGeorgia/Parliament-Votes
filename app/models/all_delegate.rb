@@ -463,12 +463,13 @@ puts "**********************************"
       member = find_by_id(member_id)
       if member.present?
         # create member hash
-        h[:note] = I18n.t('helpers.link.not_present2_footnote')
-        h[:internal_id] = member.id
-        h[:name] = member.first_name
+        h[:note] = I18n.t('helpers.links.not_present2_footnote')
+        h[:member] = Hash.new
+        h[:member][:internal_id] = member.id
+        h[:member][:name] = member.first_name
         # add vote summary
         vote_summary = Hash.new
-        h[:vote_summary] = vote_summary
+        h[:member][:vote_summary] = vote_summary
         vote_summary[:total_votes] = member.vote_count
         vote_summary[:yes_votes] = member.yes_count
         vote_summary[:no_votes] = member.no_count
@@ -476,14 +477,19 @@ puts "**********************************"
         vote_summary[:absent] = member.absent_count
         # add laws if desired
         if with_laws
-          h[:laws] = []
+          h[:member][:laws] = []
           
           # get law data
-          sql = "select s3.public_url_id, s3.law_id, s3.made_public_at,s3.official_law_title as title, s1.start_date as s1_date, s1v.present as s1_present, s1v.vote as s1_vote, "
-          sql << "s2.start_date as s2_date, s2v.present as s2_present, s2v.vote as s2_vote, s3.start_date as s3_date, s3.present as s3_present, s3.vote as s3_vote "
+          sql = "select s3.public_url_id, s3.law_id, s3.made_public_at,s3.official_law_title as title, "
+          sql << "s1.start_date as s1_date, s1v.present as s1_present, s1v.vote as s1_vote, "
+          sql << "s1.result1 as s1_yes_votes, s1.result3 as s1_no_votes, s1.result0 as s1_abstain_votes, s1.not_present as s1_not_present, "
+          sql << "s2.start_date as s2_date, s2v.present as s2_present, s2v.vote as s2_vote, "
+          sql << "s2.result1 as s2_yes_votes, s2.result3 as s2_no_votes, s2.result0 as s2_abstain_votes, s2.not_present as s2_not_present, "
+          sql << "s3.start_date as s3_date, s3.present as s3_present, s3.vote as s3_vote, "
+          sql << "s3.result1 as s3_yes_votes, s3.result3 as s3_no_votes, s3.result0 as s3_abstain_votes, s3.not_present as s3_not_present "
           sql << "from (select a.id, a.session_number1_id, a.session_number2_id,  "
           sql << "	a.public_url_id, a.law_id, a.made_public_at, a.official_law_title,  "
-          sql << "	c.start_date, vr.present, vr.vote "
+          sql << "	c.start_date, vr.present, vr.vote, vs.result1, vs.result3, vs.result0, vs.not_present "
           sql << "	from  "
           sql << "	agendas as a "
           sql << "	inner join conferences as c on c.id = a.conference_id "
@@ -494,14 +500,14 @@ puts "**********************************"
           sql << "	and a.is_public = 1 and a.public_url_id is not null "
           sql << ") as s3 "
           sql << "left join ( "
-          sql << "	select a.id, c.start_date, vs.id as voting_session_id "
+          sql << "	select a.id, c.start_date, vs.id as voting_session_id, vs.result1, vs.result3, vs.result0, vs.not_present "
           sql << "	from  "
           sql << "	agendas as a "
           sql << "	inner join conferences as c on c.id = a.conference_id "
           sql << "	inner join voting_sessions as vs on vs.agenda_id = a.id "
           sql << ") as s2 on s2.id = s3.session_number2_id "
           sql << "left join ( "
-          sql << "	select a.id, c.start_date, vs.id as voting_session_id "
+          sql << "	select a.id, c.start_date, vs.id as voting_session_id, vs.result1, vs.result3, vs.result0, vs.not_present "
           sql << "	from  "
           sql << "	agendas as a "
           sql << "	inner join conferences as c on c.id = a.conference_id "
@@ -528,7 +534,7 @@ puts "**********************************"
             # populate the law array            
             member_laws.each do |member_law|
               law = Hash.new
-              h[:laws] << law
+              h[:member][:laws] << law
               
               law[:law_id] = member_law[:law_id]
               law[:internal_id] = member_law[:public_url_id]
@@ -544,22 +550,49 @@ puts "**********************************"
                 s1[:date] = member_law[:s1_date]
                 s1[:present] = format_present(member_law[:s1_present])
                 s1[:vote] = format_vote(member_law[:s1_vote])
+                session1_vote_summary = Hash.new
+                s1[:vote_summary] = session1_vote_summary
+                session1_vote_summary[:yes_votes] = member_law[:s1_yes_votes]
+                session1_vote_summary[:no_votes] = member_law[:s1_no_votes]
+                session1_vote_summary[:abstain_votes] = member_law[:s1_abstain_votes]
+                session1_vote_summary[:absent] = member_law[:s1_not_present]
+
                 s2 = Hash.new
                 sessions[:session_2] = s2
                 s2[:date] = member_law[:s2_date]
                 s2[:present] = format_present(member_law[:s2_present])
                 s2[:vote] = format_vote(member_law[:s2_vote])
+                session2_vote_summary = Hash.new
+                s2[:vote_summary] = session2_vote_summary
+                session2_vote_summary[:yes_votes] = member_law[:s2_yes_votes]
+                session2_vote_summary[:no_votes] = member_law[:s2_no_votes]
+                session2_vote_summary[:abstain_votes] = member_law[:s2_abstain_votes]
+                session2_vote_summary[:absent] = member_law[:s2_not_present]
+
                 s3 = Hash.new
                 sessions[:session_3] = s3
                 s3[:date] = member_law[:s3_date]
                 s3[:present] = format_present(member_law[:s3_present])
                 s3[:vote] = format_vote(member_law[:s3_vote])
+                session3_vote_summary = Hash.new
+                s3[:vote_summary] = session3_vote_summary
+                session3_vote_summary[:yes_votes] = member_law[:s3_yes_votes]
+                session3_vote_summary[:no_votes] = member_law[:s3_no_votes]
+                session3_vote_summary[:abstain_votes] = member_law[:s3_abstain_votes]
+                session3_vote_summary[:absent] = member_law[:s3_not_present]
+
               else 
                 s1 = Hash.new
                 sessions[:session_1] = s1
                 s1[:date] = member_law[:s3_date]
                 s1[:present] = format_present(member_law[:s3_present])
                 s1[:vote] = format_vote(member_law[:s3_vote])
+                session1_vote_summary = Hash.new
+                s1[:vote_summary] = session1_vote_summary
+                session1_vote_summary[:yes_votes] = member_law[:s3_yes_votes]
+                session1_vote_summary[:no_votes] = member_law[:s3_no_votes]
+                session1_vote_summary[:abstain_votes] = member_law[:s3_abstain_votes]
+                session1_vote_summary[:absent] = member_law[:s3_not_present]
               end
               
             end
