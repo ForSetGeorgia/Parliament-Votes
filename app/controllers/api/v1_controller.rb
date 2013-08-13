@@ -16,8 +16,10 @@ class Api::V1Controller < ApplicationController
   
   def member_votes
     if params[:member_id].present?
-      # if with_laws provided, convert to boolean
+      # convert string into boolean
       with_laws = params[:with_laws].present? && params[:with_laws] =~ (/(true|t|yes|y|1)$/i) ? true : false
+      with_law_vote_summary = params[:with_law_vote_summary].present? && params[:with_law_vote_summary] =~ (/(true|t|yes|y|1)$/i) ? true : false
+
       # if dates provided, make sure they are valid dates
       if params[:passed_after].present?
         passed_after = Date.parse(params[:passed_after]) rescue nil
@@ -33,7 +35,7 @@ class Api::V1Controller < ApplicationController
       end
       respond_to do |format|
         format.json { 
-          render json: AllDelegate.api_v1_member_votes(params[:member_id], with_laws, 
+          render json: AllDelegate.api_v1_member_votes(params[:member_id], with_laws, with_law_vote_summary,
             passed_after, passed_before, made_public_after, made_public_before)
         }
       end

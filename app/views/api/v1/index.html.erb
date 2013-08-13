@@ -12,7 +12,12 @@
 <p>
   Only Parliament Members and laws passed during the 2012-2016 Parliament will be returned in this version of the api.
 </p>
-
+<p>Notes:</p>
+<ul>
+  <li>
+    The names are sorted in alphabetical order.
+  </li>
+</ul>
 
 <h2><a href="./v1/members">members</a></h2>
 <p>
@@ -47,6 +52,10 @@
   <li>
     with_laws (optional) - If 'true', all laws the Parliament Member has voted on will be returned.
     If 'false' or not provided, only a summary of the Parliament Member's vote history will be returned.
+  </li>
+  <li>
+    with_law_vote_summary (optional) - If 'true', a summary of each Session's vote will be provided.
+    This summary includes the number of: yes votes, no votes, abstain votes, and the number of Member's absent.
   </li>
   <li>
     passed_after (optional) - A date to get laws that were passed on or after this date.
@@ -97,7 +106,7 @@
             date,
             present,
             vote,
-            summary: 
+            vote_summary: 
             {
               total_yes,
               total_no,
@@ -110,7 +119,7 @@
             date,
             present,
             vote,
-            summary: 
+            vote_summary: 
             {
               total_yes,
               total_no,
@@ -123,7 +132,7 @@
             date,
             present,
             vote,
-            summary: 
+            vote_summary: 
             {
               total_yes,
               total_no,
@@ -144,8 +153,15 @@
 <p>Notes:</p>
 <ul>
   <li>
-    If the querystring parameter <code>with_laws</code> is not provided or is not 'true', 
-    the <code>laws</code> array will not be provided.
+    The laws are sorted in descending order by the <code>date</code> in the <code>session_3</code> hash.
+  </li>
+  <li>
+    If the querystring parameter <code>with_laws</code> is 'true', 
+    the <code>laws</code> array will be provided.
+  </li>
+  <li>
+    If the querystring parameter <code>with_law_vote_summary</code> is 'true', 
+    the <code>vote_summary</code> hash in the <code>session_x</code> hashes will be provided.
   </li>
   <li>
     The querystring parameters <code>passed_after</code> and <code>passed_before</code>
