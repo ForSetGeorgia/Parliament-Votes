@@ -463,6 +463,7 @@ puts "**********************************"
       member = find_by_id(member_id)
       if member.present?
         # create member hash
+        h[:note] = I18n.t('helpers.link.not_present2_footnote')
         h[:internal_id] = member.id
         h[:name] = member.first_name
         # add vote summary
@@ -541,24 +542,24 @@ puts "**********************************"
                 s1 = Hash.new
                 sessions[:session_1] = s1
                 s1[:date] = member_law[:s1_date]
-                s1[:present] = member_law[:s1_present]
-                s1[:vote] = member_law[:s1_vote]
+                s1[:present] = format_present(member_law[:s1_present])
+                s1[:vote] = format_vote(member_law[:s1_vote])
                 s2 = Hash.new
                 sessions[:session_2] = s2
                 s2[:date] = member_law[:s2_date]
-                s2[:present] = member_law[:s2_present]
-                s2[:vote] = member_law[:s2_vote]
+                s2[:present] = format_present(member_law[:s2_present])
+                s2[:vote] = format_vote(member_law[:s2_vote])
                 s3 = Hash.new
                 sessions[:session_3] = s3
                 s3[:date] = member_law[:s3_date]
-                s3[:present] = member_law[:s3_present]
-                s3[:vote] = member_law[:s3_vote]
+                s3[:present] = format_present(member_law[:s3_present])
+                s3[:vote] = format_vote(member_law[:s3_vote])
               else 
                 s1 = Hash.new
                 sessions[:session_1] = s1
                 s1[:date] = member_law[:s3_date]
-                s1[:present] = member_law[:s3_present]
-                s1[:vote] = member_law[:s3_vote]
+                s1[:present] = format_present(member_law[:s3_present])
+                s1[:vote] = format_vote(member_law[:s3_vote])
               end
               
             end
@@ -616,6 +617,24 @@ protected
   def self.passed_laws_absent_count(parliament_id)
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.present = 0')
     find_by_sql([sql, :parl_id => parliament_id])
+  end
+
+
+  def self.format_present(present)
+    present == 1 ? I18n.t('helpers.boolean.y') : I18n.t('helpers.boolean.n')
+  end
+
+  def self.format_vote(vote)
+    case vote
+      when 0
+        I18n.t('helpers.boolean.abstain')
+      when 1
+        I18n.t('helpers.boolean.y')
+      when 3
+        I18n.t('helpers.boolean.n')
+      else
+        I18n.t('helpers.links.not_present')
+    end
   end
 
 
