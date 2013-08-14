@@ -56,7 +56,7 @@ protected
   # record call to google analytics
   def record_analytics(api_method)
 Rails.logger.debug "referer = #{request.env['HTTP_REFERER']}"
-Rails.logger.debug "ip = #{request.env["REMOTE_ADDR"]}"
+Rails.logger.debug "ip = #{request.remote_ip}"
     ga_id = nil
     domain = nil
     if Rails.env.production?
@@ -70,7 +70,7 @@ Rails.logger.debug "ip = #{request.env["REMOTE_ADDR"]}"
     if ga_id.present?
       g = Gabba::Gabba.new(ga_id, domain)
       g.referer(request.env['HTTP_REFERER'])
-      g.ip(request.env["REMOTE_ADDR"])
+      g.ip(request.remote_ip)
       g.page_view("api:v1:#{api_method}", request.fullpath) 
     end
   end  
