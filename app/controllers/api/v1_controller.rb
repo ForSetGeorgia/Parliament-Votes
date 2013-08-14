@@ -65,7 +65,12 @@ protected
       domain = 'dev-parlvote.jumpstart.ge'
     end
     # page view format is (title, url)
-    Gabba::Gabba.new(ga_id, domain).page_view("api:v1:#{api_method}", request.fullpath) if ga_id.present?
+    if ga_id.present?
+      g = Gabba::Gabba.new(ga_id, domain)
+      g.referer(request.env['HTTP_REFERER'])
+      g.ip(request.env["REMOTE_ADDR"])
+      g.page_view("api:v1:#{api_method}", request.fullpath) 
+    end
   end  
   
 
