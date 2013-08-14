@@ -1,4 +1,5 @@
 class Api::V1Controller < ApplicationController
+	require 'fileutils'
 
   def index
 	  respond_to do |format|
@@ -22,8 +23,13 @@ class Api::V1Controller < ApplicationController
       respond_to do |format|
         format.json { 
           process_parameters
-          render json: AllDelegate.api_v1_member_votes(params[:member_id], @with_laws, @with_law_vote_summary,
+#          render json: AllDelegate.api_v1_member_votes(params[:member_id], @with_laws, @with_law_vote_summary,
+#            @passed_after, @passed_before, @made_public_after, @made_public_before)
+
+          file_path = AllDelegate.api_v1_member_votes(params[:member_id], @with_laws, @with_law_vote_summary,
             @passed_after, @passed_before, @made_public_after, @made_public_before)
+
+          send_file "#{file_path}", :type => "application/json", :disposition => 'inline'
         }
       end
       
@@ -39,19 +45,11 @@ class Api::V1Controller < ApplicationController
     respond_to do |format|
       format.json { 
         process_parameters
-        #create file name
-        file_name = Time.now.strftime('%Y%m%dT%H%M%S%L')
-        file_path = "#{Rails.root}/tmp/api_v1_all_member_votes#{file_name}.json"
-#        render json: AllDelegate.api_v1_all_member_votes(file_name, @with_laws, @with_law_vote_summary,
-#          @passed_after, @passed_before, @made_public_after, @made_public_before)
-
-        AllDelegate.api_v1_all_member_votes(file_path, @with_laws, @with_law_vote_summary,
+        
+        file_path = AllDelegate.api_v1_all_member_votes(@with_laws, @with_law_vote_summary,
           @passed_after, @passed_before, @made_public_after, @made_public_before)
-
+        
         send_file "#{file_path}", :type => "application/json", :disposition => 'inline'
-
-        File.delete("#{file_path}")
-
       }
     end
     

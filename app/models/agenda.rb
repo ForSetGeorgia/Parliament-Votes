@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class Agenda < ActiveRecord::Base
+	require 'fileutils'
   require 'open-uri'
   has_paper_trail
   is_impressionable :counter_cache => true
@@ -222,9 +223,15 @@ Rails.logger.debug "********** law url not present"
 
       # update vote count
       AllDelegate.update_vote_counts(self.parliament_id) if !self.not_update_vote_count
+      
+      # clear out json api files
+      FileUtils.rm_rf(AllDelegate::JSON_API_PATH)
     elsif was_public && !is_public && self.voting_session.present?
       # law is no longer public - update vote counts
       AllDelegate.update_vote_counts(self.parliament_id) if !self.not_update_vote_count
+
+      # clear out json api files
+      FileUtils.rm_rf(AllDelegate::JSON_API_PATH)
     end
   end
 
