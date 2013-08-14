@@ -642,7 +642,23 @@ puts "**********************************"
     return h
   end
 
+  def self.api_v1_all_member_votes(file_path, with_laws=false, with_law_vote_summary=false, passed_after=nil, passed_before=nil, made_public_after=nil, made_public_before=nil)
+    a = []
+      members = api_v1_members
+      if members.present?
+        File.open(file_path, 'a') {|f| f << '[' }
+        members.each_with_index do |member, i|
+          votes = api_v1_member_votes(member[:id], with_laws, with_law_vote_summary, passed_after, passed_before, made_public_after, made_public_before)
+          #a << votes if votes.has_key?(:member) && votes[:member].has_key?(:name) && votes[:member][:name].present?        
+          add_comma = i == members.length-1 ? '' : ','
+          File.open(file_path, 'a') {|f| f << votes.to_json + add_comma }
 
+break if i > 50   
+        end
+        File.open(file_path, 'a') {|f| f << ']' }
+      end
+    return a
+  end
   
 protected
 
