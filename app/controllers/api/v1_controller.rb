@@ -55,6 +55,8 @@ protected
 
   # record call to google analytics
   def record_analytics(api_method)
+Rails.logger.debug "referer = #{request.env['HTTP_REFERER']}"
+Rails.logger.debug "ip = #{request.env["REMOTE_ADDR"]}"
     ga_id = nil
     domain = nil
     if Rails.env.production?
