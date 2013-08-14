@@ -21,7 +21,7 @@
 
 <h2>members</h2>
 <p>
-  URL: <a href="./v1/members" target="_blank">api/v1/members</a>
+  URL: <%= link_to "/api/v1/members", :controller=>"api/v1", :action=>"members" %>
 </p>
 <p>
   This method will get a list of all members in the system.  
@@ -43,7 +43,7 @@
 
 <h2>member_votes</h2>
 <p>
-  URL: <a href="./v1/member_votes?member_id=1&with_laws=true" target="_blank">api/v1/member_votes?member_id=1</a>
+  URL: <%= link_to "/api/v1/member_votes?member_id=1", :controller=>"api/v1", :action=>"member_votes", :member_id => 1, :with_laws => true %>
 </p>
 <p>
   This method will get a list of all laws a Parliament Member has voted on.
