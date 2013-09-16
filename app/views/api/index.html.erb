@@ -1,13 +1,13 @@
-<% title "API" %>
+<% title t('.title') %>
 
-<h2>Versions</h2>
+<h2><%= t('.versions_header') %></h2>
 <ul>
   <li>
-    <%= link_to "Version 1", :controller=>"api/v1", :action=>"index" %>
+    <%= link_to t('.version1'), :controller=>"api/v1", :action=>"index" %>
   </li>
 </ul>
 
 <br /><br /><br />
 <p>
-Note: The Parliament voting system only records text in Georgian, therefore, if you are using the English portion of the votes.parliament.ge API, all text will be in Georgian.
+<%= t('.note') %>
 </p>

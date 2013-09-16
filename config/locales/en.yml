@@ -335,4 +335,51 @@ en:
       law_is_public_sub_title: New Law Notifications
       law_is_public_all: Notify me when a law becomes available.
       law_is_public_none: I do not want to receive notifications when a law becomes available.
-
+  api:
+    index: 
+      title: API
+      versions_header: Versions
+      version1: Version 1
+      note: "Note: The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all text will be in Georgian."
+    v1:
+      index:
+        title: API - Version 1
+        intro:
+          p1: This is Version 1 of the API for votes.parliament.ge. Last updated on 2013-08-13.
+          p2: All methods return JSON formatted data.
+          p3: Only Parliament Members and laws passed during the 2012-2016 Parliament will be returned in this version of the API.
+          p4: "Notes:"
+          li1: The names are sorted in alphabetical order.
+          li2: "The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all text will be in Georgian."
+        members:
+          title: members
+          p1: URL
+          p2: "This method will get a list of all members in the system. This method is helpful to get the ID of a Parliament Member that is needed for input into the other methods provided in this API."
+          p3: "The return format will be like the following:"  
+          ex_name1: John Doe
+          ex_name2: Jane Doe
+        member_votes:
+          title: member_votes
+          p1: URL
+          p2: This method will get a list of all laws a Parliament Member has voted on.
+          p3: "The query parameters for this method are the following:"
+          required: required
+          optional: optional
+          li1: ID of Parliament Member to get vote records for.
+          li2: "If 'true', all laws the Parliament Member has voted on will be returned. If 'false' or not provided, only a summary of the Parliament Member's vote history will be returned."
+          li3: "If 'true', a summary of each Session's vote will be provided. This summary includes the number of: yes votes, no votes, abstain votes, and the number of Member's absent."
+          li4: "A date to get laws that were passed on or after this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
+          li5: "A date to get laws that were passed on or before this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
+          li6: "A date to get laws that were made avialable to the public on votes.parliament.ge on or after this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
+          li7: "A date to get laws that were made avialable to the public on votes.parliament.ge on or before this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
+          p4: "The return format will be like the following:"
+          p5: "Notes:"
+          nli1: "The laws are sorted in descending order by the <code>date</code> in the <code>session_3</code> hash."
+          nli2: "If the querystring parameter <code>with_laws</code> is 'true', the <code>laws</code> array will be provided."
+          nli3: "If the querystring parameter <code>with_law_vote_summary</code> is 'true', the <code>vote_summary</code> hash in the <code>session_x</code> hashes will be provided."
+          nli4: "The querystring parameters <code>passed_after</code> and <code>passed_before</code> refer to the <code>date</code> value in the <code>session_3</code> hash."
+          nli5: "The querystring parameters <code>made_public_after</code> and <code>made_public_before</code> refer to the <code>released_to_public_at</code> value in the <code>laws</code> array."
+          nli6: "The possible values for <code>present</code> in the <code>session_x</code> hashes are the following:"
+          nli7: "The possible values for <code>vote</code> in the <code>session_x</code> hashes are the following:"
+          nli8: "It is possible for a law to be passed after only 1 session of voting. When this occurs, only <code>session_1</code> will be returned in the <code>sessions</code> hash."
+          nli9: "The Parliament voting system does not allow a Parliament Member to vote 'Abstain', therefore, it is not possible to distinguish between 'Abstain' and 'Not Present'."

@@ -1,39 +1,40 @@
-<% title "API - V1" %>
+<% title t('.title') %>
 
 <p>
-  This is Version 1 of the API for votes.parliament.ge.  
-  Last updated on 2013-08-13.
+  <%= t('.intro.p1') %>
 </p>
 
 <p>
-  All methods return JSON formatted data.
+  <%= t('.intro.p2') %>
 </p>
 
 <p>
-  Only Parliament Members and laws passed during the 2012-2016 Parliament will be returned in this version of the API.
+  <%= t('.intro.p3') %>
 </p>
-<p>Notes:</p>
+<p><%= t('.intro.p4') %></p>
 <ul>
   <li>
-    The names are sorted in alphabetical order.
+      <%= t('.intro.li1') %>
+  </li>
+  <li>
+      <%= t('.intro.li2') %>
   </li>
 </ul>
 
-<h2>members</h2>
+<h2><%= t('.members.title') %></h2>
 <p>
-  URL: <%= link_to "/api/v1/members", {:controller=>"api/v1", :action=>"members"}, :target => :blank %>
+  <%= t('.members.p1') %>: <%= link_to "/api/v1/members", {:controller=>"api/v1", :action=>"members"}, :target => :blank %>
 </p>
 <p>
-  This method will get a list of all members in the system.  
-  This method is helpful to get the ID of a Parliament Member that is needed for input into the other methods provided in this API.
+  <%= t('.members.p2') %>
 </p>
 <p>  
-  The return format will be like the following:
+  <%= t('.members.p3') %>
 </p>
 <pre>
 [
-  {id: 1, name: "John Doe"},
-  {id: 2, name: "Jane Doe"},
+  {id: 1, name: "<%= t('.members.ex_name1') %>"},
+  {id: 2, name: "<%= t('.members.ex_name2') %>"},
   .
   .
   .
@@ -41,48 +42,42 @@
 </pre>
 
 
-<h2>member_votes</h2>
+<h2><%= t('.member_votes.title') %></h2>
 <p>
-  URL: <%= link_to "/api/v1/member_votes?member_id=1", {:controller=>"api/v1", :action=>"member_votes", :member_id => 1, :with_laws => true}, :target => :blank %>
+  <%= t('.member_votes.p1') %>: <%= link_to "/api/v1/member_votes?member_id=1", {:controller=>"api/v1", :action=>"member_votes", :member_id => 1, :with_laws => true}, :target => :blank %>
 </p>
 <p>
-  This method will get a list of all laws a Parliament Member has voted on.
+  <%= t('.member_votes.p2') %>
 </p>
 <p>
-  The query parameters for this method are the following:
+  <%= t('.member_votes.p3') %>
 </p>
 <ul>
   <li>
-    <code>member_id</code> (required) - ID of Parliament Member to get vote records for.
+    <code>member_id</code> (<%= t('.member_votes.required') %>) - <%= t('.member_votes.li1') %>
   </li>
   <li>
-    <code>with_laws</code> (optional) - If 'true', all laws the Parliament Member has voted on will be returned.
-    If 'false' or not provided, only a summary of the Parliament Member's vote history will be returned.
+    <code>with_laws</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li2') %>
   </li>
   <li>
-    <code>with_law_vote_summary</code> (optional) - If 'true', a summary of each Session's vote will be provided.
-    This summary includes the number of: yes votes, no votes, abstain votes, and the number of Member's absent.
+    <code>with_law_vote_summary</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li3') %>
   </li>
   <li>
-    <code>passed_after</code> (optional) - A date to get laws that were passed on or after this date.
-    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+    <code>passed_after</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li4') %>
   </li>
   <li>
-    <code>passed_before</code> (optional) - A date to get laws that were passed on or before this date.
-    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+    <code>passed_before</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li5') %>
   </li>
   <li>
-    <code>made_public_after</code> (optional) - A date to get laws that were made avialable to the public on votes.parliament.ge on or after this date.
-    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+    <code>made_public_after</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li6') %>
   </li>
   <li>
-    <code>made_public_before</code> (optional) - A date to get laws that were made avialable to the public on votes.parliament.ge on or before this date.
-    Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored.
+    <code>made_public_before</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li7') %>
   </li>
 </ul>
 
 <p>  
-  The return format will be like the following:
+  <%= t('.member_votes.p3') %>
 </p>
 <pre>
 {
@@ -156,29 +151,25 @@
 }
 </pre>
 
-<p>Notes:</p>
+<p><%= t('.member_votes.p4') %></p>
 <ul>
   <li>
-    The laws are sorted in descending order by the <code>date</code> in the <code>session_3</code> hash.
+    <%= t('.member_votes.nli1').html_safe %>
   </li>
   <li>
-    If the querystring parameter <code>with_laws</code> is 'true', 
-    the <code>laws</code> array will be provided.
+    <%= t('.member_votes.nli2').html_safe %>
   </li>
   <li>
-    If the querystring parameter <code>with_law_vote_summary</code> is 'true', 
-    the <code>vote_summary</code> hash in the <code>session_x</code> hashes will be provided.
+    <%= t('.member_votes.nli3').html_safe %>
   </li>
   <li>
-    The querystring parameters <code>passed_after</code> and <code>passed_before</code>
-    refer to the <code>date</code> value in the <code>session_3</code> hash.
+    <%= t('.member_votes.nli4').html_safe %>
   </li>
   <li>
-    The querystring parameters <code>made_public_after</code> and <code>made_public_before</code>
-    refer to the <code>released_to_public_at</code> value in the <code>laws</code> array.
+    <%= t('.member_votes.nli5').html_safe %>
   </li>
   <li>
-    The possible values for <code>present</code> in the <code>session_x</code> hashes are the following:
+    <%= t('.member_votes.nli6').html_safe %>
     <ul>
       <li>
         <%= I18n.t('helpers.boolean.y') %>
@@ -189,7 +180,7 @@
     </ul>
   </li>
   <li>
-    The possible values for <code>vote</code> in the <code>session_x</code> hashes are the following:
+    <%= t('.member_votes.nli7').html_safe %>
     <ul>
       <li>
         <%= I18n.t('helpers.boolean.y') %>
@@ -206,15 +197,9 @@
     </ul>
   </li>
   <li>
-    It is possible for a law to be passed after only 1 session of voting.  
-    When this occurs, only <code>session_1</code> will be returned in the <code>sessions</code> hash.
+    <%= t('.member_votes.nli8').html_safe %>
   </li>
   <li>
-    The Parliament voting system does not allow a Parliament Member to vote 'Abstain', therefore, 
-    it is not possible to distinguish between 'Abstain' and 'Not Present'.
-  </li>
-  <li>
-    The Parliament voting system only records text in Georgian, therefore, if you are using the English 
-    portion of the votes.parliament.ge API, all text will be in Georgian.
+    <%= t('.member_votes.nli9').html_safe %>
   </li>
 </ul>
