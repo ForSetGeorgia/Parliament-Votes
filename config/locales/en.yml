@@ -341,7 +341,7 @@ en:
       title: API
       versions_header: Versions
       version1: Version 1
-      note: "Note: The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all text will be in Georgian."
+      note: "Note: The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all content will be in Georgian."
     v1:
       index:
         title: API - Version 1
@@ -351,7 +351,7 @@ en:
           p3: Only Parliament Members and laws passed during the 2012-2016 Parliament will be returned in this version of the API.
           p4: "Notes:"
           li1: The names are sorted in alphabetical order.
-          li2: "The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all text will be in Georgian."
+          li2: "The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all content will be in Georgian."
         members:
           title: Members
           p1: URL
