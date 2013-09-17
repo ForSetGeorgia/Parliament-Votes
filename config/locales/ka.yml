@@ -219,6 +219,7 @@ ka:
       menu_files: ფაილების ატვირთვა
       menu_laws: კანონის გამოქვეყნება 
       notifications: სიახლეების გამოწერა
+      api: API
       sign_out: გასვლა
       sign_in: სისტემაში შესვლა
       js_link_title: "ეწვიეთ ჯამპსტარტ ჯორჯიას ვებ-გვერდს"
@@ -352,31 +353,31 @@ ka:
           li1: სახელები დალაგებულია ანბანის მიხედვით.
           li2: "პარლამენტის კენჭისყრის სისტემა მხოლოდ ქართული ტექსტის ჩანაწერს აკეთებს, ამიტომ თუნდაც იყენებდეთ votes.parliament.ge-ის API-ის ინგლისურ ვერსიას, ყველა ტექსტი იქნება ქართულად."
         members:
-          title: members
+          title: წევრები
           p1: URL
           p2: "ეს მეთოდი სისტემაში ყველა წევრის სიას მიიღებს. ეს მეთოდი გამოსადეგია პარლამენტის წევრის ID-ის მისაღებად, რომელიც საჭიროა ამ API-ში არსებულ სხვა მეთოდებში სესატანად."
           p3: "დაბრუნების ფორმატი იქნება შემდეგნარი:"  
           ex_name1: John Doe
           ex_name2: Jane Doe
         member_votes:
-          title: member_votes
+          title: წევრების ხმები
           p1: URL
           p2: ეს მეთოდი მიიღებს კანონების სიას, რომელსაც ხმა მისცეს პარლამენტის წევრებმა.
           p3: "ის პარამეტრები ამ მეთოდისთვის შემდეგნაირია:"
           required: საჭიროა
           optional: სურვილისამებრ
           li1: პარლამენტის წევრის ID ხმის მიცემის ჩანაწერების მისაღებად
-          li2: "If 'true', all laws the Parliament Member has voted on will be returned. If 'false' or not provided, only a summary of the Parliament Member's vote history will be returned."
-          li3: "If 'true', a summary of each Session's vote will be provided. This summary includes the number of: yes votes, no votes, abstain votes, and the number of Member's absent."
-          li4: "A date to get laws that were passed on or after this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
-          li5: "A date to get laws that were passed on or before this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
-          li6: "A date to get laws that were made avialable to the public on votes.parliament.ge on or after this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
-          li7: "A date to get laws that were made avialable to the public on votes.parliament.ge on or before this date. Date format is 'yyyy-mm-dd'.  If the date is not in the correct format, the parameter will be ignored."
+          li2: "თუ მნიშვნელობა არის 'true', ყველა კანონი, რომელსაც პარლამენტის წევრებმა მისცეს ხმა დაბრუნდება. თუ  მნიშვნელობა არის 'false' ან არ არის წარმოდგენილი, მხოლოდ პარლამენტის წევრების მიერ ხმის მიცემის ისტორიის რეზიუმე დაბრუნდება."
+          li3: "თუ მნიშვნელობა არის 'true', თითოეული მოსმენის ხმების რეზიუმე იქნება წარმოდგენილი. ეს რეზიუმე შეიცავს მომხრეების, მოწინააღმდეგეების და იმ პარლამენტარების რაოდენობას, რომლებსაც არ მიუციათ ხმები ან არ ესწრებოდნენ მოსმენას."
+          li4: "თარიღი იმ კანონების მისაღებად, რომლებიც მიიღო პარლამენტმა ამ ან ამ თარიღის შემდგომ. თარიღის ფორმატი არის 'yyyy-mm-dd'. თუ თარიღის ფორმატი არასწორია, პარამეტრები უგულვებელყოფილ იქნება."
+          li5: "თარიღი იმ კანონების მისაღებად, რომლებიც მიიღო პარლამენტმა ამ ან ამ თარიღის შემდგომ. თარიღის ფორმატი არის 'yyyy-mm-dd'. თუ თარიღის ფორმატი არასწორია, პარამეტრები უგულვებელყოფილ იქნება."
+          li6: "თარიღი იმ კანონების მისაღებად, რომლებიც გახდა საზოგადოებისთვის ხელმისაწვდომი votes.parliament.ge-ზე ამ ან ამ თარიღის შემდგომ. თარიღის ფორმატი არის 'yyyy-mm-dd'. თუ თარიღის ფორმატი არასწორია, პარამეტრები უგულვებელყოფილ იქნება."
+          li7: "თარიღი იმ კანონების მისაღებად, რომლებიც გახდა საზოგადოებისთვის ხელმისაწვდომი votes.parliament.ge-ზე ამ ან ამ თარიღის შემდგომ. თარიღის ფორმატი არის 'yyyy-mm-dd'. თუ თარიღის ფორმატი არასწორია, პარამეტრები უგულვებელყოფილ იქნება."
           p4: "დაბრუნების ფორმატი იქნება შემდეგნაირი:"
           p5: "შენიშვნები:"
           nli1: "კანონები დალაგებულია კლებადი თანმიდევრობით <code>date</code>-ის მიხედვით <code>session_3</code> JSON მასივში."
-          nli2: "If the querystring parameter <code>with_laws</code> is 'true', the <code>laws</code> array will be provided."
-          nli3: "If the querystring parameter <code>with_law_vote_summary</code> is 'true', the <code>vote_summary</code> hash in the <code>session_x</code> hashes will be provided."
+          nli2: "თუ querystring-ის პარამეტრი <code>with_laws</code> არის 'true', <code>laws</code> მასივი იქნება წარმოდგენილი."
+          nli3: "თუ querystring-ის პარამეტრი <code>with_law_vote_summary</code> არის 'true', <code>vote_summary</code> JSON-ის მასივი <code>session_x</code> JSON მასივში  იქნება წარმოდგენილი."
           nli4: "querystring-ის პარამეტრები <code>passed_after</code> და <code>passed_before</code> მიემართება <code>date</code> მნიშვნელობას <code>session_3</code> JSON მასივში."
           nli5: "querystring-ის პარამეტრები  <code>made_public_after</code> და <code>made_public_before</code> მიემართება <code>released_to_public_at</code> მნიშვნელობას <code>laws</code> მასივში."
           nli6: " შესაძლო მნიშვნელობები <code>present</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"

@@ -219,6 +219,7 @@ en:
       menu_files: Upload Files
       menu_laws: Make Laws Public
       notifications: Notifications
+      api: API
       sign_out: Sign Out
       sign_in: Sign In
       js_link_title: "Visit JumpStart Georgia's website"
@@ -352,14 +353,14 @@ en:
           li1: The names are sorted in alphabetical order.
           li2: "The Parliament voting system only records text in Georgian, therefore, even if you are using the English portion of the votes.parliament.ge API, all text will be in Georgian."
         members:
-          title: members
+          title: Members
           p1: URL
           p2: "This method will get a list of all members in the system. This method is helpful to get the ID of a Parliament Member that is needed for input into the other methods provided in this API."
           p3: "The return format will be like the following:"  
           ex_name1: John Doe
           ex_name2: Jane Doe
         member_votes:
-          title: member_votes
+          title: Member Votes
           p1: URL
           p2: This method will get a list of all laws a Parliament Member has voted on.
           p3: "The query parameters for this method are the following:"

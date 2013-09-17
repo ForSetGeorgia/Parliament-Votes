@@ -64,6 +64,9 @@
 			              <li>
 	       		         <%= link_to t('.notifications'), notifications_path %>
 							      </li>
+			              <li>
+	       		         <%= link_to t('.api'), api_path %>
+							      </li>
 						        <li>
 				 		         <%= link_to t('.sign_out'), destroy_user_session_path, :method => :delete %>
 										</li>
@@ -73,6 +76,9 @@
 				        <li>
        		         <%= link_to t('.notifications'), notifications_path %>
 								</li>
+	              <li>
+     		         <%= link_to t('.api'), api_path %>
+					      </li>
 		          <% end %>
 							<% I18n.available_locales.each do |locale| %>
 								<% if locale != I18n.locale %>
