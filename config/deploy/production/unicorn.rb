@@ -4,7 +4,7 @@
 root = "/home/vrd/Voting-Records/current" # path to application current folder
 sock_name = "unicorn_Voting-Records" # must be unique name with no '.'
 port_num = 8107 # must be a unique port number for this application
-tout = 1500 # time in seconds before process dies - need a long time for data uploads
+tout = 2500 # time in seconds before process dies - need a long time for data uploads
 ##################################
 
 working_directory root
