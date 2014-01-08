@@ -52,6 +52,10 @@ class Agenda < ActiveRecord::Base
     where("public_url_id is not null and public_url_id != ''")
   end
 
+  def self.with_conference
+    includes(:conference)
+  end
+
   def self.laws_only(yes=false)
     if yes
       where(:is_law => 1)

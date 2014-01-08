@@ -146,7 +146,8 @@ class UploadFile < ActiveRecord::Base
                 :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
                 :first_name => delegate.at_css('firstname').nil? ? nil : combined_name, 
                 :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text,
-                :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id
+                :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id,
+                :conf_start_date => conference.start_date
               )
             end
 

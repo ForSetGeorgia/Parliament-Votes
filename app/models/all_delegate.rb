@@ -6,9 +6,9 @@ class AllDelegate < ActiveRecord::Base
   belongs_to :parliament
 
   attr_accessible :xml_id, :group_id, :first_name, :title, :parliament_id, :impressions_count,
-    :vote_count, :yes_count, :no_count, :abstain_count, :absent_count 
+    :vote_count, :yes_count, :no_count, :abstain_count, :absent_count, :started_at, :ended_at
 
-  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote
+  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote, :conf_start_date
 
   JSON_API_PATH = "#{Rails.root}/public/system/json/api"
   JSON_API_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/member_votes"
@@ -105,16 +105,22 @@ class AllDelegate < ActiveRecord::Base
 
   # get the delegates that were not present
   def self.available_delegates(agenda_id)
+    x = nil
     # get all delegates in the conference
-    agenda = Agenda.find_by_id(agenda_id)
+    agenda = Agenda.with_conference.find_by_id(agenda_id)
     if agenda.present?
+      date = agenda.conference.start_date
       used_delegates = Delegate.joins(:voting_results => :voting_session).select("distinct delegates.xml_id").where("voting_sessions.agenda_id = ?", agenda_id)
       if used_delegates.present?
-        AllDelegate.where("parliament_id = ? and xml_id not in (?)", agenda.parliament_id, used_delegates.map{|x| x.xml_id}).order("first_name")
+        x = AllDelegate.where("parliament_id = ? and xml_id not in (?)", agenda.parliament_id, used_delegates.map{|x| x.xml_id}).order("first_name")
       else
-        AllDelegate.where("parliament_id = ?", agenda.parliament_id).order("first_name")
+        x = AllDelegate.where("parliament_id = ?", agenda.parliament_id).order("first_name")
+      end
+      if date.present?
+        x = x.where(["(started_at is null or started_at <= :date) and (ended_at is null or ended_at >= :date) ", :date => date])
       end
     end
+    return x
   end
 
   def self.add_if_new(delegates, parliament_id)
@@ -122,11 +128,13 @@ class AllDelegate < ActiveRecord::Base
       delegates.each do |delegate|
         exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
 
-        if !exists.present?
-          ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
+        if exists.blank?
+          ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id, :started_at => delegate.conf_start_date)
           # now add id to delegate record
-          delegate.all_delegate_id = ad.id if ad.present?
-          delegate.save
+          if ad.present?
+            delegate.all_delegate_id = ad.id
+            delegate.save
+          end
         end
       end
     end
@@ -250,6 +258,7 @@ class AllDelegate < ActiveRecord::Base
       where(:parliament_id => parliament_id).update_all(:absent_count => 0)
     end
 
+    return nil
   end
 
   # delete all of the delegate records
@@ -274,7 +283,7 @@ puts "++++++++++++++++++++++++++++++++++"
     end
   end
 
-  # delete all vote records for this delegate that occur before teh end date
+  # delete all vote records for this delegate that occur before the end date
   def self.delete_vote_records_before_date(id, end_date)
     if id.present? && end_date.present?
 puts "**********************************"
@@ -362,6 +371,8 @@ puts "---* updating delegate record to be for record to_keep"
               del.xml_id = to_keep.first.xml_id
               del.group_id = to_keep.first.xml_id
               del.title = to_keep.first.title
+              del.started_at = to_keep.started_at
+              del.ended_at = to_keep.ended_at
               del.save
             end
           end
@@ -389,16 +400,18 @@ puts "**********************************"
   #######################################
   # get all members and their id
   # returns: 
-  # [ {id, name}, {id, name}, ... ]
+  # [ {id, name, start, end}, {id, name, start, end}, ... ]
   def self.api_v1_members()
     x = []
-    members = AllDelegate.select('id, first_name').where(:parliament_id => 1).order("first_name asc")
+    members = AllDelegate.select('id, first_name, started_at, ended_at').where(:parliament_id => 1).order("first_name asc")
     if members.present?
       members.each do |member|
         h = Hash.new
         x << h
         h[:id] = member.id
         h[:name] = member.first_name
+        h[:start_date] = member.started_at
+        h[:end_date] = member.ended_at
       end
     end
     return x
@@ -510,7 +523,7 @@ puts "**********************************"
             h[:member][:laws] = []
             
             # get law data
-            sql = "select s3.public_url_id, s3.law_id, s3.made_public_at,s3.official_law_title as title, "
+            sql = "select s3.public_url_id, s3.law_id, s3.made_public_at, s3.official_law_title as title, "
             sql << "s1.start_date as s1_date, s1v.present as s1_present, s1v.vote as s1_vote, "
             sql << "s1.result1 as s1_yes_votes, s1.result3 as s1_no_votes, s1.result0 as s1_abstain_votes, s1.not_present as s1_not_present, " if with_law_vote_summary
             sql << "s2.start_date as s2_date, s2v.present as s2_present, s2v.vote as s2_vote, "
@@ -527,7 +540,9 @@ puts "**********************************"
             sql << "	inner join voting_sessions as vs on vs.agenda_id = a.id "
             sql << "	inner join voting_results as vr on vr.voting_session_id = vs.id "
             sql << "	inner join delegates as d on vr.delegate_id = d.id "
+#            sql << "  inner join all_delegates as ad on d.all_delegate_id = ad.id "
             sql << "	where d.all_delegate_id = :all_delegate_id "
+#            sql << "  and (ad.started_at is null or ad.started_at <= c.start_date) and (ad.ended_at is null or ad.ended_at >= c.start_date) "
             sql << "	and a.is_public = 1 and a.public_url_id is not null "
             if passed_after.present?
               sql << "and c.start_date >= :passed_after "
@@ -706,6 +721,7 @@ protected
     sql << "inner join upload_files as uf on uf.id = c.upload_file_id "
     sql << "where a.is_law = 1 and a.is_public = 1 and vs.passed = 1 and uf.is_deleted = 0 and a.public_url_id is not null and a.public_url_id != '' "
     sql << "and ad.parliament_id = :parl_id "
+    sql << "and (ad.started_at is null or ad.started_at <= c.start_date) and (ad.ended_at is null or ad.ended_at >= c.start_date) "
     sql << "[placeholder] "    
     sql << "group by ad.id, ad.first_name "
     sql << ") as x on x.id = ad.id "
