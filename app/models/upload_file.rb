@@ -146,13 +146,16 @@ class UploadFile < ActiveRecord::Base
                 :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
                 :first_name => delegate.at_css('firstname').nil? ? nil : combined_name, 
                 :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text,
-                :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id,
-                :conf_start_date => conference.start_date
+                :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id
               )
+              
             end
 
             # agendas
             doc.css('Agenda').each do |agenda|
+Rails.logger.debug "***********************"        
+Rails.logger.debug "creating agenda"        
+Rails.logger.debug "***********************"        
               ag = conference.agendas.create(:xml_id => agenda.at_css('id').text, 
                 :sort_order => agenda.at_css('SortOrder').nil? ? nil : agenda.at_css('SortOrder').text, 
                 :level => agenda.at_css('Level').nil? ? nil : agenda.at_css('Level').text, 
@@ -175,6 +178,9 @@ class UploadFile < ActiveRecord::Base
                   end              
                 end
 
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "creating agenda voting session"        
+Rails.logger.debug "-----------------------"      
                 vs = ag.create_voting_session(:xml_id => session.at_css('id').text, 
   #                :agenda_id => session.at_css('Agenda_id').nil? ? nil : session.at_css('Agenda_id').text, 
                   :passed => session.at_css('Passed').nil? ? nil : session.at_css('Passed').text, 
@@ -189,37 +195,77 @@ class UploadFile < ActiveRecord::Base
                   :button3text => session.at_css('Button3Text').nil? ? nil : session.at_css('Button3Text').text,
                   :voting_conclusion => session.at_css('VotingConclusion').nil? ? nil : session.at_css('VotingConclusion').text
                 )
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "- voting session id = #{vs.id}"        
+Rails.logger.debug "-----------------------"      
 
                 # add voting results
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "creating agenda voting result"        
+Rails.logger.debug "-----------------------"      
                 doc.xpath("//VotingResult/VotingSession_id[contains(text(), '#{vs.xml_id}')]/..").each do |result|
                   del_index = conference.delegates.index{|x| x.xml_id.to_s == result.at_css('Delegate_id').text} if !result.at_css('Delegate_id').nil?
-                  vs.voting_results.create(:delegate_id => del_index.nil? ? nil : conference.delegates[del_index].id, 
+                  vr = vs.voting_results.create(:delegate_id => del_index.nil? ? nil : conference.delegates[del_index].id, 
                     :present => result.at_css('Present').nil? ? nil : result.at_css('Present').text, 
                     :vote => result.at_css('Vote').nil? ? nil : result.at_css('Vote').text, 
                     :weight => result.at_css('Weight').nil? ? nil : result.at_css('Weight').text
                   )
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "- voting result id = #{vr.id}"        
+Rails.logger.debug "-----------------------"      
                 end
               end
 
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "updating agenda data"        
+Rails.logger.debug "-----------------------"      
+
+              atemp = Agenda.find_by_id(ag.id)
+                
               # if the agenda is a law, update its status
-              ag.check_is_law
+              atemp.check_is_law
+
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "- agenda is law = #{atemp.is_law}"        
+Rails.logger.debug "-----------------------"        
 
               # make sure all of the voting session results are up to date
-              ag.voting_session.update_results if ag.is_law
+              atemp.voting_session.update_results if atemp.is_law
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "updating agenda data DONE"        
+Rails.logger.debug "-----------------------"        
 
               # if this is a law, look for new delegates in voting result records
-              AllDelegate.add_if_new(ag.voting_session.voting_results.map{|x| x.delegate}, self.parliament_id) if ag.is_law
+              AllDelegate.add_if_new(atemp.voting_session.voting_results.map{|x| x.delegate}, self.parliament_id, conference.start_date) if atemp.is_law
             end
 
             # update the conference with the number of laws and sessions
-            conference.number_laws = conference.agendas.select{|x| x.is_law == true}.count
-            conference.number_sessions = conference.agendas.count
-            conference.save
+            # - loading a new conference obj so that when save is called
+            #   all nested objects do not also have save called
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "updating conf numbers"        
+Rails.logger.debug "-----------------------"        
+            ctemp = Conference.find_by_id(conference.id)
+            ctemp.number_laws = conference.agendas.select{|x| x.is_law == true}.count
+            ctemp.number_sessions = conference.agendas.count
+            ctemp.save
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "updating conf numbers DONE"        
+Rails.logger.debug "-----------------------"        
 
           end
           # indicate the the file has been processed        
-          self.file_processed = true
-          self.save
+          # - loading a new upload file obj so that when save is called
+          #   all nested objects do not also have save called
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "updating file process status"        
+Rails.logger.debug "-----------------------"        
+          uf = UploadFile.find_by_id(self.id)
+          uf.file_processed = true
+          uf.save
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "updating file process status DONE"        
+Rails.logger.debug "-----------------------"        
         end 
       end
 

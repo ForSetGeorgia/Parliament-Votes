@@ -393,10 +393,16 @@ Rails.logger.debug "********** law url not present"
 
   # if agenda is a law, set is_law, reg #, and session #
   def check_is_law
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "check is law"        
+Rails.logger.debug "-----------------------"        
     found = false
     if self.voting_session
       PREFIX.each do |pre|
         if self.name.index(pre)
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "- this is a law!"        
+Rails.logger.debug "-----------------------"        
           # found match
           self.is_law = true
 
@@ -442,6 +448,9 @@ Rails.logger.debug "********** law url not present"
       end
 =end
     end
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "check is law DONE"        
+Rails.logger.debug "-----------------------"        
   end
 
   def generate_missing_data

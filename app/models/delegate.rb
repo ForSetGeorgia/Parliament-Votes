@@ -7,6 +7,7 @@ class Delegate < ActiveRecord::Base
   belongs_to :conference
 
   attr_accessible :xml_id, :conference_id, :group_id, :first_name, :title, :all_delegate_id
+  attr_accessor :conf_start_date
 
 
   def self.add_missing_all_delegate_id(parliament_id)

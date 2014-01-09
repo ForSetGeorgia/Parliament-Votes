@@ -8,7 +8,7 @@ class AllDelegate < ActiveRecord::Base
   attr_accessible :xml_id, :group_id, :first_name, :title, :parliament_id, :impressions_count,
     :vote_count, :yes_count, :no_count, :abstain_count, :absent_count, :started_at, :ended_at
 
-  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote, :conf_start_date
+  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote, :vote_count
 
   JSON_API_PATH = "#{Rails.root}/public/system/json/api"
   JSON_API_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/member_votes"
@@ -123,17 +123,25 @@ class AllDelegate < ActiveRecord::Base
     return x
   end
 
-  def self.add_if_new(delegates, parliament_id)
+  def self.add_if_new(delegates, parliament_id, started_at = Time.now)
+Rails.logger.debug "***************************"        
+Rails.logger.debug "adding new delegates if necessary"        
+Rails.logger.debug "***************************"        
     if delegates.present?
       delegates.each do |delegate|
-        exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
+        if delegate.present?
+          exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
 
-        if exists.blank?
-          ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id, :started_at => delegate.conf_start_date)
-          # now add id to delegate record
-          if ad.present?
-            delegate.all_delegate_id = ad.id
-            delegate.save
+          if exists.blank?
+  Rails.logger.debug "***************************"        
+  Rails.logger.debug " - adding delegate: #{delegate.inspect}; conf start date = #{started_at}"        
+  Rails.logger.debug "***************************"        
+            ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id, :started_at => started_at)
+            # now add id to delegate record
+            if ad.present?
+              delegate.all_delegate_id = ad.id
+              delegate.save
+            end
           end
         end
       end
