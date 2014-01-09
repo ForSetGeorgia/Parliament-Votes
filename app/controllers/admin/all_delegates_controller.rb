@@ -7,8 +7,6 @@ class Admin::AllDelegatesController < ApplicationController
   # GET /all_delegates
   # GET /all_delegates.json
   def index
-    @all_delegates = AllDelegate.sorted
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @all_delegates }

@@ -323,6 +323,21 @@ $(document).ready(function(){
     ]
   });
 
+  $('#all_delegates_datatable').dataTable({
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sPaginationType": "bootstrap",
+    "bJQueryUI": false,
+    "bProcessing": true,
+    "bServerSide": true,
+    "bDestroy": true,
+    "bStateSave": true,
+    "sAjaxSource": $('#all_delegates_datatable').data('source'),
+    "oLanguage": {
+      "sUrl": gon.datatable_i18n_url
+    },
+    "iDisplayLength": 20
+  });
+
 
 });
 
