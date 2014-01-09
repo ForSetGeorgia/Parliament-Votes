@@ -1,19 +1,6 @@
 <%- model_class = Parliament -%>
 <% title t '.title', :default => model_class.model_name.human %>
 
-  <p>
-    <strong><%= model_class.human_attribute_name(:name) %>:</strong>
-    <%= @parliament.name %>
-  </p>
-  <p>
-    <strong><%= model_class.human_attribute_name(:start_year) %>:</strong>
-    <%= @parliament.start_year %>
-  </p>
-  <p>
-    <strong><%= model_class.human_attribute_name(:end_year) %>:</strong>
-    <%= @parliament.end_year %>
-  </p>
-
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               admin_parliaments_path, :class => 'btn'  %>
@@ -27,3 +14,18 @@
 	<%= link_to t('helpers.links.admin'), admin_path,
   :class => 'btn' %>
 </div>
+
+  <p>
+    <strong><%= model_class.human_attribute_name(:name) %>:</strong>
+    <%= @parliament.name %>
+  </p>
+  <p>
+    <strong><%= model_class.human_attribute_name(:start_year) %>:</strong>
+    <%= @parliament.start_year %>
+  </p>
+  <p>
+    <strong><%= model_class.human_attribute_name(:end_year) %>:</strong>
+    <%= @parliament.end_year %>
+  </p>
+
+

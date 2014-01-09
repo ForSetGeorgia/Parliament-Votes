@@ -1,19 +1,6 @@
 <%- model_class = AllDelegate -%>
 <% title t '.title', :default => model_class.model_name.human %>
 
-  <p>
-    <strong><%= model_class.human_attribute_name(:first_name) %>:</strong>
-    <%= @all_delegate.first_name %>
-  </p>
-  <p>
-    <strong><%= model_class.human_attribute_name(:started_at) %>:</strong>
-    <%= @all_delegate.started_at %>
-  </p>
-  <p>
-    <strong><%= model_class.human_attribute_name(:ended_at) %>:</strong>
-    <%= @all_delegate.ended_at %>
-  </p>
-
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               admin_all_delegates_path, :class => 'btn'  %>
@@ -27,3 +14,18 @@
 	<%= link_to t('helpers.links.admin'), admin_path,
   :class => 'btn' %>
 </div>
+
+  <p>
+    <strong><%= model_class.human_attribute_name(:first_name) %>:</strong>
+    <%= @all_delegate.first_name %>
+  </p>
+  <p>
+    <strong><%= model_class.human_attribute_name(:started_at) %>:</strong>
+    <%= @all_delegate.started_at %>
+  </p>
+  <p>
+    <strong><%= model_class.human_attribute_name(:ended_at) %>:</strong>
+    <%= @all_delegate.ended_at %>
+  </p>
+
+
