@@ -14,6 +14,10 @@ class AllDelegate < ActiveRecord::Base
   JSON_API_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/member_votes"
   JSON_API_ALL_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/all_member_votes"
 
+  def self.sorted
+    order('first_name')
+  end
+
   def self.with_parliament(ids=nil)
     x = includes(:parliament => :parliament_translations)
     if ids.present? && ids.class == Array

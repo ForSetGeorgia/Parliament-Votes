@@ -11,6 +11,7 @@ ka:
       voting_session: კენჭისყრის სხდომა
       voting_result: კენჭისყრის შედეგები
       parliament: პარლამენტი
+      all_delegates: Parliament Member
     attributes:
       user:
         email: ელ.ფოსტა
@@ -99,6 +100,8 @@ ka:
         session2_vote: II მოსმენის ხმა
         session1_present: I მოსმენაზე დასწრება
         session1_vote: I მოსმენის ხმა
+        started_at: Start Date
+        ended_at: End Date
     messages:
       upload_file:
         already_exists: "'%{file_name}' უკვე  ჩატვირთული"
@@ -246,6 +249,19 @@ ka:
       view_users: მომხმარებლების ნახვა
       parliament: პარლამენტი
       deleted_files: წაშლილი ფაილის აღდგენა
+      all_delegates: Parliament Members
+    all_delegates:
+      edit:
+        title: Editing Parliament Member
+      index:
+        title: Parliament Members
+      new:
+        title: New Parliament Member
+      show:
+        title: Parliament Member Details
+      form:
+        start_date_hint: Enter date only if the Parliament Member began service at a later date
+        end_date_hint: Enter date only if the Parliament Member ended their service early
     users:
       edit:
         title: ცვლილებების შეტანა მომხმარებლის გვერდზე

@@ -1,0 +1,32 @@
+<%- model_class = AllDelegate -%>
+<% title t '.title', :default => model_class.model_name.human.pluralize %>
+
+<div class="form-actions">
+<%= link_to t('helpers.links.admin'), admin_path,
+:class => 'btn' %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:started_at) %></th>
+      <th><%= model_class.human_attribute_name(:ended_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_delegates.each do |all_delegate| %>
+      <tr>
+        <td><%= all_delegate.first_name %></td>
+        <td><%= all_delegate.started_at %></td>
+        <td><%= all_delegate.ended_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_admin_all_delegate_path(all_delegate), :class => 'btn btn-mini' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

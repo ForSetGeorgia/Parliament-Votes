@@ -12,6 +12,7 @@ BootstrapStarter::Application.routes.draw do
 		namespace :admin do
 			resources :users
       resources :parliaments
+      resources :all_delegates
 		end
 
     # root controller

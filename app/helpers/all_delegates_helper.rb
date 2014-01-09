@@ -1,0 +1,2 @@
+module AllDelegatesHelper
+end

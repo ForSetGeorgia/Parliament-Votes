@@ -11,6 +11,7 @@ en:
       voting_session: Voting Session
       voting_result: Voting Result
       parliament: Parliament
+      all_delegates: Parliament Member
     attributes:
       user:
         email: Email Address
@@ -99,6 +100,8 @@ en:
         session2_vote: Session II Vote
         session1_present: Session I Present
         session1_vote: Session I Vote
+        started_at: Start Date
+        ended_at: End Date
     messages:
       upload_file:
         already_exists: "'%{file_name}' has already been loaded"
@@ -246,6 +249,19 @@ en:
       view_users: View Users
       parliament: Parliament
       deleted_files: Restore Deleted Files
+      all_delegates: Parliament Members
+    all_delegates:
+      edit:
+        title: Editing Parliament Member
+      index:
+        title: Parliament Members
+      new:
+        title: New Parliament Member
+      show:
+        title: Parliament Member Details
+      form:
+        start_date_hint: Enter date only if the Parliament Member began service at a later date
+        end_date_hint: Enter date only if the Parliament Member ended their service early
     users:
       edit:
         title: Editing User
