@@ -6,6 +6,20 @@
 :class => 'btn' %>
 </div>
 
+<div id="parliament_options">
+  <label><%= model_class.human_attribute_name(:parliament_id) %>:</label>
+  <% @parliaments.each_with_index do |p, index| %>
+    <label for="<%= p.id%>" class="checkbox inline">
+      <%
+        checked = false
+        checked = true if @parl_ids.present? && @parl_ids.index(p.id.to_s).present?
+        checked = true if !@parl_ids.present? && index == 0
+      %>
+      <%= check_box_tag 'all_delegates_options_checkbox', p.id, checked, :id => p.id, :'data-start' => p.start_year, :'data-end' => p.end_year %>
+      <%= p.name_formatted %>
+    </label>
+  <% end %>
+</div>
 <table id="all_delegates_datatable" class="display table table-striped table-bordered" 
       data-source="<%= admin_search_all_delegates_url(:format => :json) %>">
   <thead>

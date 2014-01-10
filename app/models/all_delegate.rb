@@ -17,6 +17,15 @@ class AllDelegate < ActiveRecord::Base
   def self.sorted
     order('first_name')
   end
+  
+  def self.with_parliament(ids)
+    x = nil
+    if ids.present? && ids.class == Array
+      x = x.where(:parliament_id => ids)      
+    end
+    
+    return x
+  end
 
   def self.with_parliament(ids=nil)
     x = includes(:parliament => :parliament_translations)

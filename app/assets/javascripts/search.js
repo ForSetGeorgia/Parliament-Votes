@@ -4,6 +4,7 @@ var laws_dt;
 var passed_laws_dt;
 var member_dt;
 var member_votes_dt;
+var all_delegates_dt;
 
 function register_fancybox_live_click(){
   $(function(){ 
@@ -38,6 +39,14 @@ function get_law_parliament_options(){
 function get_member_parliament_options(){
   x = [];
   $('input[name="member_parliament_options_checkbox"]:checked').each(function(){
+    x.push($(this).val());
+  });
+  return x;
+}
+
+function get_all_delegates_options(){
+  x = [];
+  $('input[name="all_delegates_options_checkbox"]:checked').each(function(){
     x.push($(this).val());
   });
   return x;
@@ -323,7 +332,7 @@ $(document).ready(function(){
     ]
   });
 
-  $('#all_delegates_datatable').dataTable({
+  all_delegates_dt = $('#all_delegates_datatable').dataTable({
     "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
@@ -335,8 +344,16 @@ $(document).ready(function(){
     "oLanguage": {
       "sUrl": gon.datatable_i18n_url
     },
-    "iDisplayLength": 20
+    "iDisplayLength": 20,
+    "fnServerParams": function ( aoData ) {
+      aoData.push( { name: "parliament", value: get_all_delegates_options} );
+    }
   });
+  // when options change, update datatable
+  $('input[name="all_delegates_options_checkbox"]').click(function(){
+    all_delegates_dt.fnDraw();
+  });
+
 
 
 });

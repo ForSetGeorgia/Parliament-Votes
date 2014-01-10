@@ -1,15 +1,17 @@
 class AllDelegatesDatatable
   include Rails.application.routes.url_helpers
   delegate :params, :h, :link_to, :number_to_currency, :number_with_delimiter, to: :@view
+  delegate :parliament, to: :@parliament
 
-  def initialize(view)
+  def initialize(view, parliament)
     @view = view
+    @parliament = parliament.class == String ? parliament.split(",") : parliament
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: AllDelegate.count,
+      iTotalRecords: AllDelegate.with_parliament(@parliament).count,
       iTotalDisplayRecords: all_delegates.total_entries,
       aaData: data
     }
@@ -40,7 +42,7 @@ private
   end
 
   def fetch_all_delegates
-    all_delegates = AllDelegate.order("#{sort_column} #{sort_direction}")
+    all_delegates = AllDelegate.with_parliament(@parliament).order("#{sort_column} #{sort_direction}")
     all_delegates = all_delegates.page(page).per_page(per_page)
     if params[:sSearch].present?
       all_delegates = all_delegates.where("all_delegates.first_name like :search", search: "%#{params[:sSearch]}%")

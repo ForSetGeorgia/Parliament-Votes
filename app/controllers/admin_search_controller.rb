@@ -51,7 +51,7 @@ class AdminSearchController < ApplicationController
 
   def all_delegates
     respond_to do |format|
-      format.json { render json: AllDelegatesDatatable.new(view_context) }
+      format.json { render json: AllDelegatesDatatable.new(view_context, params[:parliament]) }
     end
   end
 
