@@ -262,6 +262,7 @@ ka:
       form:
         start_date_hint: შეიყვანეთ თარიღი მხოლოდ იმ შემთხვევაში თუ, პარლამენტის წევრმა მოგვიანებით დაიწყო სამსახური
         end_date_hint: შეიყვანეთ თარიღი მხოლოდ იმ შემთხვევაში თუ, პარლამენტის წევრმა სამსახური ადრე დაასრულა
+        warning: 'WARNING: Adding a date will cause the system to remove unwanted vote records for this Parliament Member'
     users:
       edit:
         title: ცვლილებების შეტანა მომხმარებლის გვერდზე

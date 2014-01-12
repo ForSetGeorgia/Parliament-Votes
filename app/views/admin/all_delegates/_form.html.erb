@@ -3,6 +3,11 @@
 
 	<%= f.inputs do %>
 		<%= f.input :first_name %>
+		
+		<p id="warning">
+		  <%= t('.warning') %>
+		</p>
+		
 		<%= f.input :started_at, :as => :string, :input_html => {:size => 20}, :hint => t('.start_date_hint')  %>
 		<%= f.input :ended_at, :as => :string, :input_html => {:size => 20}, :hint => t('.end_date_hint')  %>
 

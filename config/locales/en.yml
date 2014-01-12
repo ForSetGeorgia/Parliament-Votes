@@ -262,6 +262,7 @@ en:
       form:
         start_date_hint: Enter date only if the Parliament Member began service at a later date
         end_date_hint: Enter date only if the Parliament Member ended their service early
+        warning: 'WARNING: Adding a date will cause the system to remove unwanted vote records for this Parliament Member'
     users:
       edit:
         title: Editing User
