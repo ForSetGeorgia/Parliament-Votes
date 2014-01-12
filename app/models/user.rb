@@ -16,6 +16,9 @@ class User < ActiveRecord::Base
 	before_save :check_for_role
 	before_save :set_notification_language
 
+  # - a role with a larger number can do everything that smaller numbers can do
+  ROLES = {:user => 0, :process_files => 25, :lower_admin => 50,  :admin => 99}
+
   # if no nickname supplied, default to name in email before '@'
   def check_for_nickname
     self.nickname = self.email.split('@')[0] if !self.nickname.present? && self.email.present?
@@ -46,8 +49,6 @@ class User < ActiveRecord::Base
   end
 
   # use role inheritence
-  # - a role with a larger number can do everything that smaller numbers can do
-  ROLES = {:user => 0, :process_files => 25, :lower_admin => 50,  :admin => 99}
   def role?(base_role)
     if base_role && ROLES.values.index(base_role)
       return base_role <= self.role

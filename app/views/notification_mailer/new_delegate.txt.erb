@@ -1,0 +1,6 @@
+<%= @message.message %>
+
+<% @message.message2.each do |msg| %>
+  <%= "#{msg[0]} - " %><%= edit_admin_all_delegate_url(:id => msg[1], :locale => @message.locale) %>
+<% end %>
+

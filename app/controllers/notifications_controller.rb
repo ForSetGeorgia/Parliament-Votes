@@ -39,6 +39,24 @@ class NotificationsController < ApplicationController
   					msg << I18n.t('app.msgs.notification_new_file_none_success')
           end
 
+          # new delegate notifications
+  				if params[:new_delegates_all]
+  					# all notifications
+  					# delete anything on file first
+  					Notification.where(:notification_type => Notification::TYPES[:new_delegate],
+  																					:user_id => current_user.id).delete_all
+  					# add all option
+  					Notification.create(:notification_type => Notification::TYPES[:new_delegate],
+  																					:user_id => current_user.id)
+
+  					msg << I18n.t('app.msgs.notification_new_delegate_all_success')
+  				else
+  					# delete all notifications
+  					Notification.where(:notification_type => Notification::TYPES[:new_delegate],
+  																					:user_id => current_user.id).delete_all
+  					msg << I18n.t('app.msgs.notification_new_delegate_none_success')
+          end
+
           # process change vote notifications
   				if params[:change_votes_all]
   					# all notifications
@@ -125,6 +143,17 @@ class NotificationsController < ApplicationController
   		if @law_is_public_notifications.present? && @law_is_public_notifications.length == 1 && @law_is_public_notifications.first.identifier.nil?
 				@law_is_public_all = true
   		end
+
+  		# get new delegate data to load the form
+  		@delegate_notifications = Notification.where(:notification_type => Notification::TYPES[:new_delegate],
+  																			:user_id => current_user.id)
+
+  		@delegate_all = false
+
+  		if @delegate_notifications.present? && @delegate_notifications.length == 1 && @delegate_notifications.first.identifier.nil?
+				@delegate_all = true
+  		end
+
 
   		flash[:notice] = msg.join("<br />").html_safe if !msg.empty?
   	end

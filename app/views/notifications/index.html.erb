@@ -46,6 +46,18 @@
     <% end %>
 
     <% if current_user.role?(User::ROLES[:process_files]) %>
+    	<h3><%= t('.new_delegate_sub_title') %></h3>
+    	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="new_delegate_notifications">
+    		<div class="span12">
+    			<label for="new_delegates_all" class="checkbox">
+    				<%= check_box_tag 'new_delegates_all', 'true', @delegate_all %>
+    				<%= t('.new_delegates_all') %>
+    			</label>
+    		</div>
+    	</div>
+    <% end %>
+
+    <% if current_user.role?(User::ROLES[:process_files]) %>
     	<h3><%= t('.change_vote_sub_title') %></h3>
     	<div class="row clear <%= @enable_notifications ? 'enable_notifications' : 'disable_notifications'%>" id="change_vote_notifications">
     		<div class="span12">

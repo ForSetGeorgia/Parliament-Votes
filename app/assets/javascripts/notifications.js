@@ -32,6 +32,7 @@ $(document).ready(function(){
 			// enable new file
 			enable_notifications('language');
 			enable_notifications('new_file');
+			enable_notifications('new_delegate');
 			enable_notifications('change_vote');
 			enable_notifications('law_is_public');
 		}
@@ -42,11 +43,13 @@ $(document).ready(function(){
 			if ($(this).val() === 'true') {
 			  enable_all_fields('language');
 			  enable_all_fields('new_file');
+			  enable_all_fields('new_delegate');
   			enable_all_fields('change_vote');
   			enable_all_fields('law_is_public');
 			} else {
 			  disable_all_fields('language');
 			  disable_all_fields('new_file');
+			  disable_all_fields('new_delegate');
   			disable_all_fields('change_vote');
   			disable_all_fields('law_is_public');
 			}
@@ -60,6 +63,12 @@ $(document).ready(function(){
 		});
 		$('input#files_none').click(function(){
 			none_clicked('files');
+		});
+		$('input#new_delegates_all').click(function(){
+			all_clicked('new_delegates');
+		});
+		$('input#new_delegates_none').click(function(){
+			none_clicked('new_delegates');
 		});
 		// for change vote
 		$('input#change_votes_all').click(function(){

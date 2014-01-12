@@ -9,7 +9,7 @@ class AllDelegate < ActiveRecord::Base
     :vote_count, :yes_count, :no_count, :abstain_count, :absent_count, :started_at, :ended_at
 
   attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote,
-                :started_at_orig, :ended_at_orig, :checked_dates
+                :started_at_orig, :ended_at_orig, :checked_dates, :send_notification, :was_processed
                 
 	after_find :populate_dates
 #  after_update :check_for_date_changes

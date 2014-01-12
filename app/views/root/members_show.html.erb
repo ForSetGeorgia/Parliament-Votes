@@ -6,6 +6,22 @@
 
 <% title t('.title', :name => @member.first_name) %>
 
+<% if @member.started_at.present? || @member.ended_at.present? %>
+  <h2><%= t('.dates_header') %></h2>
+  <ul>
+    <% if @member.started_at.present? %>
+      <li>
+        <%= t('.dates_start', :name => @member.first_name, :date => @member.started_at) %>
+      </li>
+    <% end %>
+    <% if @member.ended_at.present? %>
+      <li>
+        <%= t('.dates_end', :name => @member.first_name, :date => @member.ended_at) %>
+      </li>
+    <% end %>
+  </ul>  
+<% end %>
+
 <h2><%= t('.stats_header') %></h2>
 <table id="member_stats" class="display table table-striped table-bordered">
   <thead>

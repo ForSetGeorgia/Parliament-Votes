@@ -30,6 +30,14 @@ class NotificationMailer < ActionMailer::Base
     mail(:bcc => message.bcc, :subject => message.subject)
   end
 
+  ######### new delegate
+
+  def new_delegate(message)
+    @message = message
+    mail(:bcc => message.bcc, :subject => message.subject)
+  end
+
+
 
 
 end

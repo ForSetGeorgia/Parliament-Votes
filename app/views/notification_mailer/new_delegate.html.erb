@@ -1,0 +1,10 @@
+<%= simple_format @message.message %>
+
+<ul>
+<% @message.message2.each do |msg| %>
+  <li>
+    <%= link_to msg[0], edit_admin_all_delegate_url(:id => msg[1], :locale => @message.locale) %>
+  </li>
+<% end %>
+</ul>
+

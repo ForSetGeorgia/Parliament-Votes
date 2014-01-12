@@ -7,6 +7,7 @@ class NotificationTrigger < ActiveRecord::Base
     process_new_files
     process_changed_votes
     process_law_is_public
+    process_new_delegates
   end
 
   #################
@@ -111,6 +112,47 @@ class NotificationTrigger < ActiveRecord::Base
 	        end
 
           NotificationMailer.law_is_public(message).deliver if message.message2.present?
+        end
+      end
+
+      # mark these as processed
+      NotificationTrigger.where(:id => triggers.map{|x| x.id}).update_all(:processed => true)
+
+    end
+  end
+
+
+  #################
+  ## new delegate
+  #################
+  def self.add_new_delegate(id)
+    NotificationTrigger.create(:notification_type => Notification::TYPES[:new_delegate], :identifier => id)
+  end
+
+  def self.process_new_delegates
+    triggers = NotificationTrigger.where(:notification_type => Notification::TYPES[:new_delegate]).not_processed
+
+    if triggers.present?
+      I18n.available_locales.each do |locale|
+        puts "@@@@@@@@ - locale = #{locale}"
+        message = Message.new
+	      message.bcc = Notification.new_delegate(locale)
+        puts "@@@@@@@@ - message bcc = #{message.bcc}"
+        if message.bcc.length > 0
+	        message.locale = locale
+	        message.subject = I18n.t("mailer.notification.new_delegate.subject", :locale => locale)
+	        message.message = I18n.t("mailer.notification.new_delegate.message", :locale => locale)
+          message.message2 = []
+
+          triggers.map{|x| x.identifier}.uniq.each do |id|
+            delegate = AllDelegate.find_by_id(id)
+            if delegate.present?
+              message.message2 << [delegate.first_name, delegate.id]
+		        end
+	        end
+
+          puts "@@@@@@@@ - sending delegate notification = #{message.message2}"
+          NotificationMailer.new_delegate(message).deliver if message.message2.present?
         end
       end
 

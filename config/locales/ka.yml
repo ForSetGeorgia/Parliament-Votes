@@ -125,6 +125,9 @@ ka:
       law_is_public:
         subject: "ახალი კანონი დაემატა votes.parliament.ge-ს"
         message: "შემდეგი კანონ(ებ)ის ნახვა არის შესაძლებელი."
+      new_delegate:
+        subject: "A new Parliament Member has been added into votes.parliament.ge"
+        message: "The following Parliament Members have been added to the system and should have their Start Dates set appropriately."
   helpers:
     actions: აირჩიეთ
     links:
@@ -214,6 +217,8 @@ ka:
       notification_change_vote_none_success: თქვენ არ მიიღებთ კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინებას.
       notification_law_is_public_all_success: თქვენ მიიღებთ შეტყობინებას, როცა კანონი გახდება ხელმისაწვდომი.
       notification_law_is_public_none_success: თქვენ არ მიიღებთ შეტყობინებას, როცა კანონი გახდება ხელმისაწვდომი.
+      notification_new_delegate_all_success: You will recieve a notification whenever a new Parliament Member is added.
+      notification_new_delegate_none_success: You will not receive any notifications when new Parliament Members are added.
   layouts:
     application:
       admin: ადმინისტრატო
@@ -331,6 +336,9 @@ ka:
       double_search: "ძიება გაგრძელდება მას შემდეგ, რაც ქვემოთ ირჩევთ პარლამენტის წევრს."
     members_show:
       title: "პარლამენტის წევრი: %{name}"
+      dates_header: Dates
+      dates_start: "%{name} started serivce at a later date: %{date}"
+      dates_end: "%{name} ended service at an early date: %{date}"
       stats_header: სტატისტიკა
       voting_header: კენჭისყრის შედეგები
       overall_votes_header: იმავე კანონპროექტზე კენჭისყრის შედეგები
@@ -353,6 +361,9 @@ ka:
       law_is_public_sub_title: ახალი კანონის შეტყობინება
       law_is_public_all: "შემატყობინე, როცა კანონი გახდება ხელმისაწვდომი."
       law_is_public_none: არ მინდა შეტყობინების მიღება, როცა კანონი გახდება ხელმისაწვდომი.
+      new_delegate_sub_title: New Parliament Member Notifications
+      new_delegates_all: Notify me when a Parliament Member is added.
+      new_delegates_none: I do not want to receive notifications when a Parliament Member is added.
   api:
     index: 
       title: API

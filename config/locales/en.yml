@@ -125,6 +125,9 @@ en:
       law_is_public:
         subject: "A new law has been added to votes.parliament.ge"
         message: "The following law(s) are now available for viewing."
+      new_delegate:
+        subject: "A new Parliament Member has been added into votes.parliament.ge"
+        message: "The following Parliament Members have been added to the system and should have their Start Dates set appropriately."
   helpers:
     actions: Actions
     links:
@@ -214,6 +217,8 @@ en:
       notification_change_vote_none_success: You will not receive any notifications when votes are changed.
       notification_law_is_public_all_success: You will recieve a notification whenever a law is made available.
       notification_law_is_public_none_success: You will not receive any notifications when laws are made available.
+      notification_new_delegate_all_success: You will recieve a notification whenever a new Parliament Member is added.
+      notification_new_delegate_none_success: You will not receive any notifications when new Parliament Members are added.
   layouts:
     application:
       admin: Admin
@@ -331,6 +336,9 @@ en:
       double_search: Your search will continue after you select the Parliament Member below.
     members_show:
       title: "Parliament Member: %{name}"
+      dates_header: Dates
+      dates_start: "%{name} started serivce at a later date: %{date}"
+      dates_end: "%{name} ended service at an early date: %{date}"
       stats_header: Statistics
       voting_header: Voting Records
       overall_votes_header: Overall Law Votes
@@ -353,6 +361,9 @@ en:
       law_is_public_sub_title: New Law Notifications
       law_is_public_all: Notify me when a law becomes available.
       law_is_public_none: I do not want to receive notifications when a law becomes available.
+      new_delegate_sub_title: New Parliament Member Notifications
+      new_delegates_all: Notify me when a Parliament Member is added.
+      new_delegates_none: I do not want to receive notifications when a Parliament Member is added.
   api:
     index: 
       title: API
