@@ -5,7 +5,7 @@ $(document).ready(function(){
     var startDateTextBox = $('#all_delegate_started_at');
     var endDateTextBox = $('#all_delegate_ended_at');
 		startDateTextBox.datepicker({
-			dateFormat: 'dd/mm/yy',
+			dateFormat: 'yy-mm-dd',
 	    onSelect: function (selectedDateTime){
 		    endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datepicker('getDate') );
 	    }
@@ -16,7 +16,7 @@ $(document).ready(function(){
 		}
 		
 		endDateTextBox.datepicker({
-			dateFormat: 'dd/mm/yy',
+			dateFormat: 'yy-mm-dd',
 	    onSelect: function (selectedDateTime){
 		    startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
 	    }

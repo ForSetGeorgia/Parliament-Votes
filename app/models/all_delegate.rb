@@ -8,11 +8,103 @@ class AllDelegate < ActiveRecord::Base
   attr_accessible :xml_id, :group_id, :first_name, :title, :parliament_id, :impressions_count,
     :vote_count, :yes_count, :no_count, :abstain_count, :absent_count, :started_at, :ended_at
 
-  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote, :vote_count
+  attr_accessor :session3_present, :session3_vote, :session2_present, :session2_vote, :session1_present, :session1_vote,
+                :started_at_orig, :ended_at_orig, :checked_dates
+                
+	after_find :populate_dates
+#  after_update :check_for_date_changes
 
   JSON_API_PATH = "#{Rails.root}/public/system/json/api"
   JSON_API_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/member_votes"
   JSON_API_ALL_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/all_member_votes"
+
+	# record the original date values
+	def populate_dates
+		self.started_at_orig = self.has_attribute?(:started_at) ? self.started_at : nil
+		self.ended_at_orig = self.has_attribute?(:ended_at) ? self.ended_at : nil
+		self.checked_dates = false
+	end
+
+  # if the start/end dates changed, update the vote records to reflect these new dates
+  def check_for_date_changes
+    puts "**********************************"
+    puts "** CHECKING FOR DATE CHANGES IN DELEGATE"
+    puts "**********************************"
+    update_vote_count = false
+
+    
+    # check if started at date added
+    if self.started_at != self.started_at_orig
+      puts "********** - started at changed"
+      if self.started_at.present?
+        puts "********** - started at has a value, deleting vote records before this date"
+        delete_vote_records_outside_of_date(self.started_at, '<')
+      end
+      update_vote_count = true
+    end
+    
+    # check if ended at date added
+    if self.ended_at != self.ended_at_orig
+      puts "********** - ended at changed"
+      if self.ended_at.present?
+        puts "********** - ended at has a value, deleting vote records after this date"
+        delete_vote_records_outside_of_date(self.ended_at, '>')
+      end
+      update_vote_count = true
+    end
+    
+    if update_vote_count
+      # update the vote counts for every law in this parliament
+      puts "********** updating law vote counts"
+      Agenda.update_law_vote_results(self.parliament_id)
+
+      # now update vote counts of all delegates
+      puts "********** updating delegate vote counts"
+      AllDelegate.update_vote_counts(self.parliament_id)
+      
+    end
+
+    puts "**********************************"
+    puts "** DONE CHECKING FOR DATE CHANGES IN DELEGATE"
+    puts "**********************************"
+    return nil
+  end
+
+
+  # delete all vote records for this delegate that occur before or after a date
+  # - date - date to compare against
+  # - sign - > or <; if want to delete vote records before the date, use <; else >
+  def delete_vote_records_outside_of_date(date, sign)
+    if date.present? && sign.present?
+      if ['>', '<'].index(sign).present?
+        puts "**********************************"
+        puts "** deleting vote records for = #{self.id} in parl #{self.parliament_id}; #{sign} #{date} **"
+        puts "**********************************"
+      
+        AllDelegate.transaction do
+          # get list of all conference ids that occur before the date
+          conf_ids = Conference.select('conferences.id').joins(:agendas)
+                      .where(["conferences.start_date #{sign} ? and agendas.parliament_id = ?", date, self.parliament_id]).map{|x| x.id}.uniq.sort
+                
+          if conf_ids.present?
+            puts "********** found #{conf_ids.length} conference ids"
+            # get all delegate records for this person
+            del_ids = Delegate.select('id').where(:all_delegate_id => self.id, :conference_id => conf_ids)
+            puts "********** found #{del_ids.length} delegate ids"
+
+            if del_ids.present?
+              puts "********** deleting voting results"
+              VotingResult.where(:delegate_id => del_ids.map{|x| x.id}).delete_all
+              puts "********** deleting delegate records"
+              Delegate.where(:id => del_ids.map{|x| x.id}).delete_all
+            end
+          end          
+        end
+      end
+    end
+  end
+  
+
 
   def self.sorted
     order('first_name')
@@ -137,18 +229,18 @@ class AllDelegate < ActiveRecord::Base
   end
 
   def self.add_if_new(delegates, parliament_id, started_at = Time.now)
-Rails.logger.debug "***************************"        
-Rails.logger.debug "adding new delegates if necessary"        
-Rails.logger.debug "***************************"        
+    Rails.logger.debug "***************************"        
+    Rails.logger.debug "adding new delegates if necessary"        
+    Rails.logger.debug "***************************"        
     if delegates.present?
       delegates.each do |delegate|
         if delegate.present?
           exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
 
           if exists.blank?
-  Rails.logger.debug "***************************"        
-  Rails.logger.debug " - adding delegate: #{delegate.inspect}; conf start date = #{started_at}"        
-  Rails.logger.debug "***************************"        
+            Rails.logger.debug "***************************"        
+            Rails.logger.debug " - adding delegate: #{delegate.inspect}; conf start date = #{started_at}"        
+            Rails.logger.debug "***************************"        
             ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id, :started_at => started_at)
             # now add id to delegate record
             if ad.present?
@@ -285,9 +377,9 @@ Rails.logger.debug "***************************"
   # delete all of the delegate records
   # - do this instead of destroy_all for destory all will do hundreds of queries and be slow
   def self.delete_delegate_records(id)
-puts "++++++++++++++++++++++++++++++++++"
-puts "** deleting delegate #{id} **"
-puts "++++++++++++++++++++++++++++++++++"
+    puts "++++++++++++++++++++++++++++++++++"
+    puts "** deleting delegate #{id} **"
+    puts "++++++++++++++++++++++++++++++++++"
     if id.present?
       AllDelegate.transaction do
         del = AllDelegate.find_by_id(id)
@@ -304,47 +396,10 @@ puts "++++++++++++++++++++++++++++++++++"
     end
   end
 
-  # delete all vote records for this delegate that occur before the end date
-  def self.delete_vote_records_before_date(id, end_date)
-    if id.present? && end_date.present?
-puts "**********************************"
-puts "** deleting vote records for = #{id}; before = #{end_date} **"
-puts "**********************************"
-      AllDelegate.transaction do
-        del = AllDelegate.find_by_id(id)
-        if del.present?
-          # get list of all conference ids that occur before the date
-          conf_ids = Conference.select('conferences.id').joins(:agendas).where(["conferences.start_date < ? and agendas.parliament_id = ?", end_date, del.parliament_id]).map{|x| x.id}.uniq.sort
-          if conf_ids.present?
-  puts "********** found #{conf_ids.length} conference ids"
-            # get all delegate records for this person
-            del_ids = Delegate.select('id').where(:all_delegate_id => id, :conference_id => conf_ids)
-  puts "********** found #{del_ids.length} delegate ids"
-
-            if del_ids.present?
-    puts "********** deleting voting results"
-              VotingResult.where(:delegate_id => del_ids.map{|x| x.id}).delete_all
-    puts "********** deleting delegate records"
-              Delegate.where(:id => del_ids.map{|x| x.id}).delete_all
-
-              # update the vote counts for every law in this parliament
-    puts "********** updating law vote counts"
-              Agenda.update_law_vote_results(del.parliament_id)
-
-              # now update vote counts of all delegates
-    puts "********** updating delegate vote counts"
-              update_vote_counts(del.parliament_id)
-            end
-          end          
-        end
-      end
-    end
-  end
-  
   def self.merge_delegates(id_to_keep, id_to_remove)
-puts "**********************************"
-puts "** to keep = #{id_to_keep}; to remove = #{id_to_remove} **"
-puts "**********************************"
+    puts "**********************************"
+    puts "** to keep = #{id_to_keep}; to remove = #{id_to_remove} **"
+    puts "**********************************"
     if id_to_keep.present? && id_to_remove.present?
       AllDelegate.transaction do
         to_keep = AllDelegate.includes(:delegates => :voting_results).where(:id => id_to_keep)
@@ -358,25 +413,25 @@ puts "**********************************"
           to_keep.first.save
 
           to_remove.first.delegates.each do |del|
-puts "delegate id #{del.id}"          
+            puts "delegate id #{del.id}"          
             update_del_id = false
             del.voting_results.each do |vr|
-puts "- voting record id #{vr.id}"          
+              puts "- voting record id #{vr.id}"          
               # if to_keep does not have a vote for this session, add it
               # if it does have a vote, assume want to keep the vote for the to_keep record
               if to_keep_results.index{|x| vr.voting_session_id == x.voting_session_id}.nil?
-puts "-- need to copy vote result"          
+                puts "-- need to copy vote result"          
                 # see if delegate record exists for this conference
                 to_keep_delegate = to_keep.first.delegates.select{|x| x.conference_id == del.conference_id}
                 # if records exists, update vote results record with this id
                 # otherwise update to_remove del id to reference id_to_keep
                 if to_keep_delegate.present?
-puts "--- delegate exists for to keep, just updating vote result record"          
+                  puts "--- delegate exists for to keep, just updating vote result record"          
                   # record exists, update vote results record to use to_keep del id
                   vr.delegate_id = to_keep_delegate.first.id
                   vr.save
                 else
-puts "--- delegate record not exists"          
+                  puts "--- delegate record not exists"          
                   # update to_remove delegate to reference id_to_keep
                   # - this is actually done after for loop so that
                   #   no errors occur due to changing the id before finished 
@@ -386,7 +441,7 @@ puts "--- delegate record not exists"
               end
             end        
             if update_del_id
-puts "---* updating delegate record to be for record to_keep"          
+              puts "---* updating delegate record to be for record to_keep"          
               del.all_delegate_id = to_keep.first.id
               del.first_name = to_keep.first.first_name
               del.xml_id = to_keep.first.xml_id
@@ -400,16 +455,16 @@ puts "---* updating delegate record to be for record to_keep"
         end
 
         # now delete the delegate/voting result records for to_remove
-puts "********** deleting records"          
+        puts "********** deleting records"          
         delete_delegate_records(id_to_remove)
         
         # now update vote counts of all delegates
-puts "********** updating delegate vote counts"          
+        puts "********** updating delegate vote counts"          
         update_vote_counts(to_keep.first.parliament_id)
       end
     end
-puts "**********************************"
-puts "**********************************"
+    puts "**********************************"
+    puts "**********************************"
   end
   
   
@@ -746,7 +801,7 @@ protected
     sql << "[placeholder] "    
     sql << "group by ad.id, ad.first_name "
     sql << ") as x on x.id = ad.id "
-    sql << "and ad.parliament_id = :parl_id "
+    sql << "where ad.parliament_id = :parl_id "
   end
 
   def self.passed_laws_vote_count(parliament_id)

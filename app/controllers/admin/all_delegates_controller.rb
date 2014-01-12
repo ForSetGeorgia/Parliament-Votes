@@ -77,6 +77,8 @@ class Admin::AllDelegatesController < ApplicationController
 
     respond_to do |format|
       if @all_delegate.update_attributes(params[:all_delegate])
+        @all_delegate.check_for_date_changes
+        
         format.html { redirect_to admin_all_delegates_path, notice: t('app.msgs.success_updated', :obj => t('activerecord.models.all_delegates')) }
         format.json { head :ok }
       else
