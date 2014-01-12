@@ -53,6 +53,7 @@ class AllDelegate < ActiveRecord::Base
       update_vote_count = true
     end
     
+    # if dates changed, update vote counts and clear api files
     if update_vote_count
       # update the vote counts for every law in this parliament
       puts "********** updating law vote counts"
@@ -60,8 +61,10 @@ class AllDelegate < ActiveRecord::Base
 
       # now update vote counts of all delegates
       puts "********** updating delegate vote counts"
-      AllDelegate.update_vote_counts(self.parliament_id)
-      
+      AllDelegate.update_vote_counts(self.parliament_id, self.id)
+
+      # clear out json api files
+      FileUtils.rm_rf(AllDelegate::JSON_API_PATH)
     end
 
     puts "**********************************"
@@ -325,50 +328,60 @@ class AllDelegate < ActiveRecord::Base
     return x
   end
 
-  def self.update_vote_counts(parliament_id)
+  def self.update_vote_counts(parliament_id, id=nil)
     # total votes
-    x = passed_laws_vote_count(parliament_id)
+    x = passed_laws_vote_count(parliament_id, id)
     if x.present?
       update(x.map{|x| x.id}, x.map{|x| {"vote_count" => x.vote_count}}) 
     else
       # no laws are public so make sure vote counts are 0
-      where(:parliament_id => parliament_id).update_all(:vote_count => 0)
+      z = where(:parliament_id => parliament_id)
+      z = z.where(:id => id) if id.present?
+      z.update_all(:vote_count => 0)
     end
 
     # yes votes
-    x = passed_laws_yes_count(parliament_id)
+    x = passed_laws_yes_count(parliament_id, id)
     if x.present?
       update(x.map{|x| x.id}, x.map{|x| {"yes_count" => x.vote_count}}) 
     else
       # no laws are public so make sure vote counts are 0
-      where(:parliament_id => parliament_id).update_all(:yes_count => 0)
+      z = where(:parliament_id => parliament_id)
+      z = z.where(:id => id) if id.present?
+      z.update_all(:yes_count => 0)
     end
 
     # no votes
-    x = passed_laws_no_count(parliament_id)
+    x = passed_laws_no_count(parliament_id, id)
     if x.present?
       update(x.map{|x| x.id}, x.map{|x| {"no_count" => x.vote_count}}) 
     else
       # no laws are public so make sure vote counts are 0
-      where(:parliament_id => parliament_id).update_all(:no_count => 0)
+      z = where(:parliament_id => parliament_id)
+      z = z.where(:id => id) if id.present?
+      z.update_all(:no_count => 0)
     end
 
     # abstain votes
-    x = passed_laws_abstain_count(parliament_id)
+    x = passed_laws_abstain_count(parliament_id, id)
     if x.present?
       update(x.map{|x| x.id}, x.map{|x| {"abstain_count" => x.vote_count}}) 
     else
       # no laws are public so make sure vote counts are 0
-      where(:parliament_id => parliament_id).update_all(:abstain_count => 0)
+      z = where(:parliament_id => parliament_id)
+      z = z.where(:id => id) if id.present?
+      z.update_all(:abstain_count => 0)
     end
 
     # absent votes
-    x = passed_laws_absent_count(parliament_id)
+    x = passed_laws_absent_count(parliament_id, id)
     if x.present?
       update(x.map{|x| x.id}, x.map{|x| {"absent_count" => x.vote_count}}) 
     else
       # no laws are public so make sure vote counts are 0
-      where(:parliament_id => parliament_id).update_all(:absent_count => 0)
+      z = where(:parliament_id => parliament_id)
+      z = z.where(:id => id) if id.present?
+      z.update_all(:absent_count => 0)
     end
 
     return nil
@@ -799,34 +812,61 @@ protected
     sql << "and ad.parliament_id = :parl_id "
     sql << "and (ad.started_at is null or ad.started_at <= c.start_date) and (ad.ended_at is null or ad.ended_at >= c.start_date) "
     sql << "[placeholder] "    
+    sql << "[id_placeholder] "    
     sql << "group by ad.id, ad.first_name "
     sql << ") as x on x.id = ad.id "
     sql << "where ad.parliament_id = :parl_id "
+    sql << "[id_placeholder] "    
   end
 
-  def self.passed_laws_vote_count(parliament_id)
+  def self.passed_laws_vote_count(parliament_id,id=nil)
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.present = 1')
-    find_by_sql([sql, :parl_id => parliament_id])
+    if id.present?
+      sql = sql.gsub('[id_placeholder]', "and ad.id = :id ")
+    else
+      sql = sql.gsub('[id_placeholder]', "")
+    end
+    find_by_sql([sql, :parl_id => parliament_id, :id => id])
   end
 
-  def self.passed_laws_yes_count(parliament_id)
+  def self.passed_laws_yes_count(parliament_id,id=nil)
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.vote = 1 and vr.present = 1')
-    find_by_sql([sql, :parl_id => parliament_id])
+    if id.present?
+      sql = sql.gsub('[id_placeholder]', "and ad.id = :id ")
+    else
+      sql = sql.gsub('[id_placeholder]', "")
+    end
+    find_by_sql([sql, :parl_id => parliament_id, :id => id])
   end
 
-  def self.passed_laws_no_count(parliament_id)
+  def self.passed_laws_no_count(parliament_id,id=nil)
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.vote = 3 and vr.present = 1')
-    find_by_sql([sql, :parl_id => parliament_id])
+    if id.present?
+      sql = sql.gsub('[id_placeholder]', "and ad.id = :id ")
+    else
+      sql = sql.gsub('[id_placeholder]', "")
+    end
+    find_by_sql([sql, :parl_id => parliament_id, :id => id])
   end
 
-  def self.passed_laws_abstain_count(parliament_id)
+  def self.passed_laws_abstain_count(parliament_id,id=nil)
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.vote = 0 and vr.present = 1')
-    find_by_sql([sql, :parl_id => parliament_id])
+    if id.present?
+      sql = sql.gsub('[id_placeholder]', "and ad.id = :id ")
+    else
+      sql = sql.gsub('[id_placeholder]', "")
+    end
+    find_by_sql([sql, :parl_id => parliament_id, :id => id])
   end
 
-  def self.passed_laws_absent_count(parliament_id)
+  def self.passed_laws_absent_count(parliament_id,id=nil)
     sql = passed_laws_vote_count_query.gsub('[placeholder]', 'and vr.present = 0')
-    find_by_sql([sql, :parl_id => parliament_id])
+    if id.present?
+      sql = sql.gsub('[id_placeholder]', "and ad.id = :id ")
+    else
+      sql = sql.gsub('[id_placeholder]', "")
+    end
+    find_by_sql([sql, :parl_id => parliament_id, :id => id])
   end
 
 
