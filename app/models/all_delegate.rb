@@ -18,6 +18,15 @@ class AllDelegate < ActiveRecord::Base
   JSON_API_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/member_votes"
   JSON_API_ALL_MEMBER_VOTES_PATH = "#{JSON_API_PATH}/v1/all_member_votes"
 
+  # if this is not Georgian, return the english equivalent of the first name
+  def first_name
+    if I18n.locale == :ka
+      self.read_attribute(:first_name)
+    else
+      self.read_attribute(:first_name).to_ascii.gsub(/[^A-Za-z ]/,'').titlecase
+    end
+  end
+  
 	# record the original date values
 	def populate_dates
 		self.started_at_orig = self.has_attribute?(:started_at) ? self.started_at : nil

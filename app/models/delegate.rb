@@ -9,6 +9,15 @@ class Delegate < ActiveRecord::Base
   attr_accessible :xml_id, :conference_id, :group_id, :first_name, :title, :all_delegate_id
   attr_accessor :conf_start_date
 
+  # if this is not Georgian, return the english equivalent of the first name
+  def first_name
+    if I18n.locale == :ka
+      self.read_attribute(:first_name)
+    else
+      self.read_attribute(:first_name).to_ascii.gsub(/[^A-Za-z ]/,'').titlecase
+    end
+  end
+  
 
   def self.add_missing_all_delegate_id(parliament_id)
     all_delegates = AllDelegate.where(:parliament_id => parliament_id)
