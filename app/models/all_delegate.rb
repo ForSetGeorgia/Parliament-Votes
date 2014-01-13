@@ -514,6 +514,8 @@ class AllDelegate < ActiveRecord::Base
     {
       internal_id,
       name,
+      start_date,
+      end_date,
       vote_summary:
       {
         total_votes,
@@ -599,6 +601,8 @@ class AllDelegate < ActiveRecord::Base
           h[:member] = Hash.new
           h[:member][:internal_id] = member.id
           h[:member][:name] = member.first_name
+          h[:member][:start_date] = member.started_at
+          h[:member][:end_date] = member.ended_at
           # add vote summary
           vote_summary = Hash.new
           h[:member][:vote_summary] = vote_summary
