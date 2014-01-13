@@ -387,6 +387,9 @@ ka:
           p3: "დაბრუნების ფორმატი იქნება შემდეგნარი:"  
           ex_name1: პეტრე
           ex_name2: პავლე
+          p4: "Notes:"  
+          nli1: "<code>start_date</code> will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
+          nli2: "<code>end_date</code> will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
         member_votes:
           title: წევრების ხმები
           p1: URL
@@ -408,7 +411,9 @@ ka:
           nli3: "თუ querystring-ის პარამეტრი <code>with_law_vote_summary</code> არის 'true', <code>vote_summary</code> JSON-ის მასივი <code>session_x</code> JSON მასივში  იქნება წარმოდგენილი."
           nli4: "querystring-ის პარამეტრები <code>passed_after</code> და <code>passed_before</code> მიემართება <code>date</code> მნიშვნელობას <code>session_3</code> JSON მასივში."
           nli5: "querystring-ის პარამეტრები  <code>made_public_after</code> და <code>made_public_before</code> მიემართება <code>released_to_public_at</code> მნიშვნელობას <code>laws</code> მასივში."
-          nli6: " შესაძლო მნიშვნელობები <code>present</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"
-          nli7: "შესაძლო მნიშვნელობები <code>vote</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"
-          nli8: "შესაძლებელია, კანონი მიღებულ იქნას მხოლოდ პირველი მოსმენის კენჭისყრის შედეგად. ამ შემთხვევაში მხოლოდ <code>session_1</code> დაბრუნდება <code>sessions</code> მასივში."
-          nli9: "პარლამენტის კენჭისყრის სისტემა პარლამენტის წევრს არ აძლებს უფლებას, არ მისცეს ხმა, ამიტომ შეუძლებელია გარჩევა ხმის არ მიცემასა და არ ესწრებას შორის."      
+          nli6: "The <code>start_date</code> in the <code>member</code> hash will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
+          nli7: "The <code>end_date</code> in the <code>member</code> hash will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
+          nli8: " შესაძლო მნიშვნელობები <code>present</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"
+          nli9: "შესაძლო მნიშვნელობები <code>vote</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"
+          nli10: "შესაძლებელია, კანონი მიღებულ იქნას მხოლოდ პირველი მოსმენის კენჭისყრის შედეგად. ამ შემთხვევაში მხოლოდ <code>session_1</code> დაბრუნდება <code>sessions</code> მასივში."
+          nli11: "პარლამენტის კენჭისყრის სისტემა პარლამენტის წევრს არ აძლებს უფლებას, არ მისცეს ხმა, ამიტომ შეუძლებელია გარჩევა ხმის არ მიცემასა და არ ესწრებას შორის."      

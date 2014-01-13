@@ -34,13 +34,23 @@
 </p>
 <pre>
 [
-  {id: 1, name: "<%= t('.members.ex_name1') %>"},
-  {id: 2, name: "<%= t('.members.ex_name2') %>"},
+  {id: 1, name: "<%= t('.members.ex_name1') %>", start_date: null, end_date: null},
+  {id: 2, name: "<%= t('.members.ex_name2') %>", start_date: null, end_date: "2013-11-27"},
   .
   .
   .
 ]
 </pre>
+
+<p><%= t('.members.p4') %></p>
+<ul>
+  <li>
+    <%= t('.members.nli1').html_safe %>
+  </li>
+  <li>
+    <%= t('.members.nli2').html_safe %>
+  </li>
+</ul>
 
 
 <h2><%= t('.member_votes.title') %></h2>
@@ -86,6 +96,8 @@
   {
     internal_id,
     name,
+    start_date, 
+    end_date,
     vote_summary:
     {
       total_votes,
@@ -171,6 +183,12 @@
   </li>
   <li>
     <%= t('.member_votes.nli6').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli7').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli8').html_safe %>
     <ul>
       <li>
         <%= I18n.t('helpers.boolean.y') %>
@@ -181,7 +199,7 @@
     </ul>
   </li>
   <li>
-    <%= t('.member_votes.nli7').html_safe %>
+    <%= t('.member_votes.nli9').html_safe %>
     <ul>
       <li>
         <%= I18n.t('helpers.boolean.y') %>
@@ -198,9 +216,9 @@
     </ul>
   </li>
   <li>
-    <%= t('.member_votes.nli8').html_safe %>
+    <%= t('.member_votes.nli10').html_safe %>
   </li>
   <li>
-    <%= t('.member_votes.nli9').html_safe %>
+    <%= t('.member_votes.nli11').html_safe %>
   </li>
 </ul>

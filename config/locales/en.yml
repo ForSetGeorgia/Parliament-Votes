@@ -387,6 +387,9 @@ en:
           p3: "The return format will be like the following:"  
           ex_name1: John Doe
           ex_name2: Jane Doe
+          p4: "Notes:"  
+          nli1: "<code>start_date</code> will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
+          nli2: "<code>end_date</code> will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
         member_votes:
           title: Member Votes
           p1: URL
@@ -408,7 +411,9 @@ en:
           nli3: "If the querystring parameter <code>with_law_vote_summary</code> is 'true', the <code>vote_summary</code> hash in the <code>session_x</code> hashes will be provided."
           nli4: "The querystring parameters <code>passed_after</code> and <code>passed_before</code> refer to the <code>date</code> value in the <code>session_3</code> hash."
           nli5: "The querystring parameters <code>made_public_after</code> and <code>made_public_before</code> refer to the <code>released_to_public_at</code> value in the <code>laws</code> array."
-          nli6: "The possible values for <code>present</code> in the <code>session_x</code> hashes are the following:"
-          nli7: "The possible values for <code>vote</code> in the <code>session_x</code> hashes are the following:"
-          nli8: "It is possible for a law to be passed after only 1 session of voting. When this occurs, only <code>session_1</code> will be returned in the <code>sessions</code> hash."
-          nli9: "The Parliament voting system does not allow a Parliament Member to vote 'Abstain', therefore, it is not possible to distinguish between 'Abstain' and 'Not Present'."
+          nli6: "The <code>start_date</code> in the <code>member</code> hash will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
+          nli7: "The <code>end_date</code> in the <code>member</code> hash will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
+          nli8: "The possible values for <code>present</code> in the <code>session_x</code> hashes are the following:"
+          nli9: "The possible values for <code>vote</code> in the <code>session_x</code> hashes are the following:"
+          nli10: "It is possible for a law to be passed after only 1 session of voting. When this occurs, only <code>session_1</code> will be returned in the <code>sessions</code> hash."
+          nli11: "The Parliament voting system does not allow a Parliament Member to vote 'Abstain', therefore, it is not possible to distinguish between 'Abstain' and 'Not Present'."
