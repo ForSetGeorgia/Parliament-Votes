@@ -387,7 +387,7 @@ ka:
           p3: "დაბრუნების ფორმატი იქნება შემდეგნარი:"  
           ex_name1: პეტრე
           ex_name2: პავლე
-          p4: "Notes:"  
+          p4: "შენიშვნები:"  
           nli1: "<code>start_date</code> will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
           nli2: "<code>end_date</code> will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
         member_votes:
