@@ -11,7 +11,7 @@ ka:
       voting_session: კენჭისყრის სხდომა
       voting_result: კენჭისყრის შედეგები
       parliament: პარლამენტი
-      all_delegates: პარლამენტის წევრი
+      all_delegate: პარლამენტის წევრი
     attributes:
       user:
         email: ელ.ფოსტა

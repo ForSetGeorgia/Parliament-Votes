@@ -11,7 +11,7 @@ en:
       voting_session: Voting Session
       voting_result: Voting Result
       parliament: Parliament
-      all_delegates: Parliament Member
+      all_delegate: Parliament Member
     attributes:
       user:
         email: Email Address

@@ -2,7 +2,14 @@
 	<%= f.error_messages %>
 
 	<%= f.inputs do %>
-		<%= f.input :first_name %>
+    <div class="string control-group">
+      <label class=" control-label" style="padding-top: 0;">
+        <%= t('activerecord.attributes.all_delegate.first_name') %>
+      </label>
+      <div class="controls">
+        <%= @all_delegate.first_name %>
+      </div>
+    </div>
 		
 		<p id="warning">
 		  <%= t('.warning') %>
