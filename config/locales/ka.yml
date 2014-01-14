@@ -126,8 +126,8 @@ ka:
         subject: "ახალი კანონი დაემატა votes.parliament.ge-ს"
         message: "შემდეგი კანონ(ებ)ის ნახვა არის შესაძლებელი."
       new_delegate:
-        subject: "A new Parliament Member has been added into votes.parliament.ge"
-        message: "The following Parliament Members have been added to the system and should have their Start Dates set appropriately."
+        subject: "votes.parliament.ge-ზე დამატებულია პარლამენტის ახალი წევრი"
+        message: "პარლამენტის წევრი დაემატა სისტემას, სამუშაოს დაწყების თარიღი სათნადოდ უნდა იყოს მითითებული."
   helpers:
     actions: აირჩიეთ
     links:
@@ -217,8 +217,8 @@ ka:
       notification_change_vote_none_success: თქვენ არ მიიღებთ კენჭისყრის შედეგების ცვლილების შესახებ შეტყობინებას.
       notification_law_is_public_all_success: თქვენ მიიღებთ შეტყობინებას, როცა კანონი გახდება ხელმისაწვდომი.
       notification_law_is_public_none_success: თქვენ არ მიიღებთ შეტყობინებას, როცა კანონი გახდება ხელმისაწვდომი.
-      notification_new_delegate_all_success: You will recieve a notification whenever a new Parliament Member is added.
-      notification_new_delegate_none_success: You will not receive any notifications when new Parliament Members are added.
+      notification_new_delegate_all_success: თქვენ მიიღებთ შეტყობინებას როდესაც ახალი პარლამენტის წევრი იქნება დამატებული.
+      notification_new_delegate_none_success: თქვენ არ მიიღებთ შეტყობინებას როდესაც ახალი პარლამენტის წევრი იქნება დამატებული.
   layouts:
     application:
       admin: ადმინისტრატო
@@ -267,7 +267,7 @@ ka:
       form:
         start_date_hint: შეიყვანეთ თარიღი მხოლოდ იმ შემთხვევაში თუ, პარლამენტის წევრმა მოგვიანებით დაიწყო სამსახური
         end_date_hint: შეიყვანეთ თარიღი მხოლოდ იმ შემთხვევაში თუ, პარლამენტის წევრმა სამსახური ადრე დაასრულა
-        warning: 'WARNING: Adding a date will cause the system to remove unwanted vote records for this Parliament Member'
+        warning: თარიღის დამატება გამოიწვევსამ პარლენტის წევრის ხმის მიცემის არასასურველი მონაცემების სისტემიდან წაშლას
     users:
       edit:
         title: ცვლილებების შეტანა მომხმარებლის გვერდზე
@@ -336,9 +336,9 @@ ka:
       double_search: "ძიება გაგრძელდება მას შემდეგ, რაც ქვემოთ ირჩევთ პარლამენტის წევრს."
     members_show:
       title: "პარლამენტის წევრი: %{name}"
-      dates_header: Dates
-      dates_start: "%{name} started serivce at a later date: %{date}"
-      dates_end: "%{name} ended service at an early date: %{date}"
+      dates_header: თარიღები
+      dates_start: "%{name}-ი სამსახურში დაგვიანებით  გამოცხადდა: %{date}"
+      dates_end: "%{name}-მა ადრე დაიწყო სამსახური: %{date}"
       stats_header: სტატისტიკა
       voting_header: კენჭისყრის შედეგები
       overall_votes_header: იმავე კანონპროექტზე კენჭისყრის შედეგები
@@ -361,9 +361,9 @@ ka:
       law_is_public_sub_title: ახალი კანონის შეტყობინება
       law_is_public_all: "შემატყობინე, როცა კანონი გახდება ხელმისაწვდომი."
       law_is_public_none: არ მინდა შეტყობინების მიღება, როცა კანონი გახდება ხელმისაწვდომი.
-      new_delegate_sub_title: New Parliament Member Notifications
-      new_delegates_all: Notify me when a Parliament Member is added.
-      new_delegates_none: I do not want to receive notifications when a Parliament Member is added.
+      new_delegate_sub_title: შეტყობინებები პარლამენტის ახლი წევრის შესახებ
+      new_delegates_all: მსურს მივიღო შეტყობინება როცა პარლამენტის ახალი წევრი ემატება.
+      new_delegates_none: არ მსურს მივიღო შეტყობინება, როდესაც პარლამენტის ახალი წევრი ემატება.
   api:
     index: 
       title: API
@@ -388,8 +388,8 @@ ka:
           ex_name1: პეტრე
           ex_name2: პავლე
           p4: "შენიშვნები:"  
-          nli1: "<code>start_date</code> will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
-          nli2: "<code>end_date</code> will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
+          nli1: "<code>start_date</code>-ი გაბათილდება თუ პარლამენტის წევრმი გამოცხადდა სესიის დაიწყებისთანავე. წინააღმდეგ შემთხვევაში, თარიღი დაფიქსირდება 'yyyy-mm-dd' ფორმატში, რომელიც იმას აღნიშნავს იქნება, თუ როდის   გამოცხადდა პარლამენტის წევრი."
+          nli2: "<code>end_date</code>-ი გაბათილდება თუ პარლამენტის წევრმა დაასრულა სამუშაო სესიის დასრულების დროს. წინააღმდეგ შემთხვევაში, თარიღი დაფიქსირდება 'yyyy-mm-dd' ფორმატში, რაც იმის აღმნიშვნელი იქნება, რომ პარლამენტის წევრმა დაასრულა სამუშაო დროზე ადრე."
         member_votes:
           title: წევრების ხმები
           p1: URL
@@ -411,8 +411,8 @@ ka:
           nli3: "თუ querystring-ის პარამეტრი <code>with_law_vote_summary</code> არის 'true', <code>vote_summary</code> JSON-ის მასივი <code>session_x</code> JSON მასივში  იქნება წარმოდგენილი."
           nli4: "querystring-ის პარამეტრები <code>passed_after</code> და <code>passed_before</code> მიემართება <code>date</code> მნიშვნელობას <code>session_3</code> JSON მასივში."
           nli5: "querystring-ის პარამეტრები  <code>made_public_after</code> და <code>made_public_before</code> მიემართება <code>released_to_public_at</code> მნიშვნელობას <code>laws</code> მასივში."
-          nli6: "The <code>start_date</code> in the <code>member</code> hash will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
-          nli7: "The <code>end_date</code> in the <code>member</code> hash will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
+          nli6: "<code>start_date</code>-ი <code>member</code>-ში  გაბათილდება, თუ პარლამენტის წევრმა გამოცხადდა სესიის დაწყებისთანავე. წინააღმდეგ შემთხვევაში, თარიღი დაფიქსირდება 'yyyy-mm-dd' ფორმატში, რომელიც იმის აღმნიშვნელი იქნება თუ როდის გამოცხადდა პარლამენტის წევრი."
+          nli7: "<code>start_date</code>-ი <code>member</code>-ში  გაბათილდება თუ პარლამენტის წევრმა დაასრულა სამუშაო სესიის დასრულების დროს. წინააღმდეგ შემთხვევაში, თარიღი დაფიქსირდება 'yyyy-mm-dd' ფორმატში, რაც იმის აღმნიშვნელი იქნება, რომ პარლამენტის წევრმა დაასრულა სამუშაო დროზე ადრე."
           nli8: " შესაძლო მნიშვნელობები <code>present</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"
           nli9: "შესაძლო მნიშვნელობები <code>vote</code>-სთვის <code>session_x</code> მასივებში შემდეგნარია:"
           nli10: "შესაძლებელია, კანონი მიღებულ იქნას მხოლოდ პირველი მოსმენის კენჭისყრის შედეგად. ამ შემთხვევაში მხოლოდ <code>session_1</code> დაბრუნდება <code>sessions</code> მასივში."
