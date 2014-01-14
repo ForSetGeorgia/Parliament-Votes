@@ -27,12 +27,35 @@ class AllDelegate < ActiveRecord::Base
     end
   end
   
+  def first_name_ka
+    self.read_attribute(:first_name)
+  end
+  
 	# record the original date values
 	def populate_dates
 		self.started_at_orig = self.has_attribute?(:started_at) ? self.started_at : nil
 		self.ended_at_orig = self.has_attribute?(:ended_at) ? self.ended_at : nil
 		self.checked_dates = false
 	end
+
+  # check if the provided date falls within the delegate's start/end date
+  def is_working_date?(date)
+    if self.started_at.nil? && self.ended_at.nil?
+      return true
+    else
+      start_at = true
+      end_at = true
+      if self.started_at.present? && date < self.started_at
+        start_at = false
+      end
+
+      if self.ended_at.present? && date > self.ended_at
+        end_at = false
+      end
+
+      return start_at && end_at
+    end
+  end
 
   # if the start/end dates changed, update the vote records to reflect these new dates
   def check_for_date_changes

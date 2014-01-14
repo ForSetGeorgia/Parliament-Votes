@@ -141,14 +141,33 @@ class UploadFile < ActiveRecord::Base
             doc.css("Delegate").each do |delegate|
               group_index = conference.groups.index{|x| x.xml_id.to_s == delegate.at_css('Group_id').text} if !delegate.at_css('Group_id').nil?
               combined_name = delegate.at_css('lastname').text.present? ? delegate.at_css('firstname').text + ' ' + delegate.at_css('lastname').text : delegate.at_css('firstname').text
-              all_del_index = all_delegates.index{|x| x.xml_id.to_s == delegate.at_css('id').text && x.first_name == combined_name}
-              d = conference.delegates.create(:xml_id => delegate.at_css('id').text, 
-                :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
-                :first_name => delegate.at_css('firstname').nil? ? nil : combined_name, 
-                :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text,
-                :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id
-              )
+              all_del_index = all_delegates.index{|x| x.xml_id.to_s == delegate.at_css('id').text && x.first_name_ka == combined_name}
+
+              # if delegate is already in system and has start/end dates, 
+              # only save delegate if conf date is within those dates
+              add_delegate = true
+              if all_del_index.present? && !all_delegates[all_del_index].is_working_date?(conference.start_date)
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "#######################"        
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "delegate has start/end date and this conf date is outside that time"        
+Rails.logger.debug "conf date: '#{conference.start_date}'"        
+Rails.logger.debug "delegate dates: '#{all_delegates[all_del_index].started_at}' - '#{all_delegates[all_del_index].ended_at}'"        
+Rails.logger.debug "-----------------------"        
+Rails.logger.debug "#######################"        
+Rails.logger.debug "-----------------------"        
+
+                add_delegate = false
+              end              
               
+              if add_delegate
+                d = conference.delegates.create(:xml_id => delegate.at_css('id').text, 
+                  :group_id => group_index.nil? ? nil : conference.groups[group_index].id, 
+                  :first_name => delegate.at_css('firstname').nil? ? nil : combined_name, 
+                  :title => delegate.at_css('title').nil? ? nil : delegate.at_css('title').text,
+                  :all_delegate_id => all_del_index.nil? ? nil : all_delegates[all_del_index].id
+                )
+              end              
             end
 
             # agendas
@@ -195,9 +214,6 @@ Rails.logger.debug "-----------------------"
                   :button3text => session.at_css('Button3Text').nil? ? nil : session.at_css('Button3Text').text,
                   :voting_conclusion => session.at_css('VotingConclusion').nil? ? nil : session.at_css('VotingConclusion').text
                 )
-Rails.logger.debug "-----------------------"        
-Rails.logger.debug "- voting session id = #{vs.id}"        
-Rails.logger.debug "-----------------------"      
 
                 # add voting results
 Rails.logger.debug "-----------------------"        
@@ -205,14 +221,13 @@ Rails.logger.debug "creating agenda voting result"
 Rails.logger.debug "-----------------------"      
                 doc.xpath("//VotingResult/VotingSession_id[contains(text(), '#{vs.xml_id}')]/..").each do |result|
                   del_index = conference.delegates.index{|x| x.xml_id.to_s == result.at_css('Delegate_id').text} if !result.at_css('Delegate_id').nil?
-                  vr = vs.voting_results.create(:delegate_id => del_index.nil? ? nil : conference.delegates[del_index].id, 
-                    :present => result.at_css('Present').nil? ? nil : result.at_css('Present').text, 
-                    :vote => result.at_css('Vote').nil? ? nil : result.at_css('Vote').text, 
-                    :weight => result.at_css('Weight').nil? ? nil : result.at_css('Weight').text
-                  )
-Rails.logger.debug "-----------------------"        
-Rails.logger.debug "- voting result id = #{vr.id}"        
-Rails.logger.debug "-----------------------"      
+                  if del_index.present?
+                    vr = vs.voting_results.create(:delegate_id => del_index.nil? ? nil : conference.delegates[del_index].id, 
+                      :present => result.at_css('Present').nil? ? nil : result.at_css('Present').text, 
+                      :vote => result.at_css('Vote').nil? ? nil : result.at_css('Vote').text, 
+                      :weight => result.at_css('Weight').nil? ? nil : result.at_css('Weight').text
+                    )
+                  end
                 end
               end
 
