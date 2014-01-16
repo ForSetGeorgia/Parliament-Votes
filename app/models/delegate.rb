@@ -14,7 +14,8 @@ class Delegate < ActiveRecord::Base
     if I18n.locale == :ka
       self.read_attribute(:first_name)
     else
-      self.read_attribute(:first_name).to_ascii.gsub(/[^A-Za-z ]/,'').titlecase
+      require 'utf8_converter'
+      Utf8Converter.convert_ka_to_en(self.read_attribute(:first_name)).gsub(/[^A-Za-z ]/,'').titlecase
     end
   end
   
