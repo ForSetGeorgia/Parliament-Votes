@@ -11,12 +11,12 @@
   <ul>
     <% if @member.started_at.present? %>
       <li>
-        <%= t('.dates_start', :name => @member.first_name, :date => @member.started_at) %>
+        <%= t('.dates_start', :date => @member.started_at) %>
       </li>
     <% end %>
     <% if @member.ended_at.present? %>
       <li>
-        <%= t('.dates_end', :name => @member.first_name, :date => @member.ended_at) %>
+        <%= t('.dates_end', :date => @member.ended_at) %>
       </li>
     <% end %>
   </ul>  

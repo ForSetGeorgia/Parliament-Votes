@@ -337,8 +337,8 @@ en:
     members_show:
       title: "Parliament Member: %{name}"
       dates_header: Dates
-      dates_start: "%{name} started serivce at a later date: %{date}"
-      dates_end: "%{name} ended service at an early date: %{date}"
+      dates_start: "Status of the Member of Parliament assumed on: %{date}"
+      dates_end: "Status of the Member of Parliament terminated on: %{date}"
       stats_header: Statistics
       voting_header: Voting Records
       overall_votes_header: Overall Law Votes

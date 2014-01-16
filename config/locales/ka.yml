@@ -337,8 +337,8 @@ ka:
     members_show:
       title: "პარლამენტის წევრი: %{name}"
       dates_header: თარიღები
-      dates_start: "%{name}-ი სამსახურში დაგვიანებით  გამოცხადდა: %{date}"
-      dates_end: "%{name}-მა ადრე დაიწყო სამსახური: %{date}"
+      dates_start: "პარლამენტის წევრის უფლებამოსილად ცნობის თარიღ: %{date}"
+      dates_end: "პარლამენტის წევრის უფლებამოსილების შეწყვეტის თარიღი: %{date}"
       stats_header: სტატისტიკა
       voting_header: კენჭისყრის შედეგები
       overall_votes_header: იმავე კანონპროექტზე კენჭისყრის შედეგები
