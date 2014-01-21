@@ -171,6 +171,8 @@ en:
       y: "Yes"
       n: "No"
       abstain: Abstain
+    not_started: Status not assumed
+    left_early: Status terminated
   app:
     language:
       en: English

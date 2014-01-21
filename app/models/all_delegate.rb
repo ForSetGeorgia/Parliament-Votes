@@ -41,20 +41,29 @@ class AllDelegate < ActiveRecord::Base
 
   # check if the provided date falls within the delegate's start/end date
   def is_working_date?(date)
+    return is_working_date_with_status?(date).first
+  end
+
+  # check if the provided date falls within the delegate's start/end date
+  # - if not indicate which date fails
+  def is_working_date_with_status?(date)
+    not_started, left_early = false
     if self.started_at.nil? && self.ended_at.nil?
-      return true
+      return true, not_started, left_early
     else
       start_at = true
       end_at = true
       if self.started_at.present? && date < self.started_at
         start_at = false
+        not_started = true
       end
 
       if self.ended_at.present? && date > self.ended_at
         end_at = false
+        left_early = true
       end
 
-      return start_at && end_at
+      return start_at && end_at, not_started, left_early
     end
   end
 
@@ -142,6 +151,32 @@ class AllDelegate < ActiveRecord::Base
   
 
 
+  def session3_present_formatted
+    session_present_formatted(read_attribute(:session3_present))
+  end
+
+  def session3_vote_formatted
+    session_vote_formatted(read_attribute(:session3_date), read_attribute(:session3_vote), read_attribute(:parliament_id))
+  end
+
+  def session2_present_formatted
+    session_present_formatted(read_attribute(:session2_present))
+  end
+
+  def session2_vote_formatted
+    session_vote_formatted(read_attribute(:session2_date), read_attribute(:session2_vote), read_attribute(:parliament_id))
+  end
+
+  def session1_present_formatted
+    session_present_formatted(read_attribute(:session1_present))
+  end
+
+  def session1_vote_formatted
+    session_vote_formatted(read_attribute(:session1_date), read_attribute(:session1_vote), read_attribute(:parliament_id))
+  end
+
+
+
   def self.sorted
     order('first_name')
   end
@@ -163,86 +198,6 @@ class AllDelegate < ActiveRecord::Base
     return x
   end
 
-  def session3_present_formatted
-    if read_attribute(:session3_present).present?
-      if read_attribute(:session3_present)
-        I18n.t('helpers.boolean.y')
-      else
-        I18n.t('helpers.boolean.n')
-      end
-    end
-  end
-
-  def session3_vote_formatted
-    case read_attribute(:session3_vote)
-      when 0
-        I18n.t('helpers.boolean.abstain')
-      when 1
-        I18n.t('helpers.boolean.y')
-      when 3
-        I18n.t('helpers.boolean.n')
-      else
-        if read_attribute(:parliament_id) == 1
-          I18n.t('helpers.links.not_present2')
-        else
-          I18n.t('helpers.links.not_present')
-        end
-    end
-  end
-
-  def session2_present_formatted
-    if read_attribute(:session2_present).present?
-      if read_attribute(:session2_present)
-        I18n.t('helpers.boolean.y')
-      else
-        I18n.t('helpers.boolean.n')
-      end
-    end
-  end
-
-  def session2_vote_formatted
-    case read_attribute(:session2_vote)
-      when 0
-        I18n.t('helpers.boolean.abstain')
-      when 1
-        I18n.t('helpers.boolean.y')
-      when 3
-        I18n.t('helpers.boolean.n')
-      else
-        if read_attribute(:parliament_id) == 1
-          I18n.t('helpers.links.not_present2')
-        else
-          I18n.t('helpers.links.not_present')
-        end
-    end
-  end
-
-  def session1_present_formatted
-    if read_attribute(:session1_present).present?
-      if read_attribute(:session1_present)
-        I18n.t('helpers.boolean.y')
-      else
-        I18n.t('helpers.boolean.n')
-      end
-    end
-  end
-
-  def session1_vote_formatted
-    case read_attribute(:session1_vote)
-      when 0
-        I18n.t('helpers.boolean.abstain')
-      when 1
-        I18n.t('helpers.boolean.y')
-      when 3
-        I18n.t('helpers.boolean.n')
-      else
-        if read_attribute(:parliament_id) == 1
-          I18n.t('helpers.links.not_present2')
-        else
-          I18n.t('helpers.links.not_present')
-        end
-    end
-  end
 
   # get the delegates that were not present
   def self.available_delegates(agenda_id)
@@ -325,9 +280,11 @@ class AllDelegate < ActiveRecord::Base
             .where('voting_sessions.agenda_id in (?)', ids)
             .map{|x| x.all_delegate_id}.uniq      
 
-      sql = "select ad.id, ad.first_name, ad.parliament_id, s3.present as session3_present, s3.vote as session3_vote " 
+      sql = "select ad.id, ad.first_name, ad.parliament_id, ad.started_at, ad.ended_at, "
+      sql << "c3.start_date as session3_date, s3.present as session3_present, s3.vote as session3_vote " 
       if get_all_3_sessions == "true"
-        sql << ", s2.present as session2_present, s2.vote as session2_vote, s1.present as session1_present, s1.vote as session1_vote "
+        sql << ", c2.start_date as session2_date, s2.present as session2_present, s2.vote as session2_vote, "
+        sql << "c1.start_date as session1_date, s1.present as session1_present, s1.vote as session1_vote "
       end
       sql << "from all_delegates as ad "
       sql << "left join  (select d.all_delegate_id, vr.present, vr.vote from delegates as d inner join voting_results as vr on vr.delegate_id = d.id inner join voting_sessions as vs on vs.id = vr.voting_session_id where vs.agenda_id = :session3_id "
@@ -337,6 +294,11 @@ class AllDelegate < ActiveRecord::Base
         sql << ") as s2 on s2.all_delegate_id = ad.id "
         sql << "left join  (select d.all_delegate_id, vr.present, vr.vote from delegates as d inner join voting_results as vr on vr.delegate_id = d.id inner join voting_sessions as vs on vs.id = vr.voting_session_id where vs.agenda_id = :session1_id "
         sql << ") as s1 on s1.all_delegate_id = ad.id "
+      end
+      sql << ", (select c.start_date from conferences as c inner join agendas as a on a.conference_id = c.id where a.id = :session3_id) as c3 "
+      if get_all_3_sessions == "true"
+        sql << ", (select c.start_date from conferences as c inner join agendas as a on a.conference_id = c.id where a.id = :session2_id) as c2 "
+        sql << ", (select c.start_date from conferences as c inner join agendas as a on a.conference_id = c.id where a.id = :session1_id) as c1 "
       end
       sql << "where ad.parliament_id = :parliament_id "
       sql << "and ad.id in (:all_delegate_ids) "
@@ -935,4 +897,47 @@ protected
     q << "_mpb_#{made_public_before}" if made_public_before.present?
     return q
   end
+  
+  
+  def session_present_formatted(session_present)
+    if session_present.present?
+      if session_present
+        I18n.t('helpers.boolean.y')
+      else
+        I18n.t('helpers.boolean.n')
+      end
+    end
+  end
+
+  def session_vote_formatted(session_date, session_vote, parliament_id)
+    member_in_parliament = true
+    not_started, left_early = false
+    if session_date.present?
+      member_in_parliament, not_started, left_early = is_working_date_with_status?(session_date)
+    end
+    if member_in_parliament
+      case session_vote
+        when 0
+          I18n.t('helpers.boolean.abstain')
+        when 1
+          I18n.t('helpers.boolean.y')
+        when 3
+          I18n.t('helpers.boolean.n')
+        else
+          if parliament_id == 1
+            I18n.t('helpers.links.not_present2')
+          else
+            I18n.t('helpers.links.not_present')
+          end
+      end
+    else
+      if not_started
+        I18n.t('helpers.not_started') 
+      elsif left_early
+        I18n.t('helpers.left_early') 
+      end
+    end
+  end
+
+  
 end
