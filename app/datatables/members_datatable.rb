@@ -47,7 +47,7 @@ private
     members = AllDelegate.with_parliament(@parliament).order("#{sort_column} #{sort_direction}")
     members = members.page(page).per_page(per_page)
     if params[:sSearch].present?
-      members = members.where("all_delegates.first_name like :search", search: "%#{params[:sSearch]}%")
+      members = members.where("all_delegates.first_name like :search", search: "%#{params[:sSearch].georgianize}%")
     end
     members
   end

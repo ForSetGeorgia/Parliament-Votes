@@ -48,7 +48,7 @@ private
   def fetch_all_delegates
     search = nil
     if params[:sSearch].present?
-      search = params[:sSearch]
+      search = params[:sSearch].georgianize
     end
     
     AllDelegate.votes_for_passed_law(@agenda_public_url_id, @get_all_3_sessions, search, sort_column, sort_direction, per_page, page)
