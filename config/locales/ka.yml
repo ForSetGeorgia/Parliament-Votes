@@ -171,8 +171,8 @@ ka:
       y: "დიახ"
       n: "არა"
       abstain: არ მიუცია
-    not_started: უფლებამოსილება შეწყვეტილია
-    left_early: უფლებამოსილება არ იყო ცნობილი
+    not_started: უფლებამოსილება არ იყო ცნობილი
+    left_early: უფლებამოსილება შეწყვეტილია
   app:
     language:
       en: English
