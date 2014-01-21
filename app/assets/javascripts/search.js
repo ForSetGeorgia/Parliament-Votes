@@ -281,6 +281,10 @@ $(document).ready(function(){
        .addClass("table_cell_no");
       $("#voting_results_public_datatable td").filter(function() { return $.text([this]) == gon.table_cell_abstain; })
        .addClass("table_cell_abstain");
+      $("#voting_results_public_datatable td").filter(function() { return $.text([this]) == gon.table_cell_not_started; })
+       .addClass("table_cell_not_started");
+      $("#voting_results_public_datatable td").filter(function() { return $.text([this]) == gon.table_cell_left_early; })
+       .addClass("table_cell_left_early");
     }
   });
 

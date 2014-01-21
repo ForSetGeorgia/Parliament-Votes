@@ -61,6 +61,8 @@ class ApplicationController < ActionController::Base
       gon.table_cell_yes = I18n.t('helpers.boolean.y')
       gon.table_cell_no = I18n.t('helpers.boolean.n')
       gon.table_cell_abstain = I18n.t('helpers.boolean.abstain')
+      gon.table_cell_not_started = I18n.t('helpers.not_started')
+      gon.table_cell_left_early = I18n.t('helpers.left_early')
 
       if @parliaments.present?
         gon.parl_start_year = @parliaments.first.start_year.to_s
