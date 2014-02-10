@@ -150,7 +150,7 @@ class CleanUpVersions < ActiveRecord::Migration
 
       # delete unnecessary versions
       puts "- deleting #{version_ids.uniq.length} version records"
-#      Version.where(:id => version_ids.uniq).delete_all
+      Version.where(:id => version_ids.uniq).delete_all
     end
   end
 
