@@ -2,7 +2,7 @@
 class Agenda < ActiveRecord::Base
 	require 'fileutils'
   require 'open-uri'
-  has_paper_trail
+  has_paper_trail :ignore => [:impressions_count]
   is_impressionable :counter_cache => true
   
   has_one :voting_session, :dependent => :destroy

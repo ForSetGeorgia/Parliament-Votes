@@ -1,5 +1,5 @@
 class AllDelegate < ActiveRecord::Base
-  has_paper_trail
+  has_paper_trail :ignore => [:impressions_count, :vote_count, :yes_count, :no_count, :abstain_count, :absent_count]
   is_impressionable :counter_cache => true
 
   has_many :delegates
