@@ -626,11 +626,13 @@ class AllDelegate < ActiveRecord::Base
             sql << "	from  "
             sql << "	agendas as a "
             sql << "	inner join conferences as c on c.id = a.conference_id "
+            sql << "  inner join upload_files as uf on uf.id = c.upload_file_id "
             sql << "	inner join voting_sessions as vs on vs.agenda_id = a.id "
             sql << "	inner join voting_results as vr on vr.voting_session_id = vs.id "
             sql << "	inner join delegates as d on vr.delegate_id = d.id "
             sql << "  inner join all_delegates as ad on d.all_delegate_id = ad.id "
             sql << "	where d.all_delegate_id = :all_delegate_id "
+            sql << "  and uf.is_deleted = 0 "
             sql << "  and (ad.started_at is null or ad.started_at <= c.start_date) and (ad.ended_at is null or ad.ended_at >= c.start_date) "
             sql << "	and a.is_public = 1 and a.public_url_id is not null "
             if passed_after.present?
