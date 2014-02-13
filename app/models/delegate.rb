@@ -19,7 +19,11 @@ class Delegate < ActiveRecord::Base
       self.read_attribute(:first_name).latinize.gsub(/[^A-Za-z ]/,'').titlecase
     end
   end
-  
+
+  def first_name_ka
+    self.read_attribute(:first_name)
+  end
+ 
 
   def self.add_missing_all_delegate_id(parliament_id)
     all_delegates = AllDelegate.where(:parliament_id => parliament_id)

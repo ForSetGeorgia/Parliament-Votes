@@ -109,18 +109,29 @@ class AdminController < ApplicationController
       if request.post?
         params[:delegates].keys.each do |key|
           delegate = params[:delegates][key]
-          if delegate["vote"].present?
+            if delegate["vote"].present?
+            # see if delegate record already exists
+            d = Delegate.where(:conference_id => @agenda.conference_id, :all_delegate_id => delegate["id"])
+            del = nil
 
-            # first create delegate record
-            del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], 
-              :group_id => delegate["group_id"],
-              :first_name => delegate["first_name"])
+            if d.present?
+              del = d.first
+            else
+              del = Delegate.create(:conference_id => @agenda.conference_id, :xml_id => delegate["xml_id"], 
+                :group_id => delegate["group_id"],
+                :first_name => delegate["first_name"].downcase.georgianize,
+                :all_delegate_id => delegate["id"])
+            end
+
             # now save voting result record
-            VotingResult.create(:voting_session_id => @agenda.voting_session.id, 
-                      :delegate_id => del.id,
-                      :present => true,
-                      :vote => delegate["vote"],
-                      :is_manual_add => true)
+            if del.present?
+              # now save voting result record
+              VotingResult.create(:voting_session_id => @agenda.voting_session.id, 
+                        :delegate_id => del.id,
+                        :present => true,
+                        :vote => delegate["vote"],
+                        :is_manual_add => true)
+            end
           end
         end
 

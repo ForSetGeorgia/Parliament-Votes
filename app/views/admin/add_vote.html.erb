@@ -35,6 +35,7 @@
             <tr>
               <td>  
                 <%= delegate.first_name %>
+                <%= hidden_field_tag "delegates[#{index}][id]", delegate.id %>
                 <%= hidden_field_tag "delegates[#{index}][xml_id]", delegate.xml_id %>
                 <%= hidden_field_tag "delegates[#{index}][first_name]", delegate.first_name %>
               </td>

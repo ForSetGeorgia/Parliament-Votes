@@ -177,7 +177,7 @@ Rails.logger.debug "********** law url not present"
           else
             del = Delegate.create(:conference_id => self.conference_id, :xml_id => member.xml_id, 
               :group_id => member.group_id,
-              :first_name => member.first_name,
+              :first_name => member.first_name_ka,
               :all_delegate_id => member.id)
           end
 
