@@ -165,9 +165,21 @@ Rails.logger.debug "********** law url not present"
   # if the law just became public, create vote results for not attended people
   # and update vote counts for all delegates
   def update_records_for_public_law
+    Rails.logger.debug "*********************************************"
+    Rails.logger.debug "********** update for public law start"
+    Rails.logger.debug "*********************************************"
     if !was_public && is_public && self.voting_session.present?
       delegates = AllDelegate.available_delegates(self.id)
       if delegates.present?
+        del_count = 0
+        vr_count = 0
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "********** - there are #{delegates.length} delegates available"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
         delegates.each do |member|
           # see if delegate record already exists
           d = Delegate.where(:conference_id => self.conference_id, :all_delegate_id => member.id)
@@ -175,30 +187,63 @@ Rails.logger.debug "********** law url not present"
           if d.present?
             del = d.first
           else
+            Rails.logger.debug "*********************************************"
+            Rails.logger.debug "********** -- creating delegate record for conf #{self.conference_id}; all del #{member.id}; xml id #{member.xml_id}"
+            Rails.logger.debug "*********************************************"
+
             del = Delegate.create(:conference_id => self.conference_id, :xml_id => member.xml_id, 
               :group_id => member.group_id,
               :first_name => member.first_name_ka,
               :all_delegate_id => member.id)
+            del_count += 1
           end
 
           # now save voting result record
           if del.present?
+            Rails.logger.debug "*********************************************"
+            Rails.logger.debug "********** -- creating voting result record for voting session #{self.voting_session.id}; del #{del.id}"
+            Rails.logger.debug "*********************************************"
+
             VotingResult.create(:voting_session_id => self.voting_session.id, 
                       :delegate_id => del.id,
                       :present => false,
                       :is_manual_add => true)
+            vr_count += 1
           end
         end
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "********** for #{delegates.length}, created #{del_count} delegate records; added #{vr_count} voting result records"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
+        Rails.logger.debug "*********************************************"
       end
 
       # if this law has an assigned session1 and session2, add missing delegate records to those too
       sessions = [self.session_number1_id, self.session_number2_id]
       sessions.each do |session|
+        del_count = 0
+        vr_count = 0
         if session.present?
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "********** adding missing delegates for session #{session}"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
           attached_session = Agenda.find_by_id(session)
           if attached_session.present?
             delegates = AllDelegate.available_delegates(attached_session.id)
             if delegates.present?
+              Rails.logger.debug "*********************************************"
+              Rails.logger.debug "*********************************************"
+              Rails.logger.debug "*********************************************"
+              Rails.logger.debug "********** - there are #{delegates.length} delegates available"
+              Rails.logger.debug "*********************************************"
+              Rails.logger.debug "*********************************************"
+              Rails.logger.debug "*********************************************"
               delegates.each do |member|
                 # see if delegate record already exists
                 d = Delegate.where(:conference_id => attached_session.conference_id, :all_delegate_id => member.id)
@@ -208,8 +253,10 @@ Rails.logger.debug "********** law url not present"
                 else
                   del = Delegate.create(:conference_id => attached_session.conference_id, :xml_id => member.xml_id, 
                     :group_id => member.group_id,
-                    :first_name => member.first_name,
+                    :first_name => member.first_name_ka,
                     :all_delegate_id => member.id)
+
+                  del_count += 1
                 end
 
                 # now save voting result record
@@ -218,13 +265,24 @@ Rails.logger.debug "********** law url not present"
                             :delegate_id => del.id,
                             :present => false,
                             :is_manual_add => true)
+                  vr_count += 1
                 end
               end
             end
           end
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "********** for #{delegates.length}, created #{del_count} delegate records; added #{vr_count} voting result records"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
+          Rails.logger.debug "*********************************************"
         end
       end
 
+      Rails.logger.debug "*********************************************"
+      Rails.logger.debug "********** updating delegate vote counts"
+      Rails.logger.debug "*********************************************"
       # update vote count
       AllDelegate.update_vote_counts(self.parliament_id) if !self.not_update_vote_count
       
@@ -237,6 +295,9 @@ Rails.logger.debug "********** law url not present"
       # clear out json api files
       FileUtils.rm_rf(AllDelegate::JSON_API_PATH)
     end
+    Rails.logger.debug "*********************************************"
+    Rails.logger.debug "********** update for public law end"
+    Rails.logger.debug "*********************************************"
   end
 
   def self.by_conference(conference_id)
