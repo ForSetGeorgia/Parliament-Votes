@@ -93,7 +93,7 @@ class Agenda < ActiveRecord::Base
   # - is law
   # - passed vote
   # - official law title exists
-  # - law_url exists
+  # - law_url exists ## 2014-03-17 turning this off since parliament.ge website no longer has text
   # - law_id exists
   # - session number in FINAL_VERSION
   # - session_number1_id and session_number2_id exist if III session
@@ -101,9 +101,11 @@ class Agenda < ActiveRecord::Base
     if is_public && !was_public
       has_error = false
 Rails.logger.debug "**************************"
-      if !is_law || !official_law_title.present? || !has_law_text? || !law_id.present?
+#      if !is_law || !official_law_title.present? || !has_law_text? || !law_id.present?
+      if !is_law || !official_law_title.present? || !law_id.present?
 Rails.logger.debug "*********** - 1"
-Rails.logger.debug "****** is law = #{is_law}; title present = #{official_law_title.present?}; law text = #{has_law_text?}; law id = #{law_id.present?}"
+#Rails.logger.debug "****** is law = #{is_law}; title present = #{official_law_title.present?}; law text = #{has_law_text?}; law id = #{law_id.present?}"
+Rails.logger.debug "****** is law = #{is_law}; title present = #{official_law_title.present?}; law id = #{law_id.present?}"
         has_error = true
       elsif parliament_id != 2 && !(session_number.index(FINAL_VERSION[0]) || (session_number.index(FINAL_VERSION[1]) && session_number1_id.present? && session_number2_id.present?))
 Rails.logger.debug "*********** - 2"

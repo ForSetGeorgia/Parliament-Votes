@@ -38,11 +38,19 @@ private
 
   def has_law_ids(agenda)
     x = ''
-    x = link_to(agenda.law_id.present? && agenda.law_url.present? ? I18n.t('helpers.links.edit') : I18n.t('helpers.links.add'), 
+
+    ## 2014-03-17 turning this off since parliament.ge website no longer has text
+
+#    x = link_to(agenda.law_id.present? && agenda.law_url.present? ? I18n.t('helpers.links.edit') : I18n.t('helpers.links.add'), 
+#      admin_edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
+#      :class => 'btn btn-mini btn-danger fancybox_live')
+
+    x = link_to(agenda.law_id.present? ? I18n.t('helpers.links.edit') : I18n.t('helpers.links.add'), 
       admin_edit_agenda_path(:id => agenda.id, :return_to => Agenda::MAKE_PUBLIC_PARAM, :locale => I18n.locale), 
       :class => 'btn btn-mini btn-danger fancybox_live')
 
-    if agenda.law_id.present? && agenda.law_url.present?
+#    if agenda.law_id.present? && agenda.law_url.present?
+    if agenda.law_id.present?
       x << "<br /><br />".html_safe
       x << link_to(I18n.t('helpers.links.view'), agenda.law_url, :target => :blank, :class => 'btn btn-mini')
     end
@@ -85,7 +93,10 @@ private
   end
 
   def can_publish(agenda)
-    if agenda.law_id.present? && agenda.law_url.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
+    ## 2014-03-17 turning this off since parliament.ge website no longer has text
+
+#    if agenda.law_id.present? && agenda.law_url.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
+    if agenda.law_id.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
       (agenda.session_number1_id.present? && agenda.session_number2_id.present?))
       link_to(I18n.t('helpers.links.publish'), admin_make_public_path(:id => agenda.id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
     end
