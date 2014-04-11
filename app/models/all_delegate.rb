@@ -456,8 +456,6 @@ class AllDelegate < ActiveRecord::Base
               del.xml_id = to_keep.first.xml_id
               del.group_id = to_keep.first.xml_id
               del.title = to_keep.first.title
-              del.started_at = to_keep.started_at
-              del.ended_at = to_keep.ended_at
               del.save
             end
           end

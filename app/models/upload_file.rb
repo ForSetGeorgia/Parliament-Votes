@@ -140,7 +140,7 @@ class UploadFile < ActiveRecord::Base
             # delegates
             doc.css("Delegate").each do |delegate|
               group_index = conference.groups.index{|x| x.xml_id.to_s == delegate.at_css('Group_id').text} if !delegate.at_css('Group_id').nil?
-              combined_name = delegate.at_css('lastname').text.present? ? delegate.at_css('firstname').text + ' ' + delegate.at_css('lastname').text : delegate.at_css('firstname').text
+              combined_name = delegate.at_css('lastname').text.present? ? delegate.at_css('firstname').text.strip + ' ' + delegate.at_css('lastname').text.strip : delegate.at_css('firstname').text.strip
               all_del_index = all_delegates.index{|x| x.xml_id.to_s == delegate.at_css('id').text && x.first_name_ka == combined_name}
 
               # if delegate is already in system and has start/end dates, 
