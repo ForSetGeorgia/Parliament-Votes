@@ -227,13 +227,13 @@ class AllDelegate < ActiveRecord::Base
     if delegates.present?
       delegates.each do |delegate|
         if delegate.present?
-          exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id)
+          exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name.strip, :parliament_id => parliament_id)
 
           if exists.blank?
             Rails.logger.debug "***************************"        
             Rails.logger.debug " - adding delegate: #{delegate.inspect}; conf start date = #{started_at}"        
             Rails.logger.debug "***************************"        
-            ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name, :parliament_id => parliament_id, :started_at => started_at)
+            ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name.strip, :parliament_id => parliament_id, :started_at => started_at)
             # now add id to delegate record
             if ad.present?
               delegate.all_delegate_id = ad.id
@@ -276,7 +276,7 @@ class AllDelegate < ActiveRecord::Base
         ids << a.session_number1_id
       end
             
-      all_ids = Delegate.select('delegates.all_delegate_id')
+      all_ids = Delegate.select('distinct delegates.all_delegate_id')
             .joins(:voting_results => :voting_session)
             .where('voting_sessions.agenda_id in (?)', ids)
             .map{|x| x.all_delegate_id}.uniq      

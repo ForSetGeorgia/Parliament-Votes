@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140411054856) do
+ActiveRecord::Schema.define(:version => 20140626120606) do
 
   create_table "agendas", :force => true do |t|
     t.integer  "conference_id"
