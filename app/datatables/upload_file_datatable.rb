@@ -27,7 +27,7 @@ private
         upload_file.number_possible_members,
         upload_file.conference.present? ? upload_file.conference.number_laws : nil,
         upload_file.conference.present? ? upload_file.conference.number_sessions : nil,
-        upload_file.xml_file_name,
+        upload_file.xml_file_name == 'transfer' ? upload_file.xml_file_name : link_to(upload_file.xml_file_name, upload_file.xml.url, :target => '_blank'),
         I18n.l(upload_file.created_at, :format => :no_zone),
         delete_link(upload_file)
       ]
