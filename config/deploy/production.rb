@@ -1,9 +1,11 @@
 ##################################
 ##### SET THESE VARIABLES ########
 ##################################
-server "vrd.jumpstart.ge", :web, :app, :db, primary: true # server where app is located
+#server "vrd.jumpstart.ge", :web, :app, :db, primary: true # server where app is located
+server "parlvote.jumpstart.ge", :web, :app, :db, primary: true # server where app is located
 set :application, "Voting-Records" # unique name of application
-set :user, "vrd"# name of user on server
+#set :user, "vrd"# name of user on server
+set :user, "zura"# name of user on server
 set :ngnix_conf_file_loc, "production/nginx.conf" # location of nginx conf file
 set :unicorn_init_file_loc, "production/unicorn_init.sh" # location of unicor init shell file
 set :github_account_name, "JumpStartGeorgia" # name of accout on git hub
