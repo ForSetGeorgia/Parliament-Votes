@@ -227,13 +227,13 @@ class AllDelegate < ActiveRecord::Base
     if delegates.present?
       delegates.each do |delegate|
         if delegate.present?
-          exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name.strip, :parliament_id => parliament_id)
+          exists = AllDelegate.where(:xml_id => delegate.xml_id, :first_name => delegate.first_name_ka.strip, :parliament_id => parliament_id)
 
           if exists.blank?
             Rails.logger.debug "***************************"        
             Rails.logger.debug " - adding delegate: #{delegate.inspect}; conf start date = #{started_at}"        
             Rails.logger.debug "***************************"        
-            ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name.strip, :parliament_id => parliament_id, :started_at => started_at)
+            ad = AllDelegate.create(:xml_id => delegate.xml_id, :first_name => delegate.first_name_ka.strip, :parliament_id => parliament_id, :started_at => started_at)
             # now add id to delegate record
             if ad.present?
               delegate.all_delegate_id = ad.id
@@ -452,7 +452,7 @@ class AllDelegate < ActiveRecord::Base
             if update_del_id
               puts "---* updating delegate record to be for record to_keep"          
               del.all_delegate_id = to_keep.first.id
-              del.first_name = to_keep.first.first_name
+              del.first_name = to_keep.first.first_name_ka
               del.xml_id = to_keep.first.xml_id
               del.group_id = to_keep.first.xml_id
               del.title = to_keep.first.title

@@ -30,7 +30,7 @@ class Delegate < ActiveRecord::Base
 
     delegates = Delegate.joins(:conference => :upload_file).where('upload_files.parliament_id = ? and delegates.all_delegate_id is null', parliament_id).readonly(false)
     delegates.find_each do |delegate|
-      all_del_index = all_delegates.index{|x| x.xml_id.to_s == delegate.xml_id.to_s && x.first_name == delegate.first_name}
+      all_del_index = all_delegates.index{|x| x.xml_id.to_s == delegate.xml_id.to_s && x.first_name_ka == delegate.first_name_ka}
       if all_del_index.present?
         delegate.all_delegate_id = all_delegates[all_del_index].id
         delegate.save
