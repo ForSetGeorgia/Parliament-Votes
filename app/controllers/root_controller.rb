@@ -4,18 +4,18 @@ class RootController < ApplicationController
     gon.datatable_date_filter = true
     if request.post?
       if params[:law_title].present? && params[:member_name].present?
-        redirect_to members_path(:q => params[:member_name], 
+        redirect_to members_path(:q => params[:member_name],
           :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil,
-          :law_title => params[:law_title], 
-          :start_date => params[:start_date].present? ? params[:start_date] : nil, 
+          :law_title => params[:law_title],
+          :start_date => params[:start_date].present? ? params[:start_date] : nil,
           :end_date => params[:end_date].present? ? params[:end_date] : nil)
       elsif params[:law_title].present?
-        redirect_to laws_path(:q => params[:law_title], 
+        redirect_to laws_path(:q => params[:law_title],
           :parliament => params[:parliament].present? && params[:parliament].class == Array ? params[:parliament].join(",") : nil)
       elsif params[:member_name].present?
-        redirect_to members_path(:q => params[:member_name], 
-          :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil, 
-          :start_date => params[:start_date].present? ? params[:start_date] : nil, 
+        redirect_to members_path(:q => params[:member_name],
+          :parliament => params[:parliament].present?  && params[:parliament].class == Array ? params[:parliament].join(",") : nil,
+          :start_date => params[:start_date].present? ? params[:start_date] : nil,
           :end_date => params[:end_date].present? ? params[:end_date] : nil)
       end
     end
@@ -24,7 +24,7 @@ class RootController < ApplicationController
   def laws_index
     gon.datatable_date_filter = true
     gon.initial_search = params[:q].present? ? params[:q] : ""
-    @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
+    @parl_ids = params[:parliament].present? && params[:parliament].class == String ? params[:parliament].split(',') : nil
   end
 
   def laws_show
@@ -45,7 +45,7 @@ class RootController < ApplicationController
 
   def members_index
     gon.initial_search = params[:q].present? ? params[:q] : ""
-    @parl_ids = params[:parliament].present? ? params[:parliament].split(',') : nil
+    @parl_ids = params[:parliament].present? && params[:parliament].class == String ? params[:parliament].split(',') : nil
   end
 
   def members_show
