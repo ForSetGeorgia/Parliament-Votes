@@ -8,7 +8,7 @@ var all_delegates_dt;
 
 function register_fancybox_live_click(){
   $(function(){ 
-    $("a.fancybox_live").live("click", function() {
+    $("a.fancybox_live").on("click", function() {
       console.log('fancybox live click event');
 
       $(this).filter(':not(.fb_on)').fancybox({
