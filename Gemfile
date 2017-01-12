@@ -45,6 +45,8 @@ gem "impressionist", "1.4.13" # keep track of views
 gem "gabba", "~> 1.0.1" # send to google analytics from server side
 gem 'rack-utf8_sanitizer', '~> 1.3', '>= 1.3.2' # prevent invalid encoding error
 
+gem 'test-unit', '~> 3.0' # use rails c on server
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
