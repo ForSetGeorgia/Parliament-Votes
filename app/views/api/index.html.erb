@@ -3,6 +3,9 @@
 <h2><%= t('.versions_header') %></h2>
 <ul>
   <li>
+    <%= link_to t('.version2'), :controller=>"api/v2", :action=>"index" %>
+  </li>
+  <li>
     <%= link_to t('.version1'), :controller=>"api/v1", :action=>"index" %>
   </li>
 </ul>

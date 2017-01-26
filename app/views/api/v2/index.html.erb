@@ -1,0 +1,224 @@
+<% title t('.title') %>
+<%= content_for :head, '<META NAME="ROBOTS" CONTENT="NOFOLLOW">'.html_safe %>
+
+<p>
+  <%= t('.intro.p1') %>
+</p>
+
+<p>
+  <%= t('.intro.p2') %>
+</p>
+
+<p>
+  <%= t('.intro.p3') %>
+</p>
+<p><%= t('.intro.p4') %></p>
+<ul>
+  <li>
+      <%= t('.intro.li1') %>
+  </li>
+  <li>
+      <%= t('.intro.li2') %>
+  </li>
+</ul>
+
+<h2><%= t('.members.title') %></h2>
+<p>
+  <%= t('.members.p1') %>: <%= link_to "/api/v2/members", {:controller=>"api/v2", :action=>"members"}, :target => :blank %>
+</p>
+<p>
+  <%= t('.members.p2') %>
+</p>
+<p>  
+  <%= t('.members.p3') %>
+</p>
+<pre>
+[
+  {id: 1, name: "<%= t('.members.ex_name1') %>", start_date: null, end_date: null},
+  {id: 2, name: "<%= t('.members.ex_name2') %>", start_date: null, end_date: "2013-11-27"},
+  .
+  .
+  .
+]
+</pre>
+
+<p><%= t('.members.p4') %></p>
+<ul>
+  <li>
+    <%= t('.members.nli1').html_safe %>
+  </li>
+  <li>
+    <%= t('.members.nli2').html_safe %>
+  </li>
+</ul>
+
+
+<h2><%= t('.member_votes.title') %></h2>
+<p>
+  <%= t('.member_votes.p1') %>: <%= link_to "/api/v2/member_votes?member_id=1", {:controller=>"api/v2", :action=>"member_votes", :member_id => 1, :with_laws => true}, :target => :blank %>
+</p>
+<p>
+  <%= t('.member_votes.p2') %>
+</p>
+<p>
+  <%= t('.member_votes.p3') %>
+</p>
+<ul>
+  <li>
+    <code>member_id</code> (<%= t('.member_votes.required') %>) - <%= t('.member_votes.li1') %>
+  </li>
+  <li>
+    <code>with_laws</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li2') %>
+  </li>
+  <li>
+    <code>with_law_vote_summary</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li3') %>
+  </li>
+  <li>
+    <code>passed_after</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li4') %>
+  </li>
+  <li>
+    <code>passed_before</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li5') %>
+  </li>
+  <li>
+    <code>made_public_after</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li6') %>
+  </li>
+  <li>
+    <code>made_public_before</code> (<%= t('.member_votes.optional') %>) - <%= t('.member_votes.li7') %>
+  </li>
+</ul>
+
+<p>  
+  <%= t('.member_votes.p4') %>
+</p>
+<pre>
+{
+  member:
+  {
+    internal_id,
+    name,
+    start_date, 
+    end_date,
+    vote_summary:
+    {
+      total_votes,
+      yes_votes,
+      no_votes,
+      abstain_votes,
+      absent,
+    },
+    laws: 
+    [
+      {
+        law_id,
+        internal_id,
+        title,
+        released_to_public_at
+        sessions: 
+        {
+          session_1: 
+          {
+            date,
+            present,
+            vote,
+            vote_summary: 
+            {
+              total_yes,
+              total_no,
+              total_abstain,
+              total_absent
+            }
+          },
+          session_2: 
+          {
+            date,
+            present,
+            vote,
+            vote_summary: 
+            {
+              total_yes,
+              total_no,
+              total_abstain,
+              total_absent
+            }
+          },
+          session_3: 
+          {
+            date,
+            present,
+            vote,
+            vote_summary: 
+            {
+              total_yes,
+              total_no,
+              total_abstain,
+              total_absent
+            }
+          }
+        }
+      },
+      .
+      .
+      .
+    ]
+  }
+}
+</pre>
+
+<p><%= t('.member_votes.p5') %></p>
+<ul>
+  <li>
+    <%= t('.member_votes.nli1').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli2').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli3').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli4').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli5').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli6').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli7').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli8').html_safe %>
+    <ul>
+      <li>
+        <%= I18n.t('helpers.boolean.y') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.boolean.n') %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= t('.member_votes.nli9').html_safe %>
+    <ul>
+      <li>
+        <%= I18n.t('helpers.boolean.y') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.boolean.n') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.boolean.abstain') %>
+      </li>
+      <li>
+        <%= I18n.t('helpers.links.not_present') %>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= t('.member_votes.nli10').html_safe %>
+  </li>
+  <li>
+    <%= t('.member_votes.nli11').html_safe %>
+  </li>
+</ul>

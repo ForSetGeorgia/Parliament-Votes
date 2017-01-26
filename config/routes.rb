@@ -70,6 +70,12 @@ BootstrapStarter::Application.routes.draw do
 	    match '/v1/members' => 'v1#members', :via => :get, :defaults => {:format => 'json'}
 	    match '/v1/member_votes' => 'v1#member_votes', :via => :get, :defaults => {:format => 'json'}
 	    match '/v1/all_member_votes' => 'v1#all_member_votes', :via => :get, :defaults => {:format => 'json'}
+      #v2
+      match '/v2' => 'v2#index', :via => :get
+      match '/v2/parliaments' => 'v2#parliaments', :via => :get, :defaults => {:format => 'json'}
+      match '/v2/members' => 'v2#members', :via => :get, :defaults => {:format => 'json'}
+      match '/v2/member_votes' => 'v2#member_votes', :via => :get, :defaults => {:format => 'json'}
+      match '/v2/all_member_votes' => 'v2#all_member_votes', :via => :get, :defaults => {:format => 'json'}
 		end
 
 
