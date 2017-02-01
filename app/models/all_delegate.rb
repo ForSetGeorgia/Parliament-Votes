@@ -385,7 +385,7 @@ class AllDelegate < ActiveRecord::Base
 
   # delete all of the delegate records
   # - do this instead of destroy_all for destory all will do hundreds of queries and be slow
-  def self.delete_delegate_records(id)
+  def self.delete_delegate_records(id, update_law_vote_results=true)
     puts "++++++++++++++++++++++++++++++++++"
     puts "** deleting delegate #{id} **"
     puts "++++++++++++++++++++++++++++++++++"
@@ -399,13 +399,13 @@ class AllDelegate < ActiveRecord::Base
           AllDelegate.delete(id)
 
           # update the vote counts for every law in this parliament
-          Agenda.update_law_vote_results(del.parliament_id)
+          Agenda.update_law_vote_results(del.parliament_id) if update_law_vote_results
         end
       end
     end
   end
 
-  def self.merge_delegates(id_to_keep, id_to_remove)
+  def self.merge_delegates(id_to_keep, id_to_remove, update_vote_counts=true)
     puts "**********************************"
     puts "** to keep = #{id_to_keep}; to remove = #{id_to_remove} **"
     puts "**********************************"
@@ -463,11 +463,19 @@ class AllDelegate < ActiveRecord::Base
 
         # now delete the delegate/voting result records for to_remove
         puts "********** deleting records"          
-        delete_delegate_records(id_to_remove)
+        delete_delegate_records(id_to_remove, update_vote_counts)
         
         # now update vote counts of all delegates
-        puts "********** updating delegate vote counts"          
-        update_vote_counts(to_keep.first.parliament_id)
+        if update_vote_counts
+          puts "********** updating delegate vote counts"          
+          Agenda.update_law_vote_results(to_keep.first.parliament_id)
+          update_vote_counts(to_keep.first.parliament_id)
+
+          if to_remove.first.parliament_id != to_keep.first.parliament_id
+            Agenda.update_law_vote_results(to_remove.first.parliament_id)
+            update_vote_counts(to_remove.first.parliament_id)
+          end
+        end
       end
     end
     puts "**********************************"
