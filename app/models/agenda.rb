@@ -166,11 +166,11 @@ Rails.logger.debug "********** law url not present"
 
   # if the law just became public, create vote results for not attended people
   # and update vote counts for all delegates
-  def update_records_for_public_law
+  def update_records_for_public_law(force_update=false)
     Rails.logger.debug "*********************************************"
     Rails.logger.debug "********** update for public law start"
     Rails.logger.debug "*********************************************"
-    if !was_public && is_public && self.voting_session.present?
+    if (!was_public || force_update) && is_public && self.voting_session.present?
       delegates = AllDelegate.available_delegates(self.id)
       if delegates.present?
         del_count = 0
