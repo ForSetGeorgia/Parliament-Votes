@@ -40,14 +40,14 @@ class ApplicationController < ActionController::Base
 
 	def preload_global_variables
     # only load if not using the api
-	  if params[:controller].index('api') != 0
+	  if params[:controller].present? && params[:controller].index('api') != 0
       @parliaments = Parliament.sorted_start_year
     end
 	end
 
 	def initialize_gon
     # only load if not using the api
-	  if params[:controller].index('api') != 0
+	  if params[:controller].present? && params[:controller].index('api') != 0
 		  gon.set = true
 
       gon.highlight_first_form_field = true if params[:controller].index('devise/').present?
