@@ -62,7 +62,7 @@ BootstrapStarter::Application.configure do
 
 	# options for exception notification gem
 	config.middleware.use ExceptionNotifier,
-		:email_prefix => "[Parliament Voting App Error (#{Rails.env})] ",
+		:email_prefix => "[Parliament Voting Error (#{Rails.env})] ",
 		:sender_address => ENV['APPLICATION_ERROR_FROM_EMAIL'],
 		:exception_recipients => [ENV['APPLICATION_ERROR_TO_EMAIL']]
 end

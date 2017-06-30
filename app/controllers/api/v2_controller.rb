@@ -6,10 +6,10 @@ class Api::V2Controller < ApplicationController
 	    format.html # index.html.erb
 	  end
   end
-  
+
   def parliaments
     respond_to do |format|
-      format.json { 
+      format.json {
         process_parameters
         render json: Parliament.api_v2_parliaments
       }
@@ -18,10 +18,10 @@ class Api::V2Controller < ApplicationController
     # record call to google analytics
     record_analytics("parliaments")
   end
-  
+
   def members
     respond_to do |format|
-      format.json { 
+      format.json {
         process_parameters
         render json: AllDelegate.api_v2_members(@parliament_id)
       }
@@ -30,11 +30,11 @@ class Api::V2Controller < ApplicationController
     # record call to google analytics
     record_analytics("members")
   end
-  
+
   def member_votes
     if params[:member_id].present?
       respond_to do |format|
-        format.json { 
+        format.json {
           process_parameters
 #          render json: AllDelegate.api_v2_member_votes(params[:member_id], @with_laws, @with_law_vote_summary,
 #            @passed_after, @passed_before, @made_public_after, @made_public_before)
@@ -45,7 +45,7 @@ class Api::V2Controller < ApplicationController
           send_file "#{file_path}", :type => "application/json", :disposition => 'inline'
         }
       end
-      
+
       # record call to google analytics
       record_analytics("member_votes")
     else
@@ -56,16 +56,16 @@ class Api::V2Controller < ApplicationController
 
   def all_member_votes
     respond_to do |format|
-      format.json { 
+      format.json {
         process_parameters
-        
+
         file_path = AllDelegate.api_v2_all_member_votes(@with_laws, @with_law_vote_summary,
           @passed_after, @passed_before, @made_public_after, @made_public_before, @parliament_id)
-        
+
         send_file "#{file_path}", :type => "application/json", :disposition => 'inline'
       }
     end
-    
+
     # record call to google analytics
     record_analytics("all_member_votes")
   end
@@ -102,21 +102,18 @@ protected
   def record_analytics(api_method)
     ga_id = nil
     domain = nil
-    if Rails.env.production?
-      ga_id = 'UA-12801815-23'
+    if Rails.env.production? && ENV['APPLICATION_ANALYTICS_ID'].present?
+      ga_id = ENV['APPLICATION_ANALYTICS_ID']
       domain = 'votes.parliament.ge'
-    elsif Rails.env.staging?
-      ga_id = 'UA-12801815-15'
-      domain = 'dev-parlvote.jumpstart.ge'
     end
     # page view format is (title, url)
     if ga_id.present?
       g = Gabba::Gabba.new(ga_id, domain)
       g.referer(request.env['HTTP_REFERER'])
       g.ip(request.remote_ip)
-      g.page_view("api:v2:#{api_method}", request.fullpath) 
+      g.page_view("api:v2:#{api_method}", request.fullpath)
     end
-  end  
-  
+  end
+
 
 end

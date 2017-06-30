@@ -47,6 +47,8 @@ gem 'rack-utf8_sanitizer', '~> 1.3', '>= 1.3.2' # prevent invalid encoding error
 
 gem 'test-unit', '~> 3.0' # use rails c on server
 
+gem 'dotenv-rails', '~> 2.2', '>= 2.2.1' # environment variables
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

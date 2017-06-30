@@ -76,13 +76,13 @@ en:
       delegate:
         first_name: Name
         title: Title
-      group: 
+      group:
         text: Party
         short_name: Party
-      parliament: 
+      parliament:
         start_year: Start Year
         end_year: End Year
-      parliament_translation: 
+      parliament_translation:
         name: Parliament Name
         name_hint: "(e.g., 'The 8th Parliament')"
       all_delegate:
@@ -194,7 +194,7 @@ en:
       new: New
     common:
       app_name: Voting Records
-      edited: Edited  
+      edited: Edited
       manually_added: Manually Added
       made_public_on: "Made Public On: %{date}"
       start_date: Start Date
@@ -232,8 +232,8 @@ en:
       api: API
       sign_out: Sign Out
       sign_in: Sign In
-      js_link_title: JumpStart Georgia - Informing Communities with Data and Design
-      js_link_text: Built by
+      fs_link_title: 'ForSet - Data Communications: Innovative. Effective. Simple.'
+      fs_link_text: Built by
       disclaimer: "The Voting Records Database is made possible with the support of the American people through the United States Agency for International Development (USAID).  The project is also funded by National Democratic Institute (NDI). The contents of this website do not necessarily reflect the views of NDI, USAID or the United States Government."
     unsupported_browser:
       title: Unsupported Browser
@@ -246,8 +246,8 @@ en:
       Safari: Safari
       admin: Admin
       sign_out: Sign Out
-      js_link_title: JumpStart Georgia - We communicate data better!
-      js_link_text: Built by
+      fs_link_title: 'ForSet - Data Communications: Innovative. Effective. Simple.'
+      fs_link_text: Built by
   admin:
     index:
       title: Administration Section
@@ -290,23 +290,23 @@ en:
       title: "Conference: %{name} (%{date})"
       view_laws_only: View Laws Only
       view_all: View All Items
-    edit_conference: 
+    edit_conference:
       title: Edit Conference
       not_found: The Conference could not be found.
       conference: "Conference: %{name} (%{date})"
     agenda:
       title: "Agenda: %{name} (%{date})"
       no_results: No voting results exist for this agenda.
-    edit_agenda: 
+    edit_agenda:
       title: Edit Law
       not_found: The Law could not be found.
       agenda: "Law"
-    edit_vote: 
+    edit_vote:
       title: Edit Vote
       not_found: The Voting Record could not be found.
       agenda: "Law: %{name} (%{date})"
       delegate: "Delegate: %{name}"
-    add_vote: 
+    add_vote:
       title: Add Missing Votes
       non_available: All delegates have voted.
       not_found: The Law could not be found.
@@ -367,7 +367,7 @@ en:
       new_delegates_all: Notify me when a Parliament Member is added.
       new_delegates_none: I do not want to receive notifications when a Parliament Member is added.
   api:
-    index: 
+    index:
       title: API
       versions_header: Versions
       version1: Version 1
@@ -387,10 +387,10 @@ en:
           title: Members
           p1: URL
           p2: "This method will get a list of all members in the system. This method is helpful to get the ID of a Parliament Member that is needed for input into the other methods provided in this API."
-          p3: "The return format will be like the following:"  
+          p3: "The return format will be like the following:"
           ex_name1: John Doe
           ex_name2: Jane Doe
-          p4: "Notes:"  
+          p4: "Notes:"
           nli1: "<code>start_date</code> will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
           nli2: "<code>end_date</code> will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
         member_votes:
@@ -434,10 +434,10 @@ en:
           title: Members
           p1: URL
           p2: "This method will get a list of all members in the system. This method is helpful to get the ID of a Parliament Member that is needed for input into the other methods provided in this API."
-          p3: "The return format will be like the following:"  
+          p3: "The return format will be like the following:"
           ex_name1: John Doe
           ex_name2: Jane Doe
-          p4: "Notes:"  
+          p4: "Notes:"
           nli1: "<code>start_date</code> will be null if the Parliament Member started service when this session of Parliament began.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member started their service."
           nli2: "<code>end_date</code> will be null if the Parliament Member ended service when this session of Parliament finished.  Otherwise, a date in the format of 'yyyy-mm-dd' will be provided which indicates the date the Parliament Member ended their service early."
         member_votes:

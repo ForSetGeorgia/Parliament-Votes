@@ -25,9 +25,9 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag '/favicon.ico', :rel => 'shortcut icon' %>
-    
+
 		<%= yield(:head) %>
-    
+
   </head>
   <body <%= params[:controller] == "root" && params[:action] == "index" ? "id=center_title" : "" %>>
 
@@ -136,8 +136,8 @@
         &copy; <%= Time.now.year %>
 			</div>
 			<div id="right" class="clear">
-				<%= link_to(image_tag("jumpstart-logo.png"), "https://jumpstart.ge", :target => "_blank",
-						:title => t(".js_link_title")	) %>
+				<%= link_to(image_tag("forset.png"), "https://forset.ge", :target => "_blank",
+						:title => t(".fs_link_title")	) %>
 			</div>
     </footer>
 
@@ -150,21 +150,10 @@
 			I18n.locale = "<%= I18n.locale %>";
 		</script>
 
-		<% if Rails.env.production? %>
+		<% if Rails.env.production? && ENV['APPLICATION_ANALYTICS_ID'].present? %>
       <script type="text/javascript">
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-12801815-23']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-      </script>
-		<% elsif Rails.env.staging? %>
-      <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-12801815-15']);
+        _gaq.push(['_setAccount', ENV['APPLICATION_ANALYTICS_ID']]);
         _gaq.push(['_trackPageview']);
         (function() {
           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

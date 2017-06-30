@@ -2,7 +2,6 @@
 ##### SET THESE VARIABLES ########
 ##################################
 server "pins.ge", :web, :app, :db, primary: true # server where app is located
-# server "parlvote.jumpstart.ge", :web, :app, :db, primary: true # server where app is located
 set :application, "Voting-Records" # unique name of application
 set :user, "deploy"# name of user on server# set :user, "zura"# name of user on server
 set :ngnix_conf_file_loc, "production/nginx.conf" # location of nginx conf file
