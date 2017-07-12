@@ -29,11 +29,11 @@
   </div>
 
 
-<table id="agendas_datatable" class="display table table-striped table-bordered" 
+<table id="agendas_datatable" class="display table table-striped table-bordered"
       data-source="<%= admin_search_agendas_url(:conference_id => @conference.id, :format => :json) %>">
   <thead>
     <tr>
-      <th><%= Agenda.human_attribute_name(:sort_order) %></th>
+      <th><%#= Agenda.human_attribute_name(:sort_order) %></th>
       <th><%= Agenda.human_attribute_name(:official_law_title) %></th>
       <th><%= Agenda.human_attribute_name(:law_title) %></th>
       <th><%= Agenda.human_attribute_name(:law_description) %></th>
