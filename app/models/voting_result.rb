@@ -1,6 +1,6 @@
 class VotingResult < ActiveRecord::Base
   has_paper_trail
-  
+
   belongs_to :voting_session
   belongs_to :delegate
 
@@ -33,7 +33,7 @@ class VotingResult < ActiveRecord::Base
       when 3
         I18n.t('helpers.boolean.n')
       else
-        if self.voting_session.agenda.parliament_id == 1 
+        if self.voting_session.agenda.parliament_id == 1
           I18n.t('helpers.links.not_present2')
         else
           I18n.t('helpers.links.not_present')
@@ -48,4 +48,32 @@ class VotingResult < ActiveRecord::Base
   def self.not_deleted
     includes(:voting_session => {:agenda => {:conference => :upload_file}}).where("upload_files.is_deleted = 0")
   end
+
+  # remove one of the records that have the same value for:
+  # - voting_session_id, delegate_id, present, vote
+  def self.remove_duplicates
+    start = Time.now
+    vrs = VotingResult.group('voting_session_id, delegate_id, present, vote').having('count(*) > 1').where(is_manual_add: true).map{|x| [x.voting_session_id, x.delegate_id]}
+    if vrs.present?
+      puts "found #{vrs.length} duplicate records"
+      vrs.each do |vr|
+        # delete 1 of the 2 records
+        VotingResult.where(voting_session_id: vr[0], delegate_id: vr[1]).last.delete
+      end
+
+      puts "Took #{Time.now - start} seconds to delete duplicate records"
+
+      Parliament.pluck(:id).each do |id|
+        puts "- updating parliament #{id} vote counts"
+        Agenda.update_law_vote_results(id)
+        AllDelegate.update_vote_counts(id)
+      end
+
+      # clear out json api files
+      FileUtils.rm_rf(AllDelegate::JSON_API_PATH)
+    end
+
+    puts "Took #{Time.now - start} seconds to finish everything"
+  end
+
 end
