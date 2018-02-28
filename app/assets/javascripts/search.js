@@ -7,7 +7,7 @@ var member_votes_dt;
 var all_delegates_dt;
 
 function register_fancybox_live_click(){
-  $(function(){ 
+  $(function(){
     $("a.fancybox_live").on("click", function() {
       console.log('fancybox live click event');
 
@@ -24,7 +24,7 @@ function register_fancybox_live_click(){
       $(this).triggerHandler('click');
       return false;
     });
-  }); 
+  });
 }
 
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
 
 
   $('#voting_results_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -100,7 +100,7 @@ $(document).ready(function(){
   });
 
   agenda_dt = $('#agendas_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -133,7 +133,7 @@ $(document).ready(function(){
   });
 
   $('#upload_files_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -149,12 +149,12 @@ $(document).ready(function(){
     "aaSorting": [[1, 'desc']],
     "iDisplayLength": 25,
     "aoColumnDefs": [
-      { 'bSortable': false, 'aTargets': [ 7 ] }
+      { 'bSortable': false, 'aTargets': [ 8 ] }
     ]
   });
 
   $('#deleted_files_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -176,7 +176,7 @@ $(document).ready(function(){
 
 
   laws_dt = $('#laws_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -206,7 +206,7 @@ $(document).ready(function(){
 
 
   passed_laws_dt = $('#passed_laws_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -235,7 +235,7 @@ $(document).ready(function(){
   });
 
   member_dt = $('#members_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -260,7 +260,7 @@ $(document).ready(function(){
   });
 
   $('#voting_results_public_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -289,7 +289,7 @@ $(document).ready(function(){
   });
 
   member_votes_dt = $('#member_votes_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -319,7 +319,7 @@ $(document).ready(function(){
   });
 
   $('#users_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,
@@ -337,7 +337,7 @@ $(document).ready(function(){
   });
 
   all_delegates_dt = $('#all_delegates_datatable').dataTable({
-    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",    
+    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
     "sPaginationType": "bootstrap",
     "bJQueryUI": false,
     "bProcessing": true,

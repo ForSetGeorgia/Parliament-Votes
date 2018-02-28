@@ -1,8 +1,8 @@
 <% if current_user.role?(User::ROLES[:process_files]) %>
 
   <%= form_tag admin_process_file_path, :method => :post, :class => "form-inline", :id => 'upload_file', :multipart => true do %>
-     <%= error_messages_for @upload_file  %> 
-    
+     <%= error_messages_for @upload_file  %>
+
     <label class="control-label" for="xml">
       <%= UploadFile.human_attribute_name(:xml) %>
     </label>
@@ -16,7 +16,7 @@
 
     <label class="control-label" for="number_possible_members">
       <%= UploadFile.human_attribute_name(:number_possible_members) %>
-      <%= text_field_tag 'number_possible_members', Agenda.default_number_possible_members, 
+      <%= text_field_tag 'number_possible_members', Agenda.default_number_possible_members,
             :class => 'input-mini', :size => 3, :maxlength => 3 %>
     </label>
 
@@ -33,12 +33,13 @@
   <hr />
 <% end %>
 
-<table id="upload_files_datatable" class="display table table-striped table-bordered" 
+<table id="upload_files_datatable" class="display table table-striped table-bordered"
       data-source="<%= admin_search_files_url(:format => :json) %>">
   <thead>
     <tr>
       <th><%= Conference.human_attribute_name(:name) %></th>
       <th><%= Conference.human_attribute_name(:start_date) %></th>
+      <th><%= UploadFile.human_attribute_name(:parliament_id) %></th>
       <th><%= UploadFile.human_attribute_name(:number_possible_members) %></th>
       <th><%= Conference.human_attribute_name(:number_laws) %></th>
       <th><%= Conference.human_attribute_name(:number_sessions) %></th>

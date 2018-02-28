@@ -24,6 +24,7 @@ private
       [
         upload_file.conference.present? ? link_to(upload_file.conference.name, admin_conference_path(:id => upload_file.conference.id, :locale => I18n.locale)) : nil,
         upload_file.conference.present? ? I18n.l(upload_file.conference.start_date, :format => :no_zone) : nil,
+        upload_file.parliament.present? ? upload_file.parliament.name : nil,
         upload_file.number_possible_members,
         upload_file.conference.present? ? upload_file.conference.number_laws : nil,
         upload_file.conference.present? ? upload_file.conference.number_sessions : nil,
@@ -35,8 +36,8 @@ private
   end
 
   def delete_link(upload_file)
-    if @current_user.role?(User::ROLES[:process_files]) 
-      link_to(I18n.t("helpers.links.destroy"), admin_delete_file_path(:id => upload_file.id, :locale => I18n.locale), 
+    if @current_user.role?(User::ROLES[:process_files])
+      link_to(I18n.t("helpers.links.destroy"), admin_delete_file_path(:id => upload_file.id, :locale => I18n.locale),
           :data => { :confirm => I18n.t('.confirm', :default => I18n.t("helpers.links.confirm")) },
           :class => 'btn btn-mini btn-danger')
     end
@@ -47,7 +48,7 @@ private
   end
 
   def fetch_upload_files
-    upload_files = UploadFile.not_deleted.with_conference.order("#{sort_column} #{sort_direction}")
+    upload_files = UploadFile.not_deleted.with_conference.with_parliament.order("#{sort_column} #{sort_direction}")
     upload_files = upload_files.page(page).per_page(per_page)
     upload_files
   end
@@ -61,7 +62,7 @@ private
   end
 
   def sort_column
-    columns = %w[conferences.name conferences.start_date upload_files.number_possible_members conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at conferences.name]
+    columns = %w[conferences.name conferences.start_date upload_file.parliament_id upload_files.number_possible_members conferences.number_laws conferences.number_sessions upload_files.xml_file_name upload_files.created_at conferences.name]
     columns[params[:iSortCol_0].to_i]
   end
 
