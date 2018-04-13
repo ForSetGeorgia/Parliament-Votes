@@ -71,5 +71,6 @@ end
 
 group :staging, :production do
   gem 'unicorn', '~> 5.2.0' # http server
+  gem 'unicorn-worker-killer', '~> 0.4.4' # kill the workers if they take up too much memory
 end
 
