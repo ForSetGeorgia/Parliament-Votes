@@ -315,6 +315,7 @@ ka:
     laws:
       title: მიღებული კანონის გამოქვეყნება
       can_publish: გამოქვეყნება
+      processing: პროცესშია...
     session_match:
       title: მოძებნე %{session}
       final_law_header: "ძიება:"

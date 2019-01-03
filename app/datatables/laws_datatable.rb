@@ -94,12 +94,16 @@ private
 
   def can_publish(agenda)
     ## 2014-03-17 turning this off since parliament.ge website no longer has text
-
 #    if agenda.law_id.present? && agenda.law_url.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
+  
+    x = ''
     if agenda.law_id.present? && (agenda.session_number.index(Agenda::FINAL_VERSION[0]).present? ||
       (agenda.session_number1_id.present? && agenda.session_number2_id.present?))
-      link_to(I18n.t('helpers.links.publish'), admin_make_public_path(:id => agenda.id, :locale => I18n.locale), :class => 'btn btn-mini btn-success')
+      x << link_to(I18n.t('helpers.links.publish'), admin_make_public_path(:id => agenda.id, :locale => I18n.locale), :class => 'btn btn-mini btn-success btn-make-public')
+      x << "<div class='processing_request'><span class='processing_request_text'>#{I18n.t('admin.laws.processing')}</span></div>"
     end
+
+    return x
   end
 
 

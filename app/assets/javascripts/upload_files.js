@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
-  function procressing_fadein() {
-    $('#processing_file_text').fadeIn("slow", procressing_fadeout);
+  function processing_fadein() {
+    $('#processing_file_text').fadeIn("slow", processing_fadeout);
   }
 
-  function procressing_fadeout() {
-    $('#processing_file_text').fadeOut("slow", procressing_fadeout);
+  function processing_fadeout() {
+    $('#processing_file_text').fadeOut("slow", processing_fadeout);
   }
 
   function animate_processing(){
