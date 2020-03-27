@@ -90,7 +90,7 @@ GEM
       railties (>= 3.1.0)
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.12.2)
     formtastic (2.1.1)
       actionpack (~> 3.0)
     gabba (1.0.1)
