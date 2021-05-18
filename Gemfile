@@ -32,7 +32,7 @@ gem "exception_notification", "2.5.2" # send an email when exception occurs
 
 
 
-gem 'nokogiri', '~> 1.6', '>= 1.6.6.2' # read xml file
+gem 'nokogiri', '~> 1.10' # read xml file
 gem "paper_trail", "~> 2.7.0" # keep audit log of all transactions
 
 
