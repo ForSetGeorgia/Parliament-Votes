@@ -36,7 +36,7 @@ gem 'nokogiri', '~> 1.6', '>= 1.6.6.2' # read xml file
 gem "paper_trail", "~> 2.7.0" # keep audit log of all transactions
 
 
-gem 'active_attr', '~> 0.9.0' # to create tabless models; using for contact form
+gem 'active_attr', '~> 0.15.4' # to create tabless models; using for contact form
 gem 'whenever', '~> 0.9.7' # schedule cron jobs
 gem "impressionist", "1.4.13" # keep track of views
 
